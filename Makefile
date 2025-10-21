@@ -3,13 +3,13 @@ DIR ?= IP/STD_cell
 COMP_DIR := $(shell find $(DIR) -type d -name liberty)
 COMP_BZ2 := $(patsubst %,%/../liberty.tar.bz2,$(COMP_DIR))
 
-.PHONY: comp clean-old-bz2
+.PHONY: zip clean-old-bz2
 
 %/../liberty.tar.bz2: %
 	@echo "\nCompressing: $< -> $@"
 	@tar -cjvf $@ -C $(dir $<) $(notdir $<)
 
-comp: clean-old-bz2 $(COMP_BZ2)
+zip: clean-old-bz2 $(COMP_BZ2)
 	@echo "\nAll liberty directories have been compressed!"
 
 clean-old-bz2:
@@ -21,7 +21,7 @@ clean-old-bz2:
 EXTR_BZ2 := $(shell find $(DIR) -name liberty.tar.bz2)
 EXTR_DIR := $(patsubst %.tar.bz2,%,$(EXTR_BZ2))
 
-.PHONY: extr clean-old-dir
+.PHONY: unzip clean-old-dir
 
 %: %.tar.bz2
 	@echo "\nExtracting: $< -> $@"
@@ -29,7 +29,7 @@ EXTR_DIR := $(patsubst %.tar.bz2,%,$(EXTR_BZ2))
 	@tar -xjvf $< -C $(dir $@)
 	@touch $@
 
-extr: clean-old-dir $(EXTR_DIR)
+unzip: clean-old-dir $(EXTR_DIR)
 	@echo "\nAll liberty.tar.bz2 files have been extracted!"
 
 clean-old-dir:

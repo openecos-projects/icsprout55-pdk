@@ -59,7 +59,7 @@ The ICsprout55 Open Source PDK contents:
 ```sh
 > git clone https://github.com/openecos-projects/icsprout55-pdk   # Download the repo
 > cd icsprout55-pdk                                               # Enter the repo root directory
-> make extr                                                       # Extract large files (please install bzip2 first)
+> make unzip                                                      # Extract large files (please install bzip2 first)
 ```
 
 ## About
