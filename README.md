@@ -1,3 +1,5 @@
+<div align="justify">
+  
 # ICsprout55 Open Source PDK
 ## Introduction
 The **ICsprout 55nm Open Source PDK** (hereinafter referred to as this PDK) is an open source [Process Design Kit](https://en.wikipedia.org/wiki/Process_design_kit) independently developed by ICsprout Integrated Circuit Co., Ltd. (hereinafter referred to as ICsprout) and released in October 2025 with the assistance of **ECOS team, Institute of Computing Technology, Chinese Academy of Sciences (hereinafter referred to as ECOS team).** A significant breakthrough in the global open source chip ecosystem, **this PDK represents the industry's most advanced open source process node at the time of its release**. Built on mature 55nm CMOS process technology, it provides a complete and production-proven design rule files, device models, standard cell libraries, and parameterized cells. It fully supports the backend physical design flow of digital integrated circuits, including key steps such as logic synthesis, place and route, and physical verification, etc. Ultimately, it can be taped out on ICsprout's own production lines.
@@ -11,8 +13,13 @@ The open-source release of this PDK revolutionizes the traditional challenges of
 </p>
 
 ## Status
+
+</div>
+
 > [!WARNING]
 > ICsprout currently offers the PDK contents as a preview release only!
+
+<div align="justify">
 
 This PDK is currently still in the development verification and iterative optimization phase and has not yet passed full silicon testing and reliability certification. **Therefore, it is strictly prohibited for use in any form of commercial mass production tapeout projects!** According to internal decisions by ICsprout and ECOS team, the first engineering batch tapeout shuttle of this PDK is tentatively scheduled for December 2025. The data obtained from this tapeout will provide critical data for evaluating the PDK's process performance and reliability. Furthermore, it is important to note that **​​even after multiple successful tapeouts in the future, there is still no guarantee that the PDK has reached commercial mass production.** For the foreseeable future, this PDK will only support small-batch test tapeouts for talent development and academic research. Currently, the ECOS team is closely collaborating with ICsprout to continuously fix and optimize potential issues in this PDK, and is committed to improving its compatibility and stability with mainstream open source EDA tool chains. The team sincerely thanks global open source communities for their continued attention and support, and will promptly share the latest progress of this PDK with communities after the first round of tapeout.
 
@@ -94,3 +101,5 @@ limitations under the License.
 | Name | Company | E-mail | Roles |
 | - | - | - | - |
 | Yuyang Miao | Institute of Computing Technology, Chinese Academy of Sciences | [miaoyuyang@ict.ac.cn](mailto:miaoyuyang@ict.ac.cn) | Project management, Document maintenance |
+
+</div>
