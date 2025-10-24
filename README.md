@@ -1,6 +1,19 @@
 <div align="justify">
 
 # ICsprout55 Open Source PDK
+
+## Usage
+```sh
+> git clone https://github.com/openecos-projects/icsprout55-pdk   # Download the repo
+> cd icsprout55-pdk                                               # Enter the repo root directory
+> make unzip                                                      # Extract large files (please install bzip2 first)
+```
+
+If you cannot download, try the following command:
+```sh
+> make unzip TOOL=wget                                            # Extract large files (please install bzip2 first)
+```
+
 ## Introduction
 The **ICsprout 55nm Open Source PDK** (hereinafter referred to as this PDK) is an open source [Process Design Kit](https://en.wikipedia.org/wiki/Process_design_kit) independently developed by ICsprout Integrated Circuit Co., Ltd. (hereinafter referred to as ICsprout) and released in October 2025 with the assistance of **ECOS team, Institute of Computing Technology, Chinese Academy of Sciences (hereinafter referred to as ECOS team).** A significant breakthrough in the global open source chip ecosystem, **this PDK represents the industry's most advanced open source process node at the time of its release**. Built on mature 55nm CMOS process technology, it provides a complete and production-proven design rule files, device models, standard cell libraries, and parameterized cells. It fully supports the backend physical design flow of digital integrated circuits, including key steps such as logic synthesis, place and route, and physical verification, etc. Ultimately, it can be taped out on ICsprout's own production lines.
 
@@ -60,18 +73,6 @@ The ICsprout55 Open Source PDK contents:
 │               └── verilog
 └── prtech                                   # Place & Route technology files
     └── techLEF
-```
-
-## Usage
-```sh
-> git clone https://github.com/openecos-projects/icsprout55-pdk   # Download the repo
-> cd icsprout55-pdk                                               # Enter the repo root directory
-> make unzip                                                      # Extract large files (please install bzip2 first)
-```
-
-If you cannot download, try the following command:
-```sh
-> make unzip TOOL=wget                                            # Extract large files (please install bzip2 first)
 ```
 
 ## About
