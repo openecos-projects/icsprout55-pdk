@@ -15598,6 +15598,8 @@ ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15617,6 +15619,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX0P5H7L
 `endcelldefine
@@ -15637,6 +15640,8 @@ ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15656,6 +15661,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX1H7L
 `endcelldefine
@@ -15676,6 +15682,8 @@ ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15695,6 +15703,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX2H7L
 `endcelldefine
@@ -15715,6 +15724,8 @@ ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15734,6 +15745,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX3H7L
 `endcelldefine
@@ -15754,6 +15766,8 @@ ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15773,6 +15787,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX4H7L
 `endcelldefine
@@ -15792,6 +15807,8 @@ reg NOTIFIER;
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15811,6 +15828,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX0P5H7L
 `endcelldefine
@@ -15830,6 +15848,8 @@ reg NOTIFIER;
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15849,6 +15869,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX1H7L
 `endcelldefine
@@ -15868,6 +15889,8 @@ reg NOTIFIER;
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15887,6 +15910,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX2H7L
 `endcelldefine
@@ -15906,6 +15930,8 @@ reg NOTIFIER;
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15925,6 +15951,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX3H7L
 `endcelldefine
@@ -15944,6 +15971,8 @@ reg NOTIFIER;
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional  //  functional //
+`else
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15963,6 +15992,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX4H7L
 `endcelldefine
@@ -25189,6 +25219,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25207,6 +25239,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX0P5H7L
 `endcelldefine
@@ -25222,6 +25255,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25240,6 +25275,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX0P7H7L
 `endcelldefine
@@ -25255,6 +25291,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25273,6 +25311,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX1H7L
 `endcelldefine
@@ -25288,6 +25327,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25306,6 +25347,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX1P4H7L
 `endcelldefine
@@ -25321,6 +25363,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25339,6 +25383,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX2H7L
 `endcelldefine
@@ -25354,6 +25399,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25372,6 +25419,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX3H7L
 `endcelldefine
@@ -25387,6 +25435,8 @@ input AN, BN, C, D;
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25405,6 +25455,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BBX4H7L
 `endcelldefine
@@ -25418,6 +25469,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25436,6 +25489,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX0P5H7L
 `endcelldefine
@@ -25449,6 +25503,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25467,6 +25523,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX0P7H7L
 `endcelldefine
@@ -25480,6 +25537,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25498,6 +25557,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX1H7L
 `endcelldefine
@@ -25511,6 +25571,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Z, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25529,6 +25591,7 @@ input AN, B, C, D;
     (C *> Z) = (tplh$C$Z, tphl$C$Z);
     (D *> Z) = (tplh$D$Z, tphl$D$Z);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX1P4H7L
 `endcelldefine
@@ -25542,6 +25605,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25560,6 +25625,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX2H7L
 `endcelldefine
@@ -25573,6 +25639,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25591,6 +25659,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX3H7L
 `endcelldefine
@@ -25604,6 +25673,8 @@ input AN, B, C, D;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25622,6 +25693,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+`endif // functional //
 
 endmodule //NOR4BX4H7L
 `endcelldefine
@@ -42773,6 +42845,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42785,6 +42859,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX0P5H7L
 `endcelldefine
@@ -42798,6 +42873,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42810,6 +42887,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX0P7H7L
 `endcelldefine
@@ -42823,6 +42901,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42835,6 +42915,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX12H7L
 `endcelldefine
@@ -42848,6 +42929,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42860,6 +42943,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX16H7L
 `endcelldefine
@@ -42873,6 +42957,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42885,6 +42971,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX1H7L
 `endcelldefine
@@ -42898,6 +42985,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42910,6 +42999,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX1P4H7L
 `endcelldefine
@@ -42923,6 +43013,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42935,6 +43027,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX2H7L
 `endcelldefine
@@ -42948,6 +43041,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42960,6 +43055,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX3H7L
 `endcelldefine
@@ -42973,6 +43069,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42985,6 +43083,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX4H7L
 `endcelldefine
@@ -42998,6 +43097,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -43010,6 +43111,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX6H7L
 `endcelldefine
@@ -43023,6 +43125,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -43035,6 +43139,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX8H7L
 `endcelldefine
