@@ -15594,6 +15594,8 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CKN, CKN);
 ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
@@ -15636,6 +15638,8 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CKN, CKN);
 ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
@@ -15678,6 +15682,8 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CKN, CKN);
 ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
@@ -15720,6 +15726,8 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CKN, CKN);
 ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
@@ -15762,6 +15770,8 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CKN, CKN);
 ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
@@ -15804,6 +15814,8 @@ wire dly_CK;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CK, CK);
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
@@ -15845,6 +15857,8 @@ wire dly_CK;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CK, CK);
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
@@ -15886,6 +15900,8 @@ wire dly_CK;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CK, CK);
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
@@ -15927,6 +15943,8 @@ wire dly_CK;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CK, CK);
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
@@ -15968,6 +15986,8 @@ wire dly_CK;
 
 reg NOTIFIER;
 
+buf (dly_E, E);
+buf (dly_CK, CK);
 ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
