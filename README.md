@@ -1,17 +1,17 @@
 <div align="justify">
 
 # ICsprout55 Open Source PDK
-
 ## Usage
+Download the repository and obtain large files by executing make script (please install `bzip2` tool first).
 ```sh
-> git clone https://github.com/openecos-projects/icsprout55-pdk   # Download the repo
-> cd icsprout55-pdk                                               # Enter the repo root directory
-> make unzip                                                      # Extract large files (please install bzip2 first)
+> git clone https://github.com/openecos-projects/icsprout55-pdk
+> cd icsprout55-pdk
+> make unzip
 ```
 
-If you cannot download, try the following command:
+If you cannot download large files, try the following command (make script use `curl` as the default tool).
 ```sh
-> make unzip TOOL=wget                                            # Extract large files (please install bzip2 first)
+> make unzip TOOL=wget
 ```
 
 ## Introduction
