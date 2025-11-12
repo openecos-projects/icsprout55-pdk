@@ -83,7 +83,7 @@ The ICsprout55 Open Source PDK contents:
 ### ICsprout
 ICsprout is a semiconductor foundry co-founded in 2021 by the Zhejiang Provincial Government and Zhejiang University. Leveraging an advanced 12-inch wafer pilot line, the company has built a process portfolio covering multiple nodes and categories. **​It not only offers mature 180nm and 55nm CMOS processes but also possesses specialized process capabilities such as 55nm embedded Flash (eFlash) and 180nm BCD (Bipolar-CMOS-DMOS)​,** these can extensively meet diverse manufacturing needs for analog, mixed-signal, power devices, IoT chips, etc. As a rising star and key player in China's domestic semiconductor ecosystem, ICsprout is actively promoting in-depth communication and collaboration among universities, research institutions, and open source communities in the fields of open source PDK and chip foundry services. Guided by the principles of ​​**open-source sharing**​​ and **​​independent innovation​**​, the company is committed to building a comprehensive technology platform centered on talent development and scientific research , contributing significantly to addressing the shortage of semiconductor talent and leading the development of the open source chip ecosystem.
 
-### ECOS team
+### ECOS Team
 ECOS team's name, derived from the initials of EDA, Chip, OneStudentOneChip, and System, also represents the first four letters of Ecosystem, signifying "ecosystem". The ECOS team was formed by the merger of the original "One Student One Chip" team and the original "iEDA" team. Its members primarily come from the [Frontier System Laboratory, Center for Advanced Computer Systems, Institute of Computing Technology, Chinese Academy of Sciences](https://acs.ict.ac.cn/english) and [Beijing Institute of Open Source Chip](https://www.bosc.ac.cn), etc. ECOS team are committed to building open-source chip design solutions and its supporting technology ecosystem, using the concept of **"open source"** to innovate chip design methods, and realizing the ultimate vision of **"lowering the threshold of chip design with open source and empowering thousands of industries".**
 
 ## Contribution
@@ -110,6 +110,6 @@ limitations under the License.
 ## Contact Us
 | Name | Company | E-mail | Roles |
 | - | - | - | - |
-| Yuyang Miao | Institute of Computing Technology, Chinese Academy of Sciences | [miaoyuyang@ict.ac.cn](mailto:miaoyuyang@ict.ac.cn) | Project management, Document maintenance |
+| ECOS Team | Institute of Computing Technology, Chinese Academy of Sciences | [ecos-all@ict.ac.cn](mailto:ecos-all@ict.ac.cn) | Project management, Document maintenance |
 
 </div>
