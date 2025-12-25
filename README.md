@@ -2,7 +2,7 @@
 
 # ICsprout55 Open Source PDK
 ## Todo
-- RAMs, GDS, DRC/LVS Rules, SPICE Models, PDN, RC, etc
+- RAMs, DRC/LVS Rules, SPICE Models, PDN, RC, etc
 - User Guide, Tutorials, Datasheets, etc
 
 ## Usage
@@ -49,6 +49,8 @@ The ICsprout55 Open Source PDK contents:
 │   │   └── ICsprout_55LLULP1233_IO_251013   # Specific IO library
 │   │       ├── cdl
 │   │       ├── cell_list
+|   |       |── doc
+|   |       |── gds
 │   │       ├── lef
 │   │       ├── liberty
 │   │       └── verilog
@@ -58,6 +60,7 @@ The ICsprout55 Open Source PDK contents:
 │           │   ├── cdl
 │           │   ├── cell_list
 │           │   ├── doc
+│           │   ├── gds
 │           │   ├── lef
 │           │   ├── liberty
 │           │   └── verilog
@@ -65,6 +68,7 @@ The ICsprout55 Open Source PDK contents:
 │           │   ├── cdl
 │           │   ├── cell_list
 │           │   ├── doc
+│           │   ├── gds
 │           │   ├── lef
 │           │   ├── liberty
 │           │   └── verilog
@@ -72,6 +76,7 @@ The ICsprout55 Open Source PDK contents:
 │               ├── cdl
 │               ├── cell_list
 │               ├── doc
+│               ├── gds
 │               ├── lef
 │               ├── liberty
 │               └── verilog
