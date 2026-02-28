@@ -4,6 +4,9 @@
 ORGS_NAME := openecos-projects
 REPO_NAME := icsprout55-pdk
 
+GH_PROXY  ?= https://gh-proxy.org/
+USE_PROXY ?= false
+
 RELEASE_FILE_LIB := ics55_LLSC_H7CH_liberty.tar.bz2 \
                     ics55_LLSC_H7CL_liberty.tar.bz2 \
                     ics55_LLSC_H7CR_liberty.tar.bz2
@@ -39,6 +42,9 @@ $(RELEASE_FILE):
 		exit 1; \
 	fi; \
 	echo "[download] getting $(@)..."; \
+	if [ "$(USE_PROXY)" = "true" ]; then \
+		RELEASE_URL="$(GH_PROXY)$$RELEASE_URL"; \
+	fi; \
 	if [ "$(TOOL)" = "wget" ]; then \
 		wget -O $(@) "$$RELEASE_URL" && echo "[download] done!"; \
 	else \
