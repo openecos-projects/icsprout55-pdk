@@ -46,10 +46,12 @@ $(RELEASE_FILE):
 		RELEASE_URL="$(GH_PROXY)$$RELEASE_URL"; \
 	fi; \
 	if [ "$(TOOL)" = "wget" ]; then \
-		wget -O $(@) "$$RELEASE_URL" && echo "[download] done!"; \
+		wget -O "$(@).part" "$$RELEASE_URL"; \
 	else \
-		curl -L -o $(@) "$$RELEASE_URL" && echo "[download] done!"; \
-	fi
+		curl -fL -o "$(@).part" "$$RELEASE_URL"; \
+	fi || { rm -f "$(@).part"; exit 1; }; \
+	mv "$(@).part" "$(@)"; \
+	echo "[download] done!"
 
 $(DECOMP_DIR_LIB_P)/%/liberty: %_liberty.tar.bz2
 	@echo "\n[unzip] decompressing: $< -> $(DECOMP_DIR_LIB_P)/$*/"
