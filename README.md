@@ -18,6 +18,14 @@ If you cannot download large files, try the following command (make script use `
 > make unzip TOOL=wget
 ```
 
+If you have a proxy server, try the following command to speed up the download process.
+```sh
+> make unzip PROXY_USE=true
+```
+```sh
+> make unzip PROXY_USE=true TOOL=wget
+```
+
 ## Introduction
 The **ICsprout 55nm Open Source PDK** (hereinafter referred to as this PDK) is an open source [Process Design Kit](https://en.wikipedia.org/wiki/Process_design_kit) independently developed by ICsprout Integrated Circuit Co., Ltd. (hereinafter referred to as ICsprout) and released in October 2025 with the assistance of **ECOS Team, Institute of Computing Technology, Chinese Academy of Sciences (hereinafter referred to as ECOS Team).** A significant breakthrough in the global open source chip ecosystem, **this PDK represents the industry's most advanced open source process node at the time of its release**. Built on mature 55nm CMOS process technology, it provides a complete and production-proven design rule files, device models, standard cell libraries, and parameterized cells. It fully supports the backend physical design flow of digital integrated circuits, including key steps such as logic synthesis, place and route, and physical verification, etc. Ultimately, it can be taped out on ICsprout's own production lines.
 
