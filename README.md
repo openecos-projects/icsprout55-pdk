@@ -18,7 +18,7 @@ If you cannot download large files, try the following command (make script use `
 > make unzip TOOL=wget
 ```
 
-If you have a proxy server, try the following command to speed up the download process.
+If your download process is very slow, try the following command to speed up.
 ```sh
 > make unzip PROXY_USE=true
 ```
