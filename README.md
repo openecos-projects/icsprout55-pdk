@@ -33,7 +33,7 @@ The open-source release of this PDK revolutionizes the traditional challenges of
 
 <p align="center">
     <a href="http://www.icsprout.com" target="_blank">
-        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/icsprout.png" width="75%">
+        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/icsprout.webp" width="75%">
     </a>
 </p>
 
