@@ -39,20 +39,14 @@ The **ICsprout 55nm Open Source PDK** (hereinafter referred to as this PDK) is a
 
 The open-source release of this PDK revolutionizes the traditional challenges of **high barriers and high costs** in chip design. By providing universities, research institutions, and the open-source community with a complete path from chip design to tapeout, it empowers researchers and developers to transform their wildest ideas into physical silicon. Furthermore, thanks to the advanced nature of the 55nm process node within the open-source chip field, the complexity and flexibility of future open-source chip designs will be significantly enhanced, providing a powerful boost to the development of an open-source chip ecosystem and the cultivation of chip talent.
 
-<table align="center" width="100%">
-    <tr>
-        <td align="center" valign="middle" width="50%">
-            <a href="http://www.icsprout.com" target="_blank">
-                <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/icsprout.webp" height="120">
-            </a>
-        </td>
-        <td align="center" valign="middle" width="50%">
-            <a href="https://ic.zju.edu.cn" target="_blank">
-                <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/zjuic.webp" height="120">
-            </a>
-        </td>
-    </tr>
-</table>
+<p align="center">
+    <a href="http://www.icsprout.com" target="_blank">
+        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/icsprout.webp" width="45%" align="middle">
+    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://ic.zju.edu.cn" target="_blank">
+        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/zjuic.webp" width="50%" align="middle">
+    </a>
+</p>
 
 ## Status
 
