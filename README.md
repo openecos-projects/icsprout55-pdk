@@ -41,10 +41,11 @@ The open-source release of this PDK revolutionizes the traditional challenges of
 
 <p align="center">
     <a href="http://www.icsprout.com" target="_blank">
-        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/icsprout.webp" width="45%">
+        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/icsprout.webp" height="180" align="middle">
     </a>
+    &nbsp;&nbsp;&nbsp;
     <a href="https://ic.zju.edu.cn" target="_blank">
-        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/zjuic.webp" width="45%">
+        <img alt="" src="https://raw.githubusercontent.com/openecos-projects/website-res/main/img/pdk/zjuic.webp" height="180" align="middle">
     </a>
 </p>
 
