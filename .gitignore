@@ -1,3 +1,4 @@
 /**/STD_cell/**/liberty/
 /**/gds/
 *.tar.bz2
+*.mk
