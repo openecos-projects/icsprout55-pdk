@@ -14,7 +14,8 @@ Download the repository and obtain large files by executing make script (please 
 ```bash
 git clone https://github.com/openecos-projects/icsprout55-pdk
 cd icsprout55-pdk
-make unzip
+make unzip # downloads latest release (default)
+make unzip RELEASE_TAG=v1.10.100 # pins to v1.10.100
 ```
 
 If you cannot download large files, try the following command (make script use `curl` as the default tool).
