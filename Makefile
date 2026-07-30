@@ -7,6 +7,7 @@ REPO_NAME := icsprout55-pdk
 PROXY_URL ?= https://gh-proxy.org/
 PROXY_USE ?= false
 
+RELEASE_TAG ?= latest
 RELEASE_FILE_LIB := ics55_LLSC_H7CH_liberty.tar.bz2 \
                     ics55_LLSC_H7CL_liberty.tar.bz2 \
                     ics55_LLSC_H7CR_liberty.tar.bz2
@@ -31,8 +32,13 @@ DECOMP_DIR := $(DECOMP_DIR_LIB) $(DECOMP_DIR_GDS)
 .PHONY: start download unzip clean-bz2 clean-dir
 
 $(RELEASE_FILE):
-	@echo "\n[download] getting the latest release info"
-	@RELEASE_URL=$$(curl -s "https://api.github.com/repos/$(ORGS_NAME)/$(REPO_NAME)/releases/latest" | \
+	@echo "\n[download] getting release info for $(RELEASE_TAG)"
+	@if [ "$(RELEASE_TAG)" = "latest" ]; then \
+		API_PATH="releases/latest"; \
+	else \
+		API_PATH="releases/tags/$(RELEASE_TAG)"; \
+	fi; \
+	RELEASE_URL=$$(curl -s "https://api.github.com/repos/$(ORGS_NAME)/$(REPO_NAME)/$$API_PATH" | \
 		grep -E "browser_download_url.*$(@)" | \
 		cut -d '"' -f 4); \
 	if [ -z "$$RELEASE_URL" ]; then \
