@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-//time:2024/5/18
-// this version is 0p01
-//
-
 `timescale 1ns/1ps
 `celldefine
 module ANT2H7L ( A);
@@ -21851,8 +21847,8 @@ module MUXI2X0P5H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //
@@ -21884,8 +21880,8 @@ module MUXI2X0P7H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //
@@ -21917,8 +21913,8 @@ module MUXI2X1H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //
@@ -21950,8 +21946,8 @@ module MUXI2X1P4H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //
@@ -21983,8 +21979,8 @@ module MUXI2X2H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //
@@ -22016,8 +22012,8 @@ module MUXI2X3H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //
@@ -22049,8 +22045,8 @@ module MUXI2X4H7L (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
-  not      u1(Y, Y);
+  udp_mux2 u0(YN, A, B, S0);
+  not      u1(Y, YN);
 
 `ifdef functional // functional //
 `else // functional //

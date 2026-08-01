@@ -217,4 +217,3 @@ module P65_1233_PAR_5 (A, PAD, VDDA, VSSA, VDD, VSS);
   tran (PAD,A);
 endmodule
 `endcelldefine
-

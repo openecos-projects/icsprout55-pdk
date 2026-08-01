@@ -163,9 +163,9 @@ DD0 N2 VDDIO dio_3p3_pp_nw_lp M=4 AREA=29.5875p PJ=42.45u
 
 .SUBCKT P65_1233_PAR A PAD VDDA VSSA VDD VSS
 *.PININFO A:B PAD:B VDDA:B VSSA:B VDD:B VSS:B
-X2 PAD A re_ppo_sab_2t $W=8u $L=3.34u M=1
-X1 net06 VSSA re_ppo_sab_2t $W=2u $L=15u M=1
-X0 N0 VSSA re_ppo_sab_2t $W=2u $L=30u M=1
+X2 PAD A re_ppo_sab_2t W=8u L=3.34u M=1
+X1 net06 VSSA re_ppo_sab_2t W=2u L=15u M=1
+X0 N0 VSSA re_ppo_sab_2t W=2u L=30u M=1
 M0 VDDA VDDA PAD VDDA pm3p3_lp W=25u L=650n m=18
 M1 PAD net06 VSSA VSSA nm3p3_lp W=25u L=500n m=20
 DD0 N0 net06 dio_3p3_pp_nw_lp M=10 AREA=20p PJ=24u
@@ -177,9 +177,9 @@ DD0 N0 net06 dio_3p3_pp_nw_lp M=10 AREA=20p PJ=24u
 
 .SUBCKT P65_1233_PAR_5 A PAD VDDA VSSA VDD VSS
 *.PININFO A:B PAD:B VDDA:B VSSA:B VDD:B VSS:B
-X2 PAD A  re_ppo_sab_2t $W=78u $L=400n M=1
-X1 net06 VSSA re_ppo_sab_2t $W=2u $L=15u M=1
-X0 N0 VSSA re_ppo_sab_2t $W=2u $L=30u M=1
+X2 PAD A  re_ppo_sab_2t W=78u L=400n M=1
+X1 net06 VSSA re_ppo_sab_2t W=2u L=15u M=1
+X0 N0 VSSA re_ppo_sab_2t W=2u L=30u M=1
 M0 VDDA VDDA PAD VDDA pm3p3_lp W=25u L=650n m=18
 M1 PAD net06 VSSA VSSA nm3p3_lp W=25u L=500n m=20
 DD0 N0 net06 dio_3p3_pp_nw_lp M=10 AREA=20p PJ=24u
@@ -257,9 +257,9 @@ M179 N0 I VDD VDD pm1p2_lvt_lp W=2u L=60n m=1
 
 .SUBCKT MUX_PAD N0 N1 N2 N3 N4 N5 N6 PAD VDDIO VSSIO
 *.PININFO N0:I N1:I N2:I N3:I N4:I N5:I N6:I PAD:O VDDIO:B VSSIO:B
-X0 VDDIO N7 re_ppo_sab_2t $W=1u $L=1.5u M=1
-X1 N8 N9 re_ppo_sab_2t $W=1u $L=15u M=1
-X2 N8 VSSIO re_ppo_sab_2t $W=1u $L=15u M=1
+X0 VDDIO N7 re_ppo_sab_2t W=1u L=1.5u M=1
+X1 N8 N9 re_ppo_sab_2t W=1u L=15u M=1
+X2 N8 VSSIO re_ppo_sab_2t W=1u L=15u M=1
 M101 N10 N1 PAD VSSIO nm3p3_lp W=20u L=500n m=1
 M111 N11 N1 PAD VSSIO nm3p3_lp W=20u L=500n m=1
 M114 PAD N1 N12 VSSIO nm3p3_lp W=20u L=500n m=1
@@ -380,10 +380,10 @@ M132 VDD in out VDD pm3p3_lp W=4u L=400n m=1
 .ENDS
 
 ************************************************************************
-* Cell Name:    inv
+* Cell Name:    invio
 ************************************************************************
 
-.SUBCKT inv VDD VSS in out
+.SUBCKT invio VDD VSS in out
 *.PININFO in:I out:O VDD:B VSS:B
 M16 VSS in out VSS nm1p2_lvt_lp W=1u L=60n m=1
 M156 VDD in out VDD pm1p2_lvt_lp W=2u L=60n m=1
@@ -422,8 +422,8 @@ M177 out in VDD VDD pm1p2_lvt_lp W=2u L=60n m=1
 .SUBCKT P65_1233_PBMUX A C CS DS0 DS1 I IE OD OE PAD PD PU VDD VDDIO VSS VSSIO
 *.PININFO A:I CS:I DS0:I DS1:I I:I IE:I OD:I OE:I PD:I PU:I C:O PAD:O VDD:B
 *.PININFO VDDIO:B VSS:B VSSIO:B
-X4 PAD A re_ppo_sab_2t $W=1u $L=1u M=1
-X3 N0 PAD re_ppo_sab_2t $W=1u $L=1.5u M=1
+X4 PAD A re_ppo_sab_2t W=1u L=1u M=1
+X3 N0 PAD re_ppo_sab_2t W=1u L=1.5u M=1
 M84 N1 N2 N3 VSS nm3p3_lp W=4u L=500n m=2
 M82 N4 N1 N3 VSS nm3p3_lp W=6u L=500n m=1
 M90 VSS N5 N2 VSS nm3p3_lp W=2u L=500n m=1
@@ -461,12 +461,12 @@ XI29 CS VDD VDDIO VSS N7 / level_shifter_invn1u
 XI30 IE VDD VDDIO VSS N5 / level_shifter_invn1u
 XI28 PU VDD VDDIO VSS N13 / level_shifter_invn1u
 XI48 VDD VSS N1 N31 / inv_1p_2n
-XI23 VDD VSS DS1 N33 / inv
-XI25 VDD VSS N19 N34 / inv
-XI27 VDD VSS OD N35 / inv
-XI22 VDD VSS DS0 N36 / inv
-XI24 VDD VSS N18 N37 / inv
-XI26 VDD VSS N35 N38 / inv
+XI23 VDD VSS DS1 N33 / invio
+XI25 VDD VSS N19 N34 / invio
+XI27 VDD VSS OD N35 / invio
+XI22 VDD VSS DS0 N36 / invio
+XI24 VDD VSS N18 N37 / invio
+XI26 VDD VSS N35 N38 / invio
 XI10 N37 VDD VDDIO VSS N29 / level_shifter
 XI11 N38 VDD VDDIO VSS N27 / level_shifter
 XI12 N36 VDD VDDIO VSS N24 / level_shifter
@@ -512,14 +512,14 @@ M28 OUT IN N1 VDDIO pm3p3_lp W=4u L=400n m=1
 
 .SUBCKT P65_1233_PWE_nand IN VDDIO VSSIO XIN XOUT
 *.PININFO IN:I XIN:I XOUT:O VDDIO:B VSSIO:B
-X3 XOUT net012 re_ppo_2t $W=1u $L=1.5u M=1
+X3 XOUT net012 re_ppo_2t W=1u L=1.5u M=1
 M3 VSSIO VDDIO N0 VSSIO nm3p3_lp W=4u L=500n m=1
 M2 XOUT N0 VSSIO VSSIO nm3p3_lp W=520u L=500n m=1
 M21 VSSIO VDDIO N1 VSSIO nm3p3_lp W=4u L=500n m=1
 M20 XIN N1 VSSIO VSSIO nm3p3_lp W=520u L=500n m=1
 M26 net48 IN net012 VSSIO nm3p3_lp W=100u L=500n m=1
 M30 net48 N2 VSSIO VSSIO nm3p3_lp W=100u L=500n m=1
-X2 XIN N2 re_ppo_sab_2t $W=1u $L=1.5u M=1
+X2 XIN N2 re_ppo_sab_2t W=1u L=1.5u M=1
 M22 XOUT N3 VDDIO VDDIO pm3p3_lp W=440u L=650n m=1
 M7 VDDIO VSSIO N3 VDDIO pm3p3_lp W=4u L=400n m=1
 M23 XIN N4 VDDIO VDDIO pm3p3_lp W=440u L=650n m=1
@@ -535,7 +535,7 @@ M6 net012 N2 VDDIO VDDIO pm3p3_lp W=156u L=400n m=1
 .SUBCKT P65_1233_PWE E VDD VDDIO VSS VSSIO XC XIN XOUT
 *.PININFO E:I XIN:I XC:O XOUT:O VDD:B VDDIO:B VSS:B VSSIO:B
 M16 VSS N0 N1 VSS nm3p3_lp W=16u L=500n m=1
-X0 XOUT N2 re_ppo_sab_2t $W=1u $L=1.5u M=1
+X0 XOUT N2 re_ppo_sab_2t W=1u L=1.5u M=1
 M9 N1 N0 VDD VDD pm3p3_lp W=8u L=400n m=1
 M3 XC N1 VSS VSS nm1p2_lvt_lp W=8u L=60n m=1
 M0 XC N1 VDD VDD pm1p2_lvt_lp W=20u L=60n m=1
@@ -548,56 +548,56 @@ XI4 net024 VDDIO VSSIO XIN XOUT / P65_1233_PWE_nand
 * Cell Name:    P65_1233_VDD1
 ************************************************************************
 
-.SUBCKT P65_1233_VDD1 VDD1 VDDIO VSSIO
+.SUBCKT P65_1233_VDD1 VDD1 VDDIO VSSIO VDD VSS
 *.PININFO VDD1:B VDDIO:B VSSIO:B
 M0 VDD1 VDDIO VDDIO VDDIO pm3p3_lp W=25u L=500n m=18
 M1 VDD1 N0 VSSIO VSSIO nm3p3_lp W=25u L=500n m=20
-DD0 N1 N0 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=42u
-X1 N0 VSSIO  re_ppo_sab_2t $W=2u $L=24.32u M=1
-X0 N1 VSSIO  re_ppo_sab_2t $W=2u $L=30.32u M=1
+DD0 N1 N0 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
+X1 N0 VSSIO  re_ppo_sab_2t W=2u L=24.32u M=1
+X0 N1 VSSIO  re_ppo_sab_2t W=2u L=30.32u M=1
 .ENDS
 
 ************************************************************************
 * Cell Name:    P65_1233_VDD1A
 ************************************************************************
 
-.SUBCKT P65_1233_VDD1A VDDA1 VSSA
+.SUBCKT P65_1233_VDD1A VDDA1 VSSA VDD VSS
 *.PININFO VDDA1:B VSSA:B
 M1 VDDA1 N0 VSSA VSSA nm3p3_lp W=25u L=500n m=20
 M0 VDDA1 N1 VSSA VSSA nm3p3_lp W=25u L=500n m=20
 DD1 N2 N0 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
 DD0 N3 N1 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
-X3 N2 VSSA re_ppo_sab_2t $W=1u $L=14.56u M=1
-X2 N0 VSSA  re_ppo_sab_2t $W=1u $L=11.64u M=1
-X1 VSSA N1 re_ppo_sab_2t $W=1u $L=11.64u M=1
-X0 N3 VSSA  re_ppo_sab_2t $W=1u $L=14.56u M=1
+X3 N2 VSSA re_ppo_sab_2t W=1u L=14.56u M=1
+X2 N0 VSSA  re_ppo_sab_2t W=1u L=11.64u M=1
+X1 VSSA N1 re_ppo_sab_2t W=1u L=11.64u M=1
+X0 N3 VSSA  re_ppo_sab_2t W=1u L=14.56u M=1
 .ENDS
 
 ************************************************************************
 * Cell Name:    P65_1233_VDD3
 ************************************************************************
 
-.SUBCKT P65_1233_VDD3 VDD VDDIO VSSIO
+.SUBCKT P65_1233_VDD3 VDD VDDIO VSSIO VSS
 *.PININFO VDD:B VDDIO:B VSSIO:B
 M0 VDD VDDIO VDDIO VDDIO pm3p3_lp W=25u L=500n m=18
 M1 VDD N0 VSSIO VSSIO nm3p3_lp W=25u L=500n m=20
 DD0 N1 N0 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
-X1 N0 VSSIO re_ppo_sab_2t $W=2u $L=24.32u M=1
-X0 N1 VSSIO re_ppo_sab_2t $W=2u $L=30.32u M=1
+X1 N0 VSSIO re_ppo_sab_2t W=2u L=24.32u M=1
+X0 N1 VSSIO re_ppo_sab_2t W=2u L=30.32u M=1
 .ENDS
 
 ************************************************************************
 * Cell Name:    P65_1233_VDDIO3
 ************************************************************************
 
-.SUBCKT P65_1233_VDDIO3 VDDIO VSSIO
+.SUBCKT P65_1233_VDDIO3 VDDIO VSSIO VDD VSS
 *.PININFO VDDIO:B VSSIO:B
 DD1 N0 N1 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
 DD0 N2 N3 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
-X4 VSSIO N2 re_ppo_sab_2t $W=1u $L=14.56u M=1
-X2 VSSIO N1  re_ppo_sab_2t $W=1u $L=11.64u M=1
-X3 VSSIO N0 re_ppo_sab_2t $W=1u $L=14.56u M=1
-X0 VSSIO N3 re_ppo_sab_2t $W=1u $L=11.64u M=1
+X4 VSSIO N0 re_ppo_sab_2t W=1u L=14.56u M=1
+X2 VSSIO N1 re_ppo_sab_2t W=1u L=11.64u M=1
+X3 VSSIO N2 re_ppo_sab_2t W=1u L=14.56u M=1
+X0 VSSIO N3 re_ppo_sab_2t W=1u L=11.64u M=1
 M0 VDDIO N1 VSSIO VSSIO nm3p3_lp W=25u L=500n m=20
 M1 VDDIO N3 VSSIO VSSIO nm3p3_lp W=25u L=500n m=20
 .ENDS
@@ -606,23 +606,23 @@ M1 VDDIO N3 VSSIO VSSIO nm3p3_lp W=25u L=500n m=20
 * Cell Name:    P65_1233_VSS1A
 ************************************************************************
 
-.SUBCKT P65_1233_VSS1A VDDA VSSA
+.SUBCKT P65_1233_VSS1A VDDA VSSA VDD VSS
 *.PININFO VDDA:B VSSA:B
 M1 VDDA N0 VSSA VSSA nm3p3_lp W=25u L=500n m=20
 M0 VDDA N1 VSSA VSSA nm3p3_lp W=25u L=500n m=20
 DD1 N2 N0 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
 DD0 N3 N1 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
-X3 N2 VSSA re_ppo_sab_2t $W=1u $L=14.56u M=1
-X2 N0 VSSA re_ppo_sab_2t $W=1u $L=11.64u M=1
-X1 VSSA N1 re_ppo_sab_2t $W=1u $L=11.64u M=1
-X0 N3 VSSA re_ppo_sab_2t $W=1u $L=14.56u M=1
+X3 N2 VSSA re_ppo_sab_2t W=1u L=14.56u M=1
+X2 N0 VSSA re_ppo_sab_2t W=1u L=11.64u M=1
+X1 VSSA N1 re_ppo_sab_2t W=1u L=11.64u M=1
+X0 N3 VSSA re_ppo_sab_2t W=1u L=14.56u M=1
 .ENDS
 
 ************************************************************************
 * Cell Name:    P65_1233_VSS1
 ************************************************************************
 
-.SUBCKT P65_1233_VSS1 VDD VDDIO VSS1 VSSIO
+.SUBCKT P65_1233_VSS1 VDD VDDIO VSS1 VSSIO VSS
 *.PININFO VDD:B VDDIO:B VSS1:B VSSIO:B
 DD2 VSSIO VSS1 dio_1p2_pp_nw_lvt_lp M=10 AREA=22.66p PJ=27.06u
 DD1 VSS1 VSSIO dio_1p2_pp_nw_lvt_lp M=10 AREA=37.62p PJ=42.02u
@@ -646,16 +646,14 @@ DD1 VSS VDD dio_1p2_np_pw_lvt_lp M=10 AREA=35.079p PJ=39.479u
 * Cell Name:    P65_1233_VSSIO3
 ************************************************************************
 
-.SUBCKT P65_1233_VSSIO3 VDDIO VSSIO
+.SUBCKT P65_1233_VSSIO3 VDDIO VSSIO VDD VSS
 *.PININFO VDDIO:B VSSIO:B
 DD1 N0 N1 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
 DD0 N2 N3 dio_1p2_pp_nw_lvt_lp M=10 AREA=20p PJ=24u
-X2 VSSIO N1  re_ppo_sab_2t $W=1u $L=11.64u M=1
-X4 VSSIO N2 re_ppo_sab_2t $W=1u $L=14.56u M=1
-X3 VSSIO N0  re_ppo_sab_2t $W=1u $L=14.56u M=1
-X0 VSSIO N3 re_ppo_sab_2t $W=1u $L=11.64u M=1
+X2 VSSIO N1  re_ppo_sab_2t W=1u L=11.64u M=1
+X4 VSSIO N2 re_ppo_sab_2t W=1u L=14.56u M=1
+X3 VSSIO N0  re_ppo_sab_2t W=1u L=14.56u M=1
+X0 VSSIO N3 re_ppo_sab_2t W=1u L=11.64u M=1
 M0 VDDIO N1 VSSIO VSSIO nm3p3_lp W=25u L=600n m=20
 M1 VDDIO N3 VSSIO VSSIO nm3p3_lp W=25u L=600n m=20
 .ENDS
-
-
