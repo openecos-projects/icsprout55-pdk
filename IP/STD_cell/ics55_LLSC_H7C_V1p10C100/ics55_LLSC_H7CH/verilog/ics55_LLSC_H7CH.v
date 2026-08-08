@@ -12580,7 +12580,7 @@ input  D, CKN;
 reg NOTIFIER;
 supply1 xSN,xRN;
   not      IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -12607,7 +12607,7 @@ input  D, CKN;
 reg NOTIFIER;
 supply1 xSN,xRN;
   not      IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -12634,7 +12634,7 @@ input  D, CKN;
 reg NOTIFIER;
 supply1 xSN,xRN;
   not      IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -12666,7 +12666,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -12759,7 +12759,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -12852,7 +12852,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -12945,7 +12945,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13039,7 +13039,7 @@ wire ENABLE_NOT_D;
 
   buf   XX0 (xSN,SN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13131,7 +13131,7 @@ wire ENABLE_NOT_D;
 
   buf   XX0 (xSN,SN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13223,7 +13223,7 @@ wire ENABLE_NOT_D;
 
   buf   XX0 (xSN,SN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13312,7 +13312,7 @@ output Q, QN;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13359,7 +13359,7 @@ output Q, QN;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13406,7 +13406,7 @@ output Q, QN;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13453,7 +13453,7 @@ output Q, QN;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -13498,7 +13498,7 @@ input  D, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -13525,7 +13525,7 @@ input  D, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -13552,7 +13552,7 @@ input  D, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -13579,7 +13579,7 @@ input  D, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 
@@ -13611,7 +13611,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
 
   not     I2 (QN, n0);
 
@@ -13683,7 +13683,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
 
   not     I2 (QN, n0);
 
@@ -13755,7 +13755,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
   assign ENABLE_D= (D) ? 1'b1:1'b0;
@@ -13828,7 +13828,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
   assign ENABLE_D= (D) ? 1'b1:1'b0;
@@ -13901,7 +13901,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
   assign ENABLE_D= (D) ? 1'b1:1'b0;
@@ -13974,7 +13974,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14065,7 +14065,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14156,7 +14156,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14247,7 +14247,7 @@ wire ENABLE_D;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14336,7 +14336,7 @@ supply1 xRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   not     I2 (QN, n0);
 
 wire ENABLE_SN ;
@@ -14380,7 +14380,7 @@ supply1 xRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   not     I2 (QN, n0);
 
 wire ENABLE_SN ;
@@ -14423,7 +14423,7 @@ supply1 xRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 wire ENABLE_SN ;
@@ -14467,7 +14467,7 @@ supply1 xRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
 
 wire ENABLE_SN ;
@@ -14516,7 +14516,7 @@ wire ENABLE_NOT_D;
 
   buf   XX0 (xSN,SN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14609,7 +14609,7 @@ wire ENABLE_NOT_D;
 
   buf   XX0 (xSN,SN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14702,7 +14702,7 @@ wire ENABLE_NOT_D;
 
   buf   XX0 (xSN,SN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14793,7 +14793,7 @@ output Q;
 
   buf       X0 (xRN, RN);
   buf       IC (clk, CK);
-  udp_edfft I0 (n0, D, clk, xRN, xSN, EN, NOTIFIER);
+  udp_edfft_H I0 (n0, D, clk, xRN, xSN, EN, NOTIFIER);
   buf       I1 (Q, n0);
   and       I4 (Deff, D, xRN);
 
@@ -14844,7 +14844,7 @@ output Q;
 
   buf       X0 (xRN, RN);
   buf       IC (clk, CK);
-  udp_edfft I0 (n0, D, clk, xRN, xSN, EN, NOTIFIER);
+  udp_edfft_H I0 (n0, D, clk, xRN, xSN, EN, NOTIFIER);
   buf       I1 (Q, n0);
   and       I4 (Deff, D, xRN);
 
@@ -14895,7 +14895,7 @@ output Q;
 
   buf       X0 (xRN, RN);
   buf       IC (clk, CK);
-  udp_edfft I0 (n0, D, clk, xRN, xSN, EN, NOTIFIER);
+  udp_edfft_H I0 (n0, D, clk, xRN, xSN, EN, NOTIFIER);
   buf       I1 (Q, n0);
   and       I4 (Deff, D, xRN);
 
@@ -14946,7 +14946,7 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -14993,7 +14993,7 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -15040,7 +15040,7 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -15087,7 +15087,7 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_dff_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf     I1 (Q, n0);
   not     I2 (QN, n0);
 
@@ -15324,7 +15324,7 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
 
-  udp_edff I0 (n0, D, CK, xRN, xSN, E, NOTIFIER);
+  udp_edff_H I0 (n0, D, CK, xRN, xSN, E, NOTIFIER);
   buf     B1 (Q, n0);
 
 wire ENABLE_E ;
@@ -15357,7 +15357,7 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
 
-  udp_edff I0 (n0, D, CK, xRN, xSN, E, NOTIFIER);
+  udp_edff_H I0 (n0, D, CK, xRN, xSN, E, NOTIFIER);
   buf     B1 (Q, n0);
 
 wire ENABLE_E ;
@@ -15390,7 +15390,7 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
 
-  udp_edff I0 (n0, D, CK, xRN, xSN, E, NOTIFIER);
+  udp_edff_H I0 (n0, D, CK, xRN, xSN, E, NOTIFIER);
   buf     B1 (Q, n0);
 
 wire ENABLE_E ;
@@ -15590,7 +15590,7 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
-ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
+ipicg_latchsr_H _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
@@ -15629,7 +15629,7 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
-ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
+ipicg_latchsr_H _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
@@ -15668,7 +15668,7 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
-ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
+ipicg_latchsr_H _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
@@ -15707,7 +15707,7 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
-ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
+ipicg_latchsr_H _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
@@ -15746,7 +15746,7 @@ wire dly_CKN;
 
 reg NOTIFIER;
 
-ipicg_latchsr _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
+ipicg_latchsr_H _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
@@ -15785,7 +15785,7 @@ wire dly_CK;
 
 reg NOTIFIER;
 
-ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
+ipicg_latchnsr_H _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
    specify
@@ -15823,7 +15823,7 @@ wire dly_CK;
 
 reg NOTIFIER;
 
-ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
+ipicg_latchnsr_H _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
    specify
@@ -15861,7 +15861,7 @@ wire dly_CK;
 
 reg NOTIFIER;
 
-ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
+ipicg_latchnsr_H _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
    specify
@@ -15899,7 +15899,7 @@ wire dly_CK;
 
 reg NOTIFIER;
 
-ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
+ipicg_latchnsr_H _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
    specify
@@ -15937,7 +15937,7 @@ wire dly_CK;
 
 reg NOTIFIER;
 
-ipicg_latchnsr _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
+ipicg_latchnsr_H _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
    specify
@@ -16333,7 +16333,7 @@ wire ENABLE_D;
 
 not      I3(clk,G);
 buf      XX0 (xRN,RN);
-udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
 buf      I1 (Q, n0);
 not      I2 (QN, n0);
 
@@ -16420,7 +16420,7 @@ wire ENABLE_D;
 
 not      I3(clk,G);
 buf      XX0 (xRN,RN);
-udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
 buf      I1 (Q, n0);
 not      I2 (QN, n0);
 
@@ -16507,7 +16507,7 @@ wire ENABLE_D;
 
 not      I3(clk,G);
 buf      XX0 (xRN,RN);
-udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
 buf      I1 (Q, n0);
 not      I2 (QN, n0);
 
@@ -16596,7 +16596,7 @@ wire ENABLE_NOT_D_AND_RN;
   buf       XX0 (xSN,SN);
   buf       XX1 (xRN,RN);
   not I3(clk,G);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -16759,7 +16759,7 @@ wire ENABLE_NOT_D_AND_RN;
   buf       XX0 (xSN,SN);
   buf       XX1 (xRN,RN);
   not I3(clk,G);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -16922,7 +16922,7 @@ wire ENABLE_NOT_D_AND_RN;
   buf       XX0 (xSN,SN);
   buf       XX1 (xRN,RN);
   not I3(clk,G);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17083,7 +17083,7 @@ wire ENABLE_NOT_D;
 
   not      I3 (clk,G);
   buf      XX0 (xSN,SN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17169,7 +17169,7 @@ wire ENABLE_NOT_D;
 
   not      I3 (clk,G);
   buf      XX0 (xSN,SN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17255,7 +17255,7 @@ wire ENABLE_NOT_D;
 
   not      I3 (clk,G);
   buf      XX0 (xSN,SN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17339,7 +17339,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   not I3(clk,G);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17389,7 +17389,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   not I3(clk,G);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17439,7 +17439,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   not I3(clk,G);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17489,7 +17489,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   not I3(clk,G);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17539,7 +17539,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   not I3(clk,G);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17591,7 +17591,7 @@ wire ENABLE_D;
 
   buf      I3 (clk,GN);
   buf       XX0 (xRN,RN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17678,7 +17678,7 @@ wire ENABLE_D;
 
   buf      I3 (clk,GN);
   buf       XX0 (xRN,RN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17765,7 +17765,7 @@ wire ENABLE_D;
 
   buf      I3 (clk,GN);
   buf       XX0 (xRN,RN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -17854,7 +17854,7 @@ wire ENABLE_NOT_D_AND_RN;
   buf      I3 (clk,GN);
   buf      XX0 (xSN,SN);
   buf      XX1 (xRN,RN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18015,7 +18015,7 @@ wire ENABLE_NOT_D_AND_RN;
   buf      I3 (clk,GN);
   buf      XX0 (xSN,SN);
   buf      XX1 (xRN,RN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18176,7 +18176,7 @@ wire ENABLE_NOT_D_AND_RN;
   buf      I3 (clk,GN);
   buf      XX0 (xSN,SN);
   buf      XX1 (xRN,RN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18336,7 +18336,7 @@ wire ENABLE_NOT_D;
 
   buf      I3 (clk,GN);
   buf      XX0 (xSN,SN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18424,7 +18424,7 @@ wire ENABLE_NOT_D;
 
   buf      I3 (clk,GN);
   buf      XX0 (xSN,SN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18512,7 +18512,7 @@ wire ENABLE_NOT_D;
 
   buf      I3 (clk,GN);
   buf      XX0 (xSN,SN);
-  udp_tlat I0 (n0,D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0,D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18597,7 +18597,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   buf      I3 (clk, GN);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18648,7 +18648,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   buf      I3 (clk, GN);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18699,7 +18699,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   buf      I3 (clk, GN);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18750,7 +18750,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   buf      I3 (clk, GN);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18801,7 +18801,7 @@ output Q, QN;
   supply1 xRN, xSN;
 
   buf      I3 (clk, GN);
-  udp_tlat I0 (n0, D, clk, xRN, xSN, NOTIFIER);
+  udp_tlat_H I0 (n0, D, clk, xRN, xSN, NOTIFIER);
   buf      I1 (Q, n0);
   not      I2 (QN, n0);
 
@@ -18850,8 +18850,8 @@ input  D0, D1, S0, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_mux2 I0 (nm, D0, D1, S0);
-  udp_dff  I1 (n0, nm, clk, xRN, xSN, NOTIFIER);
+  udp_mux2_H I0 (nm, D0, D1, S0);
+  udp_dff_H  I1 (n0, nm, clk, xRN, xSN, NOTIFIER);
   buf      I5 (Q, n0);
 
 wire ENABLE_NOT_S0 ;
@@ -18895,8 +18895,8 @@ input  D0, D1, S0, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_mux2 I0 (nm, D0, D1, S0);
-  udp_dff  I1 (n0, nm, clk, xRN, xSN, NOTIFIER);
+  udp_mux2_H I0 (nm, D0, D1, S0);
+  udp_dff_H  I1 (n0, nm, clk, xRN, xSN, NOTIFIER);
   buf      I5 (Q, n0);
 
 wire ENABLE_NOT_S0 ;
@@ -18940,8 +18940,8 @@ input  D0, D1, S0, CK;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
-  udp_mux2 I0 (nm, D0, D1, S0);
-  udp_dff  I1 (n0, nm, clk, xRN, xSN, NOTIFIER);
+  udp_mux2_H I0 (nm, D0, D1, S0);
+  udp_dff_H  I1 (n0, nm, clk, xRN, xSN, NOTIFIER);
   buf      I5 (Q, n0);
 
 wire ENABLE_NOT_S0 ;
@@ -18983,7 +18983,7 @@ module MUX2X0P5H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19015,7 +19015,7 @@ module MUX2X0P7H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19047,7 +19047,7 @@ module MUX2X12H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19079,7 +19079,7 @@ module MUX2X16H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19111,7 +19111,7 @@ module MUX2X1H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19143,7 +19143,7 @@ module MUX2X1P4H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19175,7 +19175,7 @@ module MUX2X2H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19207,7 +19207,7 @@ module MUX2X3H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19239,7 +19239,7 @@ module MUX2X4H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19271,7 +19271,7 @@ module MUX2X6H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19303,7 +19303,7 @@ module MUX2X8H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(Y, A, B, S0);
+  udp_mux2_H u0(Y, A, B, S0);
 
 
 
@@ -19336,7 +19336,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -19650,7 +19650,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -19964,7 +19964,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -20278,7 +20278,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -20592,7 +20592,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -20906,7 +20906,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -21220,7 +21220,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -21534,7 +21534,7 @@ input A, B, C, D, S0, S1;
 output Y;
 
 
-   udp_mux4 (Y, A, B, C, D, S0, S1);
+   udp_mux4_H (Y, A, B, C, D, S0, S1);
 
   `ifdef functional // functional //
 
@@ -21847,7 +21847,7 @@ module MUXI2X0P5H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -21880,7 +21880,7 @@ module MUXI2X0P7H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -21913,7 +21913,7 @@ module MUXI2X1H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -21946,7 +21946,7 @@ module MUXI2X1P4H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -21979,7 +21979,7 @@ module MUXI2X2H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -22012,7 +22012,7 @@ module MUXI2X3H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -22045,7 +22045,7 @@ module MUXI2X4H7H (Y, A, B, S0);
 output Y;
 input A, B, S0;
 
-  udp_mux2 u0(YN, A, B, S0);
+  udp_mux2_H u0(YN, A, B, S0);
   not      u1(Y, YN);
 
 `ifdef functional // functional //
@@ -37907,8 +37907,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -37953,8 +37953,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -37999,8 +37999,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -38049,8 +38049,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -38258,8 +38258,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -38467,8 +38467,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -38676,8 +38676,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -38885,8 +38885,8 @@ wire ENABLE_NOT_D_AND_NOT_SE_OR_SE_AND_NOT_SI;
 
   buf   XX0 (xSN,SN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39094,8 +39094,8 @@ wire ENABLE_NOT_D_AND_NOT_SE_OR_SE_AND_NOT_SI;
 
   buf   XX0 (xSN,SN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39303,8 +39303,8 @@ wire ENABLE_NOT_D_AND_NOT_SE_OR_SE_AND_NOT_SI;
 
   buf   XX0 (xSN,SN);
   not     IC (clk,CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39510,8 +39510,8 @@ output Q, QN;
 
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39578,8 +39578,8 @@ output Q, QN;
 
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39646,8 +39646,8 @@ output Q, QN;
 
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39714,8 +39714,8 @@ output Q, QN;
 
 
   not     IC (clk, CKN);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -39780,8 +39780,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -39826,8 +39826,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -39872,8 +39872,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -39918,8 +39918,8 @@ reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_NOT_SE ;
@@ -39966,8 +39966,8 @@ supply1 dSN;
 
   buf   XX0 (xRN, RN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_RN ;
@@ -40055,8 +40055,8 @@ supply1 dSN;
 
   buf   XX0 (xRN, RN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_RN ;
@@ -40144,8 +40144,8 @@ supply1 dSN;
 
   buf   XX0 (xRN, RN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_RN ;
@@ -40235,8 +40235,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -40444,8 +40444,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -40653,8 +40653,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -40862,8 +40862,8 @@ wire ENABLE_D_AND_NOT_SE_OR_SE_AND_SI;
 
   buf   XX0 (xRN,RN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -41069,8 +41069,8 @@ supply1 dRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_SN ;
@@ -41155,8 +41155,8 @@ supply1 dRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_SN ;
@@ -41241,8 +41241,8 @@ supply1 dRN;
 
   buf   XX0 (xSN, SN);
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
 
 wire ENABLE_SN ;
@@ -41331,8 +41331,8 @@ wire ENABLE_NOT_D_AND_NOT_SE_OR_SE_AND_NOT_SI;
 
   buf   XX0 (xSN,SN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -41541,8 +41541,8 @@ wire ENABLE_NOT_D_AND_NOT_SE_OR_SE_AND_NOT_SI;
 
   buf   XX0 (xSN,SN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -41751,8 +41751,8 @@ wire ENABLE_NOT_D_AND_NOT_SE_OR_SE_AND_NOT_SI;
 
   buf   XX0 (xSN,SN);
   buf     IC (clk,CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1,D,SI,SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1,D,SI,SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -42247,8 +42247,8 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -42315,8 +42315,8 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -42383,8 +42383,8 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -42451,8 +42451,8 @@ output Q, QN;
 
 
   buf     IC (clk, CK);
-  udp_dff I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
-  udp_mux I1 (n1, D, SI, SE);
+  udp_dff_H I0 (n0, n1, clk, xRN, xSN, NOTIFIER);
+  udp_mux_H I1 (n1, D, SI, SE);
   buf     I2 (Q, n0);
   not     I3 (QN, n0);
 
@@ -44190,14 +44190,14 @@ endmodule //XOR3X6H7H
 
 
 
-// $Id: udp_mux4.v
+// $Id: udp_mux4_H.v
 //
 // verilog UDP for 4-input muxes
 //
 //
 //
 
-primitive udp_mux4 (out, in0, in1, in2, in3, sel_0, sel_1);
+primitive udp_mux4_H (out, in0, in1, in2, in3, sel_0, sel_1);
    output out;
    input  in0, in1, in2, in3, sel_0, sel_1;
 
@@ -44225,15 +44225,15 @@ primitive udp_mux4 (out, in0, in1, in2, in3, sel_0, sel_1);
    0  0  0  0  x  x  :  0;
 
    endtable
-endprimitive // udp_mux4
+endprimitive // udp_mux4_H
 
-// $Id: udp_edfft.v
+// $Id: udp_edfft_H.v
 // verilog UDP for d flip-flops with enable
 //
 //
 //
 
-primitive udp_edfft (out, in, clk, clr_, set_, en, NOTIFIER);
+primitive udp_edfft_H (out, in, clk, clr_, set_, en, NOTIFIER);
    output out;
    input  in, clk, clr_, set_, en, NOTIFIER;
    reg    out;
@@ -44267,9 +44267,9 @@ primitive udp_edfft (out, in, clk, clr_, set_, en, NOTIFIER);
    ?   ?    ?      ?     ?   *    : ?  :  x  ; // any NOTIFIER changed
 
    endtable
-endprimitive // udp_edfft
+endprimitive // udp_edfft_H
 
-primitive ipicg_latchsr (Q, D, G, SB, RB, NOTIFIER);
+primitive ipicg_latchsr_H (Q, D, G, SB, RB, NOTIFIER);
    output Q;
    input  D, G, SB, RB, NOTIFIER;
    reg    Q;
@@ -44292,9 +44292,9 @@ primitive ipicg_latchsr (Q, D, G, SB, RB, NOTIFIER);
    ?  ?   ?   ?   *   : ?  :  x ; // any notifier changed
 
    endtable
-endprimitive // ipicg_latchsr
+endprimitive // ipicg_latchsr_H
 
-primitive udp_dff (out, in, clk, clr_, set_, NOTIFIER);
+primitive udp_dff_H (out, in, clk, clr_, set_, NOTIFIER);
    output out;
    input  in, clk, clr_, set_, NOTIFIER;
    reg    out;
@@ -44318,17 +44318,17 @@ primitive udp_dff (out, in, clk, clr_, set_, NOTIFIER);
    ?  ?   ?   ?   *   : ?  :  x ; // any notifier changed
 
    endtable
-endprimitive // udp_dff
+endprimitive // udp_dff_H
 
 
-// $Id: udp_mux2.v
+// $Id: udp_mux2_H.v
 //
 // verilog UDP for 2-input muxes
 //
 //
 //
 
-primitive udp_mux2 (out, in0, in1, sel);
+primitive udp_mux2_H (out, in0, in1, sel);
    output out;
    input  in0, in1, sel;
 
@@ -44344,9 +44344,9 @@ primitive udp_mux2 (out, in0, in1, sel);
    1  1   x  :  1 ;
 
    endtable
-endprimitive // udp_mux2
+endprimitive // udp_mux2_H
 
-primitive udp_edff (out, in, clk, clr_, set_, en, NOTIFIER);
+primitive udp_edff_H (out, in, clk, clr_, set_, en, NOTIFIER);
    output out;
    input  in, clk, clr_, set_, en, NOTIFIER;
    reg    out;
@@ -44376,16 +44376,16 @@ primitive udp_edff (out, in, clk, clr_, set_, en, NOTIFIER);
    ?   ?    ?      ?     ?   *    : ?  :  x ; // any notifier changed
 
    endtable
-endprimitive // udp_edff
+endprimitive // udp_edff_H
 
-// $Id: udp_mux.v
+// $Id: udp_mux_H.v
 //
 // verilog UDP for a 2-input mux used in scan cells
 //
 //
 //
 
-primitive udp_mux (out, in, s_in, s_sel);
+primitive udp_mux_H (out, in, s_in, s_sel);
    output out;
    input  in, s_in, s_sel;
 
@@ -44401,9 +44401,9 @@ primitive udp_mux (out, in, s_in, s_sel);
    1  1   x  :  1 ;
 
    endtable
-endprimitive // udp_mux
+endprimitive // udp_mux_H
 
-primitive ipicg_latchnsr (Q, D, GB, SB, RB, NOTIFIER);
+primitive ipicg_latchnsr_H (Q, D, GB, SB, RB, NOTIFIER);
    output Q;
    input  D, GB, SB, RB, NOTIFIER;
    reg    Q;
@@ -44426,7 +44426,7 @@ primitive ipicg_latchnsr (Q, D, GB, SB, RB, NOTIFIER);
    ?  ?   ?   ?   *   : ?  :  x ; // any notifier changed
 
    endtable
-endprimitive // ipicg_latchnsr
+endprimitive // ipicg_latchnsr_H
 
 // $Id: udp_sedff.v
 //
@@ -44542,13 +44542,13 @@ endprimitive  /* udp_sedff */
 endprimitive  /* udp_sedfft */
 
 
-// $Id: udp_tlat.v
+// $Id: udp_tlat_H.v
 //
 // verilog UDP for d latches
 //
 //
 
-primitive udp_tlat (out, in, hold, clr_, set_, NOTIFIER);
+primitive udp_tlat_H (out, in, hold, clr_, set_, NOTIFIER);
    output out;
    input  in, hold, clr_, set_, NOTIFIER;
    reg    out;
@@ -44571,9 +44571,9 @@ primitive udp_tlat (out, in, hold, clr_, set_, NOTIFIER);
    ?  ?   ?   ?   *   : ?  :  x  ; // any NOTIFIER changed
 
    endtable
-endprimitive // udp_tlat
+endprimitive // udp_tlat_H
 
-primitive udp_dff_rn_pre_sn (out, in, clk, clr_, set_, NOTIFIER);
+primitive udp_dff_rn_pre_sn_H (out, in, clk, clr_, set_, NOTIFIER);
    output out;
    input  in, clk, clr_, set_, NOTIFIER;
    reg    out;
@@ -44597,4 +44597,4 @@ primitive udp_dff_rn_pre_sn (out, in, clk, clr_, set_, NOTIFIER);
    ?  ?   ?   ?   *   : ?  :  x  ; // any NOTIFIER changed
 
    endtable
-endprimitive // udp_dff_rn_pre_sn
+endprimitive // udp_dff_rn_pre_sn_H
