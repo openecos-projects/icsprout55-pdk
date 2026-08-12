@@ -44294,6 +44294,22 @@ primitive ipicg_latchsr_R (Q, D, G, SB, RB, NOTIFIER);
    endtable
 endprimitive // ipicg_latchsr_R
 
+`ifdef __VERILATOR__
+module udp_dff_R (out, in, clk, clr_, set_, NOTIFIER);
+   output out;
+   input  in, clk, clr_, set_, NOTIFIER;
+   reg    out;
+
+  always @(posedge clk or negedge clr_ or negedge set_) begin
+    if (set_ == 1'b0)
+      out <= 1'b1;
+    else if (clr_ == 1'b0)
+      out <= 1'b0;
+    else
+      out <= in;
+  end
+endmodule
+`else
 primitive udp_dff_R (out, in, clk, clr_, set_, NOTIFIER);
    output out;
    input  in, clk, clr_, set_, NOTIFIER;
@@ -44319,7 +44335,7 @@ primitive udp_dff_R (out, in, clk, clr_, set_, NOTIFIER);
 
    endtable
 endprimitive // udp_dff_R
-
+`endif
 
 // $Id: udp_mux2_R.v
 //
