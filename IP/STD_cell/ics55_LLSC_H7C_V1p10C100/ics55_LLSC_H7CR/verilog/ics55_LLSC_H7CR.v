@@ -1532,6 +1532,7 @@ endmodule //AO211X6H7R
 module AO21X0P5H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1564,6 +1565,7 @@ endmodule //AO21X0P5H7R
 module AO21X0P7H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1596,6 +1598,7 @@ endmodule //AO21X0P7H7R
 module AO21X1H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1628,6 +1631,7 @@ endmodule //AO21X1H7R
 module AO21X1P4H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1660,6 +1664,7 @@ endmodule //AO21X1P4H7R
 module AO21X2H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1692,6 +1697,7 @@ endmodule //AO21X2H7R
 module AO21X3H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1724,6 +1730,7 @@ endmodule //AO21X3H7R
 module AO21X4H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1756,6 +1763,7 @@ endmodule //AO21X4H7R
 module AO21X6H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1788,6 +1796,7 @@ endmodule //AO21X6H7R
 module AO21X8H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -1930,6 +1939,7 @@ endmodule //AO221X0P5H7R
 module AO221X0P7H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire OUT0, OUT1;
 
 
    and I0(OUT0, A0, A1);
@@ -2040,6 +2050,7 @@ endmodule //AO221X0P7H7R
 module AO221X1H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire OUT0, OUT1;
 
 
    and I0(OUT0, A0, A1);
@@ -2150,6 +2161,7 @@ endmodule //AO221X1H7R
 module AO221X1P4H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire OUT0, OUT1;
 
 
    and I0(OUT0, A0, A1);
@@ -2260,6 +2272,7 @@ endmodule //AO221X1P4H7R
 module AO221X2H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire OUT0, OUT1;
 
 
    and I0(OUT0, A0, A1);
@@ -2370,6 +2383,7 @@ endmodule //AO221X2H7R
 module AO221X3H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire OUT0, OUT1;
 
 
    and I0(OUT0, A0, A1);
@@ -2480,6 +2494,7 @@ endmodule //AO221X3H7R
 module AO221X4H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire OUT0, OUT1;
 
 
    and I0(OUT0, A0, A1);
@@ -2590,6 +2605,7 @@ endmodule //AO221X4H7R
 module AO222X0P5H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -2833,6 +2849,7 @@ endmodule //AO222X0P5H7R
 module AO222X0P7H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -3076,6 +3093,7 @@ endmodule //AO222X0P7H7R
 module AO222X1H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -3319,6 +3337,7 @@ endmodule //AO222X1H7R
 module AO222X1P4H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -3562,6 +3581,7 @@ endmodule //AO222X1P4H7R
 module AO222X2H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -3805,6 +3825,7 @@ endmodule //AO222X2H7R
 module AO222X3H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -4048,6 +4069,7 @@ endmodule //AO222X3H7R
 module AO222X4H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire OUT0, OUT1, OUT2;
 
 
    and I0(OUT0, A0, A1);
@@ -4291,6 +4313,7 @@ endmodule //AO222X4H7R
 module AO22X0P5H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4358,6 +4381,7 @@ endmodule //AO22X0P5H7R
 module AO22X0P7H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4425,6 +4449,7 @@ endmodule //AO22X0P7H7R
 module AO22X1H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4492,6 +4517,7 @@ endmodule //AO22X1H7R
 module AO22X1P4H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4559,6 +4585,7 @@ endmodule //AO22X1P4H7R
 module AO22X2H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4626,6 +4653,7 @@ endmodule //AO22X2H7R
 module AO22X3H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4693,6 +4721,7 @@ endmodule //AO22X3H7R
 module AO22X4H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4760,6 +4789,7 @@ endmodule //AO22X4H7R
 module AO22X6H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire OUT0, OUT1;
 
    and I0(OUT0, A0, A1);
    and I1(OUT1, B0, B1);
@@ -4827,6 +4857,7 @@ endmodule //AO22X6H7R
 module AO31X0P5H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -4889,6 +4920,7 @@ endmodule //AO31X0P5H7R
 module AO31X0P7H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -4951,6 +4983,7 @@ endmodule //AO31X0P7H7R
 module AO31X1H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -5013,6 +5046,7 @@ endmodule //AO31X1H7R
 module AO31X1P4H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -5075,6 +5109,7 @@ endmodule //AO31X1P4H7R
 module AO31X2H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -5137,6 +5172,7 @@ endmodule //AO31X2H7R
 module AO31X3H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -5199,6 +5235,7 @@ endmodule //AO31X3H7R
 module AO31X4H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire OUT0;
 
 
    and I0(OUT0, A0, A1, A2);
@@ -5716,6 +5753,12 @@ endmodule //AOA211X4H7R
 module AOAI211X0P5H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -5785,6 +5828,12 @@ endmodule //AOAI211X0P5H7R
 module AOAI211X0P7H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -5854,6 +5903,12 @@ endmodule //AOAI211X0P7H7R
 module AOAI211X1H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -5923,6 +5978,12 @@ endmodule //AOAI211X1H7R
 module AOAI211X1P4H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -5992,6 +6053,12 @@ endmodule //AOAI211X1P4H7R
 module AOAI211X2H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -6061,6 +6128,12 @@ endmodule //AOAI211X2H7R
 module AOAI211X3H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -6130,6 +6203,12 @@ endmodule //AOAI211X3H7R
 module AOAI211X4H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( B0_inv, B0 );
@@ -6199,6 +6278,7 @@ endmodule //AOAI211X4H7R
 module AOI211X0P5H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6237,6 +6317,7 @@ endmodule //AOI211X0P5H7R
 module AOI211X0P7H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6275,6 +6356,7 @@ endmodule //AOI211X0P7H7R
 module AOI211X1H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6313,6 +6395,7 @@ endmodule //AOI211X1H7R
 module AOI211X1P4H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6351,6 +6434,7 @@ endmodule //AOI211X1P4H7R
 module AOI211X2H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6389,6 +6473,7 @@ endmodule //AOI211X2H7R
 module AOI211X3H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6427,6 +6512,7 @@ endmodule //AOI211X3H7R
 module AOI211X4H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6465,6 +6551,7 @@ endmodule //AOI211X4H7R
 module AOI211X6H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -6503,6 +6590,7 @@ endmodule //AOI211X6H7R
 module AOI21BX0P5H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6536,6 +6624,7 @@ endmodule //AOI21BX0P5H7R
 module AOI21BX0P7H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6569,6 +6658,7 @@ endmodule //AOI21BX0P7H7R
 module AOI21BX1H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6602,6 +6692,7 @@ endmodule //AOI21BX1H7R
 module AOI21BX1P4H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6668,6 +6759,7 @@ endmodule //AOI21BX2H7R
 module AOI21BX3H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6701,6 +6793,7 @@ endmodule //AOI21BX3H7R
 module AOI21BX4H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6734,6 +6827,7 @@ endmodule //AOI21BX4H7R
 module AOI21BX6H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -6767,6 +6861,7 @@ endmodule //AOI21BX6H7R
 module AOI21X0P5H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -6803,6 +6898,7 @@ endmodule //AOI21X0P5H7R
 module AOI21X0P7H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -6839,6 +6935,7 @@ endmodule //AOI21X0P7H7R
 module AOI21X1H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -6875,6 +6972,7 @@ endmodule //AOI21X1H7R
 module AOI21X1P4H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -6911,6 +7009,7 @@ endmodule //AOI21X1P4H7R
 module AOI21X2H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -6947,6 +7046,7 @@ endmodule //AOI21X2H7R
 module AOI21X3H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -6983,6 +7083,7 @@ endmodule //AOI21X3H7R
 module AOI21X4H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -7019,6 +7120,7 @@ endmodule //AOI21X4H7R
 module AOI21X6H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -7055,6 +7157,7 @@ endmodule //AOI21X6H7R
 module AOI21X8H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire OUT0;
 
     and ET_I0(OUT0, A0, A1);
     nor ET_I1(Y, OUT0, B0);
@@ -7091,6 +7194,7 @@ endmodule //AOI21X8H7R
 module AOI221X0P5H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7156,6 +7260,7 @@ endmodule //AOI221X0P5H7R
 module AOI221X0P7H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7221,6 +7326,7 @@ endmodule //AOI221X0P7H7R
 module AOI221X1H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7286,6 +7392,7 @@ endmodule //AOI221X1H7R
 module AOI221X1P4H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7351,6 +7458,7 @@ endmodule //AOI221X1P4H7R
 module AOI221X2H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7416,6 +7524,7 @@ endmodule //AOI221X2H7R
 module AOI221X3H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7481,6 +7590,7 @@ endmodule //AOI221X3H7R
 module AOI221X4H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -7546,6 +7656,7 @@ endmodule //AOI221X4H7R
 module AOI222X0P5H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -7678,6 +7789,7 @@ endmodule //AOI222X0P5H7R
 module AOI222X0P7H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -7810,6 +7922,7 @@ endmodule //AOI222X0P7H7R
 module AOI222X1H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -7942,6 +8055,7 @@ endmodule //AOI222X1H7R
 module AOI222X1P4H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -8074,6 +8188,7 @@ endmodule //AOI222X1P4H7R
 module AOI222X2H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -8206,6 +8321,7 @@ endmodule //AOI222X2H7R
 module AOI222X3H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -8338,6 +8454,7 @@ endmodule //AOI222X3H7R
 module AOI222X4H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB, outC;
 
 
 
@@ -8470,6 +8587,7 @@ endmodule //AOI222X4H7R
 module AOI22X0P5H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8517,6 +8635,7 @@ endmodule //AOI22X0P5H7R
 module AOI22X0P7H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8564,6 +8683,7 @@ endmodule //AOI22X0P7H7R
 module AOI22X1H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8611,6 +8731,7 @@ endmodule //AOI22X1H7R
 module AOI22X1P4H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8658,6 +8779,7 @@ endmodule //AOI22X1P4H7R
 module AOI22X2H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8705,6 +8827,7 @@ endmodule //AOI22X2H7R
 module AOI22X3H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8752,6 +8875,7 @@ endmodule //AOI22X3H7R
 module AOI22X4H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8799,6 +8923,7 @@ endmodule //AOI22X4H7R
 module AOI22X6H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -8846,6 +8971,7 @@ endmodule //AOI22X6H7R
 module AOI2BB1X0P5H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -8892,6 +9018,7 @@ endmodule //AOI2BB1X0P5H7R
 module AOI2BB1X0P7H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -8938,6 +9065,7 @@ endmodule //AOI2BB1X0P7H7R
 module AOI2BB1X1H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -8984,6 +9112,7 @@ endmodule //AOI2BB1X1H7R
 module AOI2BB1X1P4H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -9030,6 +9159,7 @@ endmodule //AOI2BB1X1P4H7R
 module AOI2BB1X2H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -9076,6 +9206,7 @@ endmodule //AOI2BB1X2H7R
 module AOI2BB1X3H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -9122,6 +9253,7 @@ endmodule //AOI2BB1X3H7R
 module AOI2BB1X4H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -9168,6 +9300,7 @@ endmodule //AOI2BB1X4H7R
 module AOI2BB1X6H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire B0_bar, OUT0, OUT1;
 
 
     not I0(B0_bar, B0);
@@ -9214,6 +9347,7 @@ endmodule //AOI2BB1X6H7R
 module AOI2BB2X0P5H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9289,6 +9423,7 @@ endmodule //AOI2BB2X0P5H7R
 module AOI2BB2X0P7H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9364,6 +9499,7 @@ endmodule //AOI2BB2X0P7H7R
 module AOI2BB2X1H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9439,6 +9575,7 @@ endmodule //AOI2BB2X1H7R
 module AOI2BB2X1P4H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9514,6 +9651,7 @@ endmodule //AOI2BB2X1P4H7R
 module AOI2BB2X2H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9589,6 +9727,7 @@ endmodule //AOI2BB2X2H7R
 module AOI2BB2X3H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9664,6 +9803,7 @@ endmodule //AOI2BB2X3H7R
 module AOI2BB2X4H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9739,6 +9879,7 @@ endmodule //AOI2BB2X4H7R
 module AOI2BB2X6H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA, outB;
 
 
   nor I0 (outA, A0N, A1N);
@@ -9814,6 +9955,7 @@ endmodule //AOI2BB2X6H7R
 module AOI2XB1X0P5H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -9847,6 +9989,7 @@ endmodule //AOI2XB1X0P5H7R
 module AOI2XB1X0P7H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -9880,6 +10023,7 @@ endmodule //AOI2XB1X0P7H7R
 module AOI2XB1X1H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -9913,6 +10057,7 @@ endmodule //AOI2XB1X1H7R
 module AOI2XB1X1P4H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -9946,6 +10091,7 @@ endmodule //AOI2XB1X1P4H7R
 module AOI2XB1X2H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -9979,6 +10125,7 @@ endmodule //AOI2XB1X2H7R
 module AOI2XB1X3H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -10012,6 +10159,7 @@ endmodule //AOI2XB1X3H7R
 module AOI2XB1X4H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -10045,6 +10193,7 @@ endmodule //AOI2XB1X4H7R
 module AOI2XB1X6H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -10078,6 +10227,7 @@ endmodule //AOI2XB1X6H7R
 module AOI31X0P5H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10120,6 +10270,7 @@ endmodule //AOI31X0P5H7R
 module AOI31X0P7H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10162,6 +10313,7 @@ endmodule //AOI31X0P7H7R
 module AOI31X1H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10204,6 +10356,7 @@ endmodule //AOI31X1H7R
 module AOI31X1P4H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10246,6 +10399,7 @@ endmodule //AOI31X1P4H7R
 module AOI31X2H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10288,6 +10442,7 @@ endmodule //AOI31X2H7R
 module AOI31X3H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10330,6 +10485,7 @@ endmodule //AOI31X3H7R
 module AOI31X4H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -10372,6 +10528,7 @@ endmodule //AOI31X4H7R
 module AOI32X0P5H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10441,6 +10598,7 @@ endmodule //AOI32X0P5H7R
 module AOI32X0P7H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10510,6 +10668,7 @@ endmodule //AOI32X0P7H7R
 module AOI32X1H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10579,6 +10738,7 @@ endmodule //AOI32X1H7R
 module AOI32X1P4H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10648,6 +10808,7 @@ endmodule //AOI32X1P4H7R
 module AOI32X2H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10717,6 +10878,7 @@ endmodule //AOI32X2H7R
 module AOI32X3H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10786,6 +10948,7 @@ endmodule //AOI32X3H7R
 module AOI32X4H7R (Y, A0, A1, A2, B0, B1);
 output Y;
 input A0, A1, A2, B0, B1;
+wire outA, outB;
 
 
 
@@ -10855,6 +11018,7 @@ endmodule //AOI32X4H7R
 module AOI33X0P5H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -11050,6 +11214,7 @@ endmodule //AOI33X0P5H7R
 module AOI33X0P7H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -11245,6 +11410,7 @@ endmodule //AOI33X0P7H7R
 module AOI33X1H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -11440,6 +11606,7 @@ endmodule //AOI33X1H7R
 module AOI33X1P4H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -11635,6 +11802,7 @@ endmodule //AOI33X1P4H7R
 module AOI33X2H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -11830,6 +11998,7 @@ endmodule //AOI33X2H7R
 module AOI33X3H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -12025,6 +12194,7 @@ endmodule //AOI33X3H7R
 module AOI33X4H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
   and I0(outA, A0, A1, A2);
@@ -12577,6 +12747,7 @@ endmodule //BUFX8H7R
 module DFFNQX1H7R (Q, CKN, D);
 output Q;
 input  D, CKN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   not      IC (clk, CKN);
@@ -12604,6 +12775,7 @@ endmodule //DFFNQX1H7R
 module DFFNQX2H7R (Q, CKN, D);
 output Q;
 input  D, CKN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   not      IC (clk, CKN);
@@ -12631,6 +12803,7 @@ endmodule //DFFNQX2H7R
 module DFFNQX3H7R (Q, CKN, D);
 output Q;
 input  D, CKN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   not      IC (clk, CKN);
@@ -12659,6 +12832,7 @@ module DFFNRX0P5H7R (D, RN, CKN, Q, QN);
   input D, RN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -12752,6 +12926,7 @@ module DFFNRX1H7R (D, RN, CKN, Q, QN);
   input D, RN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -12845,6 +13020,7 @@ module DFFNRX2H7R (D, RN, CKN, Q, QN);
   input D, RN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -12938,6 +13114,7 @@ module DFFNRX4H7R (D, RN, CKN, Q, QN);
   input D, RN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -13032,6 +13209,7 @@ module DFFNSX0P5H7R (D, SN, CKN, Q, QN);
   input D, SN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -13124,6 +13302,7 @@ module DFFNSX1H7R (D, SN, CKN, Q, QN);
   input D, SN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -13216,6 +13395,7 @@ module DFFNSX2H7R (D, SN, CKN, Q, QN);
   input D, SN, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -13309,6 +13489,7 @@ input CKN, D;
 output Q, QN;
 
   reg NOTIFIER;
+  wire clk, n0;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
@@ -13356,6 +13537,7 @@ input CKN, D;
 output Q, QN;
 
   reg NOTIFIER;
+  wire clk, n0;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
@@ -13403,6 +13585,7 @@ input CKN, D;
 output Q, QN;
 
   reg NOTIFIER;
+  wire clk, n0;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
@@ -13450,6 +13633,7 @@ input CKN, D;
 output Q, QN;
 
   reg NOTIFIER;
+  wire clk, n0;
   supply1 xSN,xRN;
 
   not     IC (clk, CKN);
@@ -13495,6 +13679,7 @@ endmodule //DFFNX3H7R
 module DFFQX0P5H7R (Q, CK, D);
 output Q;
 input  D, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -13522,6 +13707,7 @@ endmodule //DFFQX0P5H7R
 module DFFQX1H7R (Q, CK, D);
 output Q;
 input  D, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -13549,6 +13735,7 @@ endmodule //DFFQX1H7R
 module DFFQX2H7R (Q, CK, D);
 output Q;
 input  D, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -13576,6 +13763,7 @@ endmodule //DFFQX2H7R
 module DFFQX3H7R (Q, CK, D);
 output Q;
 input  D, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -13604,6 +13792,7 @@ module DFFRQNX1H7R (D, RN, CK, QN);
   input D, RN, CK;
 
   output QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -13676,6 +13865,7 @@ module DFFRQNX2H7R (D, RN, CK, QN);
   input D, RN, CK;
 
   output QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -13748,6 +13938,7 @@ module DFFRQX0P5H7R (D, RN, CK, Q);
   input D, RN, CK;
 
   output Q;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -13821,6 +14012,7 @@ module DFFRQX1H7R (D, RN, CK, Q);
   input D, RN, CK;
 
   output Q;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -13894,6 +14086,7 @@ module DFFRQX2H7R (D, RN, CK, Q);
   input D, RN, CK;
 
   output Q;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -13967,6 +14160,7 @@ module DFFRX0P5H7R (D, RN, CK, Q, QN);
   input D, RN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -14058,6 +14252,7 @@ module DFFRX1H7R (D, RN, CK, Q, QN);
   input D, RN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -14149,6 +14344,7 @@ module DFFRX2H7R (D, RN, CK, Q, QN);
   input D, RN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -14240,6 +14436,7 @@ module DFFRX3H7R (D, RN, CK, Q, QN);
   input D, RN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -14331,6 +14528,7 @@ endmodule //DFFRX3H7R
 module DFFSQNX1H7R (QN, CK, D, SN);
 output QN;
 input  D, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 
@@ -14375,6 +14573,7 @@ endmodule //DFFSQNX1H7R
 module DFFSQNX2H7R (QN, CK, D, SN);
 output QN;
 input  D, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 
@@ -14418,6 +14617,7 @@ endmodule //DFFSQNX2H7R
 module DFFSQX1H7R (Q, CK, D, SN);
 output Q;
 input  D, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 
@@ -14462,6 +14662,7 @@ endmodule //DFFSQX1H7R
 module DFFSQX2H7R (Q, CK, D, SN);
 output Q;
 input  D, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 
@@ -14509,6 +14710,7 @@ module DFFSX0P5H7R (D, SN, CK, Q, QN);
   input D, SN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -14602,6 +14804,7 @@ module DFFSX1H7R (D, SN, CK, Q, QN);
   input D, SN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -14695,6 +14898,7 @@ module DFFSX2H7R (D, SN, CK, Q, QN);
   input D, SN, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -14788,6 +14992,7 @@ module DFFTRQX0P5H7R ( Q, CK, D, RN);
 input CK, D, RN;
 output Q;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN, EN;
 
@@ -14839,6 +15044,7 @@ module DFFTRQX1H7R ( Q, CK, D, RN);
 input CK, D, RN;
 output Q;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN, EN;
 
@@ -14890,6 +15096,7 @@ module DFFTRQX2H7R ( Q, CK, D, RN);
 input CK, D, RN;
 output Q;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN, EN;
 
@@ -14941,6 +15148,7 @@ module DFFX0P5H7R ( Q, QN, CK, D);
 input CK, D;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN,xRN;
 
@@ -14988,6 +15196,7 @@ module DFFX1H7R ( Q, QN, CK, D);
 input CK, D;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN,xRN;
 
@@ -15035,6 +15244,7 @@ module DFFX2H7R ( Q, QN, CK, D);
 input CK, D;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN,xRN;
 
@@ -15082,6 +15292,7 @@ module DFFX3H7R ( Q, QN, CK, D);
 input CK, D;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN,xRN;
 
@@ -15320,6 +15531,7 @@ endmodule //DLY4X6H7R
 module EDFFQX0P5H7R (Q, CK, D, E);
 output Q;
 input D, CK, E;
+wire n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -15353,6 +15565,7 @@ endmodule //EDFFQX0P5H7R
 module EDFFQX1H7R (Q, CK, D, E);
 output Q;
 input D, CK, E;
+wire n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -15386,6 +15599,7 @@ endmodule //EDFFQX1H7R
 module EDFFQX2H7R (Q, CK, D, E);
 output Q;
 input D, CK, E;
+wire n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -15419,6 +15633,7 @@ endmodule //EDFFQX2H7R
 module ESDFFQX0P5H7R (Q, CK, D, E, SE, SI);
 output Q;
 input D, CK, E, SE, SI;
+wire n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -15474,6 +15689,7 @@ endmodule //ESDFFQX0P5H7R
 module ESDFFQX1H7R (Q, CK, D, E, SE, SI);
 output Q;
 input D, CK, E, SE, SI;
+wire n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -15529,6 +15745,7 @@ endmodule //ESDFFQX1H7R
 module ESDFFQX2H7R (Q, CK, D, E, SE, SI);
 output Q;
 input D, CK, E, SE, SI;
+wire n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -15587,6 +15804,8 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CKN;
+wire P0001;
+wire _n1;
 
 reg NOTIFIER;
 
@@ -15594,6 +15813,10 @@ ipicg_latchsr_R _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CKN, CKN);
+`else // functional //
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15613,6 +15836,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX0P5H7R
 `endcelldefine
@@ -15633,6 +15857,10 @@ ipicg_latchsr_R _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CKN, CKN);
+`else // functional //
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15652,6 +15880,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX1H7R
 `endcelldefine
@@ -15665,6 +15894,8 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CKN;
+wire P0001;
+wire _n1;
 
 reg NOTIFIER;
 
@@ -15672,6 +15903,10 @@ ipicg_latchsr_R _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CKN, CKN);
+`else // functional //
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15691,6 +15926,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX2H7R
 `endcelldefine
@@ -15704,6 +15940,8 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CKN;
+wire P0001;
+wire _n1;
 
 reg NOTIFIER;
 
@@ -15711,6 +15949,10 @@ ipicg_latchsr_R _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CKN, CKN);
+`else // functional //
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15730,6 +15972,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX3H7R
 `endcelldefine
@@ -15743,6 +15986,8 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CKN;
+wire P0001;
+wire _n1;
 
 reg NOTIFIER;
 
@@ -15750,6 +15995,10 @@ ipicg_latchsr_R _i0 (P0001,dly_E,dly_CKN,1'b1,1'b1,NOTIFIER);
 not _i1 (_n1,P0001);
 or _i2 (ECK,_n1,dly_CKN);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CKN, CKN);
+`else // functional //
    specify
      specparam
      tplh$CKN$ECK   = 1.0,
@@ -15769,6 +16018,7 @@ or _i2 (ECK,_n1,dly_CKN);
      $period(posedge CKN, tperiod$CKN, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGNX4H7R
 `endcelldefine
@@ -15782,12 +16032,17 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CK;
+wire P0001;
 
 reg NOTIFIER;
 
 ipicg_latchnsr_R _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CK, CK);
+`else // functional //
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15807,6 +16062,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX0P5H7R
 `endcelldefine
@@ -15820,12 +16076,17 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CK;
+wire P0001;
 
 reg NOTIFIER;
 
 ipicg_latchnsr_R _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CK, CK);
+`else // functional //
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15845,6 +16106,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX1H7R
 `endcelldefine
@@ -15858,12 +16120,17 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CK;
+wire P0001;
 
 reg NOTIFIER;
 
 ipicg_latchnsr_R _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CK, CK);
+`else // functional //
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15883,6 +16150,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX2H7R
 `endcelldefine
@@ -15896,12 +16164,17 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CK;
+wire P0001;
 
 reg NOTIFIER;
 
 ipicg_latchnsr_R _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CK, CK);
+`else // functional //
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15921,6 +16194,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX3H7R
 `endcelldefine
@@ -15934,12 +16208,17 @@ input  E;
 output ECK;
 wire dly_E;
 wire dly_CK;
+wire P0001;
 
 reg NOTIFIER;
 
 ipicg_latchnsr_R _i0 (P0001,dly_E,dly_CK,1'b1,1'b1,NOTIFIER);
 and _i1 (ECK,dly_CK,P0001);
 
+`ifdef functional // functional //
+buf (dly_E, E);
+buf (dly_CK, CK);
+`else // functional //
    specify
      specparam
      tplh$CK$ECK   = 1.0,
@@ -15959,6 +16238,7 @@ and _i1 (ECK,dly_CK,P0001);
      $period(negedge CK, tperiod$CK, NOTIFIER);
 
    endspecify
+`endif // functional //
 
 endmodule //ICGX4H7R
 `endcelldefine
@@ -16326,6 +16606,7 @@ endmodule //INVX8H7R
 module LATHRX0P5H7R (D, RN, G, Q, QN);
   input D, RN, G;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -16413,6 +16694,7 @@ endmodule //LATHRX0P5H7R
 module LATHRX1H7R (D, RN, G, Q, QN);
   input D, RN, G;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -16500,6 +16782,7 @@ endmodule //LATHRX1H7R
 module LATHRX2H7R (D, RN, G, Q, QN);
   input D, RN, G;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -16588,6 +16871,7 @@ module LATHSRX0P5H7R (D, RN, SN, G, Q, QN);
   input D, RN, SN, G;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
 
 wire ENABLE_D_AND_SN;
@@ -16751,6 +17035,7 @@ module LATHSRX1H7R (D, RN, SN, G, Q, QN);
   input D, RN, SN, G;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
 
 wire ENABLE_D_AND_SN;
@@ -16914,6 +17199,7 @@ module LATHSRX2H7R (D, RN, SN, G, Q, QN);
   input D, RN, SN, G;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
 
 wire ENABLE_D_AND_SN;
@@ -17076,6 +17362,7 @@ endmodule //LATHSRX2H7R
 module LATHSX0P5H7R (D, SN, G, Q, QN);
   input D, SN, G;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -17162,6 +17449,7 @@ endmodule //LATHSX0P5H7R
 module LATHSX1H7R (D, SN, G, Q, QN);
   input D, SN, G;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -17248,6 +17536,7 @@ endmodule //LATHSX1H7R
 module LATHSX2H7R (D, SN, G, Q, QN);
   input D, SN, G;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -17335,6 +17624,7 @@ module LATHX0P5H7R (Q, QN, D, G);
 input D, G;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -17385,6 +17675,7 @@ module LATHX1H7R (Q, QN, D, G);
 input D, G;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -17435,6 +17726,7 @@ module LATHX2H7R (Q, QN, D, G);
 input D, G;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -17485,6 +17777,7 @@ module LATHX3H7R (Q, QN, D, G);
 input D, G;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -17535,6 +17828,7 @@ module LATHX4H7R (Q, QN, D, G);
 input D, G;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -17584,6 +17878,7 @@ endmodule //LATHX4H7R
 module LATLRX0P5H7R (D, RN, GN, Q, QN);
   input D, RN, GN;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -17671,6 +17966,7 @@ endmodule //LATLRX0P5H7R
 module LATLRX1H7R (D, RN, GN, Q, QN);
   input D, RN, GN;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -17758,6 +18054,7 @@ endmodule //LATLRX1H7R
 module LATLRX2H7R (D, RN, GN, Q, QN);
   input D, RN, GN;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -17846,6 +18143,7 @@ module LATLSRX0P5H7R (D, RN, SN, GN, Q, QN);
   input D, RN, SN, GN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
 
 wire ENABLE_D_AND_SN;
@@ -18007,6 +18305,7 @@ module LATLSRX1H7R (D, RN, SN, GN, Q, QN);
   input D, RN, SN, GN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
 
 wire ENABLE_D_AND_SN;
@@ -18168,6 +18467,7 @@ module LATLSRX2H7R (D, RN, SN, GN, Q, QN);
   input D, RN, SN, GN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
 
 wire ENABLE_D_AND_SN;
@@ -18328,6 +18628,7 @@ endmodule //LATLSRX2H7R
 module LATLSX0P5H7R (D, SN, GN, Q, QN);
   input D, SN, GN;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -18416,6 +18717,7 @@ endmodule //LATLSX0P5H7R
 module LATLSX1H7R (D, SN, GN, Q, QN);
   input D, SN, GN;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -18504,6 +18806,7 @@ endmodule //LATLSX1H7R
 module LATLSX2H7R (D, SN, GN, Q, QN);
   input D, SN, GN;
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -18593,6 +18896,7 @@ module LATLX0P5H7R (Q, QN, D, GN);
 input D, GN;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -18644,6 +18948,7 @@ module LATLX1H7R (Q, QN, D, GN);
 input D, GN;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -18695,6 +19000,7 @@ module LATLX2H7R (Q, QN, D, GN);
 input D, GN;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -18746,6 +19052,7 @@ module LATLX3H7R (Q, QN, D, GN);
 input D, GN;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -18797,6 +19104,7 @@ module LATLX4H7R (Q, QN, D, GN);
 input D, GN;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -18847,6 +19155,7 @@ endmodule //LATLX4H7R
 module MDFFQX0P5H7R (Q, CK, D0, D1, S0);
 output Q;
 input  D0, D1, S0, CK;
+wire clk;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -18892,6 +19201,7 @@ endmodule //MDFFQX0P5H7R
 module MDFFQX1H7R (Q, CK, D0, D1, S0);
 output Q;
 input  D0, D1, S0, CK;
+wire clk;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -18937,6 +19247,7 @@ endmodule //MDFFQX1H7R
 module MDFFQX2H7R (Q, CK, D0, D1, S0);
 output Q;
 input  D0, D1, S0, CK;
+wire clk;
 reg NOTIFIER;
 supply1 xSN,xRN;
   buf     IC (clk, CK);
@@ -22077,6 +22388,7 @@ endmodule //MUXI2X4H7R
 module NAND2BX0P5H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22101,6 +22413,7 @@ endmodule //NAND2BX0P5H7R
 module NAND2BX0P7H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22125,6 +22438,7 @@ endmodule //NAND2BX0P7H7R
 module NAND2BX12H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22149,6 +22463,7 @@ endmodule //NAND2BX12H7R
 module NAND2BX16H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22173,6 +22488,7 @@ endmodule //NAND2BX16H7R
 module NAND2BX1H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22197,6 +22513,7 @@ endmodule //NAND2BX1H7R
 module NAND2BX1P4H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22221,6 +22538,7 @@ endmodule //NAND2BX1P4H7R
 module NAND2BX2H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22245,6 +22563,7 @@ endmodule //NAND2BX2H7R
 module NAND2BX3H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22269,6 +22588,7 @@ endmodule //NAND2BX3H7R
 module NAND2BX4H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22293,6 +22613,7 @@ endmodule //NAND2BX4H7R
 module NAND2BX6H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22317,6 +22638,7 @@ endmodule //NAND2BX6H7R
 module NAND2BX8H7R (Y, AN, B);
 output Y;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B);
@@ -22914,6 +23236,7 @@ endmodule //NAND3BBX6H7R
 module NAND3BX0P5H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -22940,6 +23263,7 @@ endmodule //NAND3BX0P5H7R
 module NAND3BX0P7H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -22966,6 +23290,7 @@ endmodule //NAND3BX0P7H7R
 module NAND3BX1H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -22992,6 +23317,7 @@ endmodule //NAND3BX1H7R
 module NAND3BX1P4H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -23018,6 +23344,7 @@ endmodule //NAND3BX1P4H7R
 module NAND3BX2H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -23044,6 +23371,7 @@ endmodule //NAND3BX2H7R
 module NAND3BX3H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -23070,6 +23398,7 @@ endmodule //NAND3BX3H7R
 module NAND3BX4H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -23096,6 +23425,7 @@ endmodule //NAND3BX4H7R
 module NAND3BX6H7R (Y, AN, B, C);
 output Y;
 input AN, B, C;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C);
@@ -23707,6 +24037,7 @@ endmodule //NAND4BBX6H7R
 module NAND4BX0P5H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23735,6 +24066,7 @@ endmodule //NAND4BX0P5H7R
 module NAND4BX0P7H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23763,6 +24095,7 @@ endmodule //NAND4BX0P7H7R
 module NAND4BX1H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23791,6 +24124,7 @@ endmodule //NAND4BX1H7R
 module NAND4BX1P4H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23819,6 +24153,7 @@ endmodule //NAND4BX1P4H7R
 module NAND4BX2H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23847,6 +24182,7 @@ endmodule //NAND4BX2H7R
 module NAND4BX3H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23875,6 +24211,7 @@ endmodule //NAND4BX3H7R
 module NAND4BX4H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -23903,6 +24240,7 @@ endmodule //NAND4BX4H7R
 module NAND4BX6H7R (Y, AN, B, C, D);
 output Y;
 input AN, B, C, D;
+wire Ax;
 
   not (Ax, AN);
   nand (Y, Ax, B, C, D);
@@ -24147,6 +24485,7 @@ endmodule //NAND4X6H7R
 module NOR2BX0P5H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24171,6 +24510,7 @@ endmodule //NOR2BX0P5H7R
 module NOR2BX0P7H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24195,6 +24535,7 @@ endmodule //NOR2BX0P7H7R
 module NOR2BX12H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24219,6 +24560,7 @@ endmodule //NOR2BX12H7R
 module NOR2BX16H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24243,6 +24585,7 @@ endmodule //NOR2BX16H7R
 module NOR2BX1H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24267,6 +24610,7 @@ endmodule //NOR2BX1H7R
 module NOR2BX1P4H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24291,6 +24635,7 @@ endmodule //NOR2BX1P4H7R
 module NOR2BX2H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24315,6 +24660,7 @@ endmodule //NOR2BX2H7R
 module NOR2BX3H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24339,6 +24685,7 @@ endmodule //NOR2BX3H7R
 module NOR2BX4H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24363,6 +24710,7 @@ endmodule //NOR2BX4H7R
 module NOR2BX6H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24387,6 +24735,7 @@ endmodule //NOR2BX6H7R
 module NOR2BX8H7R (Z, AN, B);
 output Z;
 input AN, B;
+wire Ax;
 
   not (Ax, AN);
   nor (Z, Ax, B);
@@ -24675,6 +25024,7 @@ endmodule //NOR2X8H7R
 module NOR3BX0P5H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -24710,6 +25060,7 @@ endmodule //NOR3BX0P5H7R
 module NOR3BX0P7H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -24745,6 +25096,7 @@ endmodule //NOR3BX0P7H7R
 module NOR3BX1H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -24780,6 +25132,7 @@ endmodule //NOR3BX1H7R
 module NOR3BX1P4H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -24850,6 +25203,7 @@ endmodule //NOR3BX2H7R
 module NOR3BX3H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -24885,6 +25239,7 @@ endmodule //NOR3BX3H7R
 module NOR3BX4H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -24920,6 +25275,7 @@ endmodule //NOR3BX4H7R
 module NOR3BX6H7R ( Y, AN, B, C);
 input AN, B, C;
 output Y;
+wire AN_bar;
 
 
    not I0(AN_bar, AN);
@@ -25180,11 +25536,14 @@ endmodule //NOR3X8H7R
 module NOR4BBX0P5H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25203,6 +25562,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX0P5H7R
 `endcelldefine
@@ -25213,11 +25573,14 @@ endmodule //NOR4BBX0P5H7R
 module NOR4BBX0P7H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25236,6 +25599,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX0P7H7R
 `endcelldefine
@@ -25246,11 +25610,14 @@ endmodule //NOR4BBX0P7H7R
 module NOR4BBX1H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25269,6 +25636,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX1H7R
 `endcelldefine
@@ -25279,11 +25647,14 @@ endmodule //NOR4BBX1H7R
 module NOR4BBX1P4H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25302,6 +25673,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX1P4H7R
 `endcelldefine
@@ -25312,11 +25684,14 @@ endmodule //NOR4BBX1P4H7R
 module NOR4BBX2H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25335,6 +25710,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX2H7R
 `endcelldefine
@@ -25345,11 +25721,14 @@ endmodule //NOR4BBX2H7R
 module NOR4BBX3H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25368,6 +25747,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX3H7R
 `endcelldefine
@@ -25378,11 +25758,14 @@ endmodule //NOR4BBX3H7R
 module NOR4BBX4H7R (AN, BN, C, D, Y);
 output Y;
 input AN, BN, C, D;
+wire Ax, Bx;
 
   not (Bx, BN);
   not (Ax, AN);
   nor (Y, Ax, Bx, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25401,6 +25784,7 @@ input AN, BN, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BBX4H7R
 `endcelldefine
@@ -25411,9 +25795,12 @@ endmodule //NOR4BBX4H7R
 module NOR4BX0P5H7R (AN, B, C, D, Y);
 output Y;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25432,6 +25819,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX0P5H7R
 `endcelldefine
@@ -25442,9 +25830,12 @@ endmodule //NOR4BX0P5H7R
 module NOR4BX0P7H7R (AN, B, C, D, Y);
 output Y;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25463,6 +25854,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX0P7H7R
 `endcelldefine
@@ -25473,9 +25865,12 @@ endmodule //NOR4BX0P7H7R
 module NOR4BX1H7R (AN, B, C, D, Y);
 output Y;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25494,6 +25889,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX1H7R
 `endcelldefine
@@ -25504,9 +25900,12 @@ endmodule //NOR4BX1H7R
 module NOR4BX1P4H7R (AN, B, C, D, Z);
 output Z;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Z, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25525,6 +25924,7 @@ input AN, B, C, D;
     (C *> Z) = (tplh$C$Z, tphl$C$Z);
     (D *> Z) = (tplh$D$Z, tphl$D$Z);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX1P4H7R
 `endcelldefine
@@ -25535,9 +25935,12 @@ endmodule //NOR4BX1P4H7R
 module NOR4BX2H7R (AN, B, C, D, Y);
 output Y;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25556,6 +25959,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX2H7R
 `endcelldefine
@@ -25566,9 +25970,12 @@ endmodule //NOR4BX2H7R
 module NOR4BX3H7R (AN, B, C, D, Y);
 output Y;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25587,6 +25994,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX3H7R
 `endcelldefine
@@ -25597,9 +26005,12 @@ endmodule //NOR4BX3H7R
 module NOR4BX4H7R (AN, B, C, D, Y);
 output Y;
 input AN, B, C, D;
+wire Ax;
   not (Ax, AN);
   nor (Y, Ax, B, C, D);
 
+`ifdef functional // functional //
+`else // functional //
   specify
     // delay parameters
     specparam
@@ -25618,6 +26029,7 @@ input AN, B, C, D;
     (C *> Y) = (tplh$C$Y, tphl$C$Y);
     (D *> Y) = (tplh$D$Y, tphl$D$Y);
   endspecify
+  `endif // functional //
 
 endmodule //NOR4BX4H7R
 `endcelldefine
@@ -25916,6 +26328,7 @@ endmodule //NOR4X6H7R
 module OA211X0P5H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -25954,6 +26367,7 @@ endmodule //OA211X0P5H7R
 module OA211X0P7H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -25992,6 +26406,7 @@ endmodule //OA211X0P7H7R
 module OA211X1H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -26030,6 +26445,7 @@ endmodule //OA211X1H7R
 module OA211X1P4H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -26068,6 +26484,7 @@ endmodule //OA211X1P4H7R
 module OA211X2H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -26106,6 +26523,7 @@ endmodule //OA211X2H7R
 module OA211X3H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -26144,6 +26562,7 @@ endmodule //OA211X3H7R
 module OA211X4H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -26182,6 +26601,7 @@ endmodule //OA211X4H7R
 module OA211X6H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -26220,6 +26640,7 @@ endmodule //OA211X6H7R
 module OA21X0P5H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26252,6 +26673,7 @@ endmodule //OA21X0P5H7R
 module OA21X0P7H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26284,6 +26706,7 @@ endmodule //OA21X0P7H7R
 module OA21X1H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26316,6 +26739,7 @@ endmodule //OA21X1H7R
 module OA21X1P4H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26348,6 +26772,7 @@ endmodule //OA21X1P4H7R
 module OA21X2H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26380,6 +26805,7 @@ endmodule //OA21X2H7R
 module OA21X3H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26412,6 +26838,7 @@ endmodule //OA21X3H7R
 module OA21X4H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26444,6 +26871,7 @@ endmodule //OA21X4H7R
 module OA21X6H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26476,6 +26904,7 @@ endmodule //OA21X6H7R
 module OA21X8H7R (Y, A0, A1, B0);
 output Y;
 input A0, A1, B0;
+wire outA;
 
 
 
@@ -26508,6 +26937,7 @@ endmodule //OA21X8H7R
 module OA221X0P5H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -26618,6 +27048,7 @@ endmodule //OA221X0P5H7R
 module OA221X0P7H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -26728,6 +27159,7 @@ endmodule //OA221X0P7H7R
 module OA221X1H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -26838,6 +27270,7 @@ endmodule //OA221X1H7R
 module OA221X1P4H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -26948,6 +27381,7 @@ endmodule //OA221X1P4H7R
 module OA221X2H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -27058,6 +27492,7 @@ endmodule //OA221X2H7R
 module OA221X3H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -27168,6 +27603,7 @@ endmodule //OA221X3H7R
 module OA221X4H7R ( Y, A0, A1, B0, B1, C0);
 input A0, A1, B0, B1, C0;
 output Y;
+wire outA, outB;
 
 
    or  I0(outA, A0, A1);
@@ -27278,6 +27714,7 @@ endmodule //OA221X4H7R
 module OA222X0P5H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -27521,6 +27958,7 @@ endmodule //OA222X0P5H7R
 module OA222X0P7H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -27764,6 +28202,7 @@ endmodule //OA222X0P7H7R
 module OA222X1H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -28007,6 +28446,7 @@ endmodule //OA222X1H7R
 module OA222X1P4H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -28250,6 +28690,7 @@ endmodule //OA222X1P4H7R
 module OA222X2H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -28493,6 +28934,7 @@ endmodule //OA222X2H7R
 module OA222X3H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -28736,6 +29178,7 @@ endmodule //OA222X3H7R
 module OA222X4H7R ( Y, A0, A1, B0, B1, C0, C1);
 input A0, A1, B0, B1, C0, C1;
 output Y;
+wire outA, outB, outC;
 
 
    or  I0(outA, A0, A1);
@@ -28979,6 +29422,7 @@ endmodule //OA222X4H7R
 module OA22X0P5H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29045,6 +29489,7 @@ endmodule //OA22X0P5H7R
 module OA22X0P7H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29111,6 +29556,7 @@ endmodule //OA22X0P7H7R
 module OA22X1H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29177,6 +29623,7 @@ endmodule //OA22X1H7R
 module OA22X1P4H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29243,6 +29690,7 @@ endmodule //OA22X1P4H7R
 module OA22X2H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29309,6 +29757,7 @@ endmodule //OA22X2H7R
 module OA22X3H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29375,6 +29824,7 @@ endmodule //OA22X3H7R
 module OA22X4H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29441,6 +29891,7 @@ endmodule //OA22X4H7R
 module OA22X6H7R ( Y, A0, A1, B0, B1);
 input A0, A1, B0, B1;
 output Y;
+wire outA, outB;
   or  I0(outA, A0, A1);
   or  I1(outB, B0, B1);
   and I2(Y, outA, outB);
@@ -29507,6 +29958,7 @@ endmodule //OA22X6H7R
 module OA31X0P5H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29570,6 +30022,7 @@ endmodule //OA31X0P5H7R
 module OA31X0P7H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29633,6 +30086,7 @@ endmodule //OA31X0P7H7R
 module OA31X1H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29696,6 +30150,7 @@ endmodule //OA31X1H7R
 module OA31X1P4H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29759,6 +30214,7 @@ endmodule //OA31X1P4H7R
 module OA31X2H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29822,6 +30278,7 @@ endmodule //OA31X2H7R
 module OA31X3H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29885,6 +30342,7 @@ endmodule //OA31X3H7R
 module OA31X4H7R ( Y, A0, A1, A2, B0);
 input A0, A1, A2, B0;
 output Y;
+wire outA;
 
 
     or  I0(outA, A0, A1, A2);
@@ -29948,6 +30406,7 @@ endmodule //OA31X4H7R
 module OAI211X0P5H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -29986,6 +30445,7 @@ endmodule //OAI211X0P5H7R
 module OAI211X0P7H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30024,6 +30484,7 @@ endmodule //OAI211X0P7H7R
 module OAI211X1H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30062,6 +30523,7 @@ endmodule //OAI211X1H7R
 module OAI211X1P4H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30100,6 +30562,7 @@ endmodule //OAI211X1P4H7R
 module OAI211X2H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30138,6 +30601,7 @@ endmodule //OAI211X2H7R
 module OAI211X3H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30176,6 +30640,7 @@ endmodule //OAI211X3H7R
 module OAI211X4H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30214,6 +30679,7 @@ endmodule //OAI211X4H7R
 module OAI211X6H7R (Y, A0, A1, B0, C0);
 output Y;
 input A0, A1, B0, C0;
+wire outA;
 
 
 
@@ -30252,6 +30718,7 @@ endmodule //OAI211X6H7R
 module OAI21BX0P5H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30285,6 +30752,7 @@ endmodule //OAI21BX0P5H7R
 module OAI21BX0P7H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30318,6 +30786,7 @@ endmodule //OAI21BX0P7H7R
 module OAI21BX1H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30351,6 +30820,7 @@ endmodule //OAI21BX1H7R
 module OAI21BX1P4H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30384,6 +30854,7 @@ endmodule //OAI21BX1P4H7R
 module OAI21BX2H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30417,6 +30888,7 @@ endmodule //OAI21BX2H7R
 module OAI21BX3H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30450,6 +30922,7 @@ endmodule //OAI21BX3H7R
 module OAI21BX4H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30483,6 +30956,7 @@ endmodule //OAI21BX4H7R
 module OAI21BX6H7R (Y, A0, A1, B0N);
 output Y;
 input A0, A1, B0N;
+wire outA, outB;
 
 
 
@@ -30516,6 +30990,7 @@ endmodule //OAI21BX6H7R
 module OAI21X0P5H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30550,6 +31025,7 @@ endmodule //OAI21X0P5H7R
 module OAI21X0P7H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30584,6 +31060,7 @@ endmodule //OAI21X0P7H7R
 module OAI21X1H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30618,6 +31095,7 @@ endmodule //OAI21X1H7R
 module OAI21X1P4H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30652,6 +31130,7 @@ endmodule //OAI21X1P4H7R
 module OAI21X2H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30686,6 +31165,7 @@ endmodule //OAI21X2H7R
 module OAI21X3H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30720,6 +31200,7 @@ endmodule //OAI21X3H7R
 module OAI21X4H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30754,6 +31235,7 @@ endmodule //OAI21X4H7R
 module OAI21X6H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30788,6 +31270,7 @@ endmodule //OAI21X6H7R
 module OAI21X8H7R (Y, A0, A1, B0);
 input A0, A1, B0;
 output Y;
+wire outA;
   or   I0(outA, A0, A1);
   nand I1(Y, outA, B0);
 
@@ -30822,6 +31305,7 @@ endmodule //OAI21X8H7R
 module OAI221X0P5H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -30887,6 +31371,7 @@ endmodule //OAI221X0P5H7R
 module OAI221X0P7H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -30952,6 +31437,7 @@ endmodule //OAI221X0P7H7R
 module OAI221X1H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -31017,6 +31503,7 @@ endmodule //OAI221X1H7R
 module OAI221X1P4H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -31082,6 +31569,7 @@ endmodule //OAI221X1P4H7R
 module OAI221X2H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -31147,6 +31635,7 @@ endmodule //OAI221X2H7R
 module OAI221X3H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -31212,6 +31701,7 @@ endmodule //OAI221X3H7R
 module OAI221X4H7R (Y, A0, A1, B0, B1, C0);
 output Y;
 input A0, A1, B0, B1, C0;
+wire outA, outB;
 
 
 
@@ -31277,6 +31767,7 @@ endmodule //OAI221X4H7R
 module OAI222X0P5H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -31409,6 +31900,7 @@ endmodule //OAI222X0P5H7R
 module OAI222X0P7H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -31541,6 +32033,7 @@ endmodule //OAI222X0P7H7R
 module OAI222X1H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -31673,6 +32166,7 @@ endmodule //OAI222X1H7R
 module OAI222X1P4H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -31805,6 +32299,7 @@ endmodule //OAI222X1P4H7R
 module OAI222X2H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -31937,6 +32432,7 @@ endmodule //OAI222X2H7R
 module OAI222X3H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -32069,6 +32565,7 @@ endmodule //OAI222X3H7R
 module OAI222X4H7R (Y, A0, A1, B0, B1, C0, C1);
 output Y;
 input A0, A1, B0, B1, C0, C1;
+wire outA, outB;
 
 
 
@@ -32201,6 +32698,7 @@ endmodule //OAI222X4H7R
 module OAI22X0P5H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32248,6 +32746,7 @@ endmodule //OAI22X0P5H7R
 module OAI22X0P7H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32295,6 +32794,7 @@ endmodule //OAI22X0P7H7R
 module OAI22X1H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32342,6 +32842,7 @@ endmodule //OAI22X1H7R
 module OAI22X1P4H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32389,6 +32890,7 @@ endmodule //OAI22X1P4H7R
 module OAI22X2H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32436,6 +32938,7 @@ endmodule //OAI22X2H7R
 module OAI22X3H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32483,6 +32986,7 @@ endmodule //OAI22X3H7R
 module OAI22X4H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32530,6 +33034,7 @@ endmodule //OAI22X4H7R
 module OAI22X6H7R (Y, A0, A1, B0, B1);
 output Y;
 input A0, A1, B0, B1;
+wire outA, outB;
 
 
 
@@ -32577,6 +33082,7 @@ endmodule //OAI22X6H7R
 module OAI2BB1X0P5H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32620,6 +33126,7 @@ endmodule //OAI2BB1X0P5H7R
 module OAI2BB1X0P7H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32663,6 +33170,7 @@ endmodule //OAI2BB1X0P7H7R
 module OAI2BB1X1H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32706,6 +33214,7 @@ endmodule //OAI2BB1X1H7R
 module OAI2BB1X1P4H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32749,6 +33258,7 @@ endmodule //OAI2BB1X1P4H7R
 module OAI2BB1X2H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32792,6 +33302,7 @@ endmodule //OAI2BB1X2H7R
 module OAI2BB1X3H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32835,6 +33346,7 @@ endmodule //OAI2BB1X3H7R
 module OAI2BB1X4H7R ( Z, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Z;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32878,6 +33390,7 @@ endmodule //OAI2BB1X4H7R
 module OAI2BB1X6H7R ( Y, A0N, A1N, B0);
 input A0N, A1N, B0;
 output Y;
+wire outA;
 
 
   nand I0(outA, A0N, A1N);
@@ -32921,6 +33434,7 @@ endmodule //OAI2BB1X6H7R
 module OAI2BB2X0P5H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -32995,6 +33509,7 @@ endmodule //OAI2BB2X0P5H7R
 module OAI2BB2X0P7H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33069,6 +33584,7 @@ endmodule //OAI2BB2X0P7H7R
 module OAI2BB2X1H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33143,6 +33659,7 @@ endmodule //OAI2BB2X1H7R
 module OAI2BB2X1P4H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33217,6 +33734,7 @@ endmodule //OAI2BB2X1P4H7R
 module OAI2BB2X2H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33291,6 +33809,7 @@ endmodule //OAI2BB2X2H7R
 module OAI2BB2X3H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33365,6 +33884,7 @@ endmodule //OAI2BB2X3H7R
 module OAI2BB2X4H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33439,6 +33959,7 @@ endmodule //OAI2BB2X4H7R
 module OAI2BB2X6H7R ( Y, A0N, A1N, B0, B1);
 input A0N, A1N, B0, B1;
 output Y;
+wire outA;
 
 
    nand I0(outA, A0N, A1N);
@@ -33513,6 +34034,7 @@ endmodule //OAI2BB2X6H7R
 module OAI2XB1X0P5H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33546,6 +34068,7 @@ endmodule //OAI2XB1X0P5H7R
 module OAI2XB1X0P7H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33579,6 +34102,7 @@ endmodule //OAI2XB1X0P7H7R
 module OAI2XB1X1H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33612,6 +34136,7 @@ endmodule //OAI2XB1X1H7R
 module OAI2XB1X1P4H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33645,6 +34170,7 @@ endmodule //OAI2XB1X1P4H7R
 module OAI2XB1X2H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33678,6 +34204,7 @@ endmodule //OAI2XB1X2H7R
 module OAI2XB1X3H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33711,6 +34238,7 @@ endmodule //OAI2XB1X3H7R
 module OAI2XB1X4H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33744,6 +34272,7 @@ endmodule //OAI2XB1X4H7R
 module OAI2XB1X6H7R (Y, A0, A1N, B0);
 output Y;
 input A0, A1N, B0;
+wire outA1, outA;
 
 
 
@@ -33777,6 +34306,7 @@ endmodule //OAI2XB1X6H7R
 module OAI31X0P5H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -33819,6 +34349,7 @@ endmodule //OAI31X0P5H7R
 module OAI31X0P7H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -33861,6 +34392,7 @@ endmodule //OAI31X0P7H7R
 module OAI31X1H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -33903,6 +34435,7 @@ endmodule //OAI31X1H7R
 module OAI31X1P4H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -33945,6 +34478,7 @@ endmodule //OAI31X1P4H7R
 module OAI31X2H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -33987,6 +34521,7 @@ endmodule //OAI31X2H7R
 module OAI31X3H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -34029,6 +34564,7 @@ endmodule //OAI31X3H7R
 module OAI31X4H7R (Y, A0, A1, A2, B0);
 output Y;
 input A0, A1, A2, B0;
+wire outA;
 
 
 
@@ -34071,6 +34607,7 @@ endmodule //OAI31X4H7R
 module OAI32X0P5H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34190,6 +34727,7 @@ endmodule //OAI32X0P5H7R
 module OAI32X0P7H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34309,6 +34847,7 @@ endmodule //OAI32X0P7H7R
 module OAI32X1H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34428,6 +34967,7 @@ endmodule //OAI32X1H7R
 module OAI32X1P4H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34547,6 +35087,7 @@ endmodule //OAI32X1P4H7R
 module OAI32X2H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34666,6 +35207,7 @@ endmodule //OAI32X2H7R
 module OAI32X3H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34785,6 +35327,7 @@ endmodule //OAI32X3H7R
 module OAI32X4H7R ( Y, A0, A1, A2, B0, B1);
 input A0, A1, A2, B0, B1;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -34904,6 +35447,7 @@ endmodule //OAI32X4H7R
 module OAI33X0P5H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -35098,6 +35642,7 @@ endmodule //OAI33X0P5H7R
 module OAI33X0P7H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -35292,6 +35837,7 @@ endmodule //OAI33X0P7H7R
 module OAI33X1H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -35486,6 +36032,7 @@ endmodule //OAI33X1H7R
 module OAI33X1P4H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -35680,6 +36227,7 @@ endmodule //OAI33X1P4H7R
 module OAI33X2H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -35874,6 +36422,7 @@ endmodule //OAI33X2H7R
 module OAI33X3H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -36068,6 +36617,7 @@ endmodule //OAI33X3H7R
 module OAI33X4H7R ( Y, A0, A1, A2, B0, B1, B2);
 input A0, A1, A2, B0, B1, B2;
 output Y;
+wire outA, outB;
 
 
    or   I0(outA, A0, A1, A2);
@@ -36717,6 +37267,12 @@ endmodule //OAO211X4H7R
 module OAOI211X0P5H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -36786,6 +37342,12 @@ endmodule //OAOI211X0P5H7R
 module OAOI211X0P7H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -36855,6 +37417,12 @@ endmodule //OAOI211X0P7H7R
 module OAOI211X1H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -36924,6 +37492,12 @@ endmodule //OAOI211X1H7R
 module OAOI211X1P4H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -36993,6 +37567,12 @@ endmodule //OAOI211X1P4H7R
 module OAOI211X2H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -37062,6 +37642,12 @@ endmodule //OAOI211X2H7R
 module OAOI211X3H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -37131,6 +37717,12 @@ endmodule //OAOI211X3H7R
 module OAOI211X4H7R ( Y, A0, A1, B0, C0);
 input A0, A1, B0, C0;
 output Y;
+wire A0_inv;
+wire B0_inv;
+wire C0_inv;
+wire A1_inv;
+wire Y_row1;
+wire Y_row2;
 
 	not ET_I0( A0_inv, A0 );
 	not ET_I1( A1_inv, A1 );
@@ -37903,6 +38495,7 @@ endmodule //OR4X6H7R
 module SDFFNQX1H7R (Q, CKN, D, SE, SI);
 output Q;
 input D, SI, SE, CKN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -37949,6 +38542,7 @@ endmodule //SDFFNQX1H7R
 module SDFFNQX2H7R (Q, CKN, D, SE, SI);
 output Q;
 input D, SI, SE, CKN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -37995,6 +38589,7 @@ endmodule //SDFFNQX2H7R
 module SDFFNQX3H7R (Q, CKN, D, SE, SI);
 output Q;
 input D, SI, SE, CKN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -38042,6 +38637,7 @@ module SDFFNRX0P5H7R (D, RN, SE, SI, CKN, Q, QN);
   input D, RN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -38251,6 +38847,7 @@ module SDFFNRX1H7R (D, RN, SE, SI, CKN, Q, QN);
   input D, RN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -38460,6 +39057,7 @@ module SDFFNRX2H7R (D, RN, SE, SI, CKN, Q, QN);
   input D, RN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -38669,6 +39267,7 @@ module SDFFNRX3H7R (D, RN, SE, SI, CKN, Q, QN);
   input D, RN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -38878,6 +39477,7 @@ module SDFFNSX0P5H7R (D, SN, SE, SI, CKN, Q, QN);
   input D, SN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -39087,6 +39687,7 @@ module SDFFNSX1H7R (D, SN, SE, SI, CKN, Q, QN);
   input D, SN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -39296,6 +39897,7 @@ module SDFFNSX2H7R (D, SN, SE, SI, CKN, Q, QN);
   input D, SN, SE, SI, CKN;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -39505,6 +40107,7 @@ module SDFFNX0P5H7R ( Q, QN, CKN, D, SE, SI);
 input CKN, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -39573,6 +40176,7 @@ module SDFFNX1H7R ( Q, QN, CKN, D, SE, SI);
 input CKN, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -39641,6 +40245,7 @@ module SDFFNX2H7R ( Q, QN, CKN, D, SE, SI);
 input CKN, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -39709,6 +40314,7 @@ module SDFFNX3H7R ( Q, QN, CKN, D, SE, SI);
 input CKN, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -39776,6 +40382,7 @@ endmodule //SDFFNX3H7R
 module SDFFQX0P5H7R (Q, CK, D, SE, SI);
 output Q;
 input D, SI, SE, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -39822,6 +40429,7 @@ endmodule //SDFFQX0P5H7R
 module SDFFQX1H7R (Q, CK, D, SE, SI);
 output Q;
 input D, SI, SE, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -39868,6 +40476,7 @@ endmodule //SDFFQX1H7R
 module SDFFQX2H7R (Q, CK, D, SE, SI);
 output Q;
 input D, SI, SE, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -39914,6 +40523,7 @@ endmodule //SDFFQX2H7R
 module SDFFQX3H7R (Q, CK, D, SE, SI);
 output Q;
 input D, SI, SE, CK;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN, xSN;
 supply1 dRN, dSN;
@@ -39960,6 +40570,7 @@ endmodule //SDFFQX3H7R
 module SDFFRQX0P5H7R (D, RN, SE, SI, CK, Q);
 output Q;
 input D, SI, SE, CK, RN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN;
 supply1 dSN;
@@ -40049,6 +40660,7 @@ endmodule //SDFFRQX0P5H7R
 module SDFFRQX1H7R (D, RN, SE, SI, CK, Q);
 output Q;
 input D, SI, SE, CK, RN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN;
 supply1 dSN;
@@ -40138,6 +40750,7 @@ endmodule //SDFFRQX1H7R
 module SDFFRQX2H7R (D, RN, SE, SI, CK, Q);
 output Q;
 input D, SI, SE, CK, RN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xSN;
 supply1 dSN;
@@ -40228,6 +40841,7 @@ module SDFFRX0P5H7R (D, RN, SE, SI, CK, Q, QN);
   input D, RN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -40437,6 +41051,7 @@ module SDFFRX1H7R (D, RN, SE, SI, CK, Q, QN);
   input D, RN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -40646,6 +41261,7 @@ module SDFFRX2H7R (D, RN, SE, SI, CK, Q, QN);
   input D, RN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -40855,6 +41471,7 @@ module SDFFRX3H7R (D, RN, SE, SI, CK, Q, QN);
   input D, RN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -41063,6 +41680,7 @@ endmodule //SDFFRX3H7R
 module SDFFSQX1H7R (Q, CK, D, SE, SI, SN);
 output Q;
 input D, SI, SE, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 supply1 dRN;
@@ -41149,6 +41767,7 @@ endmodule //SDFFSQX1H7R
 module SDFFSQX2H7R (Q, CK, D, SE, SI, SN);
 output Q;
 input D, SI, SE, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 supply1 dRN;
@@ -41235,6 +41854,7 @@ endmodule //SDFFSQX2H7R
 module SDFFSQX3H7R (Q, CK, D, SE, SI, SN);
 output Q;
 input D, SI, SE, CK, SN;
+wire clk, n0;
 reg NOTIFIER;
 supply1 xRN;
 supply1 dRN;
@@ -41324,6 +41944,7 @@ module SDFFSX0P5H7R (D, SN, SE, SI, CK, Q, QN);
   input D, SN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -41534,6 +42155,7 @@ module SDFFSX1H7R (D, SN, SE, SI, CK, Q, QN);
   input D, SN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -41744,6 +42366,7 @@ module SDFFSX2H7R (D, SN, SE, SI, CK, Q, QN);
   input D, SN, SE, SI, CK;
 
   output Q, QN;
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN;
 
@@ -41954,6 +42577,7 @@ module SDFFTRQX0P5H7R ( Q, CK, D, RN, SE, SI);
 input CK, D, RN, SE, SI;
 output Q;
 
+  wire n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -42026,6 +42650,7 @@ module SDFFTRQX1H7R ( Q, CK, D, RN, SE, SI);
 input CK, D, RN, SE, SI;
 output Q;
 
+  wire n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -42098,6 +42723,7 @@ module SDFFTRQX2H7R ( Q, CK, D, RN, SE, SI);
 input CK, D, RN, SE, SI;
 output Q;
 
+  wire n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -42170,6 +42796,7 @@ module SDFFTRQX3H7R ( Q, CK, D, RN, SE, SI);
 input CK, D, RN, SE, SI;
 output Q;
 
+  wire n0;
   reg NOTIFIER;
   supply1 xSN;
 
@@ -42242,6 +42869,7 @@ module SDFFX0P5H7R ( Q, QN, CK, D, SE, SI);
 input CK, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -42310,6 +42938,7 @@ module SDFFX1H7R ( Q, QN, CK, D, SE, SI);
 input CK, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -42378,6 +43007,7 @@ module SDFFX2H7R ( Q, QN, CK, D, SE, SI);
 input CK, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -42446,6 +43076,7 @@ module SDFFX3H7R ( Q, QN, CK, D, SE, SI);
 input CK, D, SE, SI;
 output Q, QN;
 
+  wire clk, n0;
   reg NOTIFIER;
   supply1 xRN, xSN;
 
@@ -42769,6 +43400,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42781,6 +43414,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX0P5H7R
 `endcelldefine
@@ -42794,6 +43428,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42806,6 +43442,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX0P7H7R
 `endcelldefine
@@ -42819,6 +43456,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42831,6 +43470,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX12H7R
 `endcelldefine
@@ -42844,6 +43484,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42856,6 +43498,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX16H7R
 `endcelldefine
@@ -42869,6 +43512,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42881,6 +43526,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX1H7R
 `endcelldefine
@@ -42894,6 +43540,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42906,6 +43554,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX1P4H7R
 `endcelldefine
@@ -42919,6 +43568,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42931,6 +43582,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX2H7R
 `endcelldefine
@@ -42944,6 +43596,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42956,6 +43610,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX3H7R
 `endcelldefine
@@ -42969,6 +43624,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -42981,6 +43638,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX4H7R
 `endcelldefine
@@ -42994,6 +43652,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -43006,6 +43666,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX6H7R
 `endcelldefine
@@ -43019,6 +43680,8 @@ input  A, OE;
    not (I0_out, A);
    bufif1 (Y, I0_out, OE);
 
+`ifdef functional // functional //
+`else // functional //
    specify
     specparam
       tplh$A$Y = 1.0,
@@ -43031,6 +43694,7 @@ input  A, OE;
      (OE *> Y) = (tplh$OE$Y, tphl$OE$Y);
 
    endspecify
+`endif // functional //
 
 endmodule //TINVX8H7R
 `endcelldefine
