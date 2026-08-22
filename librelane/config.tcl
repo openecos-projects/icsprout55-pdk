@@ -95,7 +95,7 @@ set ::env(CELL_VERILOG_MODELS) [list "$scl_dir/verilog/$::env(STD_CELL_LIBRARY).
 set ::env(CELL_SPICE_MODELS) [list "$scl_dir/cdl/$::env(STD_CELL_LIBRARY).cdl"]
 set ::env(CELL_CDLS) [list "$scl_dir/cdl/$::env(STD_CELL_LIBRARY).cdl"]
 
-set ::env(PAD_LEFS) "$io_dir/lef/ICSIOA_N55_3P3_1P6M1TM_ecos.lef"
+set ::env(PAD_LEFS) "$io_dir/lef/ICSIOA_N55_3P3_1P6M1TM_openpdk.lef"
 set ::env(PAD_GDS) "$io_dir/gds/ICSIOA_N55_3P3_1P6M1TM.gds"
 set ::env(PAD_VERILOG_MODELS) "$io_dir/verilog/icsIOA_N55_3P3.v"
 set ::env(PAD_SPICE_MODELS) "$io_dir/cdl/ICSIOA_N55_3P3.cdl"
