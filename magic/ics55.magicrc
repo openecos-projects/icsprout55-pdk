@@ -1,0 +1,25 @@
+puts stdout "Sourcing design .magicrc for technology ics55 ..."
+
+#set scalefac [tech lambda]
+#if {[lindex $scalefac 1] < 2} {
+#    scalegrid 1 2
+#}
+
+drc on
+
+catch {random seed}
+ext2spice scale off
+
+tech load [file dirname [file normalize [info script]]]/ics55.tech
+
+if {[tech name] != "ics55"} {quit -noprompt}
+
+snap lambda
+
+set VDD VDD
+set VSS VSS
+set VBN VSUB
+
+if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
+   set MAGTYPE mag
+}

@@ -4,6 +4,8 @@
 ORGS_NAME := openecos-projects
 REPO_NAME := icsprout55-pdk
 
+OPENPDKS_INSTALL_DIR ?= $(abspath .)/ics55
+
 PROXY_URL ?= https://gh-proxy.org/
 PROXY_USE ?= false
 
@@ -93,3 +95,66 @@ clean-dir:
 	@echo "\n[clean] delete decompressed dirs"
 	@find IP/STD_cell -depth -type d -name "liberty" -exec rm -rfv {} \; || true
 	@find IP -depth -type d -name "gds" -exec rm -rfv {} \; || true
+
+# Keep a list of the expected files that are expected from the download step
+LIBS_ICS55_LLSC_H7CH := $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_ff_cbest_1p32_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_ff_rcbest_1p08_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_ff_rcbest_1p32_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_ss_cworst_1p08_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_ss_rcworst_1p2_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_ss_rcworst_1p08_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/liberty/ics55_LLSC_H7CH_typ_tt_1p2_25_nldm.lib
+
+LIBS_ICS55_LLSC_H7CL := $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_ff_cbest_1p32_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_ff_rcbest_1p08_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_ff_rcbest_1p32_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_ss_cworst_1p08_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_ss_rcworst_1p2_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_ss_rcworst_1p08_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/liberty/ics55_LLSC_H7CL_typ_tt_1p2_25_nldm.lib
+
+LIBS_ICS55_LLSC_H7CR := $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_ff_cbest_1p32_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_ff_rcbest_1p08_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_ff_rcbest_1p32_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_ss_cworst_1p08_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_ss_rcworst_1p2_m40_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_ss_rcworst_1p08_125_nldm.lib \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/liberty/ics55_LLSC_H7CR_typ_tt_1p2_25_nldm.lib
+
+GDSS_ICS55_LLSC_H7CH := $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/gds/ics55_LLSC_H7CH.gds \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH/gds/ics55_LLSC_H7CH_M2.gds
+
+GDSS_ICS55_LLSC_H7CL := $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/gds/ics55_LLSC_H7CL_M2.gds \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL/gds/ics55_LLSC_H7CL.gds
+
+GDSS_ICS55_LLSC_H7CR := $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/gds/ics55_LLSC_H7CR.gds \
+$(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR/gds/ics55_LLSC_H7CR_M2.gds
+
+GDSS_ICS55_LLSC_H7CR := $(DECOMP_DIR_GDS_IO_P)/ICsprout_55LLULP1233_IO_251013/gds/ICSIOA_N55_3P3_1P6M1TM.gds
+
+LIBS_ALL = $(LIBS_ICS55_LLSC_H7CH) $(LIBS_ICS55_LLSC_H7CL) $(LIBS_ICS55_LLSC_H7CR)
+GDS_ALL = $(GDSS_ICS55_LLSC_H7CH) $(GDSS_ICS55_LLSC_H7CL) $(GDSS_ICS55_LLSC_H7CR) $(GDSS_ICS55_LLSC_H7CR)
+
+# The rule for auto-getting everything
+$(LIBS_ALL) $(GDS_ALL): unzip
+
+# The actual installation rule for openpdk format
+$(OPENPDKS_INSTALL_DIR)/checkpoint: $(LIBS_ALL) $(GDS_ALL)
+	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.tech
+	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref
+	cp -r $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CH $(OPENPDKS_INSTALL_DIR)/libs.tech/
+	cp -r $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CL $(OPENPDKS_INSTALL_DIR)/libs.tech/
+	cp -r $(DECOMP_DIR_LIB_P)/ics55_LLSC_H7CR $(OPENPDKS_INSTALL_DIR)/libs.tech/
+ifneq ($(DECOMP_DIR_LIB_P),$(DECOMP_DIR_GDS_STD_P))
+	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CH $(OPENPDKS_INSTALL_DIR)/libs.tech/
+	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CL $(OPENPDKS_INSTALL_DIR)/libs.tech/
+	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CR $(OPENPDKS_INSTALL_DIR)/libs.tech/
+endif
+	cp -r prtech $(OPENPDKS_INSTALL_DIR)/libs.tech/
+	touch $@
+
+openpdk: $(OPENPDKS_INSTALL_DIR)/checkpoint
+
+clean-openpdk:
+	@echo "\n[clean] delete decompressed dirs"
+	rm -rf $(OPENPDKS_INSTALL_DIR)
