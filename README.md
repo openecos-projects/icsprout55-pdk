@@ -4,8 +4,8 @@
 
 ## Todo
 
-- RAMs, DRC/LVS Rules, SPICE Models, PDN, RC, etc
-- User Guide, Tutorials, Datasheets, etc
+- RAMs, SPICE models, PDN, RC extraction, etc.
+- More user guides, tutorials, and datasheets.
 
 ## Usage
 
@@ -65,6 +65,9 @@ ICS55 is currently still in the development verification and iterative optimizat
 The ICsprout55 Open Source PDK contents:
 
 ```
+├── docs
+│   ├── quick-start_on_ICsprout_calibrelvs.pdf # Calibre LVS quick start
+│   └── ZJCX 55nm Design Rule Manual_V1.1.9.pdf
 ├── IP
 │   ├── IO
 │   │   └── ICsprout_55LLULP1233_IO_251013   # Specific IO library
@@ -101,8 +104,15 @@ The ICsprout55 Open Source PDK contents:
 │               ├── lef
 │               ├── liberty
 │               └── verilog
-└── prtech                                   # Place & Route technology files
-    └── techLEF
+├── prtech                                   # Place & Route technology files
+│   └── techLEF
+└── pv                                       # Physical-verification collateral
+    ├── DRC
+    │   ├── ICsprout_CalDRC_55LLULP1233_REV1_0_OS.ant
+    │   └── ICsprout_CalDRC_55LLULP1233_REV1_0_OS.drc
+    └── LVS
+        ├── ICsprout_CalLVS_55LLULP1233_REV1_0_OS.lvs
+        └── subckt.sp
 ```
 
 ## About
