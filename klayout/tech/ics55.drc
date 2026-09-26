@@ -1,0 +1,78 @@
+# frozen_string_literal: true
+
+require 'time'
+require 'logger'
+
+exec_start_time = Time.now
+
+# Custom formatter including timestamp and memory usage
+formatter = proc do |_severity, datetime, _progname, msg|
+  memory_usage = "#{RBA::Timer.memory_size / 1024}K"
+  "#{datetime}: Memory Usage (#{memory_usage}) : #{msg}\n"
+end
+
+# Create file logger
+file_logger = Logger.new($log)
+file_logger.formatter = formatter
+
+# Create stdout logger
+stdout_logger = Logger.new($stdout)
+stdout_logger.formatter = formatter
+
+# MultiLogger class to broadcast to multiple loggers
+class MultiLogger
+  def initialize(*targets)
+    @targets = targets
+  end
+
+  def info(msg)
+    @targets.each { |t| t.info(msg) }
+  end
+
+  def warn(msg)
+    @targets.each { |t| t.warn(msg) }
+  end
+
+  def error(msg)
+    @targets.each { |t| t.error(msg) }
+  end
+end
+
+# Use the multi-logger for your application
+logger = MultiLogger.new(stdout_logger, file_logger)
+
+if $input
+  if $topcell
+    source($input, $topcell)
+  else
+    source($input)
+  end
+end
+
+if $report
+  logger.info("ICS55 Klayout DRC Density runset output at: #{$report}")
+  report('Density DRC Run Report at', $report)
+else
+  layout_dir = Pathname.new(RBA::CellView.active.filename).parent.realpath
+  report_path = layout_dir.join('sg13g2_drc_density.lyrdb').to_s
+  logger.info("ICS55 Klayout DRC Density runset output at default location: #{report_path}")
+  report('Density DRC Run Report at', report_path)
+end
+
+def get_polygons(layer, data_type)
+  ps = polygons(layer, data_type)
+  $run_mode == 'deep' ? ps : ps.merged
+end
+
+met1 = get_polygons(81, 0)
+met1.width(0.090).output("MET1: Min Width < 0.09um")
+met1.space(0.090).output("MET1: Min Space < 0.09um")
+
+$drc_error_count = 0
+
+puts("Number of DRC errors for maximum rule set: #{$drc_error_count}")
+
+# ===================================
+exec_end_time = Time.now
+run_time = exec_end_time - exec_start_time
+logger.info("KLayout DRC run for maximum ruleSet completed in #{run_time.round(2)} seconds")
