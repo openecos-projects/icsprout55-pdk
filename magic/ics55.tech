@@ -1,0 +1,411 @@
+tech
+  ics55
+end
+
+planes
+  p1
+  p2
+  p3
+  p4
+  p5
+  p6
+  p7
+  p8
+  p9
+  p10
+  p11
+  p12
+  p13
+  p14
+  p15
+  p16
+  p17
+  p18
+  p19
+  p20
+  p21
+  p22
+  p23
+  p24
+  p25
+  p26
+  p27
+  p28
+  p29
+  p30
+  p31
+  p32
+  p33
+  p34
+  p35
+end
+
+# This part is HEAVILY modified
+# Basically, we just match the layer name with the via in the same plane, so we can form a cut
+# BUT we put the mX in a different plane, to avoid mistakenly identified as cut
+types
+  p1 l1
+  p2 nw,l2
+  p3 poly
+  p4 ct,l4,act
+  p5 np,l5
+  p6 pp,l6
+  p7 met1,via1
+  p8 met1_pin,l8
+  p9 m1
+  p10 met2,via2
+  p11 met2_pin,l11
+  p12 m2
+  p13 met3,via3
+  p14 met3_pin,l14
+  p15 m3
+  p16 met4,via4
+  p17 met4_pin,l17
+  p18 m4
+  p19 met5,t4v2,via5
+  p20 met5_pin,l20
+  p21 m5
+  p22 t4m2,rv,via6
+  p23 t4m2_pin,l23
+  p24 m6
+  p25 rdl,m7
+  p26 rdl_pin,l26
+  p27 ap,l27
+  p28 rpoly,l28
+  p29 unk_17_1,l29
+  p30 unk_18_1,l30
+  p31 unk_55_1,l31
+  p32 unk_71_1,l32
+  p33 unk_191_12,l33
+  p34 unk_81_2,l34
+  p35 bound,l35
+end
+
+# The cuts are also modified
+contact
+  ct act met1
+  via1 met1 met2
+  via2 met2 met3
+  via3 met3 met4
+  via4 met4 met5
+  t4v2 met5 t4m2
+  rv   t4m2 rdl
+
+  stackable
+end
+
+styles
+  styletype	mos
+  l1 pdiffusion
+  l2 ndiffusion
+  poly polysilicon
+  l4 implant4
+  l5 implant1
+  l6 implant2
+  m1 metal1
+  l8 metal1
+  via1 metal1 metal2 via1
+  m2 metal2
+  l11 metal2
+  via2 metal2 metal3 via2
+  m3 metal3
+  l14 metal3
+  via3 metal3 metal4 via3
+  m4 metal4
+  l17 metal4
+  via4 metal4 metal5 via4
+  m5 metal5
+  l20 metal5
+  via5 metal5 metal6 via5
+  m6 metal6
+  l23 metal6
+  via6 metal6 metal7 via6
+  m7 metal7
+  l26 metal7
+  l27 overglass
+  l28 metal8
+  l29 comment
+  l30 comment
+  l31 comment
+  l32 comment
+  l33 comment
+  l34 comment
+  l35 subcircuit
+end
+
+compose
+end
+
+connect
+end
+
+cifoutput
+  style gdsii
+  scalefactor 1 nanometers
+
+  layer act act
+    calma 2 1
+  layer nw nw
+    calma 9 1
+  layer poly poly
+    calma 41 1
+  layer ct ct
+    calma 72 1
+  layer np np
+    calma 52 1
+  layer pp pp
+    calma 53 1
+  layer met1 met1
+    calma 81 1
+  layer met1_pin met1_pin
+    calma 81 6
+  layer via1 via1
+    calma 91 1
+  layer met2 met2
+    calma 82 1
+  layer met2_pin met2_pin
+    calma 82 6
+  layer via2 via2
+    calma 92 1
+  layer met3 met3
+    calma 83 1
+  layer met3_pin met3_pin
+    calma 83 6
+  layer via3 via3
+    calma 93 1
+  layer met4 met4
+    calma 84 1
+  layer met4_pin met4_pin
+    calma 84 6
+  layer via4 via4
+    calma 94 1
+  layer met5 met5
+    calma 85 1
+  layer met5_pin met5_pin
+    calma 85 6
+  layer t4v2 t4v2
+    calma 113 1
+  layer t4m2 t4m2
+    calma 103 1
+  layer t4m2_pin t4m2_pin
+    calma 103 6
+  layer rv rv
+    calma 120 1
+  layer rdl rdl
+    calma 123 1
+  layer rdl_pin rdl_pin
+    calma 123 6
+  layer ap ap
+    calma 121 1
+  layer rpoly rpoly
+    calma 41 4
+  layer unk_17_1 unk_17_1
+    calma 17 1
+  layer unk_18_1 unk_18_1
+    calma 18 1
+  layer unk_55_1 unk_55_1
+    calma 55 1
+  layer unk_71_1 unk_71_1
+    calma 71 1
+  layer unk_191_12 unk_191_12
+    calma 191 12
+  layer bound bound
+    calma 351 12
+
+style drc
+ scalefactor 1 nanometers
+ options calma-permissive-labels
+
+style density
+ scalefactor 1 nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+style patternfill
+ scalefactor 1 nanometers
+ options calma-permissive-labels
+ gridlimit 5
+end
+
+cifinput
+  style gdsii
+  scalefactor 1 nanometers
+
+  layer l1 act
+  layer l2 nw
+  layer poly poly
+  layer l4 ct
+  layer l5 np
+  layer l6 pp
+  layer m1 met1
+  layer l8 met1_pin
+  layer via1 via1
+  layer m2 met2
+  layer l11 met2_pin
+  layer via2 via2
+  layer m3 met3
+  layer l14 met3_pin
+  layer via3 via3
+  layer m4 met4
+  layer l17 met4_pin
+  layer via4 via4
+  layer m5 met5
+  layer l20 met5_pin
+  layer via5 t4v2
+  layer m6 t4m2
+  layer l23 t4m2_pin
+  layer via6 rv
+  layer m7 rdl
+  layer l26 rdl_pin
+  layer l27 ap
+  layer l28 rpoly
+  layer l29 unk_17_1
+  layer l30 unk_18_1
+  layer l31 unk_55_1
+  layer l32 unk_71_1
+  layer l33 unk_191_12
+  layer l34 unk_81_2
+  layer l35 bound
+
+  calma act 2 1
+  calma nw 9 1
+  calma poly 41 1
+  calma ct 72 1
+  calma np 52 1
+  calma pp 53 1
+  calma met1 81 1
+  calma met1_pin 81 6
+  calma via1 91 1
+  calma met2 82 1
+  calma met2_pin 82 6
+  calma via2 92 1
+  calma met3 83 1
+  calma met3_pin 83 6
+  calma via3 93 1
+  calma met4 84 1
+  calma met4_pin 84 6
+  calma via4 94 1
+  calma met5 85 1
+  calma met5_pin 85 6
+  calma t4v2 113 1
+  calma t4m2 103 1
+  calma t4m2_pin 103 6
+  calma rv 120 1
+  calma rdl 123 1
+  calma rdl_pin 123 6
+  calma ap 121 1
+  calma rpoly 41 4
+  calma unk_17_1 17 1
+  calma unk_18_1 18 1
+  calma unk_55_1 55 1
+  calma unk_71_1 71 1
+  calma unk_191_12 191 12
+  calma unk_81_2 81 2
+  calma bound 351 12
+
+  # FIXME: Once magic supports anything more than 255
+  # for the calma layers, this will remain to be the
+  # boundary definition
+  templayer allbound act
+  or nw
+  or pp
+  or np
+  or met1
+  or met2
+  or met3
+  or met4
+  or met5
+  or t4m2
+  or rdl
+    boundary
+end
+
+drc
+  style drc variants (fast),(full),(routing)
+  scalefactor 10
+  cifstyle drc
+
+  variants (fast),(full)
+
+  width act 100 "dummy act width"
+  width poly 100 "dummy poly width"
+  width m1 100 "dummy m1 width"
+  width m2 100 "dummy m2 width"
+  width m3 100 "dummy m3 width"
+  width m4 100 "dummy m4 width"
+  width m5 100 "dummy m5 width"
+  width m6 100 "dummy m6 width"
+  width m7 100 "dummy m7 width"
+
+end
+
+extract
+  style default
+  planeorder p1 0
+  planeorder p10 1
+  planeorder p11 2
+  planeorder p12 3
+  planeorder p13 4
+  planeorder p14 5
+  planeorder p15 6
+  planeorder p16 7
+  planeorder p17 8
+  planeorder p18 9
+  planeorder p19 10
+  planeorder p2 11
+  planeorder p20 12
+  planeorder p21 13
+  planeorder p22 14
+  planeorder p23 15
+  planeorder p24 16
+  planeorder p25 17
+  planeorder p26 18
+  planeorder p27 19
+  planeorder p28 20
+  planeorder p29 21
+  planeorder p3 22
+  planeorder p30 23
+  planeorder p31 24
+  planeorder p32 25
+  planeorder p33 26
+  planeorder p4 27
+  planeorder p5 28
+  planeorder p6 29
+  planeorder p7 30
+  planeorder p8 31
+  planeorder p9 32
+  planeorder p34 33
+  planeorder p35 34
+end
+lef
+  masterslice l1 ACT
+  masterslice poly POLY
+  routing m1 MET1
+  routing m2 MET2
+  routing m3 MET3
+  routing m4 MET4
+  routing m5 MET5
+  routing m7 RDL
+  routing m6 T4M2
+  cut ct CT
+  cut via6 RV
+  cut via5 T4V2
+  cut via1 VIA1
+  cut via2 VIA2
+  cut via3 VIA3
+  cut via4 VIA4
+  obs m1 MET1
+  obs m2 MET2
+  obs m3 MET3
+  obs m4 MET4
+  obs m5 MET5
+  obs m7 RDL
+  obs m6 T4M2
+  obs poly,ct CT
+  obs m6,m7 RV
+  obs m5,m6 T4V2
+  obs m1,m2 VIA1
+  obs m2,m3 VIA2
+  obs m3,m4 VIA3
+  obs m4,m5 VIA4
+end
