@@ -1,0 +1,76 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#================================================
+#----------------- CONNECTIVITY -----------------
+#================================================
+# Calibre: CONNECT / SCONNECT statements around lines 2511 and 2791-2876,
+# TEXT LAYER / PORT LAYER statements around line 1931.
+
+logger.info('Starting connectivity setup.')
+
+#---------------- FEOL ----------------
+# CONNECT M1s npoly BY npoCT / CONNECT M1s ppoly BY ppoCT
+connect(poly_con, cts)
+# CONNECT M1s nSD BY ndfCT / pSD BY pdfCT / nTap / pTap (and the diode junctions)
+[nsd, psd, ntap, ptap, ndio_svt, pdio_svt, ndio_hvt, pdio_hvt,
+ ndio_lvt, pdio_lvt, ndio_io2, pdio_io2].each do |diff|
+  connect(diff, cts)
+end
+# Butted junctions: CONNECT nSD pTap / pSD nTap / nSD pSD / pTap nTap
+connect(nsd, ptap)
+connect(psd, ntap)
+connect(nsd, psd)
+connect(ptap, ntap)
+# Resistor terminals
+connect(ppoly, poly_con)
+connect(cts, m1)
+
+# SCONNECT nTap nWell / SCONNECT pTap pWell
+connect(ntap, nwell)
+# Outside the SUBCKTLVS islands the p-substrate is one global net: taps,
+# NMOS bulks and p-well diode anodes join it.
+connect_global(bulk, 'SUBSTRATE')
+connect_global(ptap_main, 'SUBSTRATE')
+dio_sub_anodes.each { |anode| connect_global(anode, 'SUBSTRATE') }
+# Inside an island the taps connect to the island p-well only
+connect(ptap_iso, psub_iso)
+connect(ptap_iso, cts)
+connect(ptap_main, cts)
+
+#---------------- BEOL ----------------
+# CONNECT M1s M2s BY VA1 ... CONNECT M5s M6s BY VA5 / CONNECT M6s APs BY PAS
+[[m1, va1, m2], [m2, va2, m3], [m3, va3, m4], [m4, va4, m5], [m5, va5, m6], [m6, pas, aps]].each do |bot, via, top|
+  connect(bot, via)
+  connect(via, top)
+end
+
+#---------------- Labels ----------------
+# TEXT LAYER METntext ATTACH METntext Mns / TEXT LAYER METn ATTACH METn Mns
+[[m1, 81], [m2, 82], [m3, 83], [m4, 84], [m5, 85], [m6, 103]].each do |metal, gds_layer|
+  connect(metal, labels(gds_layer, 6))
+  connect(metal, labels(gds_layer, 1))
+end
+# TEXT LAYER POLYtext / POLY ATTACH npoly, ppoly
+connect(poly_con, labels(41, 6))
+connect(poly_con, labels(41, 1))
+# TEXT LAYER ALPADtext / RDLtext / ALPAD / RDL ATTACH APs
+[122, 123].each do |gds_layer|
+  connect(aps, labels(gds_layer, 6))
+  connect(aps, labels(gds_layer, 1))
+end

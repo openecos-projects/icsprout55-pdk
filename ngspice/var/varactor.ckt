@@ -1,0 +1,154 @@
+*
+*  release version    : 1.1
+*
+*  simulation tool    : synopsys hspice version N-2017.12-SP2
+*
+* model name         :
+*   mosfet varactor  :
+*        *-------------------------------------------------------*
+*        |   mos varactor subckt   |     1.2v     |     2.5v     |
+*        |=======================================================|
+*        |        n+/nwell         | var1p2_npd_nw_lp    | var2p5_npd_nw_lp    |
+*        *-------------------------------------------------------*
+*
+* the valid temperature range is from -40c to 125c
+
+**************************
+* 55nm 1.2V MOS Varactor * 
+************************** 
+*This model is empirical model, and is provided for special customer.
+* 1=port1, 2=port2
+* Area=wwr*llr*nf
+.subckt var1p2_npd_nw_lp 1 2 lr=l wr=w nf=finger mismod_var=0 mr=1
+* 1.2v mos varactor scalable model parameters
+.param
++scalevar=0.9
++llr=lr*scalevar
++wwr=wr*scalevar
++coeff1     = 'max((-0.58111*(llr*1e6)+1.2615),1)'  
++coeff2     = 'min((0.1249*(llr*1e6)-0.0562),0)'    
++coeff_a1   = 'min(pwr(coeff1*pwr(nf,coeff2),-1),1)'
++coeff3     = 'max((-0.46*(llr*1e6)+1.207),1)'      
++coeff4     = 'min((0.1237*(llr*1e6)-0.05565),0)'   
++coeff_a2   = 'min(pwr(coeff3*pwr(nf,coeff4),-1),1)'
++coeff5     = 'max((-1.2344*(llr*1e6)+1.5555),1)'   
++coeff6     = 'min((1.3667*(llr*1e6)-0.615),0)'     
++coeff_cox1 = 'min(pwr(coeff5*pwr(nf,coeff6),-1),1)'
++Djnw_Area_rf = '(wwr+2*1.2e-7)*(llr*nf+(nf-1)*2e-7+2*2.95e-7)'
++Djnw_PJ_rf   = '(wwr+2*1.2e-7+llr*nf+(nf-1)*2e-7+2*2.95e-7)*2'
++Cgg_A2O    = '(1.7689*(llr*1e6) + 0.83457)*pwr((nf*(wwr*1e6)), (-0.060938*(llr*1e6)*(llr*1e6) + 0.13216*(llr*1e6) + 0.9187))*coeff_a2'
++Cgg_A2L    = '3.1419*pwr((wwr*1e6)*(llr*1e6)*nf,0.9552)'
++Cgg_A2_rf     = 'min(max(Cgg_A2O,cgg_A2L*0.1),cgg_A2L*1.9)'
++Cgg_A1O    = '(12.478*(llr*1e6) + 0.74314)*pwr((nf*(wwr*1e6)),(-0.0072862*(llr*1e6)*(llr*1e6) + 0.02485*(llr*1e6) + 0.98343))*coeff_a1'
++Cgg_A1L    = '13.7*pwr((wwr*1e6)*(llr*1e6)*nf,0.9937)'
++Cgg_A1_rf     = 'min(max(Cgg_A1O,cgg_A1L*0.9),cgg_A1L*1.1)'
++Cgg_x0L    = '-(-0.0214*(llr*1e6)*(llr*1e6) + 0.0636*(llr*1e6) + 0.0613)+(0.017641*log(llr*1e6) - 0.010754)'
++Cgg_x0_rf     = 'min(max(Cgg_x0L,-0.13),-0.06)'
++Cgg_dxL    = '-(( 0.0023421*(llr*1e6)*(llr*1e6) - 0.0037869*(llr*1e6) - 0.00099855)*log((wwr*1e6)*nf)+ (0.000087619*(llr*1e6) + 0.19174))'
++Cgg_dx_rf     = 'min(max(Cgg_dxL,-0.22),-0.15)'
+
+*spice equation***********
++Cgg_A2_sp    = '(((1.6782*(llr*1e6)+0.79398)*pwr((nf*(wwr*1e6)),(-0.000037202*(llr*1e6)*(llr*1e6)+0.0020378*(llr*1e6)+0.9748))))'
++Cgg_A1_sp    = '(13.021*(llr*1e6) +0.15931)*pwr((nf*(wwr*1e6)),(-0.000009953*(llr*1e6)*(llr*1e6) +  0.0005767*(llr*1e6) +0.99354))'
++Cgg_x0_sp    = '-(-0.00006*(llr*1e6)*(llr*1e6) + 0.0028*(llr*1e6) + 0.1052)-0.01'
++Cgg_dx_sp    = '-(( 0.0000071456*(llr*1e6)*(llr*1e6)-0.00030298*(llr*1e6)-0.0020931)*(log((wwr*1e6)*nf)/log(2.71828))+ (0.0000016102*(llr*1e6)+0.19184))'
+
+*+Cgg_A2    ='Cgg_A2_rf*(llr<=1.35e-6) + Cgg_A2_sp*(llr>1.35e-6)'
+*+Cgg_A1    ='Cgg_A1_rf*(llr<=1.35e-6) + Cgg_A1_sp*(llr>1.35e-6)'
+*+Cgg_x0    ='Cgg_x0_rf*(llr<=1.35e-6) + Cgg_x0_sp*(llr>1.35e-6)'
+*+Cgg_dx    ='Cgg_dx_rf*(llr<=1.35e-6) + Cgg_dx_sp*(llr>1.35e-6)'
+
+
++A2_rf_l=0  A2_rf_w = 2.02E-7 A2_rf_p=0  A2_rf = 0.745
++A2_sp_l = 1.4E-8   A2_sp_w = 5.1E-8  A2_sp_p=0  A2_sp = 0.8386
++A1_rf_l=0  A1_rf_w = 5.25E-8 A1_rf_p=0 A1_rf = 0.978
++A1_sp_l = 2.7E-8  A1_sp_w = -1.0E-9 A1_sp_p=0  A1_sp = 1.0174
++x0_rf_l=0  x0_rf_w = -1.0E-8 x0_rf_p=0 x0_rf = 1.248
++x0_sp_l = 4.0E-7 x0_sp_w = 3.0E-8 x0_sp_p = 0       x0_sp = 0.91
++dx_rf_l=0  dx_rf_w=0  dx_rf_p=0 dx_rf = 1.0
++dx_sp_l=0  dx_sp_w=0  dx_sp_p=0 dx_sp=1
+
++Cgg_A2    ='(A2_rf_l/llr+A2_rf_w/wwr+A2_rf_p/wwr/llr+A2_rf)*Cgg_A2_rf*(llr<=1.35e-6) + (A2_sp_l/llr+A2_sp_w/wwr+A2_sp_p/wwr/llr+A2_sp)*Cgg_A2_sp*(llr>1.35e-6)'
++Cgg_A1    ='(A1_rf_l/llr+A1_rf_w/wwr+A1_rf_p/wwr/llr+A1_rf)*Cgg_A1_rf*(llr<=1.35e-6) + (A1_sp_l/llr+A1_sp_w/wwr+A1_sp_p/wwr/llr+A1_sp)*Cgg_A1_sp*(llr>1.35e-6)'
++Cgg_x0    ='(x0_rf_l/llr+x0_rf_w/wwr+x0_rf_p/wwr/llr+x0_rf)*Cgg_x0_rf*(llr<=1.35e-6) +(x0_sp_l/llr+x0_sp_w/wwr+x0_sp_p/wwr/llr+x0_sp)*Cgg_x0_sp*(llr>1.35e-6)'
++Cgg_dx    ='(dx_rf_l/llr+dx_rf_w/wwr+dx_rf_p/wwr/llr+dx_rf)*Cgg_dx_rf*(llr<=1.35e-6) + (dx_sp_l/llr+dx_sp_w/wwr+dx_sp_p/wwr/llr+dx_sp)*Cgg_dx_sp*(llr>1.35e-6)'
+
+****mismatch*******
++dcgg_var1p2_npd_nw_lpmis = 'mismod_var*sigma_mis_var*geo_var'
++geo_var = 'ac0_var1p2_npd_nw_lp/(wr*lr*mr*nf)+bc0_var1p2_npd_nw_lp/sqrt(wr*lr*mr*nf)+cc0_var1p2_npd_nw_lp'   
+
+* gate current
++TOX      = '2.6E-09+DTOX_var1p2_npd_nw_lp' 			LLN      = 0.78143     	LWN      = 1           
++WLN      = 1.015           	WWN      = 1           	LINT     = -1.7e-008                
++LL       = 1.2e-014       	LW       = 0      	LWL      = 0       
++WINT     = -3.9e-008       	WL       = 1e-015      	WW       = 8.85e-016      	
++WWL      = -6.4478e-023       	XL       = -1.2e-008  	XW       = -1.3e-008     
++GCARC    = '33*(1+(temper-25)*0.0015)'
++GCEVGC   = 1.6         	GCETC    = 1000 
++GCETE    = 0.4                 GCIE     = 1.5                 
++Weff     = '(wwr+XW-2*(WINT+(WL/pwr(llr,WLN))+(WW/pwr(wwr,WWN))+(WWL/(pwr(llr,WLN)*pwr(wwr,WWN)))))*nf'
++Leff     = 'llr+XL-2*(LINT+(LL/pwr(llr,LLN))+(LW/pwr(wwr,LWN))+(LWL/(pwr(llr,LLN)*pwr(wwr,LWN))))'
+GG 1 2   Current='(V(1,2)*pwr(ABS(V(1,2)),GCIE)*(GCARC*Weff*Leff*exp(GCEVGC*V(1,2)-GCETC*pwr(TOX,GCETE))))*2' m=mr
+       
+* equivalent circuit
+Djnw  0   2
++nwdio_rf
++AREA  = Djnw_Area_rf
++PJ    = Djnw_PJ_rf   
++m=mr      
+Cgg   1  2  C='max((Cgg_A2+(Cgg_A1-Cgg_A2)/(1+EXP((V(1,2)-Cgg_x0)/(Cgg_dx*(0.00143*(temper-25)+1)))))*(1+DCGG_var1p2_npd_nw_lp+dcgg_var1p2_npd_nw_lpmis)*1e-15, 1e-15)' m=mr
+.model nwdio_rf d
++LEVEL    = 3                   JS       = 3.4E-06             
++JSW      = 2.8E-12                                             
++N        = 1.005                                              
++RS       = 2.04E-08            IK       = 1.81E+04                                
++IKR      = 1.67E+05            BV       = 11.05               IBV      = 166.7    
++TRS      = 7.44E-04            EG       = 1.16                TREF     = 25.0     
++XTI      = 3.0                 TLEV     = 1                   TLEVC    = 1        
++CJ       = 0                                             
++CJSW     = 0                                           
++MJ       = 0.38073             PB       = 0.58343                                   
++MJSW     = 0.33957             PHP      = 0.71012                                    
++CTA      = 2.67E-03            CTP      = 9.23E-04             TPB      = 3.16E-03 
++TPHP     = 1.58E-03            FC       = 0                    FCS      = 0        
++AREA     = 6e-9                PJ       = 3.2e-4  
+
+.ends var1p2_npd_nw_lp
+
+
+**************************
+* 55nm 2.5V MOS Varactor * 
+************************** 
+
+
+
+.subckt var2p5_npd_nw_lp n1 n2 lr=1e-6 wr=1e-6 nf=1 mr=1 mismod_var=0 
+.PARAM
++_scale  = 0.9 
++geo_fac = '1.0/sqrt(wr*lr*nf*mr)'
++acgmin_area_var2p5_npd_nw_lp = 7.3E-11
++dcgmin_area_var2p5_npd_nw_lp_mis= '0+acgmin_area_var2p5_npd_nw_lp*sigma_mis_cgmin_area*geo_fac*mismod_var'
++adcg_area_var2p5_npd_nw_lp = 0
++ddcg_area_var2p5_npd_nw_lp_mis= '0+adcg_area_var2p5_npd_nw_lp*sigma_mis_dcg_area*geo_fac*mismod_var'
++axl_var2p5_npd_nw_lp = 0
++dxl_var2p5_npd_nw_lp_mis= '0+axl_var2p5_npd_nw_lp*sigma_mis_xl*geo_fac*mismod_var'
++axw_var2p5_npd_nw_lp = 0
++dxw_var2p5_npd_nw_lp_mis= '0+axw_var2p5_npd_nw_lp*sigma_mis_xw*geo_fac*mismod_var'   
+       
++xl      = '-5.2139212E-8+dxl_var2p5_npd_nw_lp_mis'
++xw      = '-5.0E-8+dxw_var2p5_npd_nw_lp_mis'
++cgmin_w = 2.14E-10        cgmin_l = 8.6577678e-11   
++cgmin_area= '0.00134+dcgmin_area_var2p5_npd_nw_lp_mis'
++dcg_w   = -3.7869672e-11  dcg_l   = -4.728627E-12   
++dcg_area= '0.0022824400+ddcg_area_var2p5_npd_nw_lp_mis'
+
++dvgs0 = -0.25198903       dvgs_temp= -2.2E-4        vgnorm0 = 0.58508
++vgnorm_temp = 0.00115856
++area    = '(lr*_scale-xl+dxl_var2p5_npd_nw_lp)*(wr*_scale-xw+dxw_var2p5_npd_nw_lp)'
++cgmin   = 'cgmin_w*dcgmin_var2p5_npd_nw_lp*2*(wr*_scale-xw+dxw_var2p5_npd_nw_lp)+cgmin_l*dcgmin_var2p5_npd_nw_lp*2*(lr*_scale-xl+dxl_var2p5_npd_nw_lp)+cgmin_area*dcgmin_var2p5_npd_nw_lp*area'
++dcg     = 'dcg_w*dcg_var2p5_npd_nw_lp*2*(wr*_scale-xw+dxw_var2p5_npd_nw_lp)+dcg_l*dcg_var2p5_npd_nw_lp*2*(lr*_scale-xl+dxl_var2p5_npd_nw_lp)+dcg_area*dcg_var2p5_npd_nw_lp*area'
++dvgs    = 'dvgs0+dvgs_temp*(temper-25)'
++vgnorm  = 'vgnorm0+vgnorm_temp*(temper-25)'
+cg n1 n2 'nf*mr*(cgmin+dcg*(1.0+tanh((v(n1,n2)-dvgs)/vgnorm)))' 
+.ends var2p5_npd_nw_lp
+

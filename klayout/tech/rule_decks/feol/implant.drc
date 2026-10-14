@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if FEOL
+  #================================================
+  #------------------ NP / PP - Implants ----------
+  #================================================
+
+  logger.info('Starting NP/PP rules')
+
+  # NP_W_1 / PP_W_1: (INT SDx < 0.18 ABUT<90 REGION) NOT INSIDE NODRC
+  # No SINGULAR: single-point interaction is allowed (e.g. the NP/PP checkerboard of FILLTAP).
+  # NP_S_1 / PP_S_1: (EXT SDx < 0.18 ABUT<90 OPPOSITE REGION) NOT INSIDE NODRC
+  # NP_A_1 / PP_A_1: ((AREA SDx < 0.12) NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  # NP_A_2 / PP_A_2: (AREA ((HOLES SDx INNER) NOT SDx) < 0.12) NOT INSIDE NODRC
+  [[sdn, 'NP'], [sdp, 'PP']].each do |imp, name|
+    logger.info("Executing rule #{name}_W_1")
+    report_rule(no_singular(imp.width(0.18.um, euclidian)).not_inside(excl_nodrc),
+                "#{name}_W_1", "#{name}_W_1 : #{name} width >= 0.18um")
+
+    logger.info("Executing rule #{name}_S_1")
+    report_rule(imp.space(0.18.um, projection).not_inside(excl_nodrc),
+                "#{name}_S_1", "#{name}_S_1 : Space between two #{name}s >= 0.18um")
+
+    logger.info("Executing rule #{name}_A_1")
+    report_rule(imp.with_area(nil, 0.12).not_inside(excl_sram),
+                "#{name}_A_1", "#{name}_A_1 : #{name} area >= 0.12um2")
+
+    logger.info("Executing rule #{name}_A_2")
+    report_rule(small_holes(imp, 0.12).not_inside(excl_nodrc),
+                "#{name}_A_2", "#{name}_A_2 : #{name} enclosed area >= 0.12um2")
+  end
+
+  # TODO: NP/PP_S_2..6, NP/PP_EN_*, NP/PP_EX_*, NP/PP_O_1, NP/PP_A_3, PP_R_*
+end

@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if BEOL
+  #================================================
+  #------------------ Mn - Metal 2..5 -------------
+  #================================================
+  # Calibre generates these with "foreach metal_layer $metal_list". The stack is
+  # 6 metals / 1 top metal, so Mn = M2..M5 and M5 is the "TM-1" layer.
+
+  logger.info('Starting Mn rules')
+
+  [[m2, 'M2'], [m3, 'M3'], [m4, 'M4'], [m5, 'M5']].each do |mn, name|
+    # Mn_W_1a: OUTLAYER (INT Mn < 0.10 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+    logger.info("Executing rule #{name}_W_1a")
+    report_rule(mn.width(0.10.um, euclidian).not_inside(excl_nodrc),
+                "#{name}_W_1a", "#{name}_W_1a : #{name} width >= 0.10um")
+
+    # Mn_W_1b: OUTLAYER (Mn WITH WIDTH > 12) NOT INSIDE NODRC
+    #          (TM-1 layer with 1 top metal: X = Mn NOT DEUPAD)
+    logger.info("Executing rule #{name}_W_1b")
+    mn_chk = name == 'M5' ? mn - deupad : mn
+    report_rule(wider_than(mn_chk, 12.0).not_inside(excl_nodrc),
+                "#{name}_W_1b", "#{name}_W_1b : #{name} width <= 12.00um")
+
+    # Mn_S_1: OUTLAYER (EXT Mn < 0.10 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+    #         (M2 only: errors inside SRAMALL are waived)
+    # Mn_A_1: OUTLAYER (AREA Mn < 0.052) NOT INSIDE NODRC  (M2 only: also NOT INSIDE SRAMALL)
+    mn_excl = name == 'M2' ? excl_sram : excl_nodrc
+    logger.info("Executing rule #{name}_S_1")
+    report_rule(mn.space(0.10.um, euclidian).not_inside(mn_excl),
+                "#{name}_S_1", "#{name}_S_1 : Space between two #{name}s >= 0.10um")
+
+    logger.info("Executing rule #{name}_A_1")
+    report_rule(mn.with_area(nil, 0.052).not_inside(mn_excl),
+                "#{name}_A_1", "#{name}_A_1 : #{name} area >= 0.052um2")
+
+    # Mn_A_2: X = (HOLES Mn INNER) NOT Mn
+    #         OUTLAYER (AREA X < 0.18) NOT INSIDE NODRC
+    logger.info("Executing rule #{name}_A_2")
+    report_rule(small_holes(mn, 0.18).not_inside(excl_nodrc),
+                "#{name}_A_2", "#{name}_A_2 : Enclosed dielectric area by #{name} >= 0.18um2")
+  end
+
+  # TODO: Mn_W_2/3, Mn_S_2 (wide metal: Mn_2b MnALL 0.42 0.42 0.15), Mn_S_3..5, Mn_D_* (density)
+end

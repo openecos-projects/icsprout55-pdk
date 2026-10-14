@@ -1,0 +1,646 @@
+
+
+* this file contains 1.2v and 2.5v corner model parameters.
+* three corners are supported: tt_passive, ff_passive, ss_passive.
+* this file should be used with the model parameter files 'pnp12_lp.mdl', 'npn12_lp.mdl', 'pnp25_lp.mdl', 'npn25_lp.mdl'.
+* 'dio_core.mdl', 'dio_io25.mdl', 'dio_well.mdl'.
+* 'resistor.ckt', 'varactor.ckt', 'mom.ckt'. 
+
+
+
+**********************
+* bjt corner model
+**********************
+.LIB bjt_core12_tt
+.PARAM
++sigma_mis_bjt12_a= agauss(0,1,1)
++sigma_mis_bjt12_b= agauss(0,1,1)
++dbf_vpnp1p2_10x_lp= 0        dis_vpnp1p2_10x_lp= 0        dnf_vpnp1p2_10x_lp= 0       
++dbf_vpnp1p2_5x_lp= 0        dis_vpnp1p2_5x_lp= 0        dnf_vpnp1p2_5x_lp= 0       
++dbf_vpnp1p2_2x_lp= 0        dis_vpnp1p2_2x_lp= 0        dnf_vpnp1p2_2x_lp= 0       
++dcje_vpnp1p2_10x_lp= 0        dcje_vpnp1p2_5x_lp= 0        dcje_vpnp1p2_2x_lp= 0       
++dcjc_vpnp1p2_10x_lp= 0        dcjc_vpnp1p2_5x_lp= 0        dcjc_vpnp1p2_2x_lp= 0       
++dbf_vnpn1p2_10x_lp= 0        dis_vnpn1p2_10x_lp= 0        dnf_vnpn1p2_10x_lp= 0       
++dbf_vnpn1p2_5x_lp= 0        dis_vnpn1p2_5x_lp= 0        dnf_vnpn1p2_5x_lp= 0       
++dbf_vnpn1p2_2x_lp= 0        dis_vnpn1p2_2x_lp= 0        dnf_vnpn1p2_2x_lp= 0       
++dcje_vnpn1p2_10x_lp= 0        dcje_vnpn1p2_5x_lp= 0        dcje_vnpn1p2_2x_lp= 0       
++dcjc_vnpn1p2_10x_lp= 0        dcjc_vnpn1p2_5x_lp= 0        dcjc_vnpn1p2_2x_lp= 0       
+.INC './bjt/pnp12_lp.mdl'
+.INC './bjt/npn12_lp.mdl'
+.ENDL bjt_core12_tt
+
+.LIB bjt_core12_ff
+.PARAM
++sigma_mis_bjt12_a= agauss(0,1,1)
++sigma_mis_bjt12_b= agauss(0,1,1)
++dbf_vpnp1p2_2x_lp= 0.0993   dis_vpnp1p2_2x_lp= 1.39829E-19 dnf_vpnp1p2_2x_lp= -0.00815
++dbf_vpnp1p2_5x_lp= 0.0871   dis_vpnp1p2_5x_lp= 5.09E-19 dnf_vpnp1p2_5x_lp= -0.00798
++dbf_vpnp1p2_10x_lp= 0.0719   dis_vpnp1p2_10x_lp= 1.32E-18 dnf_vpnp1p2_10x_lp= -0.00805
++dcje_vpnp1p2_10x_lp= -4.12E-15 dcje_vpnp1p2_5x_lp= -1.03E-15 dcje_vpnp1p2_2x_lp= -1.65021E-16
++dcjc_vpnp1p2_10x_lp= -8.46E-16 dcjc_vpnp1p2_5x_lp= -4.01E-16 dcjc_vpnp1p2_2x_lp= -2.12E-16
++dbf_vnpn1p2_10x_lp= 0.520842 dis_vnpn1p2_10x_lp= 2.06E-18 dnf_vnpn1p2_10x_lp= -0.00795224
++dbf_vnpn1p2_5x_lp= 0.650333 dis_vnpn1p2_5x_lp= 1.93467E-19 dnf_vnpn1p2_5x_lp= -0.008045
++dbf_vnpn1p2_2x_lp= 0.798618 dis_vnpn1p2_2x_lp= 1.7433E-19 dnf_vnpn1p2_2x_lp= -0.00798439
++dcje_vnpn1p2_10x_lp= -3.83E-15 dcje_vnpn1p2_5x_lp= -9.58907E-16 dcje_vnpn1p2_2x_lp= -1.52715E-16
++dcjc_vnpn1p2_10x_lp= -4.65E-15 dcjc_vnpn1p2_5x_lp= -2.19341E-15 dcjc_vnpn1p2_2x_lp= -1.15951E-15
+.INC './bjt/pnp12_lp.mdl'
+.INC './bjt/npn12_lp.mdl'
+.ENDL bjt_core12_ff
+
+.LIB bjt_core12_ss
+.PARAM
++sigma_mis_bjt12_a= agauss(0,1,1)
++sigma_mis_bjt12_b= agauss(0,1,1)
++dbf_vpnp1p2_2x_lp= -0.0993  dis_vpnp1p2_2x_lp= -1.39829E-19 dnf_vpnp1p2_2x_lp= 0.00815 
++dbf_vpnp1p2_5x_lp= -0.0871  dis_vpnp1p2_5x_lp= -5.09E-19 dnf_vpnp1p2_5x_lp= 0.00798 
++dbf_vpnp1p2_10x_lp= -0.0719  dis_vpnp1p2_10x_lp= -1.32E-18 dnf_vpnp1p2_10x_lp= 0.00805 
++dcje_vpnp1p2_10x_lp= 4.12E-15 dcje_vpnp1p2_5x_lp= 1.03E-15 dcje_vpnp1p2_2x_lp= 1.65021E-16
++dcjc_vpnp1p2_10x_lp= 8.46E-16 dcjc_vpnp1p2_5x_lp= 4.01E-16 dcjc_vpnp1p2_2x_lp= 2.12E-16
++dbf_vnpn1p2_10x_lp= -0.520842 dis_vnpn1p2_10x_lp= -2.06E-18 dnf_vnpn1p2_10x_lp= 0.00795224
++dbf_vnpn1p2_5x_lp= -0.650333 dis_vnpn1p2_5x_lp= -1.93467E-19 dnf_vnpn1p2_5x_lp= 0.008045
++dbf_vnpn1p2_2x_lp= -0.798618 dis_vnpn1p2_2x_lp= -1.7433E-19 dnf_vnpn1p2_2x_lp= 0.00798439
++dcje_vnpn1p2_10x_lp= 3.83E-15 dcje_vnpn1p2_5x_lp= 9.58907E-16 dcje_vnpn1p2_2x_lp= 1.52715E-16
++dcjc_vnpn1p2_10x_lp= 4.65E-15 dcjc_vnpn1p2_5x_lp= 2.19341E-15 dcjc_vnpn1p2_2x_lp= 1.15951E-15
+.INC './bjt/pnp12_lp.mdl'
+.INC './bjt/npn12_lp.mdl'
+.ENDL bjt_core12_ss
+
+.LIB bjt_io25_tt
+.PARAM
++sigma_mis_bjt25_a= agauss(0,1,1)
++sigma_mis_bjt25_b= agauss(0,1,1)
++dbf_vnpn2p5_10x_lp= 0        dis_vnpn2p5_10x_lp= 0        dnf_vnpn2p5_10x_lp= 0       
++dcje_vnpn2p5_10x_lp= 0        dcjc_vnpn2p5_10x_lp= 0        dbf_vnpn2p5_5x_lp= 0       
++dis_vnpn2p5_5x_lp= 0        dnf_vnpn2p5_5x_lp= 0        dcje_vnpn2p5_5x_lp= 0       
++dcjc_vnpn2p5_5x_lp= 0        dbf_vnpn2p5_2x_lp= 0        dis_vnpn2p5_2x_lp= 0       
++dnf_vnpn2p5_2x_lp= 0        dcje_vnpn2p5_2x_lp= 0        dcjc_vnpn2p5_2x_lp= 0       
++dbf_vpnp2p5_10x_lp= 0        dis_vpnp2p5_10x_lp= 0        dnf_vpnp2p5_10x_lp= 0       
++dcje_vpnp2p5_10x_lp= 0        dcjc_vpnp2p5_10x_lp= 0        dbf_vpnp2p5_5x_lp= 0       
++dis_vpnp2p5_5x_lp= 0        dnf_vpnp2p5_5x_lp= 0        dcje_vpnp2p5_5x_lp= 0       
++dcjc_vpnp2p5_5x_lp= 0        dbf_vpnp2p5_2x_lp= 0        dis_vpnp2p5_2x_lp= 0       
++dnf_vpnp2p5_2x_lp= 0        dcje_vpnp2p5_2x_lp= 0        dcjc_vpnp2p5_2x_lp= 0       
+.INC './bjt/npn25_lp.mdl'
+.INC './bjt/pnp25_lp.mdl'
+.ENDL bjt_io25_tt
+
+.LIB bjt_io25_ff
+.PARAM
++sigma_mis_bjt25_a= agauss(0,1,1)
++sigma_mis_bjt25_b= agauss(0,1,1)
++dbf_vnpn2p5_10x_lp= 0.44785  dis_vnpn2p5_10x_lp= 2.05008E-18 dnf_vnpn2p5_10x_lp= -0.00806
++dcje_vnpn2p5_10x_lp= -4.05E-15 dcjc_vnpn2p5_10x_lp= -1.7E-15 dbf_vnpn2p5_5x_lp= 0.59952 
++dis_vnpn2p5_5x_lp= 5.936E-19 dnf_vnpn2p5_5x_lp= -0.00802 dcje_vnpn2p5_5x_lp= -1.01E-15
++dcjc_vnpn2p5_5x_lp= -4.3E-16 dbf_vnpn2p5_2x_lp= 1.20192  dis_vnpn2p5_2x_lp= 6.71533E-19
++dnf_vnpn2p5_2x_lp= -0.0107  dcje_vnpn2p5_2x_lp= -1.91478E-16 dcjc_vnpn2p5_2x_lp= -6.86551E-17
++dbf_vpnp2p5_10x_lp= 0.1106197 dis_vpnp2p5_10x_lp= 6.142E-19 dnf_vpnp2p5_10x_lp= -0.007895
++dcje_vpnp2p5_10x_lp= -4.79E-15 dcjc_vpnp2p5_10x_lp= -3.24E-16 dbf_vpnp2p5_5x_lp= 0.1305521
++dis_vpnp2p5_5x_lp= 2.778E-19 dnf_vpnp2p5_5x_lp= -0.007921 dcje_vpnp2p5_5x_lp= -1.2E-15
++dcjc_vpnp2p5_5x_lp= -8.12E-17 dbf_vpnp2p5_2x_lp= 0.256    dis_vpnp2p5_2x_lp= 5.77E-20
++dnf_vpnp2p5_2x_lp= -0.00808 dcje_vpnp2p5_2x_lp= -1.92E-16 dcjc_vpnp2p5_2x_lp= -1.29E-17
+.INC './bjt/pnp25_lp.mdl'
+.INC './bjt/npn25_lp.mdl'
+.ENDL bjt_io25_ff
+
+.LIB bjt_io25_ss
+.PARAM
++sigma_mis_bjt25_a= agauss(0,1,1)
++sigma_mis_bjt25_b= agauss(0,1,1)
++dbf_vnpn2p5_10x_lp= -0.44785 dis_vnpn2p5_10x_lp= -2.05008E-18 dnf_vnpn2p5_10x_lp= 0.00806 
++dcje_vnpn2p5_10x_lp= 4.05E-15 dcjc_vnpn2p5_10x_lp= 1.7E-15  dbf_vnpn2p5_5x_lp= -0.59952
++dis_vnpn2p5_5x_lp= -5.936E-19 dnf_vnpn2p5_5x_lp= 0.00802  dcje_vnpn2p5_5x_lp= 1.01E-15
++dcjc_vnpn2p5_5x_lp= 4.3E-16  dbf_vnpn2p5_2x_lp= -1.20192 dis_vnpn2p5_2x_lp= -1.54299E-18
++dnf_vnpn2p5_2x_lp= 0.0107   dcje_vnpn2p5_2x_lp= 1.91478E-16 dcjc_vnpn2p5_2x_lp= 6.86551E-17
++dbf_vpnp2p5_10x_lp= -0.1106197 dis_vpnp2p5_10x_lp= -6.142E-19 dnf_vpnp2p5_10x_lp= 0.007895
++dcje_vpnp2p5_10x_lp= 4.79E-15 dcjc_vpnp2p5_10x_lp= 3.24E-16 dbf_vpnp2p5_5x_lp= -0.1305521
++dis_vpnp2p5_5x_lp= -2.778E-19 dnf_vpnp2p5_5x_lp= 0.007921 dcje_vpnp2p5_5x_lp= 1.2E-15 
++dcjc_vpnp2p5_5x_lp= 8.12E-17 dbf_vpnp2p5_2x_lp= -0.256   dis_vpnp2p5_2x_lp= -5.77E-20
++dnf_vpnp2p5_2x_lp= 0.00808  dcje_vpnp2p5_2x_lp= 1.92E-16 dcjc_vpnp2p5_2x_lp= 1.29E-17
+.INC './bjt/npn25_lp.mdl'
+.INC './bjt/pnp25_lp.mdl'
+.ENDL bjt_io25_ss
+
+
+******************************
+*  bjt monte carlo model
+****************************** 
+.LIB bjt_core12_mc
+.PARAM
++bjt12_rnd0    = agauss(0,1,3)  
++bjt12_rnd1    = agauss(0,1,3)  
++bjt12_rnd2    = agauss(0,1,3)  
++bjt12_p0      = 1.0            
++bjt12_p1      = 1.0            
++bjt12_p2      = 1.0            
++bjt12_par0    = 'bjt12_rnd0*bjt12_p0'      
++bjt12_par1    = 'bjt12_rnd1*bjt12_p1'      
++bjt12_par2    = 'bjt12_rnd2*bjt12_p2'      
+.PARAM
++sigma_mis_bjt12_a= agauss(0,1,1)
++sigma_mis_bjt12_b= agauss(0,1,1)
++dbf_vpnp1p2_10x_lp= '0+(0.071900)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dis_vpnp1p2_10x_lp= '0+(1.3200e-18)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dnf_vpnp1p2_10x_lp= '0+(-0.0080500)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dbf_vpnp1p2_5x_lp= '0+(0.087100)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dis_vpnp1p2_5x_lp= '0+(5.09E-19)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dnf_vpnp1p2_5x_lp= '0+(-0.0079800)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dbf_vpnp1p2_2x_lp= '0+(0.0993)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dis_vpnp1p2_2x_lp= '0+(1.3983e-19)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dnf_vpnp1p2_2x_lp= '0+(-0.0081500)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcje_vpnp1p2_10x_lp= '0+(-4.12E-15)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcje_vpnp1p2_5x_lp= '0+(-1.03E-15)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcje_vpnp1p2_2x_lp= '0+(-1.6502e-16)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vpnp1p2_10x_lp= '0+(-8.46E-16)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vpnp1p2_5x_lp= '0+(-4.01E-16)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vpnp1p2_2x_lp= '0+(-2.12E-16)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dbf_vnpn1p2_10x_lp= '0+(0.52084)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dis_vnpn1p2_10x_lp= '0+(2.06E-18)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dnf_vnpn1p2_10x_lp= '0+(-0.0079522)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dbf_vnpn1p2_5x_lp= '0+(0.65033)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dis_vnpn1p2_5x_lp= '0+(1.9347e-19)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dnf_vnpn1p2_5x_lp= '0+(-0.008045)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dbf_vnpn1p2_2x_lp= '0+(0.79862)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dis_vnpn1p2_2x_lp= '0+(1.7433e-19)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dnf_vnpn1p2_2x_lp= '0+(-0.0079844)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcje_vnpn1p2_10x_lp= '0+(-3.83E-15)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcje_vnpn1p2_5x_lp= '0+(-9.5891e-16)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcje_vnpn1p2_2x_lp= '0+(-1.5272e-16)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vnpn1p2_10x_lp= '0+(-4.6500e-15)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vnpn1p2_5x_lp= '0+(-2.1934e-15)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vnpn1p2_2x_lp= '0+(-1.1595e-15)*bjt12_par0+(0)*bjt12_par1+(0)*bjt12_par2'
+.INC './bjt/pnp12_lp.mdl'
+.INC './bjt/npn12_lp.mdl'
+.ENDL bjt_core12_mc
+
+.LIB bjt_io25_mc
+.PARAM
++bjt25_rnd0    = agauss(0,1,3)  
++bjt25_rnd1    = agauss(0,1,3)  
++bjt25_rnd2    = agauss(0,1,3)  
++bjt25_p0      = 1.0            
++bjt25_p1      = 1.0            
++bjt25_p2      = 1.0            
++bjt25_par0    = 'bjt25_rnd0*bjt25_p0'      
++bjt25_par1    = 'bjt25_rnd1*bjt25_p1'      
++bjt25_par2    = 'bjt25_rnd2*bjt25_p2'       
+.PARAM
++sigma_mis_bjt25_a= agauss(0,1,1)
++sigma_mis_bjt25_b= agauss(0,1,1)
++dbf_vnpn2p5_10x_lp= '0+(0.44785)*bjt12_par0+(-0.0017768)*bjt12_par1+(0)*bjt12_par2'
++dis_vnpn2p5_10x_lp= '0+(2.0501e-18)*bjt12_par0+(-8.1337e-21)*bjt12_par1+(0)*bjt12_par2'
++dnf_vnpn2p5_10x_lp= '0+(-0.0080599)*bjt12_par0+(3.1978e-05)*bjt12_par1+(0)*bjt12_par2'
++dcje_vnpn2p5_10x_lp= '0+(-4.0500e-15)*bjt12_par0+(1.6068e-17)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vnpn2p5_10x_lp= '0+(-1.7000e-15)*bjt12_par0+(6.7448e-18)*bjt12_par1+(0)*bjt12_par2'
++dbf_vnpn2p5_5x_lp= '0+(0.59952)*bjt12_par0+(-0.0023786)*bjt12_par1+(0)*bjt12_par2'
++dis_vnpn2p5_5x_lp= '0+(5.9360e-19)*bjt12_par0+(-2.3551e-21)*bjt12_par1+(0)*bjt12_par2'
++dnf_vnpn2p5_5x_lp= '0+(-0.0080199)*bjt12_par0+(3.1819e-05)*bjt12_par1+(0)*bjt12_par2'
++dcje_vnpn2p5_5x_lp= '0+(-1.0100e-15)*bjt12_par0+(4.0072e-18)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vnpn2p5_5x_lp= '0+(-4.3000e-16)*bjt12_par0+(1.7060e-18)*bjt12_par1+(0)*bjt12_par2'
++dbf_vnpn2p5_2x_lp= '0+(1.2019)*bjt12_par0+(-0.0047686)*bjt12_par1+(0)*bjt12_par2'
++dis_vnpn2p5_2x_lp= '0+(1.0807e-18)*bjt12_par0+(2.4103e-19)*bjt12_par1+(0)*bjt12_par2'
++dnf_vnpn2p5_2x_lp= '0+(-0.010700)*bjt12_par0+(4.2452e-05)*bjt12_par1+(0)*bjt12_par2'
++dcje_vnpn2p5_2x_lp= '0+(-1.9148e-16)*bjt12_par0+(7.5969e-19)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vnpn2p5_2x_lp= '0+(-6.8655e-17)*bjt12_par0+(2.7239e-19)*bjt12_par1+(0)*bjt12_par2'
++dbf_vpnp2p5_10x_lp= '0+(0.11062)*bjt12_par0+(-0.00043888)*bjt12_par1+(0)*bjt12_par2'
++dis_vpnp2p5_10x_lp= '0+(6.1420e-19)*bjt12_par0+(-2.4368e-21)*bjt12_par1+(0)*bjt12_par2'
++dnf_vpnp2p5_10x_lp= '0+(-0.0078949)*bjt12_par0+(3.1324e-05)*bjt12_par1+(0)*bjt12_par2'
++dcje_vpnp2p5_10x_lp= '0+(-4.7900e-15)*bjt12_par0+(1.9004e-17)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vpnp2p5_10x_lp= '0+(-3.2400e-16)*bjt12_par0+(1.2855e-18)*bjt12_par1+(0)*bjt12_par2'
++dbf_vpnp2p5_5x_lp= '0+(0.13055)*bjt12_par0+(-0.00051797)*bjt12_par1+(0)*bjt12_par2'
++dis_vpnp2p5_5x_lp= '0+(2.7780e-19)*bjt12_par0+(-1.1022e-21)*bjt12_par1+(0)*bjt12_par2'
++dnf_vpnp2p5_5x_lp= '0+(-0.0079209)*bjt12_par0+(3.1427e-05)*bjt12_par1+(0)*bjt12_par2'
++dcje_vpnp2p5_5x_lp= '0+(-1.2000e-15)*bjt12_par0+(4.7610e-18)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vpnp2p5_5x_lp= '0+(-8.1199e-17)*bjt12_par0+(3.2216e-19)*bjt12_par1+(0)*bjt12_par2'
++dbf_vpnp2p5_2x_lp= '0+(0.25600)*bjt12_par0+(-0.0010157)*bjt12_par1+(0)*bjt12_par2'
++dis_vpnp2p5_2x_lp= '0+(5.7700e-20)*bjt12_par0+(-2.2893e-22)*bjt12_par1+(0)*bjt12_par2'
++dnf_vpnp2p5_2x_lp= '0+(-0.0080799)*bjt12_par0+(3.2057e-05)*bjt12_par1+(0)*bjt12_par2'
++dcje_vpnp2p5_2x_lp= '0+(-1.9200e-16)*bjt12_par0+(7.6176e-19)*bjt12_par1+(0)*bjt12_par2'
++dcjc_vpnp2p5_2x_lp= '0+(-1.2900e-17)*bjt12_par0+(5.1181e-20)*bjt12_par1+(0)*bjt12_par2'
+.INC './bjt/pnp25_lp.mdl'
+.INC './bjt/npn25_lp.mdl'
+.ENDL bjt_io25_mc
+
+
+***********************
+* diode corner model
+***********************
+.LIB dio_tt
+.PARAM
++djs_dio_1p2_np_pw_lp= 0        dn_dio_1p2_np_pw_lp= 0        djsw_dio_1p2_np_pw_lp= 0       
++dcj_dio_1p2_np_pw_lp= 0        dcjsw_dio_1p2_np_pw_lp= 0        djs_dio_1p2_pp_nw_lp= 0       
++dn_dio_1p2_pp_nw_lp= 0        djsw_dio_1p2_pp_nw_lp= 0        dcj_dio_1p2_pp_nw_lp= 0       
++dcjsw_dio_1p2_pp_nw_lp= 0        djs_dio_1p2_np_psub_nt_lp= 0        dn_dio_1p2_np_psub_nt_lp= 0       
++djsw_dio_1p2_np_psub_nt_lp= 0        dcj_dio_1p2_np_psub_nt_lp= 0        dcjsw_dio_1p2_np_psub_nt_lp= 0       
++djs_dio_1p2_np_pw_hvt_lp= 0        dn_dio_1p2_np_pw_hvt_lp= 0        djsw_dio_1p2_np_pw_hvt_lp= 0       
++dcj_dio_1p2_np_pw_hvt_lp= 0        dcjsw_dio_1p2_np_pw_hvt_lp= 0        djs_dio_1p2_pp_nw_hvt_lp= 0       
++dn_dio_1p2_pp_nw_hvt_lp= 0        djsw_dio_1p2_pp_nw_hvt_lp= 0        dcj_dio_1p2_pp_nw_hvt_lp= 0       
++dcjsw_dio_1p2_pp_nw_hvt_lp= 0        djs_dio_1p2_np_pw_lvt_lp= 0        dn_dio_1p2_np_pw_lvt_lp= 0       
++djsw_dio_1p2_np_pw_lvt_lp= 0        dcj_dio_1p2_np_pw_lvt_lp= 0        dcjsw_dio_1p2_np_pw_lvt_lp= 0       
++djs_dio_1p2_pp_nw_lvt_lp= 0        dn_dio_1p2_pp_nw_lvt_lp= 0        djsw_dio_1p2_pp_nw_lvt_lp= 0       
++dcj_dio_1p2_pp_nw_lvt_lp= 0        dcjsw_dio_1p2_pp_nw_lvt_lp= 0        djs_nwdio_lp= 0          
++dn_nwdio_lp= 0            djsw_nwdio_lp= 0          dcj_nwdio_lp= 0          
++dcjsw_nwdio_lp= 0         djs_npdndio_lp= 0        dn_npdndio_lp= 0       
++djsw_npdndio_lp= 0        dcj_npdndio_lp= 0        dcjsw_npdndio_lp= 0       
++djs_rwd_lp= 0             dn_rwd_lp= 0              djsw_rwd_lp= 0           
++dcj_rwd_lp= 0             dcjsw_rwd_lp= 0           djs_dnwpsub12_lp= 0       
++dn_dnwpsub12_lp= 0        djsw_dnwpsub12_lp= 0        dcj_dnwpsub12_lp= 0       
++dcjsw_dnwpsub12_lp= 0        djs_dio_2p5_np_pw_lp= 0        dn_dio_2p5_np_pw_lp= 0       
++djsw_dio_2p5_np_pw_lp= 0        dcj_dio_2p5_np_pw_lp= 0        dcjsw_dio_2p5_np_pw_lp= 0       
++djs_dio_2p5_pp_nw_lp= 0        dn_dio_2p5_pp_nw_lp= 0        djsw_dio_2p5_pp_nw_lp= 0       
++dcj_dio_2p5_pp_nw_lp= 0        dcjsw_dio_2p5_pp_nw_lp= 0        djs_dio_2p5_np_psub_nt_lp= 0       
++dn_dio_2p5_np_psub_nt_lp= 0        djsw_dio_2p5_np_psub_nt_lp= 0        dcj_dio_2p5_np_psub_nt_lp= 0       
++dcjsw_dio_2p5_np_psub_nt_lp= 0       
+.INC './dio/dio_core.mdl'
+.INC './dio/dio_io25.mdl'
+.INC './dio/dio_well.mdl'
+.ENDL dio_tt
+
+.LIB dio_ff
+.PARAM
++djs_dio_1p2_np_pw_lp= 3.72E-9  dn_dio_1p2_np_pw_lp= -0.00928 djsw_dio_1p2_np_pw_lp= 3.78E-15
++dcj_dio_1p2_np_pw_lp= -4.72E-5 dcjsw_dio_1p2_np_pw_lp= -9.08E-16 djs_dio_1p2_pp_nw_lp= 1.86E-8 
++dn_dio_1p2_pp_nw_lp= -0.00955 djsw_dio_1p2_pp_nw_lp= 1.5E-14  dcj_dio_1p2_pp_nw_lp= -5.05E-5
++dcjsw_dio_1p2_pp_nw_lp= -9.98E-14 djs_dio_1p2_np_psub_nt_lp= 1.92E-6  dn_dio_1p2_np_psub_nt_lp= -0.01066
++djsw_dio_1p2_np_psub_nt_lp= 1.75E-13 dcj_dio_1p2_np_psub_nt_lp= -4.786E-6 dcjsw_dio_1p2_np_psub_nt_lp= -2.735E-12
++djs_dio_1p2_np_pw_hvt_lp= 1.31E-8  dn_dio_1p2_np_pw_hvt_lp= -0.0097  djsw_dio_1p2_np_pw_hvt_lp= 8.64E-15
++dcj_dio_1p2_np_pw_hvt_lp= -6.31E-5 dcjsw_dio_1p2_np_pw_hvt_lp= -1.51E-15 djs_dio_1p2_pp_nw_hvt_lp= 1.27E-8 
++dn_dio_1p2_pp_nw_hvt_lp= -0.00947 djsw_dio_1p2_pp_nw_hvt_lp= 1.2E-14  dcj_dio_1p2_pp_nw_hvt_lp= -5.07E-5
++dcjsw_dio_1p2_pp_nw_hvt_lp= -8.67E-14 djs_dio_1p2_np_pw_lvt_lp= 3.0E-9   dn_dio_1p2_np_pw_lvt_lp= -0.0091 
++djsw_dio_1p2_np_pw_lvt_lp= 8.8E-16  dcj_dio_1p2_np_pw_lvt_lp= -4.33E-5 dcjsw_dio_1p2_np_pw_lvt_lp= -4.4E-16
++djs_dio_1p2_pp_nw_lvt_lp= 9.6E-9   dn_dio_1p2_pp_nw_lvt_lp= -0.00937 djsw_dio_1p2_pp_nw_lvt_lp= 1.05E-14
++dcj_dio_1p2_pp_nw_lvt_lp= -5.18E-5 dcjsw_dio_1p2_pp_nw_lvt_lp= -6.98E-14 djs_nwdio_lp= 1.65E-6    
++dn_nwdio_lp= -0.00927     djsw_nwdio_lp= 3.15E-16   dcj_nwdio_lp= -4.09E-6   
++dcjsw_nwdio_lp= -2.98E-11 djs_npdndio_lp= 1.5E-8   dn_npdndio_lp= -0.01   
++djsw_npdndio_lp= 1.4E-13  dcj_npdndio_lp= -4.3E-5  dcjsw_npdndio_lp= -7.3E-15
++djs_rwd_lp= 6.66E-8       dn_rwd_lp= -0.0101        djsw_rwd_lp= 1.5E-13     
++dcj_rwd_lp= -2.11E-5      dcjsw_rwd_lp= -1.03E-11   djs_dnwpsub12_lp= 9.55E-7 
++dn_dnwpsub12_lp= -0.0101  djsw_dnwpsub12_lp= 3.51E-12 dcj_dnwpsub12_lp= -2.56E-5
++dcjsw_dnwpsub12_lp= -8.41E-12 djs_dio_2p5_np_pw_lp= 3.27E-8  dn_dio_2p5_np_pw_lp= -0.0102 
++djsw_dio_2p5_np_pw_lp= 1.05E-13 dcj_dio_2p5_np_pw_lp= -5.01E-5 dcjsw_dio_2p5_np_pw_lp= -2.85E-12
++djs_dio_2p5_pp_nw_lp= 3.5E-8   dn_dio_2p5_pp_nw_lp= -0.0101  djsw_dio_2p5_pp_nw_lp= 9.0E-15 
++dcj_dio_2p5_pp_nw_lp= -5.92E-5 dcjsw_dio_2p5_pp_nw_lp= -1.96E-12 djs_dio_2p5_np_psub_nt_lp= 5.55E-8 
++dn_dio_2p5_np_psub_nt_lp= -0.01041 djsw_dio_2p5_np_psub_nt_lp= 2.25E-13 dcj_dio_2p5_np_psub_nt_lp= -4.95801E-5
++dcjsw_dio_2p5_np_psub_nt_lp= -5.81387E-12
+.INC './dio/dio_core.mdl'
+.INC './dio/dio_io25.mdl'
+.INC './dio/dio_well.mdl'
+.ENDL dio_ff
+
+.LIB dio_ss
+.PARAM
++djs_dio_1p2_np_pw_lp= -3.72E-9 dn_dio_1p2_np_pw_lp= 0.00928  djsw_dio_1p2_np_pw_lp= -3.78E-15
++dcj_dio_1p2_np_pw_lp= 4.72E-5  dcjsw_dio_1p2_np_pw_lp= 9.08E-16 djs_dio_1p2_pp_nw_lp= -1.86E-8
++dn_dio_1p2_pp_nw_lp= 0.00955  djsw_dio_1p2_pp_nw_lp= -1.5E-14 dcj_dio_1p2_pp_nw_lp= 5.05E-5 
++dcjsw_dio_1p2_pp_nw_lp= 9.98E-14 djs_dio_1p2_np_psub_nt_lp= -1.92E-6 dn_dio_1p2_np_psub_nt_lp= 0.01066 
++djsw_dio_1p2_np_psub_nt_lp= -1.75E-13 dcj_dio_1p2_np_psub_nt_lp= 4.786E-6 dcjsw_dio_1p2_np_psub_nt_lp= 2.735E-12
++djs_dio_1p2_np_pw_hvt_lp= -1.31E-8 dn_dio_1p2_np_pw_hvt_lp= 0.0097   djsw_dio_1p2_np_pw_hvt_lp= -8.64E-15
++dcj_dio_1p2_np_pw_hvt_lp= 6.31E-5  dcjsw_dio_1p2_np_pw_hvt_lp= 1.51E-15 djs_dio_1p2_pp_nw_hvt_lp= -1.27E-8
++dn_dio_1p2_pp_nw_hvt_lp= 0.00947  djsw_dio_1p2_pp_nw_hvt_lp= -1.2E-14 dcj_dio_1p2_pp_nw_hvt_lp= 5.07E-5 
++dcjsw_dio_1p2_pp_nw_hvt_lp= 8.67E-14 djs_dio_1p2_np_pw_lvt_lp= -3.0E-9  dn_dio_1p2_np_pw_lvt_lp= 0.0091  
++djsw_dio_1p2_np_pw_lvt_lp= -8.8E-16 dcj_dio_1p2_np_pw_lvt_lp= 4.33E-5  dcjsw_dio_1p2_np_pw_lvt_lp= 4.4E-16 
++djs_dio_1p2_pp_nw_lvt_lp= -9.6E-9  dn_dio_1p2_pp_nw_lvt_lp= 0.00937  djsw_dio_1p2_pp_nw_lvt_lp= -1.05E-14
++dcj_dio_1p2_pp_nw_lvt_lp= 5.18E-5  dcjsw_dio_1p2_pp_nw_lvt_lp= 6.98E-14 djs_nwdio_lp= -1.65E-6   
++dn_nwdio_lp= 0.00927      djsw_nwdio_lp= -3.15E-16  dcj_nwdio_lp= 4.09E-6    
++dcjsw_nwdio_lp= 2.98E-11  djs_npdndio_lp= -1.5E-8  dn_npdndio_lp= 0.01    
++djsw_npdndio_lp= -1.4E-13 dcj_npdndio_lp= 4.3E-5   dcjsw_npdndio_lp= 7.3E-15 
++djs_rwd_lp= -6.66E-8      dn_rwd_lp= 0.0101         djsw_rwd_lp= -1.5E-13    
++dcj_rwd_lp= 2.11E-5       dcjsw_rwd_lp= 1.03E-11    djs_dnwpsub12_lp= -9.55E-7
++dn_dnwpsub12_lp= 0.0101   djsw_dnwpsub12_lp= -3.51E-12 dcj_dnwpsub12_lp= 2.56E-5 
++dcjsw_dnwpsub12_lp= 8.41E-12 djs_dio_2p5_np_pw_lp= -3.27E-8 dn_dio_2p5_np_pw_lp= 0.0102  
++djsw_dio_2p5_np_pw_lp= -1.05E-13 dcj_dio_2p5_np_pw_lp= 5.01E-5  dcjsw_dio_2p5_np_pw_lp= 2.85E-12
++djs_dio_2p5_pp_nw_lp= -3.5E-8  dn_dio_2p5_pp_nw_lp= 0.0101   djsw_dio_2p5_pp_nw_lp= -9.0E-15
++dcj_dio_2p5_pp_nw_lp= 5.92E-5  dcjsw_dio_2p5_pp_nw_lp= 1.96E-12 djs_dio_2p5_np_psub_nt_lp= -5.55E-8
++dn_dio_2p5_np_psub_nt_lp= 0.01041  djsw_dio_2p5_np_psub_nt_lp= -2.25E-13 dcj_dio_2p5_np_psub_nt_lp= 4.95801E-5
++dcjsw_dio_2p5_np_psub_nt_lp= 5.81387E-12
+.INC './dio/dio_core.mdl'
+.INC './dio/dio_io25.mdl'
+.INC './dio/dio_well.mdl'
+.ENDL dio_ss
+
+
+***********************
+* resistor corner model
+***********************
+.LIB res_tt
+.PARAM
++sigma_mis_r= agauss(0,1,1)
++drsh_re_ndif_2t= 0        drsh_re_pdif_2t= 0        drsh_re_npo_2t= 0        
++drsh_re_npo_3t= 0         drsh_re_ppo_2t= 0         drsh_re_ppo_3t= 0        
++drsh_re_nwsti_2t= 0        drsh_re_nwaa_2t= 0        drsh_re_ndif_sab_2t= 0       
++drsh_re_pdif_sab_2t= 0        drsh_re_npo_sab_2t= 0        drsh_re_npo_sab_3t= 0       
++drsh_re_ppo_sab_2t= 0        drsh_re_ppo_sab_3t= 0        drsh_re_m1_2t= 0         
++drsh_re_m2_2t= 0          drsh_re_m3_2t= 0          drsh_re_m4_2t= 0         
++drsh_re_m5_2t= 0          drsh_re_m6_2t= 0          drsh_re_m7_2t= 0         
++drsh_re_m8_2t= 0          drsh_re_tm2_2t= 0         drsh_re_alpa_2t= 0       
++ddw_re_ndif_2t= 0         ddw_re_pdif_2t= 0         ddw_re_npo_2t= 0         
++ddw_re_npo_3t= 0          ddw_re_ppo_2t= 0          ddw_re_ppo_3t= 0         
++ddw_re_nwsti_2t= 0        ddw_re_nwaa_2t= 0         ddw_re_ndif_sab_2t= 0       
++ddw_re_pdif_sab_2t= 0        ddw_re_npo_sab_2t= 0        ddw_re_npo_sab_3t= 0       
++ddw_re_ppo_sab_2t= 0        ddw_re_ppo_sab_3t= 0        ddw_re_m1_2t= 0          
++ddw_re_m2_2t= 0           ddw_re_m3_2t= 0           ddw_re_m4_2t= 0          
++ddw_re_m5_2t= 0           ddw_re_m6_2t= 0           ddw_re_m7_2t= 0          
++ddw_re_m8_2t= 0           ddw_re_tm2_2t= 0          ddw_re_alpa_2t= 0        
++drsh_re_hrpo_2t= 0        ddw_re_hrpo_2t= 0         drsh_re_hrpo_3t= 0       
++ddw_re_hrpo_3t= 0         dcox_re_npo_3t= 0         dcox_re_ppo_3t= 0        
++dcox_re_npo_sab_3t= 0        dcox_re_ppo_sab_3t= 0        dcox_re_m1_2t= 0         
++dcox_re_m2_2t= 0          dcox_re_m3_2t= 0          dcox_re_m4_2t= 0         
++dcox_re_m5_2t= 0          dcox_re_m6_2t= 0          dcox_re_m7_2t= 0         
++dcox_re_m8_2t= 0          dcox_re_tm2_2t= 0         dcox_re_alpa_2t= 0       
++dcapsw_re_npo_3t= 0        dcapsw_re_ppo_3t= 0        dcapsw_re_npo_sab_3t= 0       
++dcapsw_re_ppo_sab_3t= 0        dcapsw_re_m1_2t= 0        dcapsw_re_m2_2t= 0       
++dcapsw_re_m3_2t= 0        dcapsw_re_m4_2t= 0        dcapsw_re_m5_2t= 0       
++dcapsw_re_m6_2t= 0        dcapsw_re_m7_2t= 0        dcapsw_re_m8_2t= 0       
++dcapsw_re_tm2_2t= 0        dcapsw_re_alpa_2t= 0        dcox_re_hrpo_3t= 0       
++dcapsw_re_hrpo_3t= 0       
+.INC './res/resistor.ckt'
+.ENDL res_tt
+
+.LIB res_ff
+.PARAM
++sigma_mis_r= agauss(0,1,1)
++drsh_re_ndif_2t= -3.73    drsh_re_pdif_2t= -3.6894  drsh_re_npo_2t= -3.77    
++drsh_re_npo_3t= -3.77     drsh_re_ppo_2t= -3.6805   drsh_re_ppo_3t= -3.6805  
++drsh_re_nwsti_2t= -115.5   drsh_re_nwaa_2t= -54.7    drsh_re_ndif_sab_2t= -21.7   
++drsh_re_pdif_sab_2t= -59.2858 drsh_re_npo_sab_2t= -31.2    drsh_re_npo_sab_3t= -31.2   
++drsh_re_ppo_sab_2t= -88.5354 drsh_re_ppo_sab_3t= -88.5354 drsh_re_m1_2t= -0.0295   
++drsh_re_m2_2t= -0.0261    drsh_re_m3_2t= -0.0261    drsh_re_m4_2t= -0.0261   
++drsh_re_m5_2t= -0.0261    drsh_re_m6_2t= -0.0261    drsh_re_m7_2t= -0.0261   
++drsh_re_m8_2t= -0.0261    drsh_re_tm2_2t= -0.00702  drsh_re_alpa_2t= -0.00431
++ddw_re_ndif_2t= -4.18E-9  ddw_re_pdif_2t= 5.8E-9    ddw_re_npo_2t= -4.34E-9  
++ddw_re_npo_3t= -4.34E-9   ddw_re_ppo_2t= 2.4E-9     ddw_re_ppo_3t= 2.4E-9    
++ddw_re_nwsti_2t= -1.72E-8 ddw_re_nwaa_2t= -4.89E-9  ddw_re_ndif_sab_2t= 1.57E-9 
++ddw_re_pdif_sab_2t= 3.0E-10  ddw_re_npo_sab_2t= -3.46E-9 ddw_re_npo_sab_3t= -3.46E-9
++ddw_re_ppo_sab_2t= -1.8E-9  ddw_re_ppo_sab_3t= -1.8E-9  ddw_re_m1_2t= -3.3E-9    
++ddw_re_m2_2t= -3.6E-9     ddw_re_m3_2t= -3.6E-9     ddw_re_m4_2t= -3.6E-9    
++ddw_re_m5_2t= -3.6E-9     ddw_re_m6_2t= -3.6E-9     ddw_re_m7_2t= -3.6E-9    
++ddw_re_m8_2t= -3.6E-9     ddw_re_tm2_2t= 1.23E-10   ddw_re_alpa_2t= -6.3E-9  
++drsh_re_hrpo_2t= -270.39  ddw_re_hrpo_2t= -1.695E-8 drsh_re_hrpo_3t= -270.39 
++ddw_re_hrpo_3t= -1.695E-8 dcox_re_npo_3t= 1.321E-5  dcox_re_ppo_3t= 1.321E-5 
++dcox_re_npo_sab_3t= 1.321E-5 dcox_re_ppo_sab_3t= 1.321E-5 dcox_re_m1_2t= 5.716E-6  
++dcox_re_m2_2t= 2.576E-6   dcox_re_m3_2t= 1.424E-6   dcox_re_m4_2t= 1.04E-6   
++dcox_re_m5_2t= 6.465E-7   dcox_re_m6_2t= 5.657E-7   dcox_re_m7_2t= 3.909E-7  
++dcox_re_m8_2t= 3.596E-7   dcox_re_tm2_2t= 3.636E-7  dcox_re_alpa_2t= 1.616E-7
++dcapsw_re_npo_3t= 7.78E-12 dcapsw_re_ppo_3t= 7.78E-12 dcapsw_re_npo_sab_3t= 7.78E-12
++dcapsw_re_ppo_sab_3t= 7.78E-12 dcapsw_re_m1_2t= 1.652E-11 dcapsw_re_m2_2t= 1.571E-11
++dcapsw_re_m3_2t= 1.644E-11 dcapsw_re_m4_2t= 1.633E-11 dcapsw_re_m5_2t= 1.611E-11
++dcapsw_re_m6_2t= 1.611E-11 dcapsw_re_m7_2t= 1.625E-11 dcapsw_re_m8_2t= 1.895E-11
++dcapsw_re_tm2_2t= 2.283E-11 dcapsw_re_alpa_2t= 6.87E-12 dcox_re_hrpo_3t= 1.321E-5
++dcapsw_re_hrpo_3t= 7.78E-12
+.INC './res/resistor.ckt'
+.ENDL res_ff
+
+.LIB res_ss
+.PARAM
++sigma_mis_r= agauss(0,1,1)
++drsh_re_ndif_2t= 3.73     drsh_re_pdif_2t= 3.6894   drsh_re_npo_2t= 3.77     
++drsh_re_npo_3t= 3.77      drsh_re_ppo_2t= 3.6805    drsh_re_ppo_3t= 3.6805   
++drsh_re_nwsti_2t= 115.5    drsh_re_nwaa_2t= 54.7     drsh_re_ndif_sab_2t= 21.7    
++drsh_re_pdif_sab_2t= 59.2858  drsh_re_npo_sab_2t= 31.2     drsh_re_npo_sab_3t= 31.2    
++drsh_re_ppo_sab_2t= 88.5354  drsh_re_ppo_sab_3t= 88.5354  drsh_re_m1_2t= 0.0295    
++drsh_re_m2_2t= 0.0261     drsh_re_m3_2t= 0.0261     drsh_re_m4_2t= 0.0261    
++drsh_re_m5_2t= 0.0261     drsh_re_m6_2t= 0.0261     drsh_re_m7_2t= 0.0261    
++drsh_re_m8_2t= 0.0261     drsh_re_tm2_2t= 0.00702   drsh_re_alpa_2t= 0.00431 
++ddw_re_ndif_2t= 4.18E-9   ddw_re_pdif_2t= -5.8E-9   ddw_re_npo_2t= 4.34E-9   
++ddw_re_npo_3t= 4.34E-9    ddw_re_ppo_2t= -2.4E-9    ddw_re_ppo_3t= -2.4E-9   
++ddw_re_nwsti_2t= 1.72E-8  ddw_re_nwaa_2t= 4.89E-9   ddw_re_ndif_sab_2t= -1.57E-9
++ddw_re_pdif_sab_2t= -3.0E-10 ddw_re_npo_sab_2t= 3.46E-9  ddw_re_npo_sab_3t= 3.46E-9 
++ddw_re_ppo_sab_2t= 1.8E-9   ddw_re_ppo_sab_3t= 1.8E-9   ddw_re_m1_2t= 3.3E-9     
++ddw_re_m2_2t= 3.6E-9      ddw_re_m3_2t= 3.6E-9      ddw_re_m4_2t= 3.6E-9     
++ddw_re_m5_2t= 3.6E-9      ddw_re_m6_2t= 3.6E-9      ddw_re_m7_2t= 3.6E-9     
++ddw_re_m8_2t= 3.6E-9      ddw_re_tm2_2t= -1.23E-10  ddw_re_alpa_2t= 6.3E-9   
++drsh_re_hrpo_2t= 270.39   ddw_re_hrpo_2t= 1.695E-8  drsh_re_hrpo_3t= 270.39  
++ddw_re_hrpo_3t= 1.695E-8  dcox_re_npo_3t= -1.059E-5 dcox_re_ppo_3t= -1.059E-5
++dcox_re_npo_sab_3t= -1.059E-5 dcox_re_ppo_sab_3t= -1.059E-5 dcox_re_m1_2t= -4.903E-6 
++dcox_re_m2_2t= -2.407E-6  dcox_re_m3_2t= -1.37E-6   dcox_re_m4_2t= -9.012E-7 
++dcox_re_m5_2t= -6.667E-7  dcox_re_m6_2t= -5.062E-7  dcox_re_m7_2t= -4.037E-7 
++dcox_re_m8_2t= -3.284E-7  dcox_re_tm2_2t= -3.827E-7 dcox_re_alpa_2t= -1.564E-7
++dcapsw_re_npo_3t= -7.12E-12 dcapsw_re_ppo_3t= -7.12E-12 dcapsw_re_npo_sab_3t= -7.12E-12
++dcapsw_re_ppo_sab_3t= -7.12E-12 dcapsw_re_m1_2t= -1.322E-11 dcapsw_re_m2_2t= -1.333E-11
++dcapsw_re_m3_2t= -1.333E-11 dcapsw_re_m4_2t= -1.334E-11 dcapsw_re_m5_2t= -1.344E-11
++dcapsw_re_m6_2t= -1.345E-11 dcapsw_re_m7_2t= -1.335E-11 dcapsw_re_m8_2t= -1.494E-11
++dcapsw_re_tm2_2t= -1.885E-11 dcapsw_re_alpa_2t= -8.28E-12 dcox_re_hrpo_3t= -1.059E-5
++dcapsw_re_hrpo_3t= -7.12E-12
+.INC './res/resistor.ckt'
+.ENDL res_ss
+
+
+*********************************
+* res monte carlo model
+*********************************
+.LIB res_mc
+.PARAM
++res_rnd0    = agauss(0,1,3)  
++res_rnd1    = agauss(0,1,3)  
++res_rnd2    = agauss(0,1,3)  
++res_p0      = 1.0            
++res_p1      = 1.0            
++res_p2      = 1.0            
++res_par0    = 'res_rnd0*res_p0'      
++res_par1    = 'res_rnd1*res_p1'      
++res_par2    = 'res_rnd2*res_p2'      
+.PARAM
++sigma_mis_r= agauss(0,1,1)
++drsh_re_ndif_2t= '0+(3.7298)*res_par0+(0.042375)*res_par1+(4.3128e-08)*res_par2'
++drsh_re_pdif_2t= '0+(3.6892)*res_par0+(0.041914)*res_par1+(4.2282e-08)*res_par2'
++drsh_re_npo_2t= '0+(3.7698)*res_par0+(0.042830)*res_par1+(4.8483e-08)*res_par2'
++drsh_re_npo_3t= '0+(3.7698)*res_par0+(0.042830)*res_par1+(4.5624e-08)*res_par2'
++drsh_re_ppo_2t= '0+(3.6803)*res_par0+(0.041813)*res_par1+(4.9406e-08)*res_par2'
++drsh_re_ppo_3t= '0+(3.6803)*res_par0+(0.041813)*res_par1+(4.5910e-08)*res_par2'
++drsh_re_nwsti_2t= '0+(113.81)*res_par0+(1.2931)*res_par1+(1.8390e-06)*res_par2'
++drsh_re_nwaa_2t= '0+(54.696)*res_par0+(0.62143)*res_par1+(1.1439e-06)*res_par2'
++drsh_re_ndif_sab_2t= '0+(21.699)*res_par0+(0.24653)*res_par1+(3.3303e-07)*res_par2'
++drsh_re_pdif_sab_2t= '0+(59.282)*res_par0+(0.67352)*res_par1+(1.0251e-06)*res_par2'
++drsh_re_npo_sab_2t= '0+(31.546)*res_par0+(0.35840)*res_par1+(4.6838e-07)*res_par2'
++drsh_re_npo_sab_3t= '0+(31.546)*res_par0+(0.35840)*res_par1+(4.3390e-07)*res_par2'
++drsh_re_ppo_sab_2t= '0+(88.530)*res_par0+(1.0058)*res_par1+(1.3500e-06)*res_par2'
++drsh_re_ppo_sab_3t= '0+(88.530)*res_par0+(1.0058)*res_par1+(8.7343e-07)*res_par2'
++drsh_re_m1_2t= '0+(0.029498)*res_par0+(0.00033514)*res_par1+(3.5113e-10)*res_par2'
++drsh_re_m2_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(3.2401e-10)*res_par2'
++drsh_re_m3_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(2.6904e-10)*res_par2'
++drsh_re_m4_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(2.8999e-10)*res_par2'
++drsh_re_m5_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(2.0849e-10)*res_par2'
++drsh_re_m6_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(2.0729e-10)*res_par2'
++drsh_re_m7_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(2.3751e-10)*res_par2'
++drsh_re_m8_2t= '0+(0.026098)*res_par0+(0.00029651)*res_par1+(1.1780e-10)*res_par2'
++drsh_re_tm2_2t= '0+(0.0070195)*res_par0+(7.9752e-05)*res_par1+(6.1096e-11)*res_par2'
++drsh_re_alpa_2t= '0+(0.0043097)*res_par0+(4.8964e-05)*res_par1+(2.5069e-11)*res_par2'
++ddw_re_ndif_2t= '0+(4.1797e-09)*res_par0+(4.7487e-11)*res_par1+(3.3595e-17)*res_par2'
++ddw_re_pdif_2t= '0+(-5.7996e-09)*res_par0+(-6.5892e-11)*res_par1+(-1.6233e-17)*res_par2'
++ddw_re_npo_2t= '0+(4.3397e-09)*res_par0+(4.9305e-11)*res_par1+(7.2888e-18)*res_par2'
++ddw_re_npo_3t= '0+(4.3397e-09)*res_par0+(4.9305e-11)*res_par1+(9.5101e-18)*res_par2'
++ddw_re_ppo_2t= '0+(-2.3998e-09)*res_par0+(-2.7265e-11)*res_par1+(-3.8264e-18)*res_par2'
++ddw_re_ppo_3t= '0+(-2.3998e-09)*res_par0+(-2.7265e-11)*res_par1+(-6.0476e-18)*res_par2'
++ddw_re_nwsti_2t= '0+(2.7686e-08)*res_par0+(3.1455e-10)*res_par1+(-1.0653e-18)*res_par2'
++ddw_re_nwaa_2t= '0+(8.1495e-09)*res_par0+(9.2589e-11)*res_par1+(-1.3101e-17)*res_par2'
++ddw_re_ndif_sab_2t= '0+(2.2085e-10)*res_par0+(2.5092e-12)*res_par1+(-4.3750e-19)*res_par2'
++ddw_re_pdif_sab_2t= '0+(-2.9998e-10)*res_par0+(-3.4082e-12)*res_par1+(2.1501e-19)*res_par2'
++ddw_re_npo_sab_2t= '0+(3.4598e-09)*res_par0+(3.9308e-11)*res_par1+(-4.5202e-18)*res_par2'
++ddw_re_npo_sab_3t= '0+(3.4598e-09)*res_par0+(3.9308e-11)*res_par1+(6.3622e-19)*res_par2'
++ddw_re_ppo_sab_2t= '0+(1.7999e-09)*res_par0+(2.0449e-11)*res_par1+(-7.8838e-18)*res_par2'
++ddw_re_ppo_sab_3t= '0+(1.7999e-09)*res_par0+(2.0449e-11)*res_par1+(9.0268e-20)*res_par2'
++ddw_re_m1_2t= '0+(3.2998e-09)*res_par0+(3.7490e-11)*res_par1+(2.2437e-18)*res_par2'
++ddw_re_m2_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-7.4973e-18)*res_par2'
++ddw_re_m3_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-1.2930e-17)*res_par2'
++ddw_re_m4_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-1.2801e-17)*res_par2'
++ddw_re_m5_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-2.7414e-17)*res_par2'
++ddw_re_m6_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-2.7893e-17)*res_par2'
++ddw_re_m7_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-3.7716e-17)*res_par2'
++ddw_re_m8_2t= '0+(3.5998e-09)*res_par0+(4.0898e-11)*res_par1+(-4.0077e-17)*res_par2'
++ddw_re_tm2_2t= '0+(-1.2299e-10)*res_par0+(-1.3974e-12)*res_par1+(1.5704e-18)*res_par2'
++ddw_re_alpa_2t= '0+(6.2996e-09)*res_par0+(7.1572e-11)*res_par1+(-5.8689e-17)*res_par2'
++drsh_re_hrpo_2t= '0+(270.37)*res_par0+(3.0718)*res_par1+(-2.7277e-06)*res_par2'
++ddw_re_hrpo_2t= '0+(1.6949e-08)*res_par0+(1.9256e-10)*res_par1+(-2.6165e-16)*res_par2'
++drsh_re_hrpo_3t= '0+(270.37)*res_par0+(3.0718)*res_par1+(-3.5573e-06)*res_par2'
++ddw_re_hrpo_3t= '0+(1.6949e-08)*res_par0+(1.9256e-10)*res_par1+(-2.3395e-16)*res_par2'
++dcox_re_npo_3t= '0+(-1.1884e-05)*res_par0+(6.1984e-07)*res_par1+(1.4251e-15)*res_par2'
++dcox_re_ppo_3t= '0+(-1.1884e-05)*res_par0+(6.1984e-07)*res_par1+(-4.5767e-14)*res_par2'
++dcox_re_npo_sab_3t= '0+(-1.1884e-05)*res_par0+(6.1984e-07)*res_par1+(-6.0878e-14)*res_par2'
++dcox_re_ppo_sab_3t= '0+(-1.1884e-05)*res_par0+(6.1984e-07)*res_par1+(-1.3774e-14)*res_par2'
++dcox_re_m1_2t= '0+(-5.3066e-06)*res_par0+(1.7419e-07)*res_par1+(2.6243e-14)*res_par2'
++dcox_re_m2_2t= '0+(-2.4914e-06)*res_par0+(2.0474e-08)*res_par1+(2.1322e-14)*res_par2'
++dcox_re_m3_2t= '0+(-1.3970e-06)*res_par0+(-2.8331e-10)*res_par1+(1.4138e-14)*res_par2'
++dcox_re_m4_2t= '0+(-9.7017e-07)*res_par0+(2.9014e-08)*res_par1+(4.6086e-15)*res_par2'
++dcox_re_m5_2t= '0+(-6.5647e-07)*res_par0+(-1.3290e-08)*res_par1+(9.9101e-15)*res_par2'
++dcox_re_m6_2t= '0+(-5.3584e-07)*res_par0+(1.1081e-08)*res_par1+(3.6925e-15)*res_par2'
++dcox_re_m7_2t= '0+(-3.9722e-07)*res_par0+(-8.2080e-09)*res_par1+(5.8714e-15)*res_par2'
++dcox_re_m8_2t= '0+(-3.4396e-07)*res_par0+(5.0963e-09)*res_par1+(3.5373e-15)*res_par2'
++dcox_re_tm2_2t= '0+(-3.7302e-07)*res_par0+(-9.7515e-09)*res_par1+(7.8433e-15)*res_par2'
++dcox_re_alpa_2t= '0+(-1.5900e-07)*res_par0+(-3.0531e-10)*res_par1+(1.9361e-15)*res_par2'
++dcapsw_re_npo_3t= '0+(-7.4492e-12)*res_par0+(1.0584e-13)*res_par1+(6.1598e-20)*res_par2'
++dcapsw_re_ppo_3t= '0+(-7.4492e-12)*res_par0+(1.0584e-13)*res_par1+(8.8313e-20)*res_par2'
++dcapsw_re_npo_sab_3t= '0+(-7.4492e-12)*res_par0+(1.0584e-13)*res_par1+(8.3041e-20)*res_par2'
++dcapsw_re_ppo_sab_3t= '0+(-7.4492e-12)*res_par0+(1.0584e-13)*res_par1+(6.3685e-20)*res_par2'
++dcapsw_re_m1_2t= '0+(-1.4849e-11)*res_par0+(7.8203e-13)*res_par1+(-2.1831e-20)*res_par2'
++dcapsw_re_m2_2t= '0+(-1.4511e-11)*res_par0+(5.2146e-13)*res_par1+(8.3534e-20)*res_par2'
++dcapsw_re_m3_2t= '0+(-1.4867e-11)*res_par0+(7.2730e-13)*res_par1+(8.9899e-21)*res_par2'
++dcapsw_re_m4_2t= '0+(-1.4819e-11)*res_par0+(6.9338e-13)*res_par1+(3.5342e-20)*res_par2'
++dcapsw_re_m5_2t= '0+(-1.4763e-11)*res_par0+(6.0204e-13)*res_par1+(-7.7580e-22)*res_par2'
++dcapsw_re_m6_2t= '0+(-1.4768e-11)*res_par0+(5.9911e-13)*res_par1+(-4.4377e-20)*res_par2'
++dcapsw_re_m7_2t= '0+(-1.4785e-11)*res_par0+(6.6790e-13)*res_par1+(-2.4171e-20)*res_par2'
++dcapsw_re_m8_2t= '0+(-1.6918e-11)*res_par0+(9.6276e-13)*res_par1+(-1.6374e-20)*res_par2'
++dcapsw_re_tm2_2t= '0+(-2.0820e-11)*res_par0+(9.1071e-13)*res_par1+(4.3697e-20)*res_par2'
++dcapsw_re_alpa_2t= '0+(-7.5590e-12)*res_par0+(-4.9235e-13)*res_par1+(2.7013e-19)*res_par2'
++dcox_re_hrpo_3t= '0+(-1.1884e-05)*res_par0+(6.1984e-07)*res_par1+(4.7937e-14)*res_par2'
++dcapsw_re_hrpo_3t= '0+(-7.4492e-12)*res_par0+(1.0584e-13)*res_par1+(7.1153e-20)*res_par2'
+.INC './res/resistor.ckt'
+.ENDL res_mc
+
+
+****************************
+* mos varactor corner model
+****************************
+.LIB var_tt
+.PARAM
++sigma_mis_var= agauss(0,1,1)
++ac0_var1p2_npd_nw_lp= 1.18E-14 bc0_var1p2_npd_nw_lp= 4.9E-9   cc0_var1p2_npd_nw_lp= 0       
++dcgg_var1p2_npd_nw_lp= 0        dtox_var1p2_npd_nw_lp= 0        
++sigma_mis_cgmin_area= agauss(0,3,3)
++sigma_mis_dcg_area= agauss(0,3,3)
++sigma_mis_xl= agauss(0,3,3)
++sigma_mis_xw= agauss(0,3,3)
++dcgmin_var2p5_npd_nw_lp= 1.0      dcg_var2p5_npd_nw_lp= 1.0      dxl_var2p5_npd_nw_lp= 0       
++dxw_var2p5_npd_nw_lp= 0       
+.INC './var/varactor.ckt'
+.ENDL var_tt
+
+.LIB var_ss
+.PARAM
++sigma_mis_var= agauss(0,1,1)
++ac0_var1p2_npd_nw_lp= 1.18E-14 bc0_var1p2_npd_nw_lp= 4.9E-9   cc0_var1p2_npd_nw_lp= 0       
++dcgg_var1p2_npd_nw_lp= -0.03    dtox_var1p2_npd_nw_lp= 4.8E-11  
++sigma_mis_cgmin_area= agauss(0,3,3)
++sigma_mis_dcg_area= agauss(0,3,3)
++sigma_mis_xl= agauss(0,3,3)
++sigma_mis_xw= agauss(0,3,3)
++dcgmin_var2p5_npd_nw_lp= 0.9      dcg_var2p5_npd_nw_lp= 0.965    dxl_var2p5_npd_nw_lp= 6.67E-9 
++dxw_var2p5_npd_nw_lp= -6.67E-9
+.INC './var/varactor.ckt'
+.ENDL var_ss
+
+.LIB var_ff
+.PARAM
++sigma_mis_var= agauss(0,1,1)
++ac0_var1p2_npd_nw_lp= 1.18E-14 bc0_var1p2_npd_nw_lp= 4.9E-9   cc0_var1p2_npd_nw_lp= 0       
++dcgg_var1p2_npd_nw_lp= 0.03     dtox_var1p2_npd_nw_lp= -4.8E-11 
++sigma_mis_cgmin_area= agauss(0,3,3)
++sigma_mis_dcg_area= agauss(0,3,3)
++sigma_mis_xl= agauss(0,3,3)
++sigma_mis_xw= agauss(0,3,3)
++dcgmin_var2p5_npd_nw_lp= 1.1      dcg_var2p5_npd_nw_lp= 1.035    dxl_var2p5_npd_nw_lp= -6.67E-9
++dxw_var2p5_npd_nw_lp= 6.67E-9 
+.INC './var/varactor.ckt'
+.ENDL var_ff
+
+.LIB var_mc
+.PARAM
++var_rnd0    = agauss(0,1,3)  
++var_rnd1    = agauss(0,1,3)  
++var_rnd2    = agauss(0,1,3)  
++var_p0      = 1.0             
++var_p1      = 1.0             
++var_p2      = 1.0            
++var_par0    = 'var_rnd0*var_p0'      
++var_par1    = 'var_rnd1*var_p1'      
++var_par2    = 'var_rnd2*var_p2'      
+.PARAM
++sigma_mis_var= agauss(0,1,1)
++ac0_var1var_p2_npd_nw_lp= '1.18E-14+(0)*var_par0+(0)*var_par1+(0)*var_par2'
++bc0_var1var_p2_npd_nw_lp= '4.9E-9+(0)*var_par0+(0)*var_par1+(0)*var_par2'
++cc0_var1var_p2_npd_nw_lp= '0+(0)*var_par0+(0)*var_par1+(0)*var_par2'
++dcgg_var1var_p2_npd_nw_lp= '0+(0.03)*var_par0+(-8.4814e-12)*var_par1+(-7.4300e-11)*var_par2'
++dtox_var1var_p2_npd_nw_lp= '0+(-4.8E-11)*var_par0+(1.3570e-20)*var_par1+(1.1888e-19)*var_par2'
++sigma_mis_cgmin_area= agauss(0,3,3)
++sigma_mis_dcg_area= agauss(0,3,3)
++sigma_mis_xl= agauss(0,3,3)
++sigma_mis_xw= agauss(0,3,3)
++dcgmin_var2p5_npd_nw_lp= '1.0+(0.10000)*var_par0+(-9.0364e-10)*var_par1+(2.5561e-10)*var_par2'
++dcg_var2p5_npd_nw_lp= '1.0+(0.035000)*var_par0+(-1.1202e-10)*var_par1+(-2.7968e-11)*var_par2'
++dxl_var2p5_npd_nw_lp= '0+(-6.67E-9)*var_par0+(-4.1873e-17)*var_par1+(-4.6340e-17)*var_par2'
++dxw_var2p5_npd_nw_lp= '0+(6.67E-9)*var_par0+(4.3519e-17)*var_par1+(-2.5020e-17)*var_par2'
+.INC './var/varactor.ckt'
+.ENDL var_mc
+
+
+********************
+* mom corner model *
+********************
+.LIB mom_tt
+.PARAM
++sigma_mis_mom= agauss(0,1,1)
++dmom_mnx= 0              
+.INC './mom/mom.ckt'
+.ENDL mom_tt
+
+.LIB mom_ff
+.PARAM
++sigma_mis_mom= agauss(0,1,1)
++dmom_mnx= -0.1           
+.INC './mom/mom.ckt'
+.ENDL mom_ff
+
+.LIB mom_ss
+.PARAM
++sigma_mis_mom= agauss(0,1,1)
++dmom_mnx= 0.1            
+.INC './mom/mom.ckt'
+.ENDL mom_ss
+
+.LIB mom_mc
+.PARAM
++sigma_mom= agauss(0,1,3) 
++sigma_mis_mom= agauss(0,1,1)
++dmom_mnx= '-0.1*sigma_mom'
++var_rnd0    = agauss(0,1,3)  
++var_rnd1    = agauss(0,1,3)  
++var_rnd2    = agauss(0,1,3)  
++var_p0      = 1.0            
++var_p1      = 1.0            
++var_p2      = 1.0            
++var_par0    = 'var_rnd0*var_p0'      
++var_par1    = 'var_rnd1*var_p1'      
++var_par2    = 'var_rnd2*var_p2'      
+.PARAM
++sigma_mis_mom= agauss(0,1,1)
++dmom_mnx= '0+(0.1)*var_par0+(0)*var_par1+(0)*var_par2'
+.INC './mom/mom.ckt'
+.ENDL mom_mc
+

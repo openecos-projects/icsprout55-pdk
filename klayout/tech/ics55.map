@@ -1,0 +1,164 @@
+#************************************************************************
+
+#************************************************************************
+# File: layermap
+# DATE: August 19, 2026
+# AUTHOR: Ckristian Duran
+#************************************************************************
+
+#************************************************************************
+#
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#*************************************************************************
+
+#-------------------------------------------------------------------------
+# EDI Stream layer mapping table for ics55
+# Version: 0.1b
+# Date: 19 Aug 2026
+#-------------------------------------------------------------------------
+
+#--------------------------!!!IMPORTANT NOTE!!!---------------------------
+# This layermap was deduced from two places
+# GDS data from the standard cells (Confirms MET1)
+# GDS data from the IO (Confirms MET2~RDL)
+# The code from ecc-tools, specially in
+#  ecc-tools/src/database/data/design/db_layout/IdbLayer.cpp:131
+#  src/database/manager/builder/gds_builder/gds_write.cpp:344
+#  src/database/manager/builder/gds_builder/gds_write.cpp:365
+# As you can see, the get_order() for gds_write is the GDS layer number.
+# The GDS layer type is ALWAYS 0. This is a limitation of ECC and should't.
+# How it works in other technologies that are not ics55? Well, lets say:
+# "They just reworked the lefs" or "They are hardcoded"
+# As for the actual layer number, is just an increment from _z_order
+# Whatever it gets read from the tech lef file, that is what it goes.
+# In any case, as for preview purposes, I think this is enough.
+#-------------------------------------------------------------------------
+
+#EDI Layer Name  EDI Layer Type               GDS Layer Number   GDS Layer Type
+#==============  ==============               ================   ==============
+
+ACT              ALL                          2                  1
+NW               ALL                          9                  1
+POLY             ALL                          41                 1
+CT               ALL                          72                 1
+NP               ALL                          52                 1
+PP               ALL                          53                 1
+
+# Assumed 6 for pins. Datatype 2 is used with labels, but no idea
+MET1             NET,SPNET,PIN,LEFPIN,VIA     81                 1
+MET1             PIN,LEFPIN                   81                 6
+MET1             FILL                         81                 1
+MET1             LEFOBS                       81                 1
+NAME             MET1/PIN                     81                 6
+
+VIA1             VIA                          91                 1
+VIA1             PIN                          91                 1
+VIA1             LEFPIN                       91                 1
+
+MET2             NET,SPNET,PIN,LEFPIN,VIA     82                 1
+MET2             PIN,LEFPIN                   82                 6
+MET2             FILL                         82                 1
+MET2             LEFOBS                       82                 1
+NAME             MET2/PIN                     82                 6
+
+VIA2             VIA                          92                 1
+VIA2             PIN                          92                 1
+VIA2             LEFPIN                       92                 1
+
+MET3             NET,SPNET,PIN,LEFPIN,VIA     83                 1
+MET3             PIN,LEFPIN                   83                 6
+MET3             FILL                         83                 1
+MET3             LEFOBS                       83                 1
+NAME             MET3/PIN                     83                 6
+
+VIA3             VIA                          93                 1
+VIA3             PIN                          93                 1
+VIA3             LEFPIN                       93                 1
+
+MET4             NET,SPNET,PIN,LEFPIN,VIA     84                 1
+MET4             PIN,LEFPIN                   84                 6
+MET4             FILL                         84                 1
+MET4             LEFOBS                       84                 1
+NAME             MET4/PIN                     84                 6
+
+VIA4             VIA                          94                 1
+VIA4             PIN                          94                 1
+VIA4             LEFPIN                       94                 1
+
+MET5             NET,SPNET,PIN,LEFPIN,VIA     85                 1
+MET5             PIN,LEFPIN                   85                 6
+MET5             FILL                         85                 1
+MET5             LEFOBS                       85                 1
+NAME             MET5/PIN                     85                 6
+
+T4V2             VIA                          113                1
+T4V2             PIN                          113                1
+T4V2             LEFPIN                       113                1
+
+T4M2             NET,SPNET,PIN,LEFPIN,VIA     103                1
+T4M2             PIN,LEFPIN                   103                6
+T4M2             FILL                         103                1
+T4M2             LEFOBS                       103                1
+NAME             T4M2/PIN                     103                6
+
+# TODO: RV Is actually unknown. Is not found in the AP nor the RDL
+# But it was found in the sealring as a long strip. These AP vias
+# are known to be long in the sealring exclusively
+RV               VIA                          120                1
+RV               PIN                          120                1
+RV               LEFPIN                       120                1
+
+RDL              NET,SPNET,PIN,LEFPIN,VIA     123                1
+RDL              PIN,LEFPIN                   123                6
+RDL              FILL                         123                1
+RDL              LEFOBS                       123                1
+NAME             RDL/PIN                      123                6
+
+DIEAREA          ALL                          351                12
+
+# Layers that were given a name based on context:
+AP               ALL                          121                1
+RPOLY            ALL                          41                 4
+
+# Names from kMapping.txt that do not have layer:
+# VTNH             ALL                          0                 1
+# VTPH             ALL                          0                 1
+# LVN              ALL                          0                 1
+# LVP              ALL                          0                 1
+# SN               ALL                          0                 1
+# NW1              ALL                          0                 1
+# GT               ALL                          0                 1
+
+# Layer indexes without names:
+
+# Probably LVN/LVP
+UNK_17_1 ALL 17 1
+UNK_18_1 ALL 18 1
+
+# Some sort of diode
+UNK_55_1 ALL 55 1
+UNK_71_1 ALL 71 1
+
+# Covers some of the 17/1. Probably a 3v3 dopant
+UNK_191_12 ALL 191 12
+
+# Found at some areas of IO. Probably NW1
+UNK_313_12 ALL 313 12
+
+# At the exterior of the IO. Probably a sealring
+UNK_354_12 ALL 354 12
+UNK_356_12 ALL 356 12
+UNK_357_12 ALL 357 12

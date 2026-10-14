@@ -1,0 +1,914 @@
+tech
+  ics55
+end
+
+planes
+  pact
+  pmet1
+  pmet2
+  pmet3
+  pmet4
+  pmet5
+  pmet6
+  pmet7
+  ppoly
+  pzzlast
+end
+
+types
+  pzzlast zero,lzero
+  pact act,lact
+  pact act_dm,lact_dm
+  pact act_dmblk,lact_dmblk
+  pact act_res,lact_res
+  pact act_opcblk,lact_opcblk
+  pzzlast dnw,ldnw
+  pzzlast dnw6t_mark,ldnw6t_mark
+  pzzlast nw1,lnw1
+  pzzlast nw1_res,lnw1_res
+  pzzlast nvt1,lnvt1
+  pzzlast pvt1,lpvt1
+  pzzlast nvt3,lnvt3
+  pzzlast pvt3,lpvt3
+  pzzlast dgox,ldgox
+  pzzlast tgox,ltgox
+  ppoly poly
+  ppoly poly_dm,lpoly_dm
+  ppoly poly_dmblk,lpoly_dmblk
+  ppoly poly_res,lpoly_res
+  ppoly poly_opcblk,lpoly_opcblk
+  ppoly poly_text,lpoly_text
+  ppoly poly_bar,lpoly_bar
+  pzzlast npd,lnpd
+  pact np,lnp
+  pact pp,lpp
+  pzzlast hrp,lhrp
+  pzzlast esd,lesd
+  pzzlast sab,lsab
+  pact ct,lct
+  pact ct_opcblk,lct_opcblk
+  pact ct_bar,lct_bar
+  pmet1 met1,m1,lmet1
+  pmet1 met1_dm,lmet1_dm
+  pmet1 met1_dmblk,lmet1_dmblk
+  pmet1 met1_res,lmet1_res
+  pmet1 met1_opcblk,lmet1_opcblk
+  pmet1 met1_text,lmet1_text
+  pmet1 met1_slot,lmet1_slot
+  pmet1 met1_slotblk,lmet1_slotblk
+  pmet1 met1_mom,lmet1_mom
+  pmet2 met2,m2,lmet2
+  pmet2 met2_dm,lmet2_dm
+  pmet2 met2_dmblk,lmet2_dmblk
+  pmet2 met2_res,lmet2_res
+  pmet2 met2_opcblk,lmet2_opcblk
+  pmet2 met2_text,lmet2_text
+  pmet2 met2_slot,lmet2_slot
+  pmet2 met2_slotblk,lmet2_slotblk
+  pmet2 met2_mom,lmet2_mom
+  pmet3 met3,m3,lmet3
+  pmet3 met3_dm,lmet3_dm
+  pmet3 met3_dmblk,lmet3_dmblk
+  pmet3 met3_res,lmet3_res
+  pmet3 met3_opcblk,lmet3_opcblk
+  pmet3 met3_text,lmet3_text
+  pmet3 met3_slot,lmet3_slot
+  pmet3 met3_slotblk,lmet3_slotblk
+  pmet3 met3_mom,lmet3_mom
+  pmet4 met4,m4,lmet4
+  pmet4 met4_dm,lmet4_dm
+  pmet4 met4_dmblk,lmet4_dmblk
+  pmet4 met4_res,lmet4_res
+  pmet4 met4_opcblk,lmet4_opcblk
+  pmet4 met4_text,lmet4_text
+  pmet4 met4_slot,lmet4_slot
+  pmet4 met4_slotblk,lmet4_slotblk
+  pmet4 met4_mom,lmet4_mom
+  pmet5 met5,m5,lmet5
+  pmet5 met5_dm,lmet5_dm
+  pmet5 met5_dmblk,lmet5_dmblk
+  pmet5 met5_res,lmet5_res
+  pmet5 met5_opcblk,lmet5_opcblk
+  pmet5 met5_text,lmet5_text
+  pmet5 met5_slot,lmet5_slot
+  pmet5 met5_slotblk,lmet5_slotblk
+  pmet5 met5_mom,lmet5_mom
+  pmet1 via1,lvia1
+  pmet1 via1_bar,lvia1_bar
+  pmet2 via2,lvia2
+  pmet2 via2_bar,lvia2_bar
+  pmet3 via3,lvia3
+  pmet3 via3_bar,lvia3_bar
+  pmet4 via4,lvia4
+  pmet4 via4_bar,lvia4_bar
+  pmet6 t4m2,m6,lt4m2
+  pmet6 t4m2_dm,lt4m2_dm
+  pmet6 t4m2_dmblk,lt4m2_dmblk
+  pmet6 t4m2_res,lt4m2_res
+  pmet6 t4m2_opcblk,lt4m2_opcblk
+  pmet6 t4m2_text,lt4m2_text
+  pmet6 t4m2_slot,lt4m2_slot
+  pmet6 t4m2_slotblk,lt4m2_slotblk
+  pmet5 t4v2,via5,lt4v2
+  pmet5 t4v2_bar,lt4v2_bar
+  pmet6 rv,via6,lrv
+  pzzlast cb,lcb
+  pzzlast cb_text,lcb_text
+  pzzlast alpad,lalpad
+  pzzlast alpad_res,lalpad_res
+  pzzlast alpad_text,lalpad_text
+  pzzlast alpad_slot,lalpad_slot
+  pzzlast alpad_slotblk,lalpad_slotblk
+  pmet7 rdl,m7,lrdl
+  pmet7 rdl_text,lrdl_text
+  pzzlast cover,lcover
+  pzzlast bmim,lbmim
+  pzzlast tmim,ltmim
+  pzzlast io_mark,lio_mark
+  pzzlast core_mark,lcore_mark
+  pzzlast ulld_mark,lulld_mark
+  pzzlast ud_mark,lud_mark
+  pzzlast od_mark,lod_mark
+  pzzlast sramall_mark,lsramall_mark
+  pzzlast srampg_mark,lsrampg_mark
+  pzzlast sram6thd_mark,lsram6thd_mark
+  pzzlast sram6ths_mark,lsram6ths_mark
+  pzzlast sram8thd_mark,lsram8thd_mark
+  pzzlast sram8ths_mark,lsram8ths_mark
+  pzzlast diode_mark,ldiode_mark
+  pzzlast vara_mark,lvara_mark
+  pzzlast varam_mark,lvaram_mark
+  pzzlast varaj_mark,lvaraj_mark
+  pzzlast bjt_mark,lbjt_mark
+  pzzlast ldmos_mark,lldmos_mark
+  pzzlast esdiot_mark,lesdiot_mark
+  pzzlast esdioe_mark,lesdioe_mark
+  pzzlast rfall_mark,lrfall_mark
+  pzzlast rfd_mark,lrfd_mark
+  pzzlast rfter_mark,lrfter_mark
+end
+
+contact
+  ct act met1
+  via1 met1 met2
+  via2 met2 met3
+  via3 met3 met4
+  via4 met4 met5
+  via5 met5 t4m2
+  via6 t4m2 rdl
+  stackable
+end
+
+styles
+  styletype	mos
+  lzero comment
+  lact pdiffusion
+  lact_dm pdiffusion
+  lact_dmblk pdiffusion
+  lact_res pdiffusion
+  lact_opcblk pdiffusion
+  ldnw comment
+  ldnw6t_mark comment
+  lnw1 comment
+  lnw1_res comment
+  lnvt1 comment
+  lpvt1 comment
+  lnvt3 comment
+  lpvt3 comment
+  ldgox comment
+  ltgox comment
+  poly polysilicon
+  lpoly_dm polysilicon
+  lpoly_dmblk polysilicon
+  lpoly_res polysilicon
+  lpoly_opcblk polysilicon
+  lpoly_text polysilicon
+  lpoly_bar polysilicon
+  lnpd comment
+  lnp implant1
+  lpp implant2
+  lhrp comment
+  lesd comment
+  lsab comment
+  lct implant4
+  lct_opcblk implant4
+  lct_bar implant4
+  lmet1 metal1
+  lmet1_dm metal1
+  lmet1_dmblk metal1
+  lmet1_res metal1
+  lmet1_opcblk metal1
+  lmet1_text metal1
+  lmet1_slot metal1
+  lmet1_slotblk metal1
+  lmet1_mom metal1
+  lmet2 metal2
+  lmet2_dm metal2
+  lmet2_dmblk metal2
+  lmet2_res metal2
+  lmet2_opcblk metal2
+  lmet2_text metal2
+  lmet2_slot metal2
+  lmet2_slotblk metal2
+  lmet2_mom metal2
+  lmet3 metal3
+  lmet3_dm metal3
+  lmet3_dmblk metal3
+  lmet3_res metal3
+  lmet3_opcblk metal3
+  lmet3_text metal3
+  lmet3_slot metal3
+  lmet3_slotblk metal3
+  lmet3_mom metal3
+  lmet4 metal4
+  lmet4_dm metal4
+  lmet4_dmblk metal4
+  lmet4_res metal4
+  lmet4_opcblk metal4
+  lmet4_text metal4
+  lmet4_slot metal4
+  lmet4_slotblk metal4
+  lmet4_mom metal4
+  lmet5 metal5
+  lmet5_dm metal5
+  lmet5_dmblk metal5
+  lmet5_res metal5
+  lmet5_opcblk metal5
+  lmet5_text metal5
+  lmet5_slot metal5
+  lmet5_slotblk metal5
+  lmet5_mom metal5
+  lvia1 metal1 metal2 via1
+  lvia1_bar via1
+  lvia2 metal2 metal3 via2
+  lvia2_bar via2
+  lvia3 metal3 metal4 via3
+  lvia3_bar via3
+  lvia4 metal4 metal5 via4
+  lvia4_bar via4
+  lt4m2 metal6
+  lt4m2_dm metal6
+  lt4m2_dmblk metal6
+  lt4m2_res metal6
+  lt4m2_opcblk metal6
+  lt4m2_text metal6
+  lt4m2_slot metal6
+  lt4m2_slotblk metal6
+  lt4v2 metal5 metal6 via5
+  lt4v2_bar via5
+  lrv metal6 metal7 via6
+  lcb comment
+  lcb_text comment
+  lalpad comment
+  lalpad_res comment
+  lalpad_text comment
+  lalpad_slot comment
+  lalpad_slotblk comment
+  lrdl metal7
+  lrdl_text metal7
+  lcover comment
+  lbmim comment
+  ltmim comment
+  lio_mark comment
+  lcore_mark comment
+  lulld_mark comment
+  lud_mark comment
+  lod_mark comment
+  lsramall_mark comment
+  lsrampg_mark comment
+  lsram6thd_mark comment
+  lsram6ths_mark comment
+  lsram8thd_mark comment
+  lsram8ths_mark comment
+  ldiode_mark comment
+  lvara_mark comment
+  lvaram_mark comment
+  lvaraj_mark comment
+  lbjt_mark comment
+  lldmos_mark comment
+  lesdiot_mark comment
+  lesdioe_mark comment
+  lrfall_mark comment
+  lrfd_mark comment
+  lrfter_mark comment
+end
+
+compose
+end
+
+connect
+end
+
+cifoutput
+  style gdsii
+  scalefactor 1 nanometers
+
+  layer zero zero
+    calma 0 1
+  layer act act
+    calma 2 1
+  layer act_dm act_dm
+    calma 2 2
+  layer act_dmblk act_dmblk
+    calma 2 3
+  layer act_res act_res
+    calma 2 4
+  layer act_opcblk act_opcblk
+    calma 2 5
+  layer dnw dnw
+    calma 7 1
+  layer dnw6t_mark dnw6t_mark
+    calma 7 12
+  layer nw1 nw1
+    calma 9 1
+  layer nw1_res nw1_res
+    calma 9 4
+  layer nvt1 nvt1
+    calma 17 1
+  layer pvt1 pvt1
+    calma 18 1
+  layer nvt3 nvt3
+    calma 21 1
+  layer pvt3 pvt3
+    calma 22 1
+  layer dgox dgox
+    calma 27 1
+  layer tgox tgox
+    calma 28 1
+  layer poly poly
+    calma 41 1
+  layer poly_dm poly_dm
+    calma 41 2
+  layer poly_dmblk poly_dmblk
+    calma 41 3
+  layer poly_res poly_res
+    calma 41 4
+  layer poly_opcblk poly_opcblk
+    calma 41 5
+  layer poly_text poly_text
+    calma 41 6
+  layer poly_bar poly_bar
+    calma 41 7
+  layer npd npd
+    calma 43 1
+  layer np np
+    calma 52 1
+  layer pp pp
+    calma 53 1
+  layer hrp hrp
+    calma 54 1
+  layer esd esd
+    calma 55 1
+  layer sab sab
+    calma 71 1
+  layer ct ct
+    calma 72 1
+  layer ct_opcblk ct_opcblk
+    calma 72 5
+  layer ct_bar ct_bar
+    calma 72 7
+  layer met1 met1
+    calma 81 1
+  layer met1_dm met1_dm
+    calma 81 2
+  layer met1_dmblk met1_dmblk
+    calma 81 3
+  layer met1_res met1_res
+    calma 81 4
+  layer met1_opcblk met1_opcblk
+    calma 81 5
+  layer met1_text met1_text
+    calma 81 6
+  layer met1_slot met1_slot
+    calma 81 8
+  layer met1_slotblk met1_slotblk
+    calma 81 9
+  layer met1_mom met1_mom
+    calma 81 10
+  layer met2 met2
+    calma 82 1
+  layer met2_dm met2_dm
+    calma 82 2
+  layer met2_dmblk met2_dmblk
+    calma 82 3
+  layer met2_res met2_res
+    calma 82 4
+  layer met2_opcblk met2_opcblk
+    calma 82 5
+  layer met2_text met2_text
+    calma 82 6
+  layer met2_slot met2_slot
+    calma 82 8
+  layer met2_slotblk met2_slotblk
+    calma 82 9
+  layer met2_mom met2_mom
+    calma 82 10
+  layer met3 met3
+    calma 83 1
+  layer met3_dm met3_dm
+    calma 83 2
+  layer met3_dmblk met3_dmblk
+    calma 83 3
+  layer met3_res met3_res
+    calma 83 4
+  layer met3_opcblk met3_opcblk
+    calma 83 5
+  layer met3_text met3_text
+    calma 83 6
+  layer met3_slot met3_slot
+    calma 83 8
+  layer met3_slotblk met3_slotblk
+    calma 83 9
+  layer met3_mom met3_mom
+    calma 83 10
+  layer met4 met4
+    calma 84 1
+  layer met4_dm met4_dm
+    calma 84 2
+  layer met4_dmblk met4_dmblk
+    calma 84 3
+  layer met4_res met4_res
+    calma 84 4
+  layer met4_opcblk met4_opcblk
+    calma 84 5
+  layer met4_text met4_text
+    calma 84 6
+  layer met4_slot met4_slot
+    calma 84 8
+  layer met4_slotblk met4_slotblk
+    calma 84 9
+  layer met4_mom met4_mom
+    calma 84 10
+  layer met5 met5
+    calma 85 1
+  layer met5_dm met5_dm
+    calma 85 2
+  layer met5_dmblk met5_dmblk
+    calma 85 3
+  layer met5_res met5_res
+    calma 85 4
+  layer met5_opcblk met5_opcblk
+    calma 85 5
+  layer met5_text met5_text
+    calma 85 6
+  layer met5_slot met5_slot
+    calma 85 8
+  layer met5_slotblk met5_slotblk
+    calma 85 9
+  layer met5_mom met5_mom
+    calma 85 10
+  layer via1 via1
+    calma 91 1
+  layer via1_bar via1_bar
+    calma 91 7
+  layer via2 via2
+    calma 92 1
+  layer via2_bar via2_bar
+    calma 92 7
+  layer via3 via3
+    calma 93 1
+  layer via3_bar via3_bar
+    calma 93 7
+  layer via4 via4
+    calma 94 1
+  layer via4_bar via4_bar
+    calma 94 7
+  layer t4m2 t4m2
+    calma 103 1
+  layer t4m2_dm t4m2_dm
+    calma 103 2
+  layer t4m2_dmblk t4m2_dmblk
+    calma 103 3
+  layer t4m2_res t4m2_res
+    calma 103 4
+  layer t4m2_opcblk t4m2_opcblk
+    calma 103 5
+  layer t4m2_text t4m2_text
+    calma 103 6
+  layer t4m2_slot t4m2_slot
+    calma 103 8
+  layer t4m2_slotblk t4m2_slotblk
+    calma 103 9
+  layer t4v2 t4v2
+    calma 113 1
+  layer t4v2_bar t4v2_bar
+    calma 113 7
+  layer rv rv
+    calma 120 1
+  layer cb cb
+    calma 121 1
+  layer cb_text cb_text
+    calma 121 6
+  layer alpad alpad
+    calma 122 1
+  layer alpad_res alpad_res
+    calma 122 4
+  layer alpad_text alpad_text
+    calma 122 6
+  layer alpad_slot alpad_slot
+    calma 122 8
+  layer alpad_slotblk alpad_slotblk
+    calma 122 9
+  layer rdl rdl
+    calma 123 1
+  layer rdl_text rdl_text
+    calma 123 6
+  layer cover cover
+    calma 124 1
+  layer bmim bmim
+    calma 140 1
+  layer tmim tmim
+    calma 141 1
+  layer io_mark io_mark
+    calma 150 12
+  layer core_mark core_mark
+    calma 151 12
+  layer ulld_mark ulld_mark
+    calma 152 12
+  layer ud_mark ud_mark
+    calma 153 12
+  layer od_mark od_mark
+    calma 154 12
+  layer sramall_mark sramall_mark
+    calma 171 12
+  layer srampg_mark srampg_mark
+    calma 172 12
+  layer sram6thd_mark sram6thd_mark
+    calma 173 12
+  layer sram6ths_mark sram6ths_mark
+    calma 174 12
+  layer sram8thd_mark sram8thd_mark
+    calma 176 12
+  layer sram8ths_mark sram8ths_mark
+    calma 177 12
+  layer diode_mark diode_mark
+    calma 191 12
+  layer vara_mark vara_mark
+    calma 192 12
+  layer varam_mark varam_mark
+    calma 193 12
+  layer varaj_mark varaj_mark
+    calma 194 12
+  layer bjt_mark bjt_mark
+    calma 195 12
+  layer ldmos_mark ldmos_mark
+    calma 211 12
+  layer esdiot_mark esdiot_mark
+    calma 231 12
+  layer esdioe_mark esdioe_mark
+    calma 232 12
+  layer rfall_mark rfall_mark
+    calma 241 12
+  layer rfd_mark rfd_mark
+    calma 242 12
+  layer rfter_mark rfter_mark
+    calma 243 12
+end
+
+cifinput
+  style gdsii
+  scalefactor 1 nanometers
+
+  layer lzero zero
+  layer lact act
+  layer lact_dm act_dm
+  layer lact_dmblk act_dmblk
+  layer lact_res act_res
+  layer lact_opcblk act_opcblk
+  layer ldnw dnw
+  layer ldnw6t_mark dnw6t_mark
+  layer lnw1 nw1
+  layer lnw1_res nw1_res
+  layer lnvt1 nvt1
+  layer lpvt1 pvt1
+  layer lnvt3 nvt3
+  layer lpvt3 pvt3
+  layer ldgox dgox
+  layer ltgox tgox
+  layer poly poly
+  layer lpoly_dm poly_dm
+  layer lpoly_dmblk poly_dmblk
+  layer lpoly_res poly_res
+  layer lpoly_opcblk poly_opcblk
+  layer lpoly_text poly_text
+  layer lpoly_bar poly_bar
+  layer lnpd npd
+  layer lnp np
+  layer lpp pp
+  layer lhrp hrp
+  layer lesd esd
+  layer lsab sab
+  layer lct ct
+  layer lct_opcblk ct_opcblk
+  layer lct_bar ct_bar
+  layer lmet1 met1
+  layer lmet1_dm met1_dm
+  layer lmet1_dmblk met1_dmblk
+  layer lmet1_res met1_res
+  layer lmet1_opcblk met1_opcblk
+  layer lmet1_text met1_text
+  layer lmet1_slot met1_slot
+  layer lmet1_slotblk met1_slotblk
+  layer lmet1_mom met1_mom
+  layer lmet2 met2
+  layer lmet2_dm met2_dm
+  layer lmet2_dmblk met2_dmblk
+  layer lmet2_res met2_res
+  layer lmet2_opcblk met2_opcblk
+  layer lmet2_text met2_text
+  layer lmet2_slot met2_slot
+  layer lmet2_slotblk met2_slotblk
+  layer lmet2_mom met2_mom
+  layer lmet3 met3
+  layer lmet3_dm met3_dm
+  layer lmet3_dmblk met3_dmblk
+  layer lmet3_res met3_res
+  layer lmet3_opcblk met3_opcblk
+  layer lmet3_text met3_text
+  layer lmet3_slot met3_slot
+  layer lmet3_slotblk met3_slotblk
+  layer lmet3_mom met3_mom
+  layer lmet4 met4
+  layer lmet4_dm met4_dm
+  layer lmet4_dmblk met4_dmblk
+  layer lmet4_res met4_res
+  layer lmet4_opcblk met4_opcblk
+  layer lmet4_text met4_text
+  layer lmet4_slot met4_slot
+  layer lmet4_slotblk met4_slotblk
+  layer lmet4_mom met4_mom
+  layer lmet5 met5
+  layer lmet5_dm met5_dm
+  layer lmet5_dmblk met5_dmblk
+  layer lmet5_res met5_res
+  layer lmet5_opcblk met5_opcblk
+  layer lmet5_text met5_text
+  layer lmet5_slot met5_slot
+  layer lmet5_slotblk met5_slotblk
+  layer lmet5_mom met5_mom
+  layer lvia1 via1
+  layer lvia1_bar via1_bar
+  layer lvia2 via2
+  layer lvia2_bar via2_bar
+  layer lvia3 via3
+  layer lvia3_bar via3_bar
+  layer lvia4 via4
+  layer lvia4_bar via4_bar
+  layer lt4m2 t4m2
+  layer lt4m2_dm t4m2_dm
+  layer lt4m2_dmblk t4m2_dmblk
+  layer lt4m2_res t4m2_res
+  layer lt4m2_opcblk t4m2_opcblk
+  layer lt4m2_text t4m2_text
+  layer lt4m2_slot t4m2_slot
+  layer lt4m2_slotblk t4m2_slotblk
+  layer lt4v2 t4v2
+  layer lt4v2_bar t4v2_bar
+  layer lrv rv
+  layer lcb cb
+  layer lcb_text cb_text
+  layer lalpad alpad
+  layer lalpad_res alpad_res
+  layer lalpad_text alpad_text
+  layer lalpad_slot alpad_slot
+  layer lalpad_slotblk alpad_slotblk
+  layer lrdl rdl
+  layer lrdl_text rdl_text
+  layer lcover cover
+  layer lbmim bmim
+  layer ltmim tmim
+  layer lio_mark io_mark
+  layer lcore_mark core_mark
+  layer lulld_mark ulld_mark
+  layer lud_mark ud_mark
+  layer lod_mark od_mark
+  layer lsramall_mark sramall_mark
+  layer lsrampg_mark srampg_mark
+  layer lsram6thd_mark sram6thd_mark
+  layer lsram6ths_mark sram6ths_mark
+  layer lsram8thd_mark sram8thd_mark
+  layer lsram8ths_mark sram8ths_mark
+  layer ldiode_mark diode_mark
+  layer lvara_mark vara_mark
+  layer lvaram_mark varam_mark
+  layer lvaraj_mark varaj_mark
+  layer lbjt_mark bjt_mark
+  layer lldmos_mark ldmos_mark
+  layer lesdiot_mark esdiot_mark
+  layer lesdioe_mark esdioe_mark
+  layer lrfall_mark rfall_mark
+  layer lrfd_mark rfd_mark
+  layer lrfter_mark rfter_mark
+
+  calma zero 0 1
+  calma act 2 1
+  calma act_dm 2 2
+  calma act_dmblk 2 3
+  calma act_res 2 4
+  calma act_opcblk 2 5
+  calma dnw 7 1
+  calma dnw6t_mark 7 12
+  calma nw1 9 1
+  calma nw1_res 9 4
+  calma nvt1 17 1
+  calma pvt1 18 1
+  calma nvt3 21 1
+  calma pvt3 22 1
+  calma dgox 27 1
+  calma tgox 28 1
+  calma poly 41 1
+  calma poly_dm 41 2
+  calma poly_dmblk 41 3
+  calma poly_res 41 4
+  calma poly_opcblk 41 5
+  calma poly_text 41 6
+  calma poly_bar 41 7
+  calma npd 43 1
+  calma np 52 1
+  calma pp 53 1
+  calma hrp 54 1
+  calma esd 55 1
+  calma sab 71 1
+  calma ct 72 1
+  calma ct_opcblk 72 5
+  calma ct_bar 72 7
+  calma met1 81 1
+  calma met1_dm 81 2
+  calma met1_dmblk 81 3
+  calma met1_res 81 4
+  calma met1_opcblk 81 5
+  calma met1_text 81 6
+  calma met1_slot 81 8
+  calma met1_slotblk 81 9
+  calma met1_mom 81 10
+  calma met2 82 1
+  calma met2_dm 82 2
+  calma met2_dmblk 82 3
+  calma met2_res 82 4
+  calma met2_opcblk 82 5
+  calma met2_text 82 6
+  calma met2_slot 82 8
+  calma met2_slotblk 82 9
+  calma met2_mom 82 10
+  calma met3 83 1
+  calma met3_dm 83 2
+  calma met3_dmblk 83 3
+  calma met3_res 83 4
+  calma met3_opcblk 83 5
+  calma met3_text 83 6
+  calma met3_slot 83 8
+  calma met3_slotblk 83 9
+  calma met3_mom 83 10
+  calma met4 84 1
+  calma met4_dm 84 2
+  calma met4_dmblk 84 3
+  calma met4_res 84 4
+  calma met4_opcblk 84 5
+  calma met4_text 84 6
+  calma met4_slot 84 8
+  calma met4_slotblk 84 9
+  calma met4_mom 84 10
+  calma met5 85 1
+  calma met5_dm 85 2
+  calma met5_dmblk 85 3
+  calma met5_res 85 4
+  calma met5_opcblk 85 5
+  calma met5_text 85 6
+  calma met5_slot 85 8
+  calma met5_slotblk 85 9
+  calma met5_mom 85 10
+  calma via1 91 1
+  calma via1_bar 91 7
+  calma via2 92 1
+  calma via2_bar 92 7
+  calma via3 93 1
+  calma via3_bar 93 7
+  calma via4 94 1
+  calma via4_bar 94 7
+  calma t4m2 103 1
+  calma t4m2_dm 103 2
+  calma t4m2_dmblk 103 3
+  calma t4m2_res 103 4
+  calma t4m2_opcblk 103 5
+  calma t4m2_text 103 6
+  calma t4m2_slot 103 8
+  calma t4m2_slotblk 103 9
+  calma t4v2 113 1
+  calma t4v2_bar 113 7
+  calma rv 120 1
+  calma cb 121 1
+  calma cb_text 121 6
+  calma alpad 122 1
+  calma alpad_res 122 4
+  calma alpad_text 122 6
+  calma alpad_slot 122 8
+  calma alpad_slotblk 122 9
+  calma rdl 123 1
+  calma rdl_text 123 6
+  calma cover 124 1
+  calma bmim 140 1
+  calma tmim 141 1
+  calma io_mark 150 12
+  calma core_mark 151 12
+  calma ulld_mark 152 12
+  calma ud_mark 153 12
+  calma od_mark 154 12
+  calma sramall_mark 171 12
+  calma srampg_mark 172 12
+  calma sram6thd_mark 173 12
+  calma sram6ths_mark 174 12
+  calma sram8thd_mark 176 12
+  calma sram8ths_mark 177 12
+  calma diode_mark 191 12
+  calma vara_mark 192 12
+  calma varam_mark 193 12
+  calma varaj_mark 194 12
+  calma bjt_mark 195 12
+  calma ldmos_mark 211 12
+  calma esdiot_mark 231 12
+  calma esdioe_mark 232 12
+  calma rfall_mark 241 12
+  calma rfd_mark 242 12
+  calma rfter_mark 243 12
+
+  # FIXME: Once magic supports anything more than 255
+  # for the calma layers, this will remain to be the
+  # boundary definition
+  templayer allbound act
+  or nw
+  or pp
+  or np
+  or met1
+  or met2
+  or met3
+  or met4
+  or met5
+  or t4m2
+  or rdl
+    boundary
+end
+
+drc
+  style drc variants (fast),(full),(routing)
+  scalefactor 10
+  
+  variants (fast),(full)
+  
+  width act 100 "dummy act width"
+  width poly 100 "dummy poly width"
+  width m1 100 "dummy metal1 width"
+  width m2 100 "dummy metal2 width"
+  width m3 100 "dummy metal3 width"
+  width m4 100 "dummy metal4 width"
+  width m5 100 "dummy metal5 width"
+  width t4m2 100 "dummy t4m2 width"
+  width rdl 100 "dummy rdl width"
+end
+
+extract
+  style default
+  planeorder pact 0
+  planeorder pmet1 1
+  planeorder pmet2 2
+  planeorder pmet3 3
+  planeorder pmet4 4
+  planeorder pmet5 5
+  planeorder pmet6 6
+  planeorder pmet7 7
+  planeorder ppoly 8
+  planeorder pzzlast 9
+end
+
+lef
+  masterslice lact ACT
+  masterslice poly POLY
+  routing m1 MET1
+  routing m2 MET2
+  routing m3 MET3
+  routing m4 MET4
+  routing m5 MET5
+  routing m7 RDL
+  routing m6 T4M2
+  cut ct CT
+  cut via6 RV
+  cut via5 T4V2
+  cut via1 VIA1
+  cut via2 VIA2
+  cut via3 VIA3
+  cut via4 VIA4
+  obs m1 MET1
+  obs m2 MET2
+  obs m3 MET3
+  obs m4 MET4
+  obs m5 MET5
+  obs m7 RDL
+  obs m6 T4M2
+  obs poly,ct CT
+  obs m6,m7 RV
+  obs m5,m6 T4V2
+  obs m1,m2 VIA1
+  obs m2,m3 VIA2
+  obs m3,m4 VIA3
+  obs m4,m5 VIA4
+end
+

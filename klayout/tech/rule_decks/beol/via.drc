@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if BEOL
+  #================================================
+  #------------------ Vn - Via 1..4 ---------------
+  #================================================
+  # Calibre generates these with "foreach via_layer $via_list".
+  # Vn connects Mn (bottom) to Mn+1 (top).
+
+  logger.info('Starting Vn rules')
+
+  [[v1, 'V1', m1, m2], [v2, 'V2', m2, m3], [v3, 'V3', m3, m4], [v4, 'V4', m4, m5]].each do |vn, name, mbot, mtop|
+    # Vn_W_1: OUTLAYER (NOT RECTANGLE Vn == 0.09 BY == 0.09) NOT INSIDE (OR GRID SRINGBLK NODRC)
+    # TODO: ALLOW_V01 option (0.1 x 0.1 vias) not implemented.
+    logger.info("Executing rule #{name}_W_1")
+    report_rule(not_square(vn, 0.09).not_inside(grid | sringblk | nodrc),
+                "#{name}_W_1", "#{name}_W_1 : Fixed #{name} size (square) = 0.09um")
+
+    # Vn_S_1: OUTLAYER (EXT Vn < 0.11 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+    logger.info("Executing rule #{name}_S_1")
+    report_rule(vn.space(0.11.um, euclidian).not_inside(excl_nodrc),
+                "#{name}_S_1", "#{name}_S_1 : Space between two #{name}s >= 0.11um")
+
+    # Vn_EN_2a: OUTLAYER (Vn NOT Mn) NOT INSIDE NODRC
+    # TODO: the rectangle enclosure part (0/0.04 opposite or 0.03 all sides) is not implemented.
+    logger.info("Executing rule #{name}_EN_2a")
+    report_rule((vn - mbot).not_inside(excl_nodrc),
+                "#{name}_EN_2a", "#{name}_EN_2a : #{name} must be fully enclosed by bottom metal")
+
+    # Vn_EN_5a: OUTLAYER (ENC X Mn+1 < 0.005 ABUT<90 SINGULAR REGION OVERLAP OUTSIDE ALSO) NOT INSIDE NODRC
+    #           OUTLAYER (Vn NOT Mn+1) NOT INSIDE NODRC
+    # TODO: Vn_EN_5b (0.02 when perpendicular enclosure < 0.02) is not implemented.
+    logger.info("Executing rule #{name}_EN_5a")
+    report_rule((vn - mtop).not_inside(excl_nodrc),
+                "#{name}_EN_5a", "#{name}_EN_5a : #{name} must be fully enclosed by top metal")
+    report_rule(mtop.enclosing(vn, 0.005.um, euclidian).not_inside(excl_nodrc),
+                "#{name}_EN_5a_enc", "#{name}_EN_5a : Min top metal enclosure of #{name} >= 0.005um")
+  end
+
+  # TODO: Vn_W_2 (bar vias), Vn_S_2/3, Vn_EN_2b/2c, Vn_R_*
+end

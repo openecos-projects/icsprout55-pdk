@@ -1,0 +1,56 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if BEOL
+  #================================================
+  #------------------ MET1 - Metal 1 --------------
+  #================================================
+
+  logger.info('Starting MET1 rules')
+
+  # MET1_W_1: OUTLAYER (INT M1 < 0.09 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+  #           OUTLAYER (M1 WITH WIDTH > 12) NOT INSIDE NODRC
+  logger.info('Executing rule MET1_W_1')
+  report_rule(m1.width(0.09.um, euclidian).not_inside(excl_nodrc),
+              'MET1_W_1', 'MET1_W_1 : M1 width >= 0.09um')
+  report_rule(wider_than(m1, 12.0).not_inside(excl_nodrc),
+              'MET1_W_1_max', 'MET1_W_1 : M1 width <= 12.00um')
+
+  # MET1_S_1: X = EXT M1 < 0.09 ABUT<90 SINGULAR REGION
+  #           OUTLAYER ((X NOT INDALL) NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  #           (inside INDALL Calibre uses ABUT<89, i.e. 89-90 deg spaces are waived there)
+  # TODO: INDALL 89 deg waiver not implemented, markers inside INDALL are checked with ABUT<90.
+  logger.info('Executing rule MET1_S_1')
+  report_rule(m1.space(0.09.um, euclidian).not_inside(excl_sram),
+              'MET1_S_1', 'MET1_S_1 : Space between two M1s >= 0.09um')
+
+  # MET1_A_1: SETLAYER X = AREA M1 < 0.042
+  #           OUTLAYER (X NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  logger.info('Executing rule MET1_A_1')
+  report_rule(m1.with_area(nil, 0.042).not_inside(excl_sram),
+              'MET1_A_1', 'MET1_A_1 : M1 area >= 0.042um2')
+
+  # MET1_A_2: SETLAYER X = (HOLES M1 INNER EMPTY) NOT M1
+  #           OUTLAYER (AREA X < 0.18) NOT INSIDE NODRC
+  logger.info('Executing rule MET1_A_2')
+  report_rule(small_holes(m1, 0.18).not_inside(excl_nodrc),
+              'MET1_A_2', 'MET1_A_2 : Enclosed dielectric area by M1 >= 0.18um2')
+
+  # TODO: MET1_W_2/3, MET1_S_2 (wide metal: Mn_2b M1ALL 0.42 0.42 0.15), MET1_S_3..5, MET1_D_* (density)
+end

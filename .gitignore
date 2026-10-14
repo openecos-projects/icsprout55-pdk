@@ -2,3 +2,6 @@
 /**/gds/
 *.tar.bz2
 *.mk
+ics55/*
+icsprout55/*
+.DS_Store

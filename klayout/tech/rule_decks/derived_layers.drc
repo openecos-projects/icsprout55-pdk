@@ -1,0 +1,84 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#================================================
+#--------------- DERIVED LAYERS -----------------
+#================================================
+# Hand translation of the derived layer section of the Calibre deck
+# (ICsprout_CalDRC_55LLULP1233_REV1_0_OS.drc, around lines 850-1900).
+# Only the layers needed by the translated rules are defined here.
+# The Calibre statement is kept as a comment above each definition.
+
+logger.info('Deriving layers.')
+
+# Markers / exclusion regions
+# GRID = GRBLK OR SRINGBLK
+grid = grblk | sringblk
+# DEUPAD = COPY DEUPADi
+deupad = deupadi
+# PA = COPY CBi
+pa = cbi
+
+# FEOL
+# AA = COPY ACTi
+aa = acti
+# NW = COPY NW1i
+nw = nw1i
+# DNW = COPY DNWi
+dnw = dnwi
+# PO = COPY POLYi
+po = polyi
+# SDN = COPY NPi / SDP = COPY PPi
+sdn = npi
+sdp = ppi
+# DG = COPY DGOX / TG = COPY TGOX
+dg = dgox
+tg = tgox
+# CT = OR CTi CTbar
+ct = cti | ctbar
+
+# NW flavours (used by NW1 spacing)
+# NW00 = NW NOT NW1res
+nw00 = nw - nw1res
+# HVNW = NW NOT OUTSIDE TG / MVNW = NW NOT OUTSIDE DG
+hvnw = nw.not_outside(tg)
+mvnw = nw.not_outside(dg)
+# LVNW = (NW NOT HVNW) NOT MVNW
+lvnw = (nw - hvnw) - mvnw
+# LVNW0 = NW00 AND LVNW
+lvnw0 = nw00 & lvnw
+# NWRES = NW AND NW1res
+nwres = nw & nw1res
+
+# BEOL
+# Mn = METno NOT METnsloti
+m1 = met1o - met1sloti
+m2 = met2o - met2sloti
+m3 = met3o - met3sloti
+m4 = met4o - met4sloti
+m5 = met5o - met5sloti
+# T4M2 = T4M2o NOT T4M2sloti
+t4m2 = t4m2o - t4m2sloti
+
+# Vn_org = OR VIAni VIAnbar
+v1 = via1i | via1bar
+v2 = via2i | via2bar
+v3 = via3i | via3bar
+v4 = via4i | via4bar
+# T4V2 = OR T4V2i T4V2bar
+t4v2 = t4v2i | t4v2bar
