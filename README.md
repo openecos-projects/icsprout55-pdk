@@ -34,18 +34,6 @@ make unzip PROXY_USE=true
 make unzip PROXY_USE=true TOOL=wget
 ```
 
-### IO Liberty corner restrictions
-
-> [!WARNING]
-> Do not use the IO Liberty corners `ss_1p08_2p97_m40c`,
-> `ff_1p32_3p63_125c`, or `ff_1p32_3p63_m40c` for timing-driven synthesis,
-> implementation, static timing analysis, or timing signoff until corrected
-> library data have been supplied and validated. These files contain anomalous
-> `P65_1233_PBMUX` three-state enable timing tables. They remain in the repository
-> for traceability; their presence does not mean they are suitable for use.
->
-> See the [IO Liberty corner restrictions and evidence](IP/IO/ICsprout_55LLULP1233_IO_251013/liberty/README.md).
-
 ## Introduction
 
 The **ICsprout 55nm Open Source PDK** (hereinafter referred to as ICS55) is an open source [Process Design Kit](https://en.wikipedia.org/wiki/Process_design_kit) independently developed by ICsprout Integrated Circuit Co., Ltd. (hereinafter referred to as ICsprout) and College of Integrated Circuits Zhejiang University (hereinafter referred to as IC, ZJU), maintained and released (first released in October 2025) by **ECOS Team, Institute of Computing Technology, Chinese Academy of Sciences (hereinafter referred to as ECOS Team).** A significant breakthrough in the global open source chip ecosystem, **ICS55 represents the industry's most advanced open source process node at the time of its release**. Built on mature 55nm CMOS process technology, it provides a complete and production-proven design rule files, device models, standard cell libraries, and parameterized cells. It fully supports the backend physical design flow of digital integrated circuits, including key steps such as logic synthesis, place and route, and physical verification, etc. Ultimately, it can be taped out on ICsprout's own production lines.
