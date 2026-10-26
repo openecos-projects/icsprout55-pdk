@@ -1,0 +1,194 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#================================================
+#----------------- SCHEMATIC --------------------
+#================================================
+# Reads CDL/SPICE schematics such as the PDK standard cell and IO CDLs.
+#
+# The CDLs installed in the PDK are already converted by hacking/cdl_convert.py.
+# The same cleanup is applied here so that raw vendor CDLs (and the merged
+# netlist written by LibreLane) can be read as well; it is a no-op on converted files:
+#   - "+" continuation lines are joined
+#   - the CDL "/" separator on X lines and "$X=.. $Y=.." annotations are removed
+#   - repeated, identical .SUBCKT definitions (INV, TG, NAND2, ...) are kept once
+#   - parameters used but not declared in a .SUBCKT (nw, pw, nl, pl) get a default
+# The cleaned copy is written next to the LVS report.
+
+# Sheet resistance used for the poly resistors on both sides (Calibre: VARIABLE rsh_rppo 10.252)
+RSH_RPPO = 10.252
+
+# Subcircuit calls read as devices (the CDL has them as empty .SUBCKTs)
+RES_MODELS = %w[re_ppo_2t re_ppo_sab_2t].freeze
+
+module CdlCleaner
+  NUM_RE = /\A[-+]?(\d+\.?\d*|\.\d+)([eE][-+]?\d+)?[a-zA-Z]*\z/.freeze
+
+  def self.join_continuations(lines)
+    out = []
+    lines.each do |line|
+      if line.start_with?('+') && !out.empty?
+        out[-1] = "#{out[-1]} #{line[1..].strip}"
+      else
+        out << line.rstrip
+      end
+    end
+    out
+  end
+
+  def self.clean_device(line)
+    line.split.reject { |t| t == '/' || t.start_with?('$') }.join(' ')
+  end
+
+  # Identifiers used as parameter values but not declared on the .SUBCKT line
+  def self.undeclared_params(header, body)
+    declared = header.split[2..].select { |t| t.include?('=') }.map { |t| t.split('=')[0].downcase }
+    params = {}
+    body.each do |line|
+      next if line.start_with?('*')
+
+      line.scan(/(\w+)\s*=\s*([^\s=]+)/).each do |key, val|
+        next if val =~ NUM_RE || declared.include?(val.downcase) || params.key?(val.downcase)
+        next unless val =~ /\A[A-Za-z_]\w*\z/
+
+        params[val.downcase] = key.downcase == 'l' ? '60n' : '200n'
+      end
+    end
+    params
+  end
+
+  def self.clean(text, logger)
+    lines = join_continuations(text.lines.map(&:chomp))
+    out = []
+    seen = {}
+    i = 0
+    while i < lines.size
+      line = lines[i]
+      unless line =~ /\A\s*\.subckt\b/i
+        out << line
+        i += 1
+        next
+      end
+      j = i
+      j += 1 until j >= lines.size || lines[j] =~ /\A\s*\.ends\b/i
+      header = line
+      body = lines[(i + 1)...j]
+      ends = lines[j] || '.ENDS'
+      i = j + 1
+      name = header.split[1].downcase
+      key = ([header] + body).map { |l| l.split.join(' ') }.join("\n")
+      if seen.key?(name)
+        logger.warn("Schematic: subcircuit #{name} defined twice with different bodies, keeping the first") if seen[name] != key
+        next
+      end
+      seen[name] = key
+      params = undeclared_params(header, body)
+      header = "#{header} #{params.map { |k, v| "#{k}=#{v}" }.join(' ')}" unless params.empty?
+      out << header
+      body.each { |b| out << (b.start_with?('*') || b.strip.empty? ? b : clean_device(b)) }
+      out << ends
+    end
+    "#{out.join("\n")}\n"
+  end
+end
+
+# Netlist reader delegate: MOS, diodes and the poly resistor subcircuits
+class Ics55SpiceReader < RBA::NetlistSpiceReaderDelegate
+  def wants_subcircuit(name)
+    RES_MODELS.include?(name.downcase)
+  end
+
+  def element(circuit, el, name, model, value, nets, params)
+    case el
+    when 'M'
+      make_mos(circuit, name, model, nets, params)
+    when 'D'
+      make_diode(circuit, name, model, nets, params)
+    when 'X'
+      make_res(circuit, name, model, nets, params)
+    else
+      false
+    end
+  end
+
+  private
+
+  def device_class(circuit, model, klass)
+    cls = circuit.netlist.device_class_by_name(model)
+    unless cls
+      cls = klass.new
+      cls.name = model
+      circuit.netlist.add(cls)
+    end
+    cls
+  end
+
+  def mult(params)
+    (params['M'] || 1.0).to_f
+  end
+
+  # SPICE values are in SI units, KLayout device parameters in um / um2
+  def make_mos(circuit, name, model, nets, params)
+    return false unless nets.size == 4
+
+    cls = device_class(circuit, model, RBA::DeviceClassMOS4Transistor)
+    dev = circuit.create_device(cls, name)
+    %w[S G D B].each_with_index { |t, i| dev.connect_terminal(t, nets[i]) }
+    dev.set_parameter('W', params['W'].to_f * 1e6 * mult(params))
+    dev.set_parameter('L', params['L'].to_f * 1e6)
+    true
+  end
+
+  def make_diode(circuit, name, model, nets, params)
+    return false unless nets.size == 2
+
+    cls = device_class(circuit, model, RBA::DeviceClassDiode)
+    dev = circuit.create_device(cls, name)
+    dev.connect_terminal('A', nets[0])
+    dev.connect_terminal('C', nets[1])
+    area = params['AREA'] || params['A'] || 0.0
+    perim = params['PJ'] || params['P'] || 0.0
+    dev.set_parameter('A', area.to_f * 1e12 * mult(params))
+    dev.set_parameter('P', perim.to_f * 1e6 * mult(params))
+    true
+  end
+
+  def make_res(circuit, name, model, nets, params)
+    return false unless nets.size == 2
+
+    cls = device_class(circuit, model, RBA::DeviceClassResistor)
+    dev = circuit.create_device(cls, name)
+    dev.connect_terminal('A', nets[0])
+    dev.connect_terminal('B', nets[1])
+    w = params['W'].to_f * 1e6
+    l = params['L'].to_f * 1e6
+    m = mult(params)
+    dev.set_parameter('W', w * m)
+    dev.set_parameter('L', l)
+    dev.set_parameter('R', w.positive? ? RSH_RPPO * l / w / m : 0.0)
+    true
+  end
+end
+
+# Clean a schematic file and return the path of the cleaned copy
+def clean_schematic(path, out_dir, logger)
+  cleaned = File.join(out_dir, "#{File.basename(path, '.*')}_lvs.cdl")
+  File.write(cleaned, CdlCleaner.clean(File.read(path, encoding: 'ISO-8859-1'), logger))
+  logger.info("Cleaned schematic written to #{cleaned}")
+  cleaned
+end

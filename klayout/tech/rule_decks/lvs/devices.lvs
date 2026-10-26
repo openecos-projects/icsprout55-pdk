@@ -1,0 +1,104 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#================================================
+#--------------- DEVICE EXTRACTION --------------
+#================================================
+# Calibre: DEVICE statements around line 3309 (MOS), 3457 (diodes), 3653 (poly resistors).
+# Device class names are the model names used in the CDL netlists.
+
+logger.info('Starting device extraction.')
+
+#---------------- MOS ----------------
+# DEVICE MN(model) gate gate(G) nSD(S) nSD(D) pWell(B)
+# DEVICE MP(model) gate gate(G) pSD(S) pSD(D) nWell(B)
+# NMOS bulk: global substrate (empty "bulk" layer) outside SUBCKTLVS islands,
+# the island p-well (psub_iso) inside. PMOS bulk: the n-well.
+MOS_DEVICES = [
+  ['nm1p2_svt_lp', ncore_svt_gate, nsd, :sub],
+  ['pm1p2_svt_lp', pcore_svt_gate, psd, nwell],
+  ['nm1p2_hvt_lp', ncore_hvt_gate, nsd, :sub],
+  ['pm1p2_hvt_lp', pcore_hvt_gate, psd, nwell],
+  ['nm1p2_lvt_lp', ncore_lvt_gate, nsd, :sub],
+  ['pm1p2_lvt_lp', pcore_lvt_gate, psd, nwell],
+  ['nm3p3_lp', nio2_gate, nsd, :sub],
+  ['pm3p3_lp', pio2_gate, psd, nwell]
+].freeze
+
+def extract_mos(model, gate, sd, poly, well)
+  extract_devices(mos4(model), { 'SD' => sd, 'G' => gate, 'tS' => sd, 'tD' => sd,
+                                 'tG' => poly, 'W' => well })
+end
+
+MOS_DEVICES.each do |model, gate, sd, well|
+  logger.info("Extracting #{model}")
+  if well == :sub
+    extract_mos(model, gate - subcktlvs, sd, poly_con, bulk)
+    extract_mos(model, gate & subcktlvs, sd, poly_con, psub_iso)
+  else
+    extract_mos(model, gate, sd, poly_con, well)
+  end
+end
+
+#---------------- Diodes ----------------
+# DEVICE D(dio_*_np_pw_*) ndio pWell(POS) ndio(NEG)   -> anode on the substrate
+# DEVICE D(dio_*_pp_nw_*) pdio pdio(POS) nWell(NEG)   -> cathode on the n-well
+# p-well diodes outside the islands: the anode is a copy of the junction,
+# connected to the global SUBSTRATE (connectivity.lvs). Inside: the island p-well.
+DIODE_DEVICES = [
+  ['dio_1p2_np_pw_lp', :sub, ndio_svt],
+  ['dio_1p2_pp_nw_lp', pdio_svt, nwell],
+  ['dio_1p2_np_pw_hvt_lp', :sub, ndio_hvt],
+  ['dio_1p2_pp_nw_hvt_lp', pdio_hvt, nwell],
+  ['dio_1p2_np_pw_lvt_lp', :sub, ndio_lvt],
+  ['dio_1p2_pp_nw_lvt_lp', pdio_lvt, nwell],
+  ['dio_3p3_np_pw_lp', :sub, ndio_io2],
+  ['dio_3p3_pp_nw_lp', pdio_io2, nwell]
+].freeze
+
+# Anode copies of the p-well diodes on the global substrate
+dio_sub_anodes = []
+
+DIODE_DEVICES.each do |model, p_layer, n_layer|
+  logger.info("Extracting #{model}")
+  if p_layer == :sub
+    n_main = n_layer - subcktlvs
+    anode = n_main.dup
+    dio_sub_anodes << anode
+    # Cathode terminals go on the full junction layer, which is the one connected to the contacts
+    extract_devices(diode(model), { 'P' => anode, 'N' => n_main, 'tA' => anode, 'tC' => n_layer })
+    extract_devices(diode(model), { 'P' => psub_iso, 'N' => n_layer & subcktlvs,
+                                    'tA' => psub_iso, 'tC' => n_layer })
+  else
+    extract_devices(diode(model), { 'P' => p_layer, 'N' => n_layer })
+  end
+end
+
+#---------------- Poly resistors ----------------
+# DEVICE re_ppo_2t rppo_2T ppoly(POS) ppoly(NEG) CMACRO RES_PO_PRO rppo_2T ppoly rsh_rppo ...
+# DEVICE re_ppo_sab_2t rpposab_2T ppoly(POS) ppoly(NEG) CMACRO RES_PO_PRO rpposab_2T ppoly rsh_rppo ...
+# W and L are compared; R uses the same sheet resistance on both sides (schematic.lvs).
+RES_DEVICES = [
+  ['re_ppo_2t', rppo_2t, ppoly],
+  ['re_ppo_sab_2t', rpposab_2t, ppoly]
+].freeze
+
+RES_DEVICES.each do |model, body, terminal|
+  logger.info("Extracting #{model}")
+  extract_devices(resistor(model, RSH_RPPO), { 'R' => body, 'C' => terminal })
+end

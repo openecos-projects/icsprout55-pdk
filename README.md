@@ -34,6 +34,57 @@ make unzip PROXY_USE=true
 make unzip PROXY_USE=true TOOL=wget
 ```
 
+### Open tool flow (LibreLane, KLayout, Magic, ngspice)
+
+`make openpdk` builds an OpenPDK-style tree in `icsprout55/` from the vendor IP
+and the open tool views in this repository. It runs `make unzip` for you if the
+large files are not there yet.
+
+```bash
+make openpdk
+export PDK_ROOT=$(pwd)
+export PDK=icsprout55
+```
+
+Point LibreLane at it with `--pdk icsprout55 --manual-pdk`. The PDK plugin in
+`librelane/librelane_plugin_ics55` provides the `ICS55.KLayoutLVS` step and is
+picked up through `PYTHONPATH`:
+
+```bash
+export PYTHONPATH=$PDK_ROOT/$PDK/libs.tech/librelane:$PYTHONPATH
+```
+
+Standard cell libraries (`--scl`, default `ics55_LLSC_H7CR`):
+
+| Library | Site | Notes |
+|---|---|---|
+| `ics55_LLSC_H7CR` / `ics55_LLSC_H7CH` / `ics55_LLSC_H7CL` | `core7` (0.2 x 1.4) | 7-track, regular / high / low Vt, shipped with this repository |
+| `ICsprout55_9TSVT_basic` / `ICsprout55_9THVT_basic` / `ICsprout55_9TLVT_basic` | `SC9T_site` (0.2 x 1.8) | 9-track, only installed when the `ICsprout_55LLULP1225_STD_0818` vendor directory is next to this repository (`PRIVATE_STD_ROOT=<dir>` to point elsewhere) |
+
+The 9-track libraries ship 16 liberty corners as NLDM and CCS plus `.db`, about
+15 GB per library, so only the three NLDM corners used by
+`librelane/config.tcl` are installed. `make openpdk PRIVATE_STD_LIBERTY=all`
+installs every NLDM corner instead.
+
+`make openpdk PDK_NAME=<name>` installs under a different directory name, and
+`make clean-openpdk` removes the tree.
+
+### Demos
+
+| Demo | What it does |
+|---|---|
+| `demo_counter` | a small counter through the full LibreLane flow (synthesis to GDS, KLayout DRC and LVS) |
+| `demo_chip` | `demo_counter` as a macro in a padded chip top level |
+| `demo_sim` | ngspice device and standard cell simulations |
+
+```bash
+make openpdk
+cd demo_counter && bash run.sh
+```
+
+`demo_counter/run.sh` also shows how to select another standard cell library.
+
+
 ## Introduction
 
 The **ICsprout 55nm Open Source PDK** (hereinafter referred to as ICS55) is an open source [Process Design Kit](https://en.wikipedia.org/wiki/Process_design_kit) independently developed by ICsprout Integrated Circuit Co., Ltd. (hereinafter referred to as ICsprout) and College of Integrated Circuits Zhejiang University (hereinafter referred to as IC, ZJU), maintained and released (first released in October 2025) by **ECOS Team, Institute of Computing Technology, Chinese Academy of Sciences (hereinafter referred to as ECOS Team).** A significant breakthrough in the global open source chip ecosystem, **ICS55 represents the industry's most advanced open source process node at the time of its release**. Built on mature 55nm CMOS process technology, it provides a complete and production-proven design rule files, device models, standard cell libraries, and parameterized cells. It fully supports the backend physical design flow of digital integrated circuits, including key steps such as logic synthesis, place and route, and physical verification, etc. Ultimately, it can be taped out on ICsprout's own production lines.
@@ -114,6 +165,32 @@ The ICsprout55 Open Source PDK contents:
         ├── ICsprout_CalLVS_55LLULP1233_REV1_0_OS.lvs
         └── subckt.sp
 ```
+
+The open tool views added for the LibreLane flow, installed into `icsprout55/`
+by `make openpdk`:
+
+```
+├── klayout                                  # KLayout DRC and LVS decks
+│   └── tech
+│       ├── ics55.drc, ics55.lvs             # entry points
+│       ├── ics55.lyp, ics55.lyt, ics55.map  # layer properties / stack / DEF map
+│       └── rule_decks                       # the rules, translated from pv/
+├── librelane                                # LibreLane PDK configuration
+│   ├── config.tcl                           # PDK level: views, corners, routing
+│   ├── N551P6M_ecos.lef                     # technology LEF
+│   ├── ics55_LLSC_H7C_common.tcl            # shared 7-track configuration
+│   ├── ICsprout55_SC9T_common.tcl           # shared 9-track configuration
+│   ├── <standard cell library>              # cells, synthesis maps, tracks, RCX
+│   └── librelane_plugin_ics55               # ICS55.KLayoutLVS step
+├── magic                                    # Magic technology file
+├── netgen                                   # netgen setup
+├── ngspice                                  # device models for ngspice
+├── hspice                                   # the vendor models the ngspice ones come from
+├── scripts                                  # generators: CDL conversion, layer maps
+├── demo_counter, demo_chip, demo_sim        # see Demos above
+└── Makefile
+```
+
 
 ## About
 

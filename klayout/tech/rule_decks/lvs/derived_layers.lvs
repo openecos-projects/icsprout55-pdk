@@ -1,0 +1,172 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#================================================
+#--------------- DERIVED LAYERS -----------------
+#================================================
+# Hand translation of the "Logic Operation" section of the Calibre LVS deck
+# (ICsprout_CalLVS_55LLULP1233_REV1_0_OS.lvs, around lines 1636-1860).
+# The Calibre statement is kept as a comment above each definition.
+# Options fixed to the Calibre defaults: IO TGOX_33, TOTALMETAL 6, TOP_METAL_NUM SINGLE.
+
+logger.info('Deriving layers.')
+
+# Empty layer standing for the p-substrate. NMOS bulk and p-well diode anodes
+# are connected to the global net SUBSTRATE through it (see connectivity.lvs).
+bulk = polygon_layer
+
+#---------------- Poly ----------------
+# PO = OR POLY POLYdm / AA = OR ACT ACTdm / CTs = OR CT CTbar
+po = poly | polydm
+aa = act | actdm
+cts = ct | ctbar
+
+# AA_eff_reg = (AA INTERACT CTs) OR (AA INTERACT (PO INTERACT CTs))
+aa_eff_reg = aa.interacting(cts) | aa.interacting(po.interacting(cts))
+
+# resPOLY = PO AND (OR (POLYres NOT INTERACT SAB) (POLYres AND SAB) HRPBLK)
+res_poly = po & (polyres.not_interacting(sab) | (polyres & sab) | hrpblk)
+# non_resPOLY = PO NOT resPOLY
+non_res_poly = po - res_poly
+
+# gpoly = non_resPOLY AND AA / poGate = (gpoly AND AA_eff_reg) NOT POLYdm
+gpoly = non_res_poly & aa
+po_gate = (gpoly & aa_eff_reg) - polydm
+# connpoly = non_resPOLY NOT gpoly / npoly = connpoly AND NP / ppoly = connpoly NOT npoly
+connpoly = non_res_poly - gpoly
+npoly = connpoly & np
+ppoly = connpoly - npoly
+# npoGate = poGate INSIDE NP / ppoGate = poGate INSIDE PP
+npo_gate = po_gate.inside(np)
+ppo_gate = po_gate.inside(pp)
+# Gate poly is part of the poly conductor (Calibre: CONNECT npoly ngpoly / ppoly pgpoly / *_gate)
+poly_con = non_res_poly
+
+#---------------- Diffusion ----------------
+# nDif = AA AND NP / pDif = AA AND PP
+ndif = aa & np
+pdif = aa & pp
+# nresDiff = (nDif NOT PO) AND ((ACTres NOT INTERACT SAB) OR (ACTres AND SAB))
+act_res_mk = actres.not_interacting(sab) | (actres & sab)
+nres_diff = (ndif - po) & act_res_mk
+pres_diff = (pdif - po) & act_res_mk
+# nDiff = (nDif NOT PO) NOT nresDiff
+ndiff = (ndif - po) - nres_diff
+pdiff = (pdif - po) - pres_diff
+
+#---------------- Wells ----------------
+# non_resNW = NW NOT NW1res / nWell = bulk AND non_resNW
+nwell = nw - nw1res
+
+# nTap = (nDiff AND NW) INTERACT CT / pTap = (pDiff NOT NW) INTERACT CT
+ntap = (ndiff & nw).interacting(ct)
+ptap = (pdiff - nw).interacting(ct)
+# Substrate islands. Calibre:
+#   sub2 = SIZE SUBCKTLVS BY 0.005 / sub2Ring = sub2 NOT SUBCKTLVS
+#   non_pWell = sub2Ring OR NW / pWell = bulk NOT non_pWell
+# i.e. the p-substrate inside a SUBCKTLVS marker is cut off from the rest.
+# Outside the markers the substrate is the global net SUBSTRATE (empty "bulk"
+# layer); inside, a real p-well polygon per island.
+psub_iso = subcktlvs - nwell
+ptap_iso = ptap & subcktlvs
+ptap_main = ptap - subcktlvs
+
+# nJunc = nDiff NOT NW / pJunc = pDiff AND NW
+njunc = ndiff - nw
+pjunc = pdiff & nw
+
+# nSD = ((nJunc NOT BJT) NOT DIODE) NOT LDMOS
+nsd = njunc - bjt - diode - ldmos
+psd = pjunc - bjt - diode - ldmos
+
+#---------------- MOS gates ----------------
+# ngate = npoGate NOT nWell / pgate = ppoGate AND nWell
+ngate = npo_gate - nwell
+pgate = ppo_gate & nwell
+# ngate_core = (ngate NOT DGOX) NOT TGOX
+ngate_core = ngate - dgox - tgox
+pgate_core = pgate - dgox - tgox
+
+# nonSVT = NVT1 OR PVT1 OR NVT3 OR PVT3 OR SRAMALL OR BJT OR ACTres OR VARAM OR ULLD OR ESDIOE
+non_svt_esd = nvt1 | pvt1 | nvt3 | pvt3 | sramall | bjt | actres | varam | ulld
+non_svt = non_svt_esd | esdioe
+
+# ncore_svt_gate = (((ngate_core NOT PSUB) NOT OD1) NOT UD) NOT nonSVT
+ncore_svt_gate = ngate_core - psub - od - ud - non_svt
+pcore_svt_gate = pgate_core - psub - od - ud - non_svt
+# ncore_hvt_gate = (((((ngate_core NOT PSUB) NOT SRAMALL) AND NVT3) NOT OD1) NOT UD) NOT ULLD
+ncore_hvt_gate = ((ngate_core - psub - sramall) & nvt3) - od - ud - ulld
+pcore_hvt_gate = ((pgate_core - psub - sramall) & pvt3) - od - ud - ulld
+# ncore_lvt_gate = ((((ngate_core NOT PSUB) NOT SRAMALL) AND NVT1) NOT OD1) NOT UD
+ncore_lvt_gate = ((ngate_core - psub - sramall) & nvt1) - od - ud
+pcore_lvt_gate = ((pgate_core - psub - sramall) & pvt1) - od - ud
+# IO TGOX_33:
+# nio2_gate = (((((ngate AND TGOX) NOT DGOX) NOT PSUB) NOT OD1) NOT UD) NOT nonSVT_esd
+nio2_gate = (ngate & tgox) - dgox - psub - od - ud - non_svt_esd
+pio2_gate = (pgate & tgox) - dgox - psub - od - ud - non_svt_esd
+
+#---------------- Diodes ----------------
+# nDioJunc = (nJunc NOT ACTres) AND DIODE / pDioJunc = (pJunc NOT ACTres) AND DIODE
+ndio_junc = (njunc - actres) & diode
+pdio_junc = (pjunc - actres) & diode
+dio_core = (ndio_junc | pdio_junc) - dgox - tgox - psub
+
+# ndiocore_svt_diode = ((((nDioJunc NOT (DGOX OR TGOX)) NOT PSUB) NOT nonSVT) NOT INTERACT DNW
+ndio_svt = ((ndio_junc & dio_core) - non_svt).not_interacting(dnw)
+pdio_svt = (pdio_junc & dio_core) - non_svt
+# ndiocore_hvt_diode = ((nDioJunc NOT (DGOX OR TGOX)) NOT PSUB) AND NVT3
+ndio_hvt = (ndio_junc & dio_core) & nvt3
+pdio_hvt = (pdio_junc & dio_core) & pvt3
+# ndiocore_lvt_diode = ((nDioJunc NOT (DGOX OR TGOX)) NOT PSUB) AND NVT1
+ndio_lvt = (ndio_junc & dio_core) & nvt1
+pdio_lvt = (pdio_junc & dio_core) & pvt1
+# ndioio2_diode = (((nDioJunc AND TGOX) NOT DGOX) NOT PSUB) NOT nonSVT_esd
+ndio_io2 = (ndio_junc & tgox) - dgox - psub - non_svt_esd
+pdio_io2 = (pdio_junc & tgox) - dgox - psub - non_svt_esd
+
+#---------------- Poly resistors ----------------
+# rppo_2T = ((resPOLY AND PP) NOT SAB) NOT RES3TPOLY
+rppo_2t = ((res_poly & pp) - sab) - res3tpoly
+# rpposab_2T = (((resPOLY AND PP) AND SAB) NOT RES3TPOLY) NOT HRP
+rpposab_2t = ((res_poly & pp) & sab) - res3tpoly - hrp
+
+#---------------- Metals ----------------
+# Mn s = (METn OR METndm) NOT (metal resistors)
+# TODO: metal resistors (METnres) are not split out yet.
+# Not in Calibre: the PDK layer map (ics55.map) writes LEF/DEF pin shapes on
+# datatype 6 (Calibre: text only), so these polygons are part of the metal too.
+# The layers are joined with "+" (no merge), not "|": in deep mode a merge with a
+# parent wire that touches a cell pin moves the merged polygon to the parent, the
+# cell label is left without a shape and the cell net loses its name (the pins of
+# the placed standard cells come out unnamed). Connectivity does not need merging.
+m1 = met1 + met1dm + get_polygons(81, 6)
+m2 = met2 + met2dm + get_polygons(82, 6)
+m3 = met3 + met3dm + get_polygons(83, 6)
+m4 = met4 + met4dm + get_polygons(84, 6)
+m5 = met5 + met5dm + get_polygons(85, 6)
+# TOTALMETAL 6 / SINGLE top metal: M6s = T4M2, VA5 = T4V2
+m6 = t4m2 + t4m2dm + get_polygons(103, 6)
+# VAn = VIAn OR VIAnbar (joined, see above)
+va1 = via1 + via1bar
+va2 = via2 + via2bar
+va3 = via3 + via3bar
+va4 = via4 + via4bar
+va5 = t4v2 + t4v2bar
+# PAS = CB OR RV / APs = ALPAD OR RDL
+pas = cb + rv
+aps = alpad + rdl + get_polygons(123, 6)

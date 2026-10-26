@@ -1,0 +1,68 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if BEOL
+  #================================================
+  #------------- T4V2 / T4M2 - Top metal ----------
+  #================================================
+
+  logger.info('Starting T4V2/T4M2 rules')
+
+  # T4V2_W_1: OUTLAYER ((NOT RECTANGLE (T4V2 NOT GT4V2) == 0.36 BY == 0.36) NOT GRID) NOT INSIDE (SRINGBLK OR NODRC)
+  # TODO: the GRID variant (rectangle allowed) is not implemented, GRID is excluded instead.
+  logger.info('Executing rule T4V2_W_1')
+  report_rule(not_square(t4v2, 0.36).not_inside(grid | sringblk | nodrc),
+              'T4V2_W_1', 'T4V2_W_1 : Fixed T4V2 size (square) = 0.36um')
+
+  # T4V2_S_1: OUTLAYER (EXT T4V2 < 0.34 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+  logger.info('Executing rule T4V2_S_1')
+  report_rule(t4v2.space(0.34.um, euclidian).not_inside(excl_nodrc),
+              'T4V2_S_1', 'T4V2_S_1 : Space between two T4V2s >= 0.34um')
+
+  # T4M2_W_1: OUTLAYER ((INT T4M2 < 0.40 ABUT<90 SINGULAR REGION) NOT INDALL) NOT INSIDE NODRC
+  #           (INDALL: ABUT<89)
+  #           X = (T4M2 NOT DEUPAD) WITH WIDTH > 20.00
+  #           OUTLAYER ((X NOT INTERACT PA) NOT INDALL) NOT INSIDE NODRC
+  # TODO: INDALL 89 deg waiver not implemented.
+  logger.info('Executing rule T4M2_W_1')
+  report_rule(t4m2.width(0.40.um, euclidian).not_inside(excl_nodrc),
+              'T4M2_W_1', 'T4M2_W_1 : T4M2 width >= 0.40um')
+  report_rule((wider_than(t4m2 - deupad, 20.0).not_interacting(pa) - indall).not_inside(excl_nodrc),
+              'T4M2_W_1_max', 'T4M2_W_1 : T4M2 width <= 20um')
+
+  # T4M2_S_1: OUTLAYER ((EXT T4M2 < 0.40 ABUT<90 SINGULAR REGION) NOT INDALL) NOT INSIDE NODRC
+  # TODO: INDALL 89 deg waiver not implemented.
+  logger.info('Executing rule T4M2_S_1')
+  report_rule(t4m2.space(0.40.um, euclidian).not_inside(excl_nodrc),
+              'T4M2_S_1', 'T4M2_S_1 : Space between T4M2s >= 0.40um')
+
+  # T4M2_A_1: OUTLAYER (AREA T4M2 < 0.40) NOT INSIDE NODRC
+  logger.info('Executing rule T4M2_A_1')
+  report_rule(t4m2.with_area(nil, 0.40).not_inside(excl_nodrc),
+              'T4M2_A_1', 'T4M2_A_1 : T4M2 area >= 0.40um2')
+
+  # T4M2_A_2: X = (HOLES T4M2 INNER) NOT T4M2
+  #           OUTLAYER (AREA X < 0.6) NOT INSIDE NODRC
+  logger.info('Executing rule T4M2_A_2')
+  report_rule(small_holes(t4m2, 0.6).not_inside(excl_nodrc),
+              'T4M2_A_2', 'T4M2_A_2 : Enclosed area by T4M2 >= 0.6um2')
+
+  # TODO: T4V2_W_2, T4V2_S_2, T4V2_EN_* (needs M5/T4M2 enclosure), T4V2_R_*,
+  #       T4M2_S_2 (wide metal: Mn_2b T4M2ALL 2 2 0.5), T4M2_D_* (density)
+end

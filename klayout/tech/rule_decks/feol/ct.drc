@@ -1,0 +1,41 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if FEOL
+  #================================================
+  #------------------ CT - Contact ----------------
+  #================================================
+
+  logger.info('Starting CT rules')
+
+  # CT_W_1: X = NOT RECTANGLE ((CT NOT RCT) NOT GCT) == 0.09 BY == 0.09
+  #         (X NOT INSIDE ((GRID OR SRAMALL) OR EFUSEALL)) NOT INSIDE (SRINGBLK OR NODRC)
+  # TODO: the GRID / EFUSEALL / SRAMALL special cases (rectangular CT allowed there) are not checked yet.
+  logger.info('Executing rule CT_W_1')
+  report_rule(not_square(ct, 0.09).not_inside(grid | sramall | efuseall | sringblk | nodrc),
+              'CT_W_1', 'CT_W_1 : Fixed CT size (square) = 0.09um')
+
+  # CT_S_1: X = EXT CT < 0.11 ABUT<90 SINGULAR REGION
+  #         (X NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  logger.info('Executing rule CT_S_1')
+  report_rule(ct.space(0.11.um, euclidian).not_inside(excl_sram),
+              'CT_S_1', 'CT_S_1 : Space between two contacts >= 0.11um')
+
+  # TODO: CT_W_2, CT_S_1a..6 (CT_S_2 needs connectivity), CT_EN_* (enclosures), CT_R_*
+end

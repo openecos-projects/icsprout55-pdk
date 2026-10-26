@@ -1,0 +1,49 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if FEOL
+  #================================================
+  #------------------ ACT - Active (AA) -----------
+  #================================================
+
+  logger.info('Starting ACT rules')
+
+  # ACT_W_1: OUTLAYER (INT AA < 0.08 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+  logger.info('Executing rule ACT_W_1')
+  report_rule(aa.width(0.08.um, euclidian).not_inside(excl_nodrc),
+              'ACT_W_1', 'ACT_W_1 : AA width >= 0.08um')
+
+  # ACT_S_1: OUTLAYER (EXT AA < 0.11 ABUT<90 SINGULAR REGION) NOT INSIDE (NODRC OR SRAMALL)
+  logger.info('Executing rule ACT_S_1')
+  report_rule(aa.space(0.11.um, euclidian).not_inside(excl_sram),
+              'ACT_S_1', 'ACT_S_1 : Space between two AAs >= 0.11um')
+
+  # ACT_A_1: SETLAYER X = AREA AA < 0.0384
+  #          OUTLAYER (X NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  logger.info('Executing rule ACT_A_1')
+  report_rule(aa.with_area(nil, 0.0384).not_inside(excl_sram),
+              'ACT_A_1', 'ACT_A_1 : AA area >= 0.0384um2')
+
+  # ACT_A_2: OUTLAYER (AREA ((HOLES AA INNER) NOT AA) < 0.08) NOT INSIDE NODRC
+  logger.info('Executing rule ACT_A_2')
+  report_rule(small_holes(aa, 0.08).not_inside(excl_nodrc),
+              'ACT_A_2', 'ACT_A_2 : AA enclosed area >= 0.08um2')
+
+  # TODO: ACT_W_2/3a/3b (45 deg, gate width), ACT_L_1/2, ACT_S_1a..8, ACT_EN_*, ACT_D_* (density)
+end

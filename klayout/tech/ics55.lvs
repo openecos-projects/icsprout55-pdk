@@ -1,0 +1,383 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#====================================================================================================================
+#------------------------------------------------ ICS55 LVS RULE DECK -----------------------------------------------
+#====================================================================================================================
+# Translation in progress of the Calibre runset
+#   icsprout55-pdk/pv/LVS/ICsprout_CalLVS_55LLULP1233_REV1_0_OS.lvs
+# Extracts the devices used by the PDK standard cells and IO library:
+#   MOS    nm1p2/pm1p2 svt/hvt/lvt, nm3p3/pm3p3 (TGOX)
+#   diodes dio_1p2_{np_pw,pp_nw}{,_hvt,_lvt}_lp, dio_3p3_{np_pw,pp_nw}_lp
+#   res    re_ppo_2t, re_ppo_sab_2t
+#
+# Usage:
+#   klayout -b -r ics55.lvs -rd input=<gds> -rd schematic=<cdl/spice> [-rd topcell=<cell>]
+#           [-rd report=<lvsdb>] [-rd target_netlist=<cir>] [-rd log=<file>]
+#           [-rd run_mode=deep|flat] [-rd tapless=true] [-rd implicit_nets="VDDIO VSSIO"]
+#
+# tapless=true: for tapless standard cells (no taps inside the cell), the
+#   substrate is joined to the ground net and wells without a tap to the power
+#   net of each circuit (names from -rd tapless_power=VDD -rd tapless_ground=VSS).
+#   This is what FILLTAP cells do once the cells are placed in rows.
+#
+# implicit_nets: space or comma separated label patterns whose nets are joined by name
+#   (KLayout connect_implicit), e.g. supply rails of an IO cell that only
+#   connect through the neighbouring cells. "LABEL" applies to the top cell,
+#   "CELL:LABEL" to the cells matching the CELL pattern (e.g. "P65_1233_*:VDDIO").
+#====================================================================================================================
+
+require 'time'
+require 'logger'
+require 'etc'
+require 'pathname'
+
+exec_start_time = Time.now
+
+# Custom formatter including timestamp and memory usage
+formatter = proc do |_severity, datetime, _progname, msg|
+  memory_usage = "#{RBA::Timer.memory_size / 1024}K"
+  "#{datetime}: Memory Usage (#{memory_usage}) : #{msg}\n"
+end
+
+# Create file logger
+file_logger = Logger.new($log)
+file_logger.formatter = formatter
+
+# Create stdout logger
+stdout_logger = Logger.new($stdout)
+stdout_logger.formatter = formatter
+
+# Don't buffer stdout
+$stdout.sync = true
+
+# MultiLogger class to broadcast to multiple loggers
+class MultiLogger
+  def initialize(*targets)
+    @targets = targets
+  end
+
+  def info(msg)
+    @targets.each { |t| t.info(msg) }
+  end
+
+  def warn(msg)
+    @targets.each { |t| t.warn(msg) }
+  end
+
+  def error(msg)
+    @targets.each { |t| t.error(msg) }
+  end
+end
+
+# Use the multi-logger for your application
+logger = MultiLogger.new(stdout_logger, file_logger)
+
+logger.info('Starting ICS55 LVS')
+
+#================================================
+#----------------- FILE SETUP -------------------
+#================================================
+
+def bool_check?(obj)
+  obj.to_s.downcase == 'true'
+end
+
+if $input
+  if $topcell
+    source($input, $topcell)
+  else
+    source($input)
+  end
+end
+
+layout_dir = Pathname.new($input || RBA::CellView.active.filename).parent.realpath
+top_name = source.cell_name
+report_path = $report || layout_dir.join("#{top_name}.lvsdb").to_s
+out_dir = File.dirname(File.expand_path(report_path))
+logger.info("LVS report at: #{report_path}")
+report_lvs(report_path)
+
+netlist_path = $target_netlist || File.join(out_dir, "#{top_name}_extracted.cir")
+logger.info("Extracted netlist at: #{netlist_path}")
+target_netlist(netlist_path, write_spice(true, false), 'Extracted by KLayout with the ICS55 LVS runset')
+
+#================================================
+#------------------ SWITCHES --------------------
+#================================================
+
+$run_mode ||= 'deep'
+case $run_mode
+when 'flat'
+  flat
+else
+  deep
+end
+logger.info("#{$run_mode} mode is enabled.")
+
+threads(($threads || Etc.nprocessors).to_i)
+
+TAPLESS = bool_check?($tapless)
+TAPLESS_POWER = $tapless_power || 'VDD'
+TAPLESS_GROUND = $tapless_ground || 'VSS'
+logger.info("Tapless mode: #{TAPLESS} (power #{TAPLESS_POWER}, ground #{TAPLESS_GROUND})")
+
+IMPLICIT_NETS = ($implicit_nets || '').split(/[\s,]+/).reject(&:empty?)
+logger.info("Implicit nets: #{IMPLICIT_NETS.join(' ')}") unless IMPLICIT_NETS.empty?
+
+#================================================
+#------------------ RULE DECKS ------------------
+#================================================
+
+# %include rule_decks/lvs/layers_def.lvs
+# %include rule_decks/lvs/schematic.lvs
+# %include rule_decks/lvs/derived_layers.lvs
+# %include rule_decks/lvs/devices.lvs
+# %include rule_decks/lvs/connectivity.lvs
+
+IMPLICIT_NETS.each do |entry|
+  cell, label = entry.split(':', 2)
+  label ? connect_implicit(cell, label) : connect_implicit(cell)
+end
+
+#================================================
+#------------------ SCHEMATIC -------------------
+#================================================
+
+if $schematic
+  schematic(clean_schematic($schematic, out_dir, logger), RBA::NetlistSpiceReader.new(Ics55SpiceReader.new))
+  logger.info("Schematic: #{$schematic}")
+else
+  logger.error('No schematic given (-rd schematic=<file>)')
+  raise 'No schematic given'
+end
+
+#================================================
+#------------------ TAPLESS ---------------------
+#================================================
+
+# Tie the substrate to ground and untapped wells to power in every circuit
+def tie_tapless(nl, power, ground, logger)
+  nl.each_circuit do |c|
+    gnd = c.net_by_name(ground)
+    pwr = c.net_by_name(power)
+    sub = c.net_by_name('SUBSTRATE')
+    c.join_nets(gnd, sub) if gnd && sub && gnd != sub
+    next unless pwr
+
+    # Untapped well: a net without pins whose terminals are all MOS bulks or diode cathodes
+    floating = c.each_net.select do |n|
+      next false if n == pwr || n.pin_count.positive? || n.subcircuit_pin_count.positive?
+      next false if n.terminal_count.zero?
+
+      n.each_terminal.all? do |t|
+        tname = t.terminal_def.name
+        (t.device.device_class.is_a?(RBA::DeviceClassMOS4Transistor) && tname == 'B') ||
+          (t.device.device_class.is_a?(RBA::DeviceClassDiode) && tname == 'C')
+      end
+    end
+    floating.each { |n| c.join_nets(pwr, n) }
+    logger.info("Tapless: #{c.name}: joined #{floating.size} well net(s) to #{power}") unless floating.empty?
+  end
+end
+
+if TAPLESS
+  tie_tapless(netlist, TAPLESS_POWER, TAPLESS_GROUND, logger)
+end
+
+#================================================
+#------------- PORTS FROM LABELS ----------------
+#================================================
+
+# Calibre "PORT LAYER TEXT": a labelled net of a cell is a port even when the
+# parent does not connect it (e.g. an unused output). KLayout only creates pins
+# for nets connected from above, so add the missing ones here, with a new
+# (dangling) net on every instance of the cell.
+def expose_labeled_pins(nl, top_name)
+  nl.each_circuit_bottom_up do |c|
+    next if c.name == top_name
+
+    c.each_net.to_a.each do |n|
+      next if n.name.to_s.empty? || n.pin_count.positive?
+
+      pin = c.create_pin(n.name)
+      c.connect_pin(pin, n)
+      c.each_ref do |sc|
+        sc.connect_pin(pin, sc.circuit.create_net)
+      end
+    end
+  end
+end
+
+expose_labeled_pins(netlist, top_name)
+
+#================================================
+#--------- PINS SHORTED BY ALL PARENTS ----------
+#================================================
+
+# Two pins of a cell that connect to the same net in every instance are
+# shorted outside of the cell, so they are joined into one pin. This is the
+# case for the wells and substrate of the tapless standard cells (tied by
+# FILLTAP through abutment and the global substrate) and for supply rails that
+# come in pieces inside an IO cell. A pin left open in any instance stays
+# separate and still shows up as a mismatch.
+#
+# This runs on both netlists. On the layout side it joins the well / substrate
+# pins of the extracted cells; on the schematic side it does the same for
+# libraries whose CDL has the well bias as explicit pins (the private 9-track
+# standard cells have VNW / VPW on every cell, tied to VDD / VSS by the taps in
+# the layout and by the global connections of the placed netlist). Joining one
+# side only would leave those pins without a counterpart and fail every cell.
+def join_shorted_pins(nl, logger)
+  nl.each_circuit_top_down do |c|
+    refs = c.each_ref.to_a
+    next if refs.empty?
+
+    # Net identity in the parents: index of the net in its circuit, looked up
+    # through the subcircuit pin references (the Ruby net objects are not unique)
+    net_index = {}
+    refs.map(&:circuit).uniq(&:name).each do |parent|
+      parent.each_net.each_with_index do |n, i|
+        n.each_subcircuit_pin do |ref|
+          net_index[[parent.name, ref.subcircuit.id, ref.pin_id]] = i
+        end
+      end
+    end
+
+    groups = c.each_pin.to_a.group_by do |pin|
+      ids = refs.map { |sc| net_index[[sc.circuit.name, sc.id, pin.id]] }
+      ids.any?(&:nil?) ? [:open, pin.id] : refs.map { |sc| sc.circuit.name }.zip(ids)
+    end
+    groups.each_value do |pins|
+      next if pins.size < 2
+
+      keep = c.net_for_pin(pins[0].id)
+      pins[1..].each do |pin|
+        other = c.net_for_pin(pin.id)
+        refs.each { |sc| sc.disconnect_pin(pin.id) }
+        c.disconnect_pin(pin.id)
+        c.join_nets(keep, other) if other && keep
+        c.remove_pin(pin.id)
+      end
+      logger.info("#{c.name}: joined #{pins.size} pins shorted in all instances")
+    end
+  end
+end
+
+join_shorted_pins(netlist, logger)
+join_shorted_pins(schematic, logger)
+
+#================================================
+#------------- COMPARISON RESULTS ---------------
+#================================================
+
+# Calibre: LVS REDUCE SPLIT GATES YES (multi-finger series stacks with split internal nodes)
+# split_gates handles the extracted netlist. In addition, symmetric nets (e.g.
+# the split internal nodes of parallel stacks, or two identical halves of a
+# clamp) are joined on both sides so the devices can be combined the same way.
+# This is done before align, which flattens the helper subcircuits: the
+# symmetry is found within e.g. the MUX_PAD driver but not once it is flattened.
+# Only leaf circuits (devices, no subcircuits): KLayout 0.30.10 crashes in
+# join_symmetric_nets on large circuits made only of subcircuit instances.
+# Top-level pins first, so labelled top nets (e.g. VSS1 / VSSIO) are never joined.
+MOS_DEVICES.each { |model, _g, _sd, _w| split_gates(model) }
+netlist.make_top_level_pins
+symmetric = RBA::NetlistComparer.new
+[netlist, schematic].each do |nl|
+  nl.combine_devices
+  nl.each_circuit do |c|
+    next if c.each_device.count.zero? || c.each_subcircuit.count.positive?
+
+    symmetric.join_symmetric_nets(c)
+  end
+  nl.combine_devices
+end
+align
+netlist.simplify
+schematic.simplify
+
+# Calibre: TRACE PROPERTY ... mos_err / dio_err / res_err, all 0.1 (percent)
+PROP_TOL = 0.001
+MOS_DEVICES.each do |model, _g, _sd, _w|
+  tolerance(model, 'W', relative: PROP_TOL)
+  tolerance(model, 'L', relative: PROP_TOL)
+end
+# Resistors: R is derived from W/L on both sides, compare the geometry
+RES_MODELS.each do |model|
+  tolerance(model, 'W', relative: PROP_TOL)
+  tolerance(model, 'L', relative: PROP_TOL)
+end
+DIODE_DEVICES.each do |model, _p, _n|
+  tolerance(model, 'A', relative: PROP_TOL)
+  tolerance(model, 'P', relative: PROP_TOL)
+end
+
+# Pins swapped by the layout. Some cells match only with input pins paired
+# crosswise, because the transistor order of the GDS differs from the CDL (e.g.
+# NAND2X0P5H7R: A drives the NMOS next to the output in the GDS, next to VSS in
+# the CDL; AOI22X3H7R: the A and B AND groups). The cell matches, but every
+# instance then looks miswired. Calibre accepts these through gate recognition
+# (LVS RECOGNIZE GATES); here the permutation found by the cell comparison is
+# declared as equivalent pins and the netlists are compared again. Only the
+# permutations of cells that matched are used.
+def crossed_pins(xref)
+  ok = [RBA::NetlistCrossReference::Match, RBA::NetlistCrossReference::MatchWithWarning]
+  swaps = []
+  xref.each_circuit_pair do |cp|
+    lay, sch = cp.first, cp.second
+    next unless lay && sch && ok.include?(cp.status)
+
+    sch_pins = sch.each_pin.map(&:name)
+    xref.each_pin_pair(cp) do |pp|
+      next unless pp.first && pp.second
+
+      # Layout pin names can be joined ones (e.g. SUBSTRATE|VSS). A swap is only
+      # between two pins of the schematic cell (not e.g. SUBSTRATE vs VSS).
+      names = pp.first.name.to_s.split('|')
+      next if names.empty? || names.include?(pp.second.name)
+
+      other = names.find { |n| sch_pins.include?(n) }
+      swaps << [sch.name, [other, pp.second.name].sort] if other
+    end
+  end
+  swaps.uniq
+end
+
+matched = compare
+unless matched
+  swaps = crossed_pins(lvs_data.xref)
+  swaps.each do |cell, pins|
+    logger.info("#{cell}: pins #{pins.join(' and ')} are swapped in the layout, declared equivalent")
+    equivalent_pins(cell, *pins)
+  end
+  matched = compare unless swaps.empty?
+end
+
+if !matched
+  logger.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+  logger.error("ERROR : Netlists don't match")
+  logger.info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+else
+  logger.info('==========================================')
+  logger.info('INFO : Congratulations! Netlists match.')
+  logger.info('==========================================')
+end
+
+exec_end_time = Time.now
+run_time = exec_end_time - exec_start_time
+logger.info(format('LVS Total Run time %f seconds', run_time))

@@ -1,0 +1,192 @@
+*
+*  release version    : 1.1
+*
+*  simulation tool    : synopsys hspice version N-2017.12-SP2
+*
+*  model type         :
+*    mosfet           : hspice level 54(bsim4v4.5)
+*
+*  model name         :
+*    mosfet           :
+*        *----------------------------------------------------------------------------------------------------*
+*        |     mosfet type        |   2.5v(od 3.3v)    | 
+*        |====================================================================================================|
+*        *----------------------------------*
+*        |      nmos      | nnatod3p3_lp    |
+*        *----------------------------------*
+*  valid temperature range is from -40c to 125c
+*
+
+
+***********************************************************************************
+*                              2.5v(od 3.3v) io native nmos model                               *
+***********************************************************************************
+.MODEL nnatod3p3_lp_core nmos
+****************************************************************
+*                        Model selector
+****************************************************************
++level   = 54.0            version = 4.5             binunit = 2.0            
++paramchk= 1.0             mobmod  = 0               capmod  = 2.0            
++rdsmod  = 0               igcmod  = 0               igbmod  = 0              
++rbodymod= 0               trnqsmod= 0               acnqsmod= 0              
++diomod  = 2.0             tempmod = 0               permod  = 1.0            
++geomod  = 0               rgeomod = 1.0             rgatemod= 0              
++wpemod  = 0               fnoimod = 1.0             tnoimod = 0              
++xpart   = 1.0            
+
+****************************************************************
+*                       Process Parameter
+****************************************************************
++epsrox  = 3.9             toxe    = '5.69e-09+dtoxe_nnatod3p3_lp+dtoxe_nnatod3p3_lp_mis' dtox    = 0              
++toxref  = 5.76E-9         xj      = 1.15E-7         ndep    = 1.3E17         
++ngate   = 3.9E20          nsd     = 1.0E20          rsh     = 12.91          
+
+****************************************************************
+*                      dW and dL Parameter
+****************************************************************
++wint    = 3.0E-9          wl      = 0               wln     = 1.0            
++ww      = 0               wwn     = 1.0             wwl     = 0              
++lint    = -4.0E-8         ll      = -1.6401E-14     lln     = 0.91675        
++lw      = 0               lwn     = 1.0             lwl     = -1.733E-20     
++llc     = 9.0E-15         lwc     = 0               lwlc    = 0              
++wlc     = 0               wwc     = 0               wwlc    = 0              
++dwg     = 5.9251E-10      dwb     = 0               xl      = '3.00e-09+dxl_nnatod3p3_lp'
++xw      = '2.00e-08+dxw_nnatod3p3_lp' dlc     = 4.0E-8          dwc     = 0              
++lmin    = 1.79982e-06          lmax    = 1.0E-4          wmin    = 4.49955e-07         
++wmax    = 1.0E-4          dlcig   = 0              
+
+****************************************************************
+*                    Basic Model Parameters
+****************************************************************
++vth0    = '(-0.132)+dvth0_nnatod3p3_lp+dvth0_nnatod3p3_lp_mis' lvth0   = '(-2.18E-8)+dlvth0_nnatod3p3_lp' wvth0   = -2.22156E-8    
++pvth0   = 1.0E-14         phin    = 0               k1      = 0.082          
++k2      = 0.0015          lk2     = -2.56E-9        wk2     = -5.051E-9      
++pk2     = -1.628E-15      k3      = 4.36            k3b     = -2.123         
++w0      = 1.0E-8          lpe0    = 0               lpeb    = 0              
++vbm     = -3.0            dvtp0   = 0               dvtp1   = 0              
++dvt0    = 3.1499          wdvt0   = -9.7E-7         dvt1    = 0.11866        
++dvt2    = 0.015           dvt0w   = 0               dvt1w   = 0              
++dvt2w   = 0               u0      = '0.05398+du0_nnatod3p3_lp+du0_nnatod3p3_lp_mis' lu0     = '(-1.36E-10)+dlu0_nnatod3p3_lp'
++wu0     = '(6.87649E-9)+dwu0_nnatod3p3_lp' pu0     = 6.9097E-15      ua      = 8.4E-10        
++lua     = 0               wua     = 4.0283E-16      pua     = 7.0E-23        
++ub      = 2.0094E-18      lub     = -1.0755E-25     wub     = -3.916E-25     
++pub     = 2.0307E-31      uc      = 1.3E-11         luc     = 0              
++wuc     = -1.5E-17        ud      = 0               up      = 0              
++lp      = 1.0E-8          eu      = 1.67            vsat    = '76000.0+dvsat_nnatod3p3_lp+dvsat_nnatod3p3_lp_mis'
++lvsat   = 0               pvsat   = 2.2212E-8       a0      = 6.1            
++la0     = -5.6858E-6      pa0     = -2.15111E-12    ags     = 0.656          
++lags    = 9.691E-7        wags    = -8.0E-8         pags    = 3.3792E-14     
++b0      = -7.0E-7         b1      = 0               keta    = -0.047         
++wketa   = 2.0E-9          pketa   = 1.8E-14         a1      = 0              
++a2      = 1.0             voff    = '(-0.0820000)+dvoff_nnatod3p3_lp+dvoff_nnatod3p3_lp_mis' lvoff   = -1.4E-9        
++voffl   = 0               minv    = -0.38892        nfactor = 0.01           
++eta0    = '0.094+deta0_nnatod3p3_lp_mis' etab    = 0.021           dsub    = 0.05589        
++cit     = -3.66E-4        lcit    = 2.72E-10        cdsc    = 2.4E-4         
++cdscb   = 0               cdscd   = 0               pclm    = 1.2            
++lpclm   = -5.819E-7       ppclm   = -1.28E-13       pdiblc1 = 0.39           
++pdiblc2 = 9.384E-4        lpdiblc2= 4.849E-9        pdiblcb = 0              
++drout   = 0.56            pscbe1  = 4.24E8          pscbe2  = 1.0E-8         
++pvag    = 0               delta   = 0.0066          ldelta  = 4.4545E-9      
++fprout  = 0               pdits   = 0               pditsl  = 0              
++pditsd  = 0               lambda  = 0               vtl     = 0              
+
+****************************************************************
+*    Parameters for Asymmetric and Bias-Dependent Rds Model
+****************************************************************
++rdsw    = 148.0           rdswmin = 0               rdw     = 74.0           
++rdwmin  = 0               rsw     = 74.0            rswmin  = 0              
++prwb    = 0               prwg    = 0               wr      = 1.0            
+
+****************************************************************
+*          Impact Ionization Current Model Parameters
+****************************************************************
++alpha0  = 3.2183E-10      alpha1  = 0.072475        lalpha1 = -4.56E-8       
++beta0   = 14.413          lbeta0  = -4.7035E-6     
+
+****************************************************************
+*               Gate Dielectric Tunneling Current
+****************************************************************
++aigbacc = 9.49E-4         bigbacc = 0.00171         cigbacc = 0.075          
++nigbacc = 1.0             aigbinv = 0.0111          bigbinv = 9.49E-4        
++cigbinv = 0.006           eigbinv = 1.1             nigbinv = 3.0            
++aigc    = 0.0136          bigc    = 0.00171         cigc    = 0.075          
++aigsd   = 0.0136          bigsd   = 0.00171         cigsd   = 0.075          
++nigc    = 1.0             poxedge = 1.0             pigcd   = 1.0            
++ntox    = 1.0            
+
+****************************************************************
+*                    GIDL Effect Parameters
+****************************************************************
++agidl   = 1.0E-10         bgidl   = 1.0E10          cgidl   = 0.78651        
++egidl   = 2.0            
+
+****************************************************************
+*          Flicker and Thermal Noise Model Parameters
+****************************************************************
++noia    = 6.6E40          noib    = 8.0E24          noic    = 8.0E7          
++em      = 1.0E7           ef      = 1.04            ntnoi   = 0.96           
+
+****************************************************************
+*                     Capacitance Parameter
+****************************************************************
++cgso    = '2.8E-10+0*prelayout+dcgso_nnatod3p3_lp' cgdo    = '2.8E-10+0*prelayout+dcgdo_nnatod3p3_lp' cgbo    = 0              
++ckappas = 0.61            ckappad = 0.61            cf      = '2.79e-011+dcf_nnatod3p3_lp'
++vfbcv   = -1.0            noff    = 4.0             voffcv  = 0.002          
++acde    = 0.22            moin    = 9.2             cgsl    = '1.0E-10+dcgsl_nnatod3p3_lp'
++cgdl    = '3.5E-10+dcgdl_nnatod3p3_lp'
+
+****************************************************************
+*          Souce/Drain Junction Diode Model Parameter
+****************************************************************
++ijthsrev= 0.1             ijthsfwd= 0.1             xjbvs   = 1.0            
++bvs     = 16.2            jss     = 1.85E-7         jsws    = 4.5E-13        
++jswgs   = 5.0E-13         cjs     = '0.00099171574+dcjs_nnatod3p3_lp' cjsws   = '1.1598664e-10+dcjsws_nnatod3p3_lp'
++cjswgs  = '2.0343e-010+dcjswgs_nnatod3p3_lp' mjs     = 0.353           mjsws   = 0              
++mjswgs  = 0.7             pbs     = 0.82            pbsws   = 1.171          
++pbswgs  = 0.85            njs     = 1.041           xtis    = 3.0            
++tpb     = 0.00195         tpbsw   = 0.002342        tpbswg  = 0.001          
++tcj     = 8.767E-4        tcjsw   = 4.2938E-4       tcjswg  = 0.0024         
++jtss    = 0               jtsd    = 0               jtssws  = 0              
++jtsswd  = 0               jtsswgs = 0               jtsswgd = 0              
++njts    = 20.0            njtssw  = 20.0            njtsswg = 20.0           
++xtss    = 0.02            xtsd    = 0.02            xtssws  = 0.02           
++xtsswd  = 0.02            xtsswgs = 0.02            xtsswgd = 0.02           
++tnjts   = 0               tnjtssw = 0               tnjtsswg= 0              
+
+****************************************************************
+*          Layout-Dependent Parasitics Model Parameter
+****************************************************************
++dmcg    = 1.22E-7         dmci    = 2.93E-7         dmdg    = 0              
++dmcgt   = 0               dwj     = 0               xgw     = 0              
++xgl     = 0               ngcon   = 1.0            
+
+****************************************************************
+*                  RF Model Related Parameter
+****************************************************************
++rbsb    = 50.0           
+
+****************************************************************
+*                    Temperature coefficient
+****************************************************************
++tnom    = 25.0            ute     = -1.0876         wute    = 0              
++kt1     = -0.161          pkt1    = 1.4002E-13      kt1l    = -2.937E-8      
++pkt1l   = -1.3629E-19     kt2     = -0.02           lkt2    = -1.3235E-10    
++pkt2    = 1.4191E-14      ua1     = 4.6E-10         lua1    = 2.6641E-15     
++pua1    = -1.7495E-21     ub1     = 6.8E-19         lub1    = -4.6003E-24    
++pub1    = 3.173E-30       uc1     = -9.8855E-12     luc1    = 0              
++ud1     = 0               at      = 69000.0         lat     = -0.085         
++pat     = -4.0313E-8      prt     = 0               tvoff   = 0.0067         
++ltvoff  = 0              
+
+****************************************************************
+*                Stress Effect Related Parameter
+****************************************************************
++saref   = 4.14E-7         sbref   = 4.14E-7         wlod    = 0              
++ku0     = -6.4317365E-8   kvsat   = 0               kvth0   = 8.9E-10        
++tku0    = 0               llodku0 = 0               wlodku0 = 0              
++llodvth = 0               wlodvth = 0               lku0    = 0              
++wku0    = 0               pku0    = 0               lkvth0  = 0              
++wkvth0  = 0               pkvth0  = 0               stk2    = 0              
++lodk2   = 1.0             steta0  = 0               lodeta0 = 1.0            
+
+

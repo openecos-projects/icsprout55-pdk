@@ -1,0 +1,53 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if FEOL
+  #================================================
+  #------------------ PO - Poly -------------------
+  #================================================
+
+  logger.info('Starting PO rules')
+
+  # PO_W_1: OUTLAYER (INT PO <0.06 ABUT<90 SINGULAR REGION) NOT INSIDE NODRC
+  logger.info('Executing rule PO_W_1')
+  report_rule(po.width(0.06.um, euclidian).not_inside(excl_nodrc),
+              'PO_W_1', 'PO_W_1 : PO width >= 0.06um')
+
+  # PO_S_1: SETLAYER X = EXT PO < 0.12 ABUT<90 SINGULAR REGION
+  #         OUTLAYER (X NOT INSIDE (SRAMALL OR INDALL)) NOT INSIDE NODRC
+  # NOTE: back to the Calibre value. The markers of the standard cells (SDFFSQ at
+  #       0.12, OAI2BB2X6/SDFFNQX3/ICGX1/DFFQX0P5 at 0.119) were corners of one
+  #       polygon measured through its interior: no two PO polygons of the
+  #       libraries are closer than 0.12um. drop_inner removes these.
+  logger.info('Executing rule PO_S_1')
+  report_rule(drop_inner(po.space(0.12.um, euclidian), po).not_inside(excl_sram | indall),
+              'PO_S_1', 'PO_S_1 : Space between two POs >= 0.12um')
+  
+  # PO_A_1: OUTLAYER ((AREA PO < 0.04) NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  logger.info('Executing rule PO_A_1')
+  report_rule(po.with_area(nil, 0.04).not_inside(excl_sram),
+              'PO_A_1', 'PO_A_1 : PO area >= 0.040um2')
+
+  # PO_A_2: OUTLAYER (AREA ((HOLES PO INNER) NOT PO) < 0.09) NOT INSIDE NODRC
+  logger.info('Executing rule PO_A_2')
+  report_rule(small_holes(po, 0.09).not_inside(excl_nodrc),
+              'PO_A_2', 'PO_A_2 : PO enclosed area >= 0.09um2')
+
+  # TODO: PO_W_2*/3 (gate lengths), PO_S_2..18, PO_EN_*, PO_EX_*, PO_L_*, PO_D_* (density), PO_R_*
+end

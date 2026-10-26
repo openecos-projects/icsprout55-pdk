@@ -1,0 +1,583 @@
+*
+*  release version    : 1.1
+*
+*  simulation tool    : synopsys hspice version N-2017.12-SP2
+*
+*  model type         :
+*    mosfet           : hspice level 54(bsim4v4.5)
+*
+*  model name         :
+*    mosfet           :
+*        *----------------------------------------------------------------------------------------------------*
+*        |     mosfet type    |   1.2v      |   
+*        |====================================================================================================|
+*        *----------------------------------*
+*        |      svt nmos      | nm1p2_svt_lp    |
+*        *----------------------------------*
+*  valid temperature range is from -40c to 125c
+*
+
+
+.PARAM
++select6(v,v1,v2,v3,v4,v5,v6)= 'v<v1?1 : v<v2?1 : v<v3?2 : v<v4?3 : v<v5?4 : v<v6?5 : 5'
+
+.PARAM
++select7(v,v1,v2,v3,v4,v5,v6,v7)= 'v<v1?1 : v<v2?1 : v<v3?2 : v<v4?3 : v<v5?4 : v<v6?5 : v<v7?6 : 6'
+
+.PARAM
++selectp6(p,p1,p2,p3,p4,p5,p6)= 'p==1?p1 : p==2?p2 : p==3?p3 : p==4?p4 : p==5?p5 : p==6?p6 : 1e4'
+
+.PARAM
++selectp7(p,p1,p2,p3,p4,p5,p6,p7)= 'p==1?p1 : p==2?p2 : p==3?p3 : p==4?p4 : p==5?p5 : p==6?p6 : p==7?p7 : 1e4'
+
+.PARAM
++evalbin_core(p1,p2,p3,p4)= '(p1/lbin_core/dbin_core-p2/lbin_core/ubin_core+p3/rbin_core/ubin_core-p4/rbin_core/dbin_core + ((p2-p1)/lbin_core+(p4-p3)/rbin_core)/(l*1e6) + ((p4-p1)/dbin_core+(p2-p3)/ubin_core)/(w*1e6) + (p1-p2+p3-p4)/(l*1e6)/(w*1e6))/(1/lbin_core-1/rbin_core)/(1/dbin_core-1/ubin_core)'
+
+.PARAM
++xbin_core= 'select6(w*1e6,0.12,0.15,0.3,0.5,1,10)'
+
+.PARAM
++lbin_core= 'selectp6(xbin_core,0.12,0.15,0.3,0.5,1,10)'
+
+.PARAM
++rbin_core= 'selectp6(xbin_core+1,0.12,0.15,0.3,0.5,1,10)'
+
+.PARAM
++ybin_core= 'select7(l*1e6,0.06,0.08,0.2,0.5,0.7,1,10)'
+
+.PARAM
++dbin_core= 'selectp7(ybin_core,0.06,0.08,0.2,0.5,0.7,1,10)'
+
+.PARAM
++ubin_core= 'selectp7(ybin_core+1,0.06,0.08,0.2,0.5,0.7,1,10)'
+
+.PARAM
++nm1p2_svt_lp_vth0_w0p12(y)= 'selectp7(y,0.002,0.016,0.002,-0.001,-0.001,-0.001,-0.011)'
+
+.PARAM
++nm1p2_svt_lp_vth0_w0p15(y)= 'selectp7(y,0.0095,0.003,-0.0201,-0.0265,-0.0185,-0.0165,-0.011)'
+
+.PARAM
++nm1p2_svt_lp_vth0_w0p3(y)= 'selectp7(y,0.0045,-0.007,-0.0201,-0.0201,-0.0155,-0.0155,-0.011)'
+
+.PARAM
++nm1p2_svt_lp_vth0_w0p5(y)= 'selectp7(y,0.0045,-0.007,-0.0182,-0.0225,-0.0205,-0.0155,-0.011)'
+
+.PARAM
++nm1p2_svt_lp_vth0_w1(y)= 'selectp7(y,0.0125,-0.007,-0.0185,-0.0145,-0.0095,-0.0095,-0.005)'
+
+.PARAM
++nm1p2_svt_lp_vth0_w10(y)= 'selectp7(y,-0.006,-0.001,-0.004,0.0075,0.008,0.008,0)'
+
+.PARAM
++nm1p2_svt_lp_eta0_w0p12(y)= 'selectp7(y,0,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_eta0_w0p15(y)= 'selectp7(y,0.015,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_eta0_w0p3(y)= 'selectp7(y,0.015,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_eta0_w0p5(y)= 'selectp7(y,0.015,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_eta0_w1(y)= 'selectp7(y,0.02,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_eta0_w10(y)= 'selectp7(y,0,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_cit_w0p12(y)= 'selectp7(y,0,0,0.001,0.001,0.001,0.001,0.001)'
+
+.PARAM
++nm1p2_svt_lp_cit_w0p15(y)= 'selectp7(y,0.0001,0.0001,0.0005,0.001,0.001,0.001,0.001)'
+
+.PARAM
++nm1p2_svt_lp_cit_w0p3(y)= 'selectp7(y,0.0001,0.0001,0.0014,0.0014,0.001,0.001,0.001)'
+
+.PARAM
++nm1p2_svt_lp_cit_w0p5(y)= 'selectp7(y,0.0001,0.0001,0.0005,0.001,0.001,0.0012,0.001)'
+
+.PARAM
++nm1p2_svt_lp_cit_w1(y)= 'selectp7(y,0.0001,0.0001,0.0005,0.001,0.001,0.0012,0.001)'
+
+.PARAM
++nm1p2_svt_lp_cit_w10(y)= 'selectp7(y,0,0,0.00015,0.00015,0.00025,0.0002,0)'
+
+.PARAM
++nm1p2_svt_lp_voff_w0p12(y)= 'selectp7(y,0,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_voff_w0p15(y)= 'selectp7(y,0,0.005,0.005,0.008,0.009,0.007,0)'
+
+.PARAM
++nm1p2_svt_lp_voff_w0p3(y)= 'selectp7(y,0,0.005,0.005,0.005,0.005,0.005,0)'
+
+.PARAM
++nm1p2_svt_lp_voff_w0p5(y)= 'selectp7(y,0,0.005,0.006,0.008,0.009,0.005,0)'
+
+.PARAM
++nm1p2_svt_lp_voff_w1(y)= 'selectp7(y,0,0.005,0.008,0.008,0.007,0.005,0)'
+
+.PARAM
++nm1p2_svt_lp_voff_w10(y)= 'selectp7(y,0,0,-0.002,-0.002,-0.0017,-0.0017,0)'
+
+.PARAM
++nm1p2_svt_lp_u0_w0p12(y)= 'selectp7(y,0.0007,0.0007,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_u0_w0p15(y)= 'selectp7(y,0,-0.0027,-0.0024,-0.0022,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_u0_w0p3(y)= 'selectp7(y,0,-0.0024,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_u0_w0p5(y)= 'selectp7(y,0,-0.0024,-0.0024,-0.0022,-0.0012,0,0)'
+
+.PARAM
++nm1p2_svt_lp_u0_w1(y)= 'selectp7(y,0,-0.0024,-0.0024,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_u0_w10(y)= 'selectp7(y,0,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_ua_w0p12(y)= 'selectp7(y,-0.00000000001,-0.00000000001,0.0000000001,0.0000000001,0.0000000001,0.0000000001,0.0000000001)'
+
+.PARAM
++nm1p2_svt_lp_ua_w0p15(y)= 'selectp7(y,-0.0000000001,0.00000000015,0.00000000025,0.00000000025,0.00000000027,0.00000000002,0.000000000135)'
+
+.PARAM
++nm1p2_svt_lp_ua_w0p3(y)= 'selectp7(y,-0.0000000001,0.00000000012,0.00000000012,0.00000000012,0.00000000006,0.00000000006,0.000000000135)'
+
+.PARAM
++nm1p2_svt_lp_ua_w0p5(y)= 'selectp7(y,-0.0000000001,0.00000000012,0.00000000033,0.00000000038,0.0000000003,0.00000000013,0.0000000002)'
+
+.PARAM
++nm1p2_svt_lp_ua_w1(y)= 'selectp7(y,-0.00000000013,0.00000000012,0.00000000032,0.000000000425,0.00000000015,0.00000000016,0.0000000002)'
+
+.PARAM
++nm1p2_svt_lp_ua_w10(y)= 'selectp7(y,0.00000000011,0.0000000001,0.00000000021,0.00000000022,0.00000000018,0.00000000016,0)'
+
+.PARAM
++nm1p2_svt_lp_ub_w0p12(y)= 'selectp7(y,1E-19,1E-19,-1E-19,-1E-19,-1.5E-19,-1.5E-19,-1.5E-19)'
+
+.PARAM
++nm1p2_svt_lp_ub_w0p15(y)= 'selectp7(y,1E-19,-4.9E-19,-4.9E-19,-4.9E-19,-3.2E-19,1E-19,-1E-19)'
+
+.PARAM
++nm1p2_svt_lp_ub_w0p3(y)= 'selectp7(y,1E-19,-4.9E-19,1E-19,1E-19,1E-19,1E-19,-1E-19)'
+
+.PARAM
++nm1p2_svt_lp_ub_w0p5(y)= 'selectp7(y,1E-19,-4.9E-19,-4.9E-19,-4.9E-19,-3E-19,1E-19,-1E-19)'
+
+.PARAM
++nm1p2_svt_lp_ub_w1(y)= 'selectp7(y,1E-19,-4.9E-19,-4.9E-19,-2.9E-19,1E-19,1E-19,-1E-19)'
+
+.PARAM
++nm1p2_svt_lp_ub_w10(y)= 'selectp7(y,-1.15E-19,-1.65E-19,-1.01E-19,-1.01E-19,-1.01E-19,-1.2E-19,0)'
+
+.PARAM
++nm1p2_svt_lp_a0_w0p12(y)= 'selectp7(y,-0.8,-2.5,-1.3,0.2,0.2,0.2,0.2)'
+
+.PARAM
++nm1p2_svt_lp_a0_w0p15(y)= 'selectp7(y,0.5,-1,-0.6,0.4,0.2,0.2,0.4)'
+
+.PARAM
++nm1p2_svt_lp_a0_w0p3(y)= 'selectp7(y,0.5,0,0.35,0.35,0.35,0.35,0.7)'
+
+.PARAM
++nm1p2_svt_lp_a0_w0p5(y)= 'selectp7(y,0.5,0,0.3,0.5,0.5,0.5,0.5)'
+
+.PARAM
++nm1p2_svt_lp_a0_w1(y)= 'selectp7(y,0.5,0,0.4,0.5,0.5,0.5,0.5)'
+
+.PARAM
++nm1p2_svt_lp_a0_w10(y)= 'selectp7(y,-0.3,-0.3,0.35,0.35,0.35,0.35,0)'
+
+.PARAM
++nm1p2_svt_lp_ags_w0p12(y)= 'selectp7(y,1,2,0.5,-0.03,-0.03,-0.03,-0.03)'
+
+.PARAM
++nm1p2_svt_lp_ags_w0p15(y)= 'selectp7(y,0.1,0.2,0.2,-0.1,-0.1,-0.12,-0.03)'
+
+.PARAM
++nm1p2_svt_lp_ags_w0p3(y)= 'selectp7(y,0.1,0.2,0.06,-0.06,-0.06,-0.06,-0.03)'
+
+.PARAM
++nm1p2_svt_lp_ags_w0p5(y)= 'selectp7(y,0.1,0.2,0.1,-0.18,-0.2,-0.14,-0.03)'
+
+.PARAM
++nm1p2_svt_lp_ags_w1(y)= 'selectp7(y,0.1,0.2,-0.1,-0.18,-0.15,-0.14,-0.002)'
+
+.PARAM
++nm1p2_svt_lp_ags_w10(y)= 'selectp7(y,0.3,0.3,-0.03,-0.03,-0.03,0,0)'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_w0p12(y)= 'selectp7(y,0,0,0.8,0.8,0.8,0.8,0.8)'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_w0p15(y)= 'selectp7(y,0,0,0.95,0.95,0.95,0.95,0.8)'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_w0p3(y)= 'selectp7(y,0,0,0.95,0.95,0.95,0.95,0.8)'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_w0p5(y)= 'selectp7(y,0,0,0.95,0.95,0.95,0.95,0.8)'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_w1(y)= 'selectp7(y,0,0,0.95,0.95,0.95,0.95,0.8)'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_w10(y)= 'selectp7(y,0,0,0.9,0.9,0.9,0.9,0)'
+
+.PARAM
++nm1p2_svt_lp_vsat_w0p12(y)= 'selectp7(y,0,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_vsat_w0p15(y)= 'selectp7(y,-3000,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_vsat_w0p3(y)= 'selectp7(y,-3000,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_vsat_w0p5(y)= 'selectp7(y,-3000,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_vsat_w1(y)= 'selectp7(y,-3000,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_vsat_w10(y)= 'selectp7(y,-3000,0,0,0,0,0,0)'
+
+.PARAM
++nm1p2_svt_lp_vth0_c(x,y)= 'selectp6(x,nm1p2_svt_lp_vth0_w0p12(y),nm1p2_svt_lp_vth0_w0p15(y),nm1p2_svt_lp_vth0_w0p3(y),nm1p2_svt_lp_vth0_w0p5(y),nm1p2_svt_lp_vth0_w1(y),nm1p2_svt_lp_vth0_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_vth0_q= 'evalbin_core(nm1p2_svt_lp_vth0_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_vth0_c(xbin_core+1,ybin_core),nm1p2_svt_lp_vth0_c(xbin_core,ybin_core),nm1p2_svt_lp_vth0_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_eta0_c(x,y)= 'selectp6(x,nm1p2_svt_lp_eta0_w0p12(y),nm1p2_svt_lp_eta0_w0p15(y),nm1p2_svt_lp_eta0_w0p3(y),nm1p2_svt_lp_eta0_w0p5(y),nm1p2_svt_lp_eta0_w1(y),nm1p2_svt_lp_eta0_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_eta0_q= 'evalbin_core(nm1p2_svt_lp_eta0_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_eta0_c(xbin_core+1,ybin_core),nm1p2_svt_lp_eta0_c(xbin_core,ybin_core),nm1p2_svt_lp_eta0_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_cit_c(x,y)= 'selectp6(x,nm1p2_svt_lp_cit_w0p12(y),nm1p2_svt_lp_cit_w0p15(y),nm1p2_svt_lp_cit_w0p3(y),nm1p2_svt_lp_cit_w0p5(y),nm1p2_svt_lp_cit_w1(y),nm1p2_svt_lp_cit_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_cit_q= 'evalbin_core(nm1p2_svt_lp_cit_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_cit_c(xbin_core+1,ybin_core),nm1p2_svt_lp_cit_c(xbin_core,ybin_core),nm1p2_svt_lp_cit_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_voff_c(x,y)= 'selectp6(x,nm1p2_svt_lp_voff_w0p12(y),nm1p2_svt_lp_voff_w0p15(y),nm1p2_svt_lp_voff_w0p3(y),nm1p2_svt_lp_voff_w0p5(y),nm1p2_svt_lp_voff_w1(y),nm1p2_svt_lp_voff_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_voff_q= 'evalbin_core(nm1p2_svt_lp_voff_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_voff_c(xbin_core+1,ybin_core),nm1p2_svt_lp_voff_c(xbin_core,ybin_core),nm1p2_svt_lp_voff_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_u0_c(x,y)= 'selectp6(x,nm1p2_svt_lp_u0_w0p12(y),nm1p2_svt_lp_u0_w0p15(y),nm1p2_svt_lp_u0_w0p3(y),nm1p2_svt_lp_u0_w0p5(y),nm1p2_svt_lp_u0_w1(y),nm1p2_svt_lp_u0_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_u0_q= 'evalbin_core(nm1p2_svt_lp_u0_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_u0_c(xbin_core+1,ybin_core),nm1p2_svt_lp_u0_c(xbin_core,ybin_core),nm1p2_svt_lp_u0_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_ua_c(x,y)= 'selectp6(x,nm1p2_svt_lp_ua_w0p12(y),nm1p2_svt_lp_ua_w0p15(y),nm1p2_svt_lp_ua_w0p3(y),nm1p2_svt_lp_ua_w0p5(y),nm1p2_svt_lp_ua_w1(y),nm1p2_svt_lp_ua_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_ua_q= 'evalbin_core(nm1p2_svt_lp_ua_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_ua_c(xbin_core+1,ybin_core),nm1p2_svt_lp_ua_c(xbin_core,ybin_core),nm1p2_svt_lp_ua_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_ub_c(x,y)= 'selectp6(x,nm1p2_svt_lp_ub_w0p12(y),nm1p2_svt_lp_ub_w0p15(y),nm1p2_svt_lp_ub_w0p3(y),nm1p2_svt_lp_ub_w0p5(y),nm1p2_svt_lp_ub_w1(y),nm1p2_svt_lp_ub_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_ub_q= 'evalbin_core(nm1p2_svt_lp_ub_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_ub_c(xbin_core+1,ybin_core),nm1p2_svt_lp_ub_c(xbin_core,ybin_core),nm1p2_svt_lp_ub_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_a0_c(x,y)= 'selectp6(x,nm1p2_svt_lp_a0_w0p12(y),nm1p2_svt_lp_a0_w0p15(y),nm1p2_svt_lp_a0_w0p3(y),nm1p2_svt_lp_a0_w0p5(y),nm1p2_svt_lp_a0_w1(y),nm1p2_svt_lp_a0_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_a0_q= 'evalbin_core(nm1p2_svt_lp_a0_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_a0_c(xbin_core+1,ybin_core),nm1p2_svt_lp_a0_c(xbin_core,ybin_core),nm1p2_svt_lp_a0_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_ags_c(x,y)= 'selectp6(x,nm1p2_svt_lp_ags_w0p12(y),nm1p2_svt_lp_ags_w0p15(y),nm1p2_svt_lp_ags_w0p3(y),nm1p2_svt_lp_ags_w0p5(y),nm1p2_svt_lp_ags_w1(y),nm1p2_svt_lp_ags_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_ags_q= 'evalbin_core(nm1p2_svt_lp_ags_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_ags_c(xbin_core+1,ybin_core),nm1p2_svt_lp_ags_c(xbin_core,ybin_core),nm1p2_svt_lp_ags_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_c(x,y)= 'selectp6(x,nm1p2_svt_lp_dvtp1_w0p12(y),nm1p2_svt_lp_dvtp1_w0p15(y),nm1p2_svt_lp_dvtp1_w0p3(y),nm1p2_svt_lp_dvtp1_w0p5(y),nm1p2_svt_lp_dvtp1_w1(y),nm1p2_svt_lp_dvtp1_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_dvtp1_q= 'evalbin_core(nm1p2_svt_lp_dvtp1_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_dvtp1_c(xbin_core+1,ybin_core),nm1p2_svt_lp_dvtp1_c(xbin_core,ybin_core),nm1p2_svt_lp_dvtp1_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_vsat_c(x,y)= 'selectp6(x,nm1p2_svt_lp_vsat_w0p12(y),nm1p2_svt_lp_vsat_w0p15(y),nm1p2_svt_lp_vsat_w0p3(y),nm1p2_svt_lp_vsat_w0p5(y),nm1p2_svt_lp_vsat_w1(y),nm1p2_svt_lp_vsat_w10(y))'
+
+.PARAM
++nm1p2_svt_lp_vsat_q= 'evalbin_core(nm1p2_svt_lp_vsat_c(xbin_core+1,ybin_core+1),nm1p2_svt_lp_vsat_c(xbin_core+1,ybin_core),nm1p2_svt_lp_vsat_c(xbin_core,ybin_core),nm1p2_svt_lp_vsat_c(xbin_core,ybin_core+1))'
+
+.PARAM
++nm1p2_svt_lp_dvth0_retgt= 'nm1p2_svt_lp_vth0_q'
+
+.PARAM
++nm1p2_svt_lp_dlpe0_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_ddvtp0_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_ddvt0_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_ddvt1_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_deta0_retgt= 'nm1p2_svt_lp_eta0_q'
+
+.PARAM
++nm1p2_svt_lp_ddsub_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_ddvtp1_retgt= 'nm1p2_svt_lp_dvtp1_q'
+
+.PARAM
++nm1p2_svt_lp_dw0_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_dk3_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_ddvt0w_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_ddvt1w_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_dminv_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_dnfactor_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_dcit_retgt= 'nm1p2_svt_lp_cit_q'
+
+.PARAM
++nm1p2_svt_lp_dvoff_retgt= 'nm1p2_svt_lp_voff_q'
+
+.PARAM
++nm1p2_svt_lp_du0_retgt= 'nm1p2_svt_lp_u0_q'
+
+.PARAM
++nm1p2_svt_lp_dua_retgt= 'nm1p2_svt_lp_ua_q'
+
+.PARAM
++nm1p2_svt_lp_dub_retgt= 'nm1p2_svt_lp_ub_q'
+
+.PARAM
++nm1p2_svt_lp_duc_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_da0_retgt= 'nm1p2_svt_lp_a0_q'
+
+.PARAM
++nm1p2_svt_lp_dags_retgt= 'nm1p2_svt_lp_ags_q'
+
+.PARAM
++nm1p2_svt_lp_dvsat_retgt= 'nm1p2_svt_lp_vsat_q'
+
+.PARAM
++nm1p2_svt_lp_db0_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_db1_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_dcgbo_retgt= '0'
+
+.PARAM
++nm1p2_svt_lp_dcf_retgt= '0'
+
+
+***********************************************************************************
+*                              1.2v core svt nmos model                               *
+***********************************************************************************
+.MODEL nm1p2_svt_lp_core nmos
+****************************************************************
+*                        Model selector
+****************************************************************
++level   = 54.0            version = 4.5             binunit = 2.0            
++paramchk= 1.0             mobmod  = 0               capmod  = 2.0            
++rdsmod  = 0               igcmod  = 2.0             igbmod  = 1.0            
++rbodymod= 0               trnqsmod= 0               acnqsmod= 0              
++diomod  = 2.0             tempmod = 0               permod  = 1.0            
++geomod  = 0               rgeomod = 1.0             rgatemod= 0              
++wpemod  = 1.0             fnoimod = 1.0             tnoimod = 0              
++xpart   = 1.0            
+
+****************************************************************
+*                       Process Parameter
+****************************************************************
++epsrox  = 3.9             toxe    = '2.54e-009+dtoxe_nm1p2_svt_lp+dtoxe_nm1p2_svt_lp_mismatch' dtox    = 2.9E-10        
++toxref  = '2.54e-009+dtoxe_nm1p2_svt_lp+dtoxe_nm1p2_svt_lp_mismatch' xj      = 1.15E-7         ndep    = 3.5E17         
++ngate   = 5.0000000e+22   nsd     = 1.0E20          rsh     = 14.13          
+
+****************************************************************
+*                      dW and dL Parameter
+****************************************************************
++wint    = 1.0E-8          wl      = 0               wln     = 1.0            
++ww      = 0               wwn     = 1.0             wwl     = 0              
++lint    = -1.45E-8        ll      = 2.1E-16         lln     = 1.0            
++lw      = 0               lwn     = 1.0             lwl     = 2.0E-23        
++llc     = 0               lwc     = 0               lwlc    = -2.8E-23       
++wlc     = 0               wwc     = 0               wwlc    = 0              
++dwg     = 0               dwb     = 0               xl      = '(-2.0e-9)+dxl_nm1p2_svt_lp'
++xw      = '1.5e-008+dxw_nm1p2_svt_lp' dlc     = 1.1E-8          dwc     = -8.5E-9        
++lmin    = 5.39946e-08          lmax    = 1.0E-4          wmin    = 1.07989e-07        
++wmax    = 1.0E-4          dlcig   = 1.0E-9         
+
+****************************************************************
+*                    Basic Model Parameters
+****************************************************************
++vth0    = '0.324+dvth0_nm1p2_svt_lp+nm1p2_svt_lp_dvth0_retgt+dvth0_nm1p2_svt_lp_mismatch' wvth0   = '(-9.8E-9)+dwvth0_nm1p2_svt_lp' lvth0   = '(-3.37E-8)+dlvth0_nm1p2_svt_lp'
++pvth0   = '(-1.0E-15)+dpvth0_nm1p2_svt_lp' phin    = 0.08            k1      = 0.42           
++k2      = 0.005           wk2     = -3.5E-9         lk2     = -5.5E-9        
++pk2     = 1.5E-16         k3      = '15.0+nm1p2_svt_lp_dk3_retgt' k3b     = 10.0           
++w0      = '(1.5E-6)+nm1p2_svt_lp_dw0_retgt' lpe0    = '(2.7E-7)+nm1p2_svt_lp_dlpe0_retgt' plpe0   = 1.2E-21        
++lpeb    = 0               vbm     = -3.0            dvtp0   = '(5.9E-7)+nm1p2_svt_lp_ddvtp0_retgt'
++dvtp1   = '0+nm1p2_svt_lp_ddvtp1_retgt' dvt0    = '0.03+nm1p2_svt_lp_ddvt0_retgt' dvt1    = '0.15+nm1p2_svt_lp_ddvt1_retgt'
++dvt2    = -0.05           dvt0w   = '0.004+nm1p2_svt_lp_ddvt0w_retgt' dvt1w   = '980000+nm1p2_svt_lp_ddvt1w_retgt'
++dvt2w   = 0.2             u0      = '0.01947+du0_nm1p2_svt_lp+nm1p2_svt_lp_du0_retgt+du0_nm1p2_svt_lp_mismatch' wu0     = '(4.25E-10)+dwu0_nm1p2_svt_lp'
++lu0     = '(-7.0E-11)+dlu0_nm1p2_svt_lp' pu0     = '(-4.0E-18)+dpu0_nm1p2_svt_lp' ua      = '(-1.1E-9)+nm1p2_svt_lp_dua_retgt'
++wua     = -8.0E-18        lua     = -1.37E-17       pua     = -1.0E-24       
++ub      = '(1.68E-18)+nm1p2_svt_lp_dub_retgt' wub     = 5.0E-26         lub     = 2.2E-26        
++pub     = -3.0E-34        uc      = '(1.0E-10)+nm1p2_svt_lp_duc_retgt' wuc     = -8.0E-18       
++luc     = -1.0E-18        puc     = 5.0E-25         up      = 1.0            
++lp      = 4.0E-8          eu      = 1.67            vsat    = '75000.0+nm1p2_svt_lp_dvsat_retgt'
++lvsat   = '(-1.0E-4)+dlvsat_nm1p2_svt_lp' pvsat   = '(1.95E-10)+dpvsat_nm1p2_svt_lp' a0      = '(2.8019)+da0_nm1p2_svt_lp+nm1p2_svt_lp_da0_retgt'
++wa0     = '(1.36E-7)+dwa0_nm1p2_svt_lp' la0     = '(3.0E-7)+dla0_nm1p2_svt_lp' pa0     = '(1.0E-14)+dpa0_nm1p2_svt_lp'
++ags     = '0.65813+dags_nm1p2_svt_lp+nm1p2_svt_lp_dags_retgt' wags    = '-1.95E-8+dwags_nm1p2_svt_lp'        lags    = '4.5E-7+dlags_nm1p2_svt_lp'         
++pags    = '-1.0E-16+dpags_nm1p2_svt_lp'        b0      = '(-1.25E-7)+nm1p2_svt_lp_db0_retgt' b1      = '0+nm1p2_svt_lp_db1_retgt'
++keta    = 0.0065          wketa   = -2.0E-9         lketa   = 8.2E-9         
++pketa   = -2.0E-16        a1      = 0               a2      = 1.0            
++voff    = '(-0.0755)+nm1p2_svt_lp_dvoff_retgt+dvoff_nm1p2_svt_lp+dvoff_nm1p2_svt_lp_mismatch' pvoff   = 0               voffl   = 5.1183E-11     
++minv    = '0.96+nm1p2_svt_lp_dminv_retgt' wminv   = 1.0E-7          lminv   = 1.0E-8         
++pminv   = 0               nfactor = '1.0+nm1p2_svt_lp_dnfactor_retgt' eta0    = '0.53+nm1p2_svt_lp_deta0_retgt+deta0_nm1p2_svt_lp_mismatch'
++leta0   = '0+dleta0_nm1p2_svt_lp' peta0   = '(-1.49E-15)+dpeta0_nm1p2_svt_lp' etab    = -0.2           
++letab   = 0               petab   = 7.0E-16         dsub    = '0.56+nm1p2_svt_lp_ddsub_retgt'
++cit     = '(0.0015)+nm1p2_svt_lp_dcit_retgt' wcit    = -1.5E-10        lcit    = 1.65E-10       
++pcit    = 1.0E-18         cdsc    = 2.4E-4          cdscb   = 5.0E-5         
++cdscd   = 2.0E-5          pclm    = 0.4             lpclm   = 0              
++pdiblc1 = 0               pdiblc2 = 0.003           ppdiblc2= 1.0E-16        
++pdiblcb = 0               drout   = 0.56            pscbe1  = 6.24E8         
++pscbe2  = 1.0E-5          pvag    = 0               delta   = 0.01           
++ldelta  = 0               pdelta  = 0               fprout  = 0              
++pdits   = 0               pditsl  = 496130          pditsd  = 0              
+
+****************************************************************
+*    Parameters for Asymmetric and Bias-Dependent Rds Model
+****************************************************************
++rdsw    = 80.0            rdswmin = 0               rdw     = 59.5           
++rdwmin  = 0               rsw     = 59.5            rswmin  = 0              
++prwb    = 0               prwg    = 1.0             wr      = 1.0            
+
+****************************************************************
+*          Impact Ionization Current Model Parameters
+****************************************************************
++alpha0  = 1.0E-8          alpha1  = 0.8             beta0   = 12.6           
++lbeta0  = -6.5E-8        
+
+****************************************************************
+*               Gate Dielectric Tunneling Current
+****************************************************************
++aigbacc = 0.038           bigbacc = 0.054           cigbacc = 0.075          
++nigbacc = 1.0             aigbinv = 0.35            bigbinv = 0.03           
++cigbinv = 0.006           eigbinv = 1.0999          nigbinv = 3.0            
++aigc    = 0.01222         bigc    = 0.0017526       cigc    = 0.00375        
++aigsd   = 0.011287        bigsd   = 9.4044E-4       cigsd   = 0.01125        
++nigc    = 2.0             poxedge = 1.0             pigcd   = 4.4            
++ntox    = 1.0            
+
+****************************************************************
+*                    GIDL Effect Parameters
+****************************************************************
++agidl   = 1.0E-12         bgidl   = 8.9911E8        cgidl   = 2.9467         
++egidl   = 0.0053727      
+
+****************************************************************
+*          Flicker and Thermal Noise Model Parameters
+****************************************************************
++noia    = 1.21324E43      noib    = 3.60226E29      noic    = 8.0E9          
++em      = 17864000        ef      = 1.3034          lintnoi = -1.0E-8        
++ntnoi   = 1.0            
+
+****************************************************************
+*                     Capacitance Parameter
+****************************************************************
++cgso    = '7.5E-11+dcgso_nm1p2_svt_lp+6.44E-11' cgdo    = '7.5E-11+dcgdo_nm1p2_svt_lp+6.44E-11' cgbo    = '(0+nm1p2_svt_lp_dcgbo_retgt)*prelayout'
++cf      = '(8.29e-11+dcf_nm1p2_svt_lp+nm1p2_svt_lp_dcf_retgt)*prelayout' lcf     = '-1.0e-18*prelayout' wcf     = '2.0E-17*prelayout'
++pcf     = '(5.1E-25)*prelayout' noff    = 1.9             lnoff   = 6.0E-8         
++wnoff   = 3.0E-8          voffcv  = -0.036          lvoffcv = -1.0E-9        
++wvoffcv = 1.0E-9          pvoffcv = 2.0E-16         acde    = 0.15           
++lacde   = -1.0E-9         wacde   = 4.0E-8          pacde   = 5.0E-15        
++moin    = 5.5             cgsl    = '7.5E-11+dcgsl_nm1p2_svt_lp' cgdl    = '7.5E-11+dcgdl_nm1p2_svt_lp'
+
+****************************************************************
+*          Souce/Drain Junction Diode Model Parameter
+****************************************************************
++ijthsrev= 0.1             ijthsfwd= 0.1             xjbvs   = 1.0            
++bvs     = 10.8            jss     = 1.1E-7          jsws    = 5.2E-14        
++jswgs   = 2.17E-14        cjs     = '8.72E-4+dcjs_nm1p2_svt_lp' cjsws   = '1E-13+dcjsws_nm1p2_svt_lp'
++cjswgs  = '2.654e-010+dcjswgs_nm1p2_svt_lp' mjs     = 0.344           mjsws   = 0.29047        
++mjswgs  = 0.9             pbs     = 0.579           pbsws   = 0.972          
++pbswgs  = 1.0             njs     = 1.055           xtis    = 3.0            
++tpb     = 0.00118         tpbsw   = 0.0027025       tpbswg  = 0.00269        
++tcj     = 0.001072        tcjsw   = 0.685           tcjswg  = 6.88E-4        
++jtss    = 0               jtsd    = 0               jtssws  = 0              
++jtsswd  = 0               jtsswgs = 1.0E-10         jtsswgd = 1.0E-10        
++njts    = 20.0            njtssw  = 20.0            njtsswg = 20.0           
++xtss    = 0.02            xtsd    = 0.02            xtssws  = 0.02           
++xtsswd  = 0.02            xtsswgs = 0.02            xtsswgd = 0.02           
++tnjts   = 0               tnjtssw = 0               tnjtsswg= 0              
+
+****************************************************************
+*          Layout-Dependent Parasitics Model Parameter
+****************************************************************
++dmcg    = 9.0E-8          dmci    = 2.75E-7         dwj     = 0              
++xgw     = 0               xgl     = 0              
+
+****************************************************************
+*                  RF Model Related Parameter
+****************************************************************
++xrcrg1  = 12.0            xrcrg2  = 1.0            
+
+****************************************************************
+*                    Temperature coefficient
+****************************************************************
++tnom    = 25.0            ute     = -1.03           lute    = 9.0E-8         
++wute    = 1.4E-8          pute    = -9.0E-16        kt1     = -0.185         
++lkt1    = -1.0E-9         wkt1    = 7.5E-10         pkt1    = -3.0E-16       
++kt2     = -0.06           lkt2    = 2.0E-9          wkt2    = 6.4E-10        
++pkt2    = 1.0E-16         ua1     = 1.0E-9          lua1    = 1.41E-17       
++ub1     = -5.0E-19        lub1    = 8.5E-26         uc1     = 4.4E-12        
++luc1    = 5.4E-18         wuc1    = -1.66E-18       puc1    = -1.0E-24       
++at      = 22000.0         lat     = 0               pat     = 1.0E-11        
++prt     = 0               tvoff   = 0.005           ptvoff  = -1.0E-17       
+
+****************************************************************
+*                Stress Effect Related Parameter
+****************************************************************
++saref   = 3.65E-7         sbref   = 3.65E-7         wlod    = 0              
++ku0     = -1.1E-7         kvsat   = 1.0             kvth0   = 5.5E-9         
++tku0    = 0               llodku0 = 1.0             wlodku0 = 1.0            
++llodvth = 1.0             wlodvth = 1.0             lku0    = 8.5E-7         
++wku0    = 4.5E-6          pku0    = 3.0E-13         lkvth0  = 4.0E-9         
++wkvth0  = 1.0E-8          pkvth0  = 7.0E-15         stk2    = 0              
++lodk2   = 1.0             steta0  = -7.0E-9         lodeta0 = 1.0            
+
+****************************************************************
+*            Well Proximity Effect Model Parameters
+****************************************************************
++web     = 1.0             wec     = 1.0             kvth0we = 0.0023         
++lkvth0we= -1.5E-10        wkvth0we= -1.5E-10        pkvth0we= 1.1E-17        
++k2we    = 0               ku0we   = 0.0012          lku0we  = -1.0E-10       
++wku0we  = -6.0E-10        pku0we  = 3.0E-17        
+

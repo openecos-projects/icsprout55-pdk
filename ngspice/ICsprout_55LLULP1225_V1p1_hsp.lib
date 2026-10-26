@@ -1,0 +1,167 @@
+.LIB pre_layout
+.option scale = 0.9 
+.PARAM
++prelayout= 1.0           
+.ENDL pre_layout
+
+.LIB tt_mos
+.option scale = 0.9 
+.LIB 'model_wrapper1_hsp.lib' tt
+.LIB 'model_wrapper1_hsp.lib' mos_total
+.PARAM
++corner_ratio= 1.0        
+.ENDL tt_mos
+
+.LIB ff_mos
+.option scale = 0.9 
+.LIB 'model_wrapper1_hsp.lib' ff
+.LIB 'model_wrapper1_hsp.lib' mos_total
+.PARAM
++corner_ratio= 1.0        
+.ENDL ff_mos
+
+.LIB ss_mos
+.option scale = 0.9 
+.LIB 'model_wrapper1_hsp.lib' ss
+.LIB 'model_wrapper1_hsp.lib' mos_total
+.PARAM
++corner_ratio= 1.0        
+.ENDL ss_mos
+
+.LIB fnsp_mos
+.option scale = 0.9 
+.LIB 'model_wrapper1_hsp.lib' fnsp
+.LIB 'model_wrapper1_hsp.lib' mos_total
+.PARAM
++corner_ratio= 1.0        
+.ENDL fnsp_mos
+
+.LIB snfp_mos
+.option scale = 0.9 
+.LIB 'model_wrapper1_hsp.lib' snfp
+.LIB 'model_wrapper1_hsp.lib' mos_total
+.PARAM
++corner_ratio= 1.0        
+.ENDL snfp_mos
+
+.LIB mc_mos
+.option scale = 0.9 
+.LIB 'model_wrapper1_hsp.lib' mos_mc
+.LIB 'model_wrapper1_hsp.lib' mos_total
+.PARAM
++corner_ratio= 1.0        
+.PARAM
++mismod  = 0              
+.ENDL mc_mos
+
+.LIB tt_bjt
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' bjt_core12_tt
+.LIB 'model_wrapper2_hsp.lib' bjt_io25_tt
+.ENDL tt_bjt
+
+.LIB ff_bjt
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' bjt_core12_ff
+.LIB 'model_wrapper2_hsp.lib' bjt_io25_ff
+.ENDL ff_bjt
+
+.LIB ss_bjt
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' bjt_core12_ss
+.LIB 'model_wrapper2_hsp.lib' bjt_io25_ss
+.ENDL ss_bjt
+
+.LIB mc_bjt
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' bjt_core12_mc
+.LIB 'model_wrapper2_hsp.lib' bjt_io25_mc
+.PARAM
++mismod_bjt= 0 
+.ENDL mc_bjt
+
+.LIB tt_dio
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' dio_tt
+.ENDL tt_dio
+
+.LIB ff_dio
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' dio_ff
+.ENDL ff_dio
+
+.LIB ss_dio
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' dio_ss
+.ENDL ss_dio
+
+.LIB mc_dio
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' dio_tt
+.ENDL mc_dio
+
+.LIB tt_res
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' res_tt
+.ENDL tt_res
+
+.LIB ff_res
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' res_ff
+.ENDL ff_res
+
+.LIB ss_res
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' res_ss
+.ENDL ss_res
+
+.LIB mc_res
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' res_mc
+.PARAM
++resmis_mod= 0 
+.ENDL mc_res
+
+.LIB tt_var
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' var_tt
+.ENDL tt_var
+
+.LIB ff_var
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' var_ff
+.ENDL ff_var
+
+.LIB ss_var
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' var_ss
+.ENDL ss_var
+
+.LIB mc_var
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' var_mc
+.PARAM
++mismod_var= 0 
+.ENDL mc_var
+
+.LIB tt_mom
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' mom_tt
+.ENDL tt_mom
+
+.LIB ff_mom
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' mom_ff
+.ENDL ff_mom
+
+.LIB ss_mom
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' mom_ss
+.ENDL ss_mom
+
+.LIB mc_mom
+.option scale = 0.9 
+.LIB 'model_wrapper2_hsp.lib' mom_mc
+.PARAM
++mismod_mom= 0 
+.ENDL mc_mom

@@ -1,0 +1,230 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+#====================================================================================================================
+#------------------------------------------------ ICS55 DRC RULE DECK -----------------------------------------------
+#====================================================================================================================
+# Translation in progress of the Calibre runset
+#   icsprout55-pdk/pv/DRC/ICsprout_CalDRC_55LLULP1233_REV1_0_OS.drc
+# Rule names follow the Calibre RULECHECK names so results can be compared 1:1.
+# Metal stack: 6 metals, 1 top metal (M1-M5 + T4M2), i.e. the Calibre default
+#   total_metal 6 / top_metal 1 / T4V2_T4M2 1
+#
+# Usage:
+#   klayout -b -r ics55.drc -rd input=<gds> [-rd topcell=<cell>] [-rd report=<lyrdb>]
+#           [-rd log=<file>] [-rd run_mode=deep|flat|tiling] [-rd threads=<n>]
+#           [-rd no_feol=true] [-rd no_beol=true]
+#====================================================================================================================
+
+require 'time'
+require 'logger'
+require 'pathname'
+require 'etc'
+
+exec_start_time = Time.now
+
+# Custom formatter including timestamp and memory usage
+formatter = proc do |_severity, datetime, _progname, msg|
+  memory_usage = "#{RBA::Timer.memory_size / 1024}K"
+  "#{datetime}: Memory Usage (#{memory_usage}) : #{msg}\n"
+end
+
+# Create file logger
+file_logger = Logger.new($log)
+file_logger.formatter = formatter
+
+# Create stdout logger
+stdout_logger = Logger.new($stdout)
+stdout_logger.formatter = formatter
+
+# Don't buffer stdout
+$stdout.sync = true
+
+# MultiLogger class to broadcast to multiple loggers
+class MultiLogger
+  def initialize(*targets)
+    @targets = targets
+  end
+
+  def info(msg)
+    @targets.each { |t| t.info(msg) }
+  end
+
+  def warn(msg)
+    @targets.each { |t| t.warn(msg) }
+  end
+
+  def error(msg)
+    @targets.each { |t| t.error(msg) }
+  end
+end
+
+# Use the multi-logger for your application
+logger = MultiLogger.new(stdout_logger, file_logger)
+
+#================================================
+#----------------- FILE SETUP -------------------
+#================================================
+
+logger.info("Starting running ICS55 KLayout DRC runset on #{$input}")
+
+if $input
+  if $topcell
+    source($input, $topcell)
+  else
+    source($input)
+  end
+end
+
+logger.info('Loading database to memory is complete.')
+
+if $report
+  logger.info("ICS55 KLayout DRC runset output at: #{$report}")
+  report('ICS55 DRC Run Report at', $report)
+else
+  layout_dir = Pathname.new(RBA::CellView.active.filename).parent.realpath
+  report_path = layout_dir.join('ics55_drc.lyrdb').to_s
+  logger.info("ICS55 KLayout DRC runset output at default location: #{report_path}")
+  report('ICS55 DRC Run Report at', report_path)
+end
+
+#================================================
+#------------------ SWITCHES --------------------
+#================================================
+
+logger.info('Evaluate switches.')
+
+def bool_check?(obj)
+  obj.to_s.downcase == 'true'
+end
+
+# Run mode setup
+def setup_run_mode(run_mode)
+  case run_mode
+  when 'tiling'
+    tiles(500.um)
+    tile_borders(30.um)
+  when 'flat'
+    flat
+  else
+    deep
+  end
+end
+
+# Threads
+$threads = ($threads || Etc.nprocessors).to_i
+threads($threads)
+logger.info("KLayout will use #{$threads} thread(s) in tiling mode.")
+
+# Run mode
+$run_mode ||= 'deep'
+setup_run_mode($run_mode)
+logger.info("#{$run_mode} mode is enabled.")
+
+# FEOL / BEOL. Accepts IHP style (-rd no_feol=true) and LibreLane style (-rd feol=false)
+FEOL = !bool_check?($no_feol) && $feol.to_s.downcase != 'false'
+logger.info("FEOL enabled: #{FEOL}")
+
+BEOL = !bool_check?($no_beol) && $beol.to_s.downcase != 'false'
+logger.info("BEOL enabled: #{BEOL}")
+
+#================================================
+#-------------------- UTILS ---------------------
+#================================================
+
+$drc_error_count = 0
+
+# Write a rule result to the report and accumulate the error count
+def report_rule(errs, rule, desc)
+  errs.output(rule, desc)
+  $drc_error_count += errs.count
+  errs.forget
+end
+
+# Parts of a layer wider than w (Calibre: "layer WITH WIDTH > w")
+def wider_than(layer, w)
+  layer.sized(-(w / 2.0).um).sized((w / 2.0).um)
+end
+
+# Shapes that are not a w x w square (Calibre: "NOT RECTANGLE layer == w BY == w")
+def not_square(layer, w)
+  layer - layer.squares.with_bbox_width(w.um)
+end
+
+# Enclosed (hole) areas smaller than a (Calibre: "AREA ((HOLES layer INNER) NOT layer) < a")
+# Merged with minimum coherence: shapes touching only at a corner stay separate,
+# so a region closed at single points is not a hole (as in Calibre).
+def small_holes(layer, a)
+  region = layer.data.dup
+  region.min_coherence = true
+  (DRC::DRCLayer.new(self, region.merged).holes - layer).with_area(nil, a)
+end
+
+# Drop zero-distance (corner to corner) results, for Calibre checks without SINGULAR
+def no_singular(errs)
+  errs.with_distance(0.0005, nil)
+end
+
+# Drop space results measured through the layer itself. KLayout's euclidian
+# space check can report two corners of the same polygon across its interior
+# (e.g. PO in SDFFNQX3H7R); the area spanned by such a pair is entirely inside
+# the layer, which can never be a real space violation.
+def drop_inner(errs, layer)
+  errs.interacting(errs.polygons(0.0005) - layer)
+end
+
+#================================================
+#------------- LAYERS DEFINITIONS ---------------
+#================================================
+
+# %include rule_decks/layers_def.drc
+# %include rule_decks/derived_layers.drc
+
+# Common exclusion regions
+excl_nodrc = nodrc
+excl_sram = nodrc | sramall
+
+#================================================
+#------------------ FEOL RULES ------------------
+#================================================
+
+# %include rule_decks/feol/dnw.drc
+# %include rule_decks/feol/nw.drc
+# %include rule_decks/feol/act.drc
+# %include rule_decks/feol/po.drc
+# %include rule_decks/feol/implant.drc
+# %include rule_decks/feol/ct.drc
+
+#================================================
+#------------------ BEOL RULES ------------------
+#================================================
+
+# %include rule_decks/beol/met1.drc
+# %include rule_decks/beol/metn.drc
+# %include rule_decks/beol/via.drc
+# %include rule_decks/beol/topmetal.drc
+
+#================================================
+#------------------- SUMMARY --------------------
+#================================================
+
+logger.info("Number of DRC errors: #{$drc_error_count}")
+
+exec_end_time = Time.now
+run_time = exec_end_time - exec_start_time
+logger.info("KLayout DRC run completed in #{run_time.round(2)} seconds")

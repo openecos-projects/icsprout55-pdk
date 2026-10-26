@@ -1,0 +1,70 @@
+*
+*  release version    : 1.1
+*
+*  simulation tool    : synopsys hspice version N-2017.12-SP2
+*
+*  MOM Capacitor   :
+*
+*        *-----------------------------------------------------------* 
+*        |                 Type                     |   MOM subckt   |
+*        *-----------------------------------------------------------* 
+*        |                MOM                       |   mom_2t    | 
+*        *-----------------------------------------------------------*
+*
+* (Remark: shielding option: 0=non-shielding, 1=poly-shielding, 2=metal-shielding)
+*
+*****************************************************************
+*                       55nm MOM Capacitor 2t                   *
+*****************************************************************
+* a=port1, b=port2
+.subckt mom_2t a b lf=1u nf=6 bm=1 tm=3 mr=1 mismod_mom=0 
+.PARAM
++nm      = 'tm-bm+1'      
++dc0_mis = '1.025*(a11+a12+a13)*sigma_mis_mom*mismod_mom'
++a11     = '3.45E-7*geo_fac*geo_fac'
++a12     = '3.105E-6*geo_fac'
++a13     = 2.2425E-4       
++geo_fac = '1/sqrt(lf*nf*mr*nm)'
++ctc1    = 2.89E-6         cvc1    = 1.43665E-9      cvc2    = 1.90679E-9     
++tcoef   = '1.0+ctc1*(temper-25.0)'
++cf      = 'max((((((0.207291*nm-4.85047E-2)*lf*1e6+(1.05962E-2*nm-4.827941E-4))*nf-((9.935717E-3*nm+7.69893E-2)*lf*1e6+(1.65152E-3*nm-8.03382E-2)))*(bm==1)+(((0.199407*nm-3.597274E-3)*lf*1e6+(1.34357E-2*nm-0.018116))*nf-((1.965032E-3*nm+0.169599)*lf*1e6+(2.51922E-2*nm-0.306621)))*(bm>1)))*1.04*1e-15,1e-18)'
+cab a b 'mr*cf*(1+dc0_mis)*(1+dmom_mnx)*tcoef*(1.0+v(a,b)*(cvc1+cvc2*v(a,b)))/2' 
+.ends mom_2t
+
+*
+*  release version    : 1.0
+*
+*  release date       : 09/30/2024
+*
+*  simulation tool    : synopsys hspice version N-2017.12-SP2
+*
+*  MOM Capacitor   :
+*
+*        *-----------------------------------------------------------* 
+*        |                 Type                     |   MOM subckt   |
+*        *-----------------------------------------------------------* 
+*        |                MOM                       |   mom_3t    | 
+*        *-----------------------------------------------------------*
+*
+* (Remark: shielding option: 0=non-shielding, 1=poly-shielding, 2=metal-shielding)
+*
+*****************************************************************
+*                       55nm MOM Capacitor 3t                    *
+ *****************************************************************
+.subckt mom_3t a b p lf=1u nf=6 bm=1 tm=3 mr=1 mismod_mom=0 shielding=0 
+.PARAM
++nm      = 'tm-bm+1'      
++dc0_mis = '1.025*(a11+a12+a13)*sigma_mis_mom*mismod_mom'
++a11     = '3.45E-7*geo_fac*geo_fac'
++a12     = '3.105E-6*geo_fac'
++a13     = 2.2425E-4       
++geo_fac = '1/sqrt(lf*nf*mr*nm)'
++ctc1    = 2.89E-6         cvc1    = 1.43665E-9      cvc2    = 1.90679E-9     
++tcoef   = '1.0+ctc1*(temper-25.0)'
++cf      = 'max((((((0.207291*nm-4.85047E-2)*lf*1e6+(1.05962E-2*nm-4.827941E-4))*nf-((9.935717E-3*nm+7.69893E-2)*lf*1e6+(1.65152E-3*nm-8.03382E-2)))*(bm==1)+(((0.199407*nm-3.597274E-3)*lf*1e6+(1.34357E-2*nm-0.018116))*nf-((1.965032E-3*nm+0.169599)*lf*1e6+(2.51922E-2*nm-0.306621)))*(bm>1)))*1.04*1e-15,1e-18)'
++Cpara   = 'max((((0.00598*pwr(bm,-0.7316))*lf*1e6*nf*((shielding==0)+(4.1*pwr(bm,-0.85))*(shielding==1))+(-0.0037594*bm+0.0273)*lf*1e6*nf*(shielding==2))+0.2)*1E-15,1E-18)'
+cab a b 'mr*cf*(1+dc0_mis)*(1+dmom_mnx)*tcoef*(1.0+v(a,b)*(cvc1+cvc2*v(a,b)))/2' 
+cap a p 'Cpara*mr*tcoef*(1.0+v(a,p)*(cvc1+cvc2*v(a,p)))/2' 
+cbp b p 'Cpara*mr*tcoef*(1.0+v(b,p)*(cvc1+cvc2*v(b,p)))/2' 
+.ends mom_3t
+

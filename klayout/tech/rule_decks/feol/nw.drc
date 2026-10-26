@@ -1,0 +1,49 @@
+# frozen_string_literal: true
+
+#=========================================================================================
+# Copyright 2026 Ckristian Duran
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=========================================================================================
+
+
+if FEOL
+  #================================================
+  #------------------ NW1 - N-Well ----------------
+  #================================================
+
+  logger.info('Starting NW1 rules')
+
+  # NW1_W_1: OUTLAYER ((INT NW < 0.47 ABUT<90 SINGULAR REGION) NOT INSIDE SRAMALL) NOT INSIDE NODRC
+  logger.info('Executing rule NW1_W_1')
+  report_rule(nw.width(0.47.um, euclidian).not_inside(excl_sram),
+              'NW1_W_1', 'NW1_W_1 : NW1 width >= 0.47um')
+
+  # NW1_S_1: OUTLAYER ((EXT LVNW0 < 0.47 ABUT<90 SINGULAR REGION) NOT NWRES) NOT INSIDE NODRC
+  # NOTE: Calibre subtracts NWRES from the error region; here markers inside NWRES are dropped.
+  logger.info('Executing rule NW1_S_1')
+  report_rule(lvnw0.space(0.47.um, euclidian).not_inside(nwres).not_inside(excl_nodrc),
+              'NW1_S_1', 'NW1_S_1 : Space between NW1s >= 0.47um')
+
+  # NW1_A_1: OUTLAYER (AREA NW < 0.3) NOT INSIDE NODRC
+  logger.info('Executing rule NW1_A_1')
+  report_rule(nw.with_area(nil, 0.3).not_inside(excl_nodrc),
+              'NW1_A_1', 'NW1_A_1 : NW1 area >= 0.30um2')
+
+  # NW1_A_2: OUTLAYER (AREA ((HOLES NW INNER) NOT NW) < 0.3) NOT INSIDE NODRC
+  logger.info('Executing rule NW1_A_2')
+  report_rule(small_holes(nw, 0.3).not_inside(excl_nodrc),
+              'NW1_A_2', 'NW1_A_2 : NW1 enclosed area >= 0.3um2')
+
+  # TODO: NW1_S_2 (needs connectivity), NW1_S_3..5, NW1_R_1
+end

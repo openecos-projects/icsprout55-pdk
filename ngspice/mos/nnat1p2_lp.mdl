@@ -1,0 +1,376 @@
+*
+*  release version    : 1.1
+*
+*  simulation tool    : synopsys hspice version N-2017.12-SP2
+*
+*  model type         :
+*    mosfet           : hspice level 54(bsim4v4.5)
+*
+*  model name         :
+*    mosfet           :
+*        *----------------------------------------------------------------------------------------------------*
+*        |     mosfet type    |   1.2v        |  
+*        |====================================================================================================|
+*        *----------------------------------*
+*        |      native nmos      | nnat1p2_lp    |
+*        *----------------------------------*
+*  valid temperature range is from -40c to 125c
+*
+
+
+.param wum = w*1e6
+.param lum = l*1e6
+
+.param vth0_w0p5_1 = 0
+.param vth0_w0p5_2 = -0.1192
+.param vth0_w0p5_3 = -0.125
+.param vth0_w0p5_4 = -0.324964
+.param vth0_w0p5_5 = -0.0036
+
+.param vth0_w1_1 = -0.002
+.param vth0_w1_2 = -0.264
+.param vth0_w1_3 = -0.228
+.param vth0_w1_4 = -0.324
+.param vth0_w1_5 = -0.00080000000
+
+.param vth0_w10_1 = -0.177
+.param vth0_w10_2 = 0.002
+.param vth0_w10_3 = 0.002
+.param vth0_w10_4 = 0.012
+.param vth0_w10_5 = 0.004
+
+.param u0_w0p5_1 = 0.00080000000
+.param u0_w0p5_2 = -0.0070000000
+.param u0_w0p5_3 = -0.0088000000
+.param u0_w0p5_4 = -0.017
+.param u0_w0p5_5 = -0.0034
+
+.param u0_w1_1 = 0.0028
+.param u0_w1_2 = -0.010400000
+.param u0_w1_3 = -0.009
+.param u0_w1_4 = -0.014
+.param u0_w1_5 = -0.002
+
+.param u0_w10_1 = -0.00338
+.param u0_w10_2 = 0
+.param u0_w10_3 = -0.002
+.param u0_w10_4 = 0
+.param u0_w10_5 = 0
+
+.param voff_w0p5_1 = 0
+.param voff_w0p5_2 = 0.085000000
+.param voff_w0p5_3 = 0.103
+.param voff_w0p5_4 = 0.234
+.param voff_w0p5_5 = 0.0046
+
+.param voff_w1_1 = 0
+.param voff_w1_2 = 0.178
+.param voff_w1_3 = 0.16
+.param voff_w1_4 = 0.232
+.param voff_w1_5 = 0
+
+.param voff_w10_1 = 0.11800000
+.param voff_w10_2 = 0
+.param voff_w10_3 = 0
+.param voff_w10_4 = -0.00060000000
+.param voff_w10_5 = -2.0E-4
+
+.param vsat_w0p5_1 = 1000.0
+.param vsat_w0p5_2 = -12000.0
+.param vsat_w0p5_3 = -9000.0
+.param vsat_w0p5_4 = -35000.0
+.param vsat_w0p5_5 = 7230000.0
+
+.param vsat_w1_1 = -9000.0
+.param vsat_w1_2 = -39000.0
+.param vsat_w1_3 = -40000.0
+.param vsat_w1_4 = -51000.0
+.param vsat_w1_5 = -40000.0
+
+.param vsat_w10_1 = -13000.0
+.param vsat_w10_2 = 50000.0
+.param vsat_w10_3 = 76000.0
+.param vsat_w10_4 = 69000.0
+.param vsat_w10_5 = 100000.0
+
+.param eta0_w0p5_1 = 0
+.param eta0_w0p5_2 = 0.5
+.param eta0_w0p5_3 = 4.0
+.param eta0_w0p5_4 = 0
+.param eta0_w0p5_5 = 0
+
+.param eta0_w1_1 = 0
+.param eta0_w1_2 = 0
+.param eta0_w1_3 = 0
+.param eta0_w1_4 = 0
+.param eta0_w1_5 = 0
+
+.param eta0_w10_1 = 0
+.param eta0_w10_2 = 0
+.param eta0_w10_3 = 0
+.param eta0_w10_4 = 0
+.param eta0_w10_5 = 0
+
+.param evalbin(p1,p2,p3,p4) = '(p1/lbin/dbin-p2/lbin/ubin+p3/rbin/ubin-p4/rbin/dbin + ((p2-p1)/lbin+(p4-p3)/rbin)/lum + ((p4-p1)/dbin+(p2-p3)/ubin)/wum + (p1-p2+p3-p4)/lum/wum)/(1/lbin-1/rbin)/(1/dbin-1/ubin)'
+.param select3(v,v1,v2,v3) = 'v<v1?1 : v<v2?1 : v<v3?2 : 2'
+.param select5(v,v1,v2,v3,v4,v5) = 'v<v1?1 : v<v2?1 : v<v3?2 : v<v4?3 : v<v5?4 : 4'
+.param selectp3(p,p1,p2,p3) = 'p==1?p1 : p==2?p2 : p==3?p3 : 1e4'
+.param selectp5(p,p1,p2,p3,p4,p5) = 'p==1?p1 : p==2?p2 : p==3?p3 : p==4?p4 : p==5?p5 : 1e4'
+
+.param xbin = select3(wum,0.5,1,10)
+.param lbin = selectp3(xbin,0.5,1,10)
+.param rbin = selectp3(xbin+1,0.5,1,10)
+.param ybin = select5(lum,0.2,0.5,0.7,1,10)
+.param dbin = selectp5(ybin,0.2,0.5,0.7,1,10)
+.param ubin = selectp5(ybin+1,0.2,0.5,0.7,1,10)
+
+
+.param vth0_w0p5(y) = 'selectp5(y,vth0_w0p5_1,vth0_w0p5_2,vth0_w0p5_3,vth0_w0p5_4,vth0_w0p5_5)'
+.param vth0_w1(y) = 'selectp5(y,vth0_w1_1,vth0_w1_2,vth0_w1_3,vth0_w1_4,vth0_w1_5)'
+.param vth0_w10(y) = 'selectp5(y,vth0_w10_1,vth0_w10_2,vth0_w10_3,vth0_w10_4,vth0_w10_5)'
+.param vth0_c(x,y) = 'selectp3(x, vth0_w0p5(y), vth0_w1(y), vth0_w10(y))'
+.param vth0_q = 'evalbin(vth0_c(xbin+1,ybin+1), vth0_c(xbin+1,ybin), vth0_c(xbin,ybin), vth0_c(xbin,ybin+1))'
+
+.param u0_w0p5(y) = 'selectp5(y,u0_w0p5_1,u0_w0p5_2,u0_w0p5_3,u0_w0p5_4,u0_w0p5_5)'
+.param u0_w1(y) = 'selectp5(y,u0_w1_1,u0_w1_2,u0_w1_3,u0_w1_4,u0_w1_5)'
+.param u0_w10(y) = 'selectp5(y,u0_w10_1,u0_w10_2,u0_w10_3,u0_w10_4,u0_w10_5)'
+.param u0_c(x,y) = 'selectp3(x,  u0_w0p5(y),  u0_w1(y), u0_w10(y))'
+.param u0_q = 'evalbin(u0_c(xbin+1,ybin+1), u0_c(xbin+1,ybin), u0_c(xbin,ybin), u0_c(xbin,ybin+1))'
+
+.param voff_w0p5(y) = 'selectp5(y,voff_w0p5_1,voff_w0p5_2,voff_w0p5_3,voff_w0p5_4,voff_w0p5_5)'
+.param voff_w1(y) = 'selectp5(y,voff_w1_1,voff_w1_2,voff_w1_3,voff_w1_4,voff_w1_5)'
+.param voff_w10(y) = 'selectp5(y,voff_w10_1,voff_w10_2,voff_w10_3,voff_w10_4,voff_w10_5)'
+.param voff_c(x,y) = 'selectp3(x,  voff_w0p5(y),  voff_w1(y), voff_w10(y))'
+.param voff_qq = 'evalbin(voff_c(xbin+1,ybin+1), voff_c(xbin+1,ybin), voff_c(xbin,ybin), voff_c(xbin,ybin+1))'
+
+.param vsat_w0p5(y) = 'selectp5(y,vsat_w0p5_1,vsat_w0p5_2,vsat_w0p5_3,vsat_w0p5_4,vsat_w0p5_5)'
+.param vsat_w1(y) = 'selectp5(y,vsat_w1_1,vsat_w1_2,vsat_w1_3,vsat_w1_4,vsat_w1_5)'
+.param vsat_w10(y) = 'selectp5(y,vsat_w10_1,vsat_w10_2,vsat_w10_3,vsat_w10_4,vsat_w10_5)'
+.param vsat_c(x,y) = 'selectp3(x,  vsat_w0p5(y),  vsat_w1(y), vsat_w10(y))'
+.param vsat_qq = 'evalbin(vsat_c(xbin+1,ybin+1), vsat_c(xbin+1,ybin), vsat_c(xbin,ybin), vsat_c(xbin,ybin+1))' 
+
+.param eta0_w0p5(y) = 'selectp5(y,eta0_w0p5_1,eta0_w0p5_2,eta0_w0p5_3,eta0_w0p5_4,eta0_w0p5_5)'
+.param eta0_w1(y) = 'selectp5(y,eta0_w1_1,eta0_w1_2,eta0_w1_3,eta0_w1_4,eta0_w1_5)'
+.param eta0_w10(y) = 'selectp5(y,eta0_w10_1,eta0_w10_2,eta0_w10_3,eta0_w10_4,eta0_w10_5)'
+.param eta0_c(x,y) = 'selectp3(x, eta0_w0p5(y), eta0_w1(y), eta0_w10(y))'
+.param eta0_q = 'evalbin(eta0_c(xbin+1,ybin+1), eta0_c(xbin+1,ybin), eta0_c(xbin,ybin), eta0_c(xbin,ybin+1))'
+
+***********************************************************************************
+*                              1.2v core native nmos model                               *
+***********************************************************************************
+.MODEL nnat1p2_lp_core nmos
+****************************************************************
+*                        Model selector
+****************************************************************
++level   = 54.0            version = 4.5             binunit = 2.0            
++paramchk= 1.0             mobmod  = 0               capmod  = 2.0            
++rdsmod  = 0               igcmod  = 2.0             igbmod  = 1.0            
++rbodymod= 0               trnqsmod= 0               acnqsmod= 0              
++diomod  = 2.0             tempmod = 0               permod  = 1.0            
++geomod  = 0               rgeomod = 1.0             rgatemod= 0              
++wpemod  = 0               fnoimod = 1.0             tnoimod = 0              
++xpart   = 1.0            
+
+****************************************************************
+*                       Process Parameter
+****************************************************************
++epsrox  = 3.9             toxe    = '2.54e-009+dtoxe_nnat1p2_lp' dtox    = 1.5E-10        
++toxref  = 3.0E-9          xj      = 1.15E-7         ndep    = 1.0E16         
++ngate = 8.0E21            nsd     = 1.0E20          rsh     = 8.5            
+
+****************************************************************
+*                      dW and dL Parameter
+****************************************************************
++wint    = 1.72E-8         wl      = 0               wln     = 1.04           
++ww      = -1.32E-15       wwn     = 1.07            wwl = 0
++lint    = -3.5E-8         ll      = 5.36E-16        lln = 1.0
++lw = 0                    lwn     = 1.0             lwl = 0
++llc     = 0               lwc     = 0               lwlc    = 0              
++wlc     = 0               wwc     = 0               wwlc    = 0              
++dwg     = 0               dwb     = 0               xl      = '-2e-009+dxl_nnat1p2_lp'
++xw      = '1.5e-008+dxw_nnat1p2_lp' dlc = 1.75E-8             dwc     = 0              
++lmin    = 6.29937e-07          lmax    = 1.0E-4          wmin    = 4.49955e-07         
++wmax    = 1.0E-4          dlcig   = 1.0E-9         
+
+****************************************************************
+*                    Basic Model Parameters
+****************************************************************
++vth0 = '(-0.115)+dvth0_nnat1p2_lp+dvth0_nnat1p2_lp_mis+vth0_q'      lvth0 = '(-6.4E-8)+dlvth0_nnat1p2_lp'        pvth0 = '(-6.8E-15)+dpvth0_nnat1p2_lp'
++phin    = 2.3411E-4       k1      = 0.15            k2 = -0.03398
++k3 = 2.5                  k3b     = -1.0            w0      = 0              
++lpe0 = 3.085E-6           lpeb    = 0               vbm     = -3.0           
++dvtp0   = 0               dvtp1   = 0               dvt0    = 0.03186        
++dvt1    = 0.1764          dvt2    = -0.03           dvt0w   = 0              
++dvt1w   = 0               dvt2w   = 0               u0 = '0.0378+du0_nnat1p2_lp+du0_nnat1p2_lp_mis+u0_q'
++lu0 = '(-4.3000000e-09)+dlu0_nnat1p2_lp'      wu0 = '6.0500000e-09+dwu0_nnat1p2_lp'       pu0 = '(-5.5E-16)+dpu0_nnat1p2_lp'
++ua = 2.1680000e-10        lua = -3.6200000e-16      pua = 1.2555E-22
++ub = 2.0000000e-18        lub = 2.6128000e-25       wub     = 3.456E-26      
++pub = -2.2410000e-31      uc = -2.0550000e-10       luc = -2.2800000e-17
++wuc = -2.96E-17           puc = 5.9000000e-24       ud      = 0              
++up      = 0               lp      = 1.0E-8          eu      = 1.67           
++vsat    = '79316.0+vsat_qq+dvsat_nnat1p2_lp_mis'        lvsat   = -0.0012738      pvsat   = 1.3054E-9      
++a0 = 5.3                  la0 = 2.0E-6              pa0 = -8.5000000e-13
++ags = '0.96 +dags_nnat1p2_lp'               lags = '9.08E-7+dlags_nnat1p2_lp'            pags = '1.144E-12+dpags_nnat1p2_lp'
++b0      = 0               b1      = 0               keta    = -0.1           
++lketa = 0                 pketa = 0                 a1      = 1.0            
++a2      = 0.011           voff = '(-0.118)+dvoff_nnat1p2_lp+dvoff_nnat1p2_lp_mis+voff_qq'  voffl = 6.653E-22
++minv = -0.264             nfactor = 1.1             eta0 = '0.27106+eta0_q+deta0_nnat1p2_lp_mis'
++peta0 = -2.2432E-14       etab    = -0.01           dsub    = 0.40669        
++cit = 0.0069              lcit = 1.45E-9            wcit = -7.6E-10
++pcit = -3.7171E-16        cdsc    = 2.4E-4          cdscb   = 0              
++cdscd   = 0               pclm    = 0.595           ppclm   = 1.712E-14      
++pdiblc1 = 0.39            pdiblc2 = '0.0136+dpdiblc2_nnat1p2_lp_mis'          pdiblcb = 0              
++drout   = 0.56            pscbe1  = 4.24E8          pscbe2  = 5.0E-8         
++pvag = 0                  delta   = 0.007         
+
+****************************************************************
+*    Parameters for Asymmetric and Bias-Dependent Rds Model
+****************************************************************
++rdsw    = 45.4            rdswmin = 0               rdw     = 22.7           
++rdwmin  = 0               rsw     = 22.7            rswmin  = 0              
++prwb    = 0               prwg    = 1.0             wr      = 1.0            
+
+****************************************************************
+*          Impact Ionization Current Model Parameters
+****************************************************************
++alpha0  = 0               alpha1  = 2.5E-5          beta0   = 4.0            
+
+****************************************************************
+*               Gate Dielectric Tunneling Current
+****************************************************************
++aigbacc = 0.017           bigbacc = 0.00171         cigbacc = 0.075          
++nigbacc = 1.1             aigbinv = 0.011           bigbinv = 9.49E-4        
++cigbinv = 0.006           eigbinv = 1.1             nigbinv = 3.0            
++aigc    = 0.012861        bigc    = 0.00198         cigc    = 0.01224        
++aigsd   = 0.0087688       laigsd  = 3.5436E-10      paigsd  = -4.5004E-17    
++bigsd   = 4.8E-4          cigsd   = 0.15            nigc    = 7.0            
++poxedge = 0.94            pigcd   = 3.5             ntox    = 1.0            
+
+****************************************************************
+*                    GIDL Effect Parameters
+****************************************************************
++agidl   = 1.0E-6          bgidl   = 2.0E9           cgidl   = 0.5            
++egidl   = 0.8            
+
+****************************************************************
+*          Flicker and Thermal Noise Model Parameters
+****************************************************************
++noia    = 3.0E42          noib    = 9.0176E24       noic    = -1.2891E8      
++em      = 4.1E7           ef      = 1.1             ntnoi   = 1.0            
+
+****************************************************************
+*                     Capacitance Parameter
+****************************************************************
++cgso = '2.6E-10+8.24e-11*prelayout+dcgso_nnat1p2_lp'    cgdo = '2.6E-10+8.24e-11*prelayout+dcgdo_nnat1p2_lp'    cgbo    = 0              
++cf      = '8.27e-011+dcf_nnat1p2_lp' noff    = 2.0             voffcv = -0.019
++lvoffcv = 5.5E-8          acde    = 0.6             moin    = 8.0            
++cgsl    = '3e-011+dcgsl_nnat1p2_lp' cgdl    = '3e-011+dcgdl_nnat1p2_lp'
+
+****************************************************************
+*          Souce/Drain Junction Diode Model Parameter
+****************************************************************
++ijthsrev= 0.1             ijthsfwd= 0.1             xjbvs   = 1.0            
++bvs     = 17.0            jss     = 6.4E-6          jsws    = 3.5E-13        
++jswgs   = 3.0E-13         cjs     = '9.54450e-05+dcjs_nnat1p2_lp' cjsws   = '5.47000e-11+dcjsws_nnat1p2_lp'
++cjswgs  = '3.0997e-011+dcjswgs_nnat1p2_lp' mjs     = 0.706           mjsws   = 0.272          
++mjswgs  = 0.59981         pbs     = 0.864           pbsws   = 0.902          
++pbswgs  = 0.6992          njs     = 1.066           xtis    = 3.0            
++tpb = 0.0021              tpbsw = 0.00249           tpbswg = 0.0014
++tcj = 0.00170745          tcjsw = 1.2187E-4         tcjswg = 0.0019995
++jtss    = 0               jtsd    = 0               jtssws  = 0              
++jtsswd  = 0               jtsswgs = 0               jtsswgd = 0
++njts    = 20.0            njtssw  = 20.0            njtsswg = 20.0           
++xtss    = 0.02            xtsd    = 0.02            xtssws  = 0.02           
++xtsswd  = 0.02            xtsswgs = 0.02            xtsswgd = 0.6            
++tnjts   = 0               tnjtssw = 0               tnjtsswg= 0              
+
+****************************************************************
+*          Layout-Dependent Parasitics Model Parameter
+****************************************************************
++dmcg    = 9.0E-8          dmci    = 2.75E-7         dmdg    = 0              
++dmcgt   = 0               dwj     = 0               xgw     = 0              
++xgl     = 0               ngcon   = 1.0            
+
+****************************************************************
+*                  RF Model Related Parameter
+****************************************************************
++xrcrg1  = 12.0            xrcrg2  = 1.0             rbsb    = 50.0           
+
+****************************************************************
+*                    Temperature coefficient
+****************************************************************
++tnom    = 25.0            ute = -1.6500000          lute = 5.6E-8
++pute = -1.0E-14           kt1 = -0.26               lkt1 = -6.4000000e-08
++wkt1 = -2.0E-8            pkt1 = 1.7E-14            kt1l    = 0              
++kt2 = -0.05               lkt2 = 9.3255E-10         ua1 = 2.56E-9
++lua1 = -3.0E-16           wua1 = 9.0E-17            pua1 = -3.3087E-24
++ub1 = -4.75E-18           lub1    = 0               pub1 = 2.0E-32
++uc1 = -6.0E-10            luc1 = 1.33514E-16        puc1 = 1.8208E-23
++ud1     = 0               at = 110110.0             lat = -0.012856
++pat = 2.3248000e-10       prt     = 0               tvoff = 0.0037989
++ltvoff = 0
+
+****************************************************************
+*                Stress Effect Related Parameter
+****************************************************************
++saref   = 3.65E-7         sbref   = 3.65E-7         wlod    = 0              
++ku0 = -6.5E-8             kvsat = -0.10504000       kvth0 = 4.5E-8
++tku0    = 0               llodku0 = 1.0             wlodku0 = 1.0            
++llodvth = 1.0             wlodvth = 1.0             lku0 = 1.0000000e-07
++wku0 = 5.0000000e-07      pku0 = 3.7E-13            lkvth0 = 8.0E-7
++wkvth0 = 8.5E-7           pkvth0 = -2.3000000e-12   stk2    = 0              
++lodk2   = 1.0             steta0  = -2.0E-9         lodeta0 = 1.0            
+
++ 
++ 
++ 
++ 
+
+
++ 
++ 
++ 
++ 
++ 
++ 
++ lminv = -2.0E-8
++ lvoff= 0
++ lpvag = 1.0E-7
++ 
++ wvth0 = '9.0000000e-09+dwvth0_nnat1p2_lp'
++ wvoff = 0
+
+
+
+
+
+
+
+
++ pvoff = 6.6E-15
++ pminv = 8.1000000e-14
++ ppdiblc2 = -1.01E-15
+
+
+
+
+
+
++ plpe0= 0
++ 
+
++ wa0 = -1.80135E-6
++ wags = '1.9744E-7+dwags_nnat1p2_lp'
+
++ wminv = -4.0E-8
++ wua = 1.2E-16
+
++ lk2 = 7.1000000e-10
++ pk2 = -1.2E-15
++ wk2 = 1.5E-9
+
++ 
++ wtvoff = -6.0E-10
++ 
++ wkt2= 0
++ lnoff = -7.0E-8
