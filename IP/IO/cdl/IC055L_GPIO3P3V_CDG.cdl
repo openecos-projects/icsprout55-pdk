@@ -1,0 +1,1859 @@
+************************************************************************************
+* Emprean Library/IP Product
+* Filename: IC055L_GPIO3P3V_CDG.cdl
+* Technology: Icsprout_55nm
+* Product Type: Standard I/O
+* Product Name: IC055L_GPIO3P3V_CDG
+*************************************************************************************
+
+.include "./subckt.sp"
+
+
+
+.SUBCKT PANA2 AVDDD AVSSD PAD VSS
+DD_X0 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X4 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X5 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X7 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X8 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 PAD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X15 AVSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+.ENDS
+
+
+.SUBCKT PANA2C AVDDDC AVSSDC PAD VSS
+DD_X0 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X4 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X5 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X7 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X8 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 PAD AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X15 AVSSDC PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+.ENDS
+
+
+.SUBCKT PANA2I PAD POC VDD VDDD VSS VSSD
+DD_X0 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X4 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X5 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X7 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X8 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 VSSD PAD dio_2p5_np_pw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X15 PAD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+.ENDS
+
+
+.SUBCKT PCUT VSS
+.ENDS
+
+
+.SUBCKT PDBSDU A C IE OE PAD PD POC PU S0 S1 S2 ST VDD VDDD VSS VSSD
+MM_X0 net_33 net_78 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X1 net_54 S1 S1 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X2 net_85 net_34 net_34 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+XR_X0 PAD net_64 VDDD re_ppo_sab_3t W=1e-06 L=1.2e-06 MR=1
+MM_X3 net_69 POC VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X4 PAD net_27 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X5 net_90 net_81 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X6 net_9 S2 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X7 net_67 net_66 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X8 net_21 S2 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X9 net_73 net_13 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X10 net_24 net_15 VSS VSS nmod3p3_lp W=6e-06 L=5e-07 MR=1
+MM_X11 net_69 POC VDDD VDDD pmod3p3_lp W=2.4e-06 L=4e-07 MR=1
+MM_X12 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X13 net_16 net_85 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X14 net_31 net_64 net_11 VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X15 net_10 net_59 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X16 net_89 net_8 VDDD VDDD pmod3p3_lp W=6e-06 L=4e-07 MR=1
+MM_X17 net_66 net_22 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X18 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X19 net_64 VDDD VDDD VDDD pmod3p3_lp W=1e-05 L=4e-07 MR=1
+MM_X20 net_67 net_31 net_11 VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X21 net_11 net_64 VDDD VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X22 net_40 net_82 net_24 VSS nmod3p3_lp W=6e-06 L=5e-07 MR=1
+MM_X23 net_6 net_38 net_38 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X24 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X25 net_82 net_19 VDDD VDDD pmod3p3_lp W=6e-06 L=4e-07 MR=1
+MM_X26 net_39 net_35 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X27 net_49 net_88 net_88 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X28 net_57 net_15 VDDD VDDD pmod3p3_lp W=4e-06 L=4e-07 MR=1
+MM_X29 PAD net_71 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X30 net_64 VSS VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X31 net_34 PU VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X32 net_27 net_57 VSS VSS nmod3p3_lp W=5e-06 L=5e-07 MR=1
+MM_X33 net_76 net_14 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X34 PAD net_71 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X35 net_5 S0 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X36 net_75 net_54 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X37 net_52 net_50 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X38 net_48 net_43 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X39 net_40 net_15 VDDD VDDD pmod3p3_lp W=1.6e-05 L=4e-07 MR=1
+MM_X40 PAD net_40 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X41 net_31 net_64 net_1 VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X42 net_36 net_75 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X43 net_20 net_22 net_22 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X44 net_81 net_73 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X45 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X46 net_14 net_13 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X47 net_76 net_13 net_13 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X48 net_49 net_2 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X49 net_63 net_49 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X50 PAD net_29 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X51 net_20 net_60 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X52 net_6 net_56 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X53 net_21 S2 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X54 net_36 net_75 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X55 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X56 PAD net_27 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X57 net_63 net_49 VDDD VDDD pmod3p3_lp W=1e-06 L=4e-07 MR=1
+MM_X58 net_56 net_38 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X59 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X60 net_12 net_82 VDDD VDDD pmod3p3_lp W=6e-06 L=4e-07 MR=1
+MM_X61 net_72 S1 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X62 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X63 net_29 net_79 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X64 C net_10 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X65 net_67 net_66 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X66 net_9 net_32 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X67 net_34 PU VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X68 net_3 net_66 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X69 PAD net_40 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X70 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X71 PAD net_51 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X72 net_35 PD VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X73 net_87 A VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X74 net_38 net_80 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X75 net_44 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X76 net_75 net_72 net_72 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X77 net_51 net_8 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X78 PAD net_29 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X79 net_62 net_34 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X80 net_4 net_90 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X81 net_78 net_43 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X82 net_1 net_64 net_4 VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X83 net_26 net_8 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X84 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X85 net_56 net_6 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X86 net_79 net_36 VDDD VDDD pmod3p3_lp W=4e-06 L=4e-07 MR=1
+MM_X87 net_61 net_82 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X88 net_71 net_82 net_77 VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X89 net_54 net_72 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X90 net_49 net_69 VDDD VDDD pmod3p3_lp W=2e-06 L=4e-07 MR=1
+MM_X91 net_73 POC VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X92 PAD net_58 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+XR_X1 PAD net_64 VDDD re_ppo_sab_3t W=1e-06 L=1.2e-06 MR=1
+MM_X93 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X94 net_69 POC VDDD VDDD pmod3p3_lp W=2.4e-06 L=4e-07 MR=1
+MM_X95 net_13 IE VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X96 net_60 net_22 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X97 net_10 net_59 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X98 PAD net_27 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X99 net_26 net_8 VDDD VDDD pmod3p3_lp W=2e-06 L=4e-07 MR=1
+MM_X100 net_10 net_59 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X101 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X102 net_25 OE VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X103 C net_10 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X104 net_15 net_9 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X105 net_2 net_45 net_45 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X106 net_8 net_63 VSS VSS nmod3p3_lp W=1.6e-06 L=5e-07 MR=1
+MM_X107 net_78 net_43 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X108 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X109 net_72 S1 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X110 net_20 net_66 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X111 PAD net_61 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X112 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X113 PAD net_58 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X114 net_16 net_85 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X115 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X116 net_32 net_21 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X117 net_88 net_45 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X118 net_76 net_73 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X119 net_61 net_82 net_30 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X120 net_32 net_9 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X121 PAD net_27 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X122 net_80 A VDD VDD pm1p2_svt_lp W=1.7e-06 L=9e-08 MR=1
+MM_X123 net_48 S0 S0 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X124 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X125 net_43 net_48 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X126 net_8 net_63 VDDD VDDD pmod3p3_lp W=6e-06 L=4e-07 MR=1
+MM_X127 net_50 net_35 net_35 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X128 net_45 A VSS VSS nm1p2_svt_lp W=1.5e-06 L=9e-08 MR=1
+MM_X129 net_50 net_39 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X130 PAD net_12 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+XR_X2 net_68 VSSD VDDD re_ppo_sab_3t W=1.8e-06 L=5.1e-06 MR=1
+MM_X131 PAD net_40 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X132 net_79 net_36 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X133 net_64 net_52 VSS VSS nmod3p3_lp W=8e-07 L=5.7e-06 MR=1
+MM_X134 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X135 net_50 PD VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X136 net_32 S2 S2 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X137 net_71 net_82 VDDD VDDD pmod3p3_lp W=1.2e-05 L=4e-07 MR=1
+MM_X138 net_27 net_57 net_44 VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X139 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X140 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X141 net_57 net_15 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X142 net_67 net_66 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X143 net_12 net_82 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X144 net_27 net_8 VSS VSS nmod3p3_lp W=5e-06 L=5e-07 MR=1
+MM_X145 net_52 net_50 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X146 net_69 POC VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X147 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X148 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X149 net_5 S0 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X150 net_25 OE VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X151 net_31 net_90 VDDD VDDD pmod3p3_lp W=2e-06 L=4e-07 MR=1
+MM_X152 net_0 net_8 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X153 net_43 S0 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X154 net_77 net_36 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X155 C net_10 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X156 net_82 net_19 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X157 net_3 net_66 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X158 net_29 net_8 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X159 net_40 net_82 VDDD VDDD pmod3p3_lp W=1.6e-05 L=4e-07 MR=1
+MM_X160 net_39 PD PD VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X161 net_35 PD VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X162 net_81 net_73 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X163 net_29 net_79 net_89 VDDD pmod3p3_lp W=6e-06 L=4e-07 MR=1
+MM_X164 net_43 net_5 net_5 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X165 PAD net_40 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+XR_X3 VDDD net_58 VDDD re_ppo_sab_3t W=1.8e-06 L=5.1e-06 MR=1
+MM_X166 PAD net_58 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X167 net_7 net_16 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X168 net_75 S1 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X169 net_64 net_7 VDDD VDDD pmod3p3_lp W=1e-06 L=2.2e-06 MR=1
+MM_X170 net_60 net_22 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X171 net_80 OE VDD VDD pm1p2_svt_lp W=1.7e-06 L=9e-08 MR=1
+MM_X172 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X173 net_66 net_60 net_60 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X174 net_39 net_50 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X175 net_6 POC VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X176 net_7 net_16 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X177 net_30 net_78 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X178 net_42 net_25 VDD VDD pm1p2_svt_lp W=4.2e-06 L=9e-08 MR=1
+MM_X179 net_22 ST VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X180 net_6 net_80 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X181 net_38 net_80 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X182 net_59 net_31 VSS VSS nmod3p3_lp W=1e-06 L=1.5e-06 MR=1
+MM_X183 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X184 net_22 ST VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X185 net_73 net_14 net_14 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X186 net_66 net_20 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X187 net_14 net_13 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X188 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X189 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X190 net_56 net_80 net_80 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X191 net_83 net_3 VDDD VDDD pmod3p3_lp W=5e-07 L=6e-07 MR=1
+MM_X192 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X193 net_62 PU PU VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X194 PAD net_27 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X195 PAD net_58 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X196 net_33 net_78 VDDD VDDD pmod3p3_lp W=4e-06 L=4e-07 MR=1
+MM_X197 net_4 net_90 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X198 net_62 net_85 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X199 net_73 net_76 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X200 net_54 net_75 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X201 net_59 net_31 VDD VDD pmod3p3_lp W=1e-05 L=4e-07 MR=1
+MM_X202 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X203 net_19 net_6 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X204 C net_10 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X205 net_51 net_33 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X206 net_49 net_45 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X207 net_31 net_90 VDDD VDDD pmod3p3_lp W=2e-06 L=4e-07 MR=1
+MM_X208 net_85 net_62 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X209 net_71 net_36 VDDD VDDD pmod3p3_lp W=1.2e-05 L=4e-07 MR=1
+MM_X210 net_80 OE net_87 VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X211 net_61 net_78 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X212 net_48 net_5 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X213 net_13 IE VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X214 net_19 net_6 VDDD VDDD pmod3p3_lp W=4e-06 L=4e-07 MR=1
+MM_X215 net_9 net_21 net_21 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X216 net_2 net_88 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X217 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X218 PAD net_68 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X219 net_90 net_81 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X220 PAD net_26 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X221 net_88 net_45 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X222 net_85 PU VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X223 net_51 net_33 net_0 VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X224 net_45 net_25 VSS VSS nm1p2_svt_lp W=1.5e-06 L=9e-08 MR=1
+MM_X225 net_1 net_31 net_83 VSS nmod3p3_lp W=5e-07 L=9e-07 MR=1
+MM_X226 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X227 net_10 net_59 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X228 PAD net_40 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X229 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X230 net_2 net_49 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X231 C net_10 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X232 net_45 A net_42 VDD pm1p2_svt_lp W=4.2e-06 L=9e-08 MR=1
+MM_X233 PAD net_58 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X234 net_15 net_9 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+.ENDS
+
+
+.SUBCKT PDISDU C IE PAD PD POC PU ST VDD VDDD VSS VSSD
+MM_X0 net_6 net_29 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X1 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X2 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X3 net_0 net_19 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X4 net_23 net_36 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X5 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X6 net_19 PU VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X7 net_20 net_15 net_15 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X8 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X9 net_9 net_23 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X10 net_10 net_39 net_14 VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X11 C net_13 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X12 net_16 net_15 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X13 net_8 net_7 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X14 net_7 net_34 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X15 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X16 net_5 net_41 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X17 net_21 PD VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X18 net_16 net_15 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X19 net_1 net_10 net_30 VSS nmod3p3_lp W=5e-07 L=9e-07 MR=1
+MM_X20 net_13 net_33 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X21 net_33 net_10 VDD VDD pmod3p3_lp W=1e-05 L=4e-07 MR=1
+MM_X22 net_39 net_9 VDDD VDDD pmod3p3_lp W=1e-06 L=2.2e-06 MR=1
+MM_X23 net_26 net_17 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X24 net_33 net_10 VSS VSS nmod3p3_lp W=1e-06 L=1.5e-06 MR=1
+MM_X25 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X26 net_34 ST VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X27 net_10 net_39 net_1 VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X28 net_14 net_39 VDDD VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X29 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X30 net_20 net_16 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X31 net_30 net_3 VDDD VDDD pmod3p3_lp W=5e-07 L=6e-07 MR=1
+MM_X32 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X33 net_5 net_41 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X34 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X35 net_12 net_6 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X36 net_36 net_19 net_19 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X37 net_19 PU VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X38 C net_13 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X39 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X40 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X41 net_8 net_7 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X42 net_39 VSS VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X43 net_29 net_21 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X44 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X45 net_10 net_41 VDDD VDDD pmod3p3_lp W=2e-06 L=4e-07 MR=1
+MM_X46 net_8 net_10 net_14 VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X47 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X48 net_3 net_7 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X49 net_6 PD VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X50 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X51 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X52 net_26 net_17 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X53 net_0 net_36 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X54 net_29 net_6 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X55 net_0 PU PU VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X56 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X57 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X58 net_10 net_41 VDDD VDDD pmod3p3_lp W=2e-06 L=4e-07 MR=1
+XR_X0 PAD net_39 VDDD re_ppo_sab_3t W=1e-06 L=1.2e-06 MR=1
+MM_X59 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X60 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X61 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X62 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X63 net_1 net_39 net_5 VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X64 net_13 net_33 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X65 net_9 net_23 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X66 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X67 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X68 net_34 ST VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X69 net_41 net_26 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X70 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X71 net_15 IE VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X72 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X73 net_3 net_7 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X74 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X75 net_36 PU VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X76 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X77 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X78 net_39 VDDD VDDD VDDD pmod3p3_lp W=1e-05 L=4e-07 MR=1
+MM_X79 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X80 net_31 net_7 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X81 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X82 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X83 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X84 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X85 net_20 net_17 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X86 C net_13 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X87 net_8 net_7 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+XR_X1 PAD net_39 VDDD re_ppo_sab_3t W=1e-06 L=1.2e-06 MR=1
+MM_X88 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X89 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X90 net_37 net_34 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X91 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X92 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X93 net_6 net_21 net_21 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X94 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X95 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X96 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X97 net_31 net_34 net_34 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X98 net_37 net_34 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X99 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X100 net_23 net_36 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X101 net_31 net_37 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X102 net_39 net_12 VSS VSS nmod3p3_lp W=8e-07 L=5.7e-06 MR=1
+MM_X103 net_15 IE VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X104 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X105 net_29 PD PD VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+XR_X2 VDDD net_28 VDDD re_ppo_sab_3t W=1.8e-06 L=5.1e-06 MR=1
+MM_X106 net_41 net_26 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X107 net_12 net_6 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X108 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X109 net_17 net_15 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X110 net_13 net_33 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X111 net_17 POC VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X112 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X113 net_17 net_16 net_16 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X114 net_7 net_31 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X115 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X116 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X117 net_21 PD VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X118 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X119 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+MM_X120 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X121 C net_13 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X122 net_13 net_33 VDD VDD pm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X123 net_17 net_20 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X124 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X125 net_7 net_37 net_37 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X126 C net_13 VSS VSS nm1p2_svt_lp W=4e-06 L=9e-08 MR=1
+MM_X127 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+XR_X3 net_38 VSSD VDDD re_ppo_sab_3t W=1.8e-06 L=5.1e-06 MR=1
+MM_X128 net_36 net_0 VDDD VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X129 PAD net_28 VDDD VDDD pmod3p3_lp W=2.65e-05 L=4e-07 MR=1
+MM_X130 PAD net_38 VSSD VSSD nmod3p3_lp W=1.5e-05 L=5e-07 MR=1
+.ENDS
+
+
+.SUBCKT POSCX E POC VDD VDDD VSS VSSD XC XIN XOUT
+DD_X0 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X0 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X1 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+XR_X0 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X2 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X1 VSS net_12 dio_2p5_np_pw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X3 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X4 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X5 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X6 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X2 net_8 VDDD dio_2p5_pp_nw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X7 net_14 net_18 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X8 net_14 net_18 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X9 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X10 net_7 net_23 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X11 net_11 net_6 VSS VSS nmod3p3_lp W=1.4e-06 L=5e-07 MR=1
+MM_X12 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X13 net_23 net_3 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X14 net_7 net_14 VDDD VDDD pmod3p3_lp W=1e-06 L=4e-07 MR=1
+MM_X15 net_9 VSS VDDD VDDD pmod3p3_lp W=4.5e-06 L=4e-07 MR=1
+MM_X16 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X17 net_7 net_23 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X18 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X19 net_14 net_23 net_23 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+DD_X3 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X20 net_7 net_23 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X21 net_6 net_3 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X22 net_6 net_12 net_2 VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+DD_X4 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X23 net_14 net_18 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X24 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+XR_X1 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X25 net_13 net_6 net_20 VDDD pmod3p3_lp W=4.5e-06 L=4e-07 MR=1
+DD_X5 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+XR_X2 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+XR_X3 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+DD_X6 VSS net_8 dio_2p5_np_pw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X26 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X27 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X28 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X7 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+DD_X8 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X29 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X9 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+XR_X4 net_8 XIN VSSD re_ndif_sab_3t W=2e-06 L=1e-05 MR=1
+MM_X30 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X10 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+DD_X11 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X31 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X12 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X32 XC net_11 VSS VSS nm1p2_svt_lp W=4.6e-06 L=9e-08 MR=1
+DD_X13 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X33 net_14 net_18 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X34 XC net_11 VSS VSS nm1p2_svt_lp W=4.6e-06 L=9e-08 MR=1
+MM_X35 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X36 net_12 net_1 net_4 VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+XR_X5 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X37 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X38 net_20 net_12 VDDD VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X39 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X40 net_6 net_12 net_2 VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+MM_X41 net_14 net_7 VDDD VDDD pmod3p3_lp W=1e-06 L=4e-07 MR=1
+MM_X42 net_23 net_3 VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+DD_X14 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X43 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X44 net_6 net_12 net_20 VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X45 net_3 E VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X46 net_9 net_6 net_2 VSS nmod3p3_lp W=2.5e-06 L=5e-07 MR=1
+MM_X47 net_2 net_12 VSS VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+MM_X48 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X49 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X50 net_11 net_6 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+DD_X15 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X51 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+DD_X16 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X52 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X53 net_2 net_12 VSS VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+MM_X54 net_11 net_6 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+DD_X17 net_12 VDDD dio_2p5_pp_nw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X55 net_18 net_23 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X56 net_1 net_7 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X57 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X58 net_4 net_8 VSS VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+DD_X18 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X59 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X60 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X61 net_20 net_12 VDDD VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X62 net_13 VDDD VSS VSS nmod3p3_lp W=5e-06 L=5e-07 MR=1
+DD_X19 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+DD_X20 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X63 net_4 net_8 VSS VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+MM_X64 net_7 net_18 net_18 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+DD_X21 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X65 net_1 net_7 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+DD_X22 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X66 net_23 net_3 VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X67 net_11 net_6 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+MM_X68 net_7 net_23 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X69 net_7 net_23 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X70 net_18 net_23 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+DD_X23 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X71 net_6 net_12 net_20 VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+DD_X24 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X72 net_14 net_18 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X73 net_14 POC VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X74 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X75 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+DD_X25 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X76 net_12 net_1 net_4 VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+MM_X77 net_3 E VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X78 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X79 net_3 E VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X80 XC net_11 VSS VSS nm1p2_svt_lp W=4.6e-06 L=9e-08 MR=1
+DD_X26 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+DD_X27 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X81 net_11 net_6 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+.ENDS
+
+
+.SUBCKT POSCXFR E POC VDD VDDD VSS VSSD XC XIN XOUT
+MM_X0 net_19 net_24 VDD VDD pm1p2_svt_lp W=3.2e-06 L=9e-08 MR=1
+MM_X1 net_14 net_24 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X2 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X3 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X4 net_11 net_7 VSS VSS nmod3p3_lp W=1.4e-06 L=5e-07 MR=1
+DD_X0 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X5 net_15 net_7 net_21 VDDD pmod3p3_lp W=4.5e-06 L=4e-07 MR=1
+DD_X1 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X6 net_2 net_19 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+DD_X2 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+DD_X3 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X7 net_11 net_7 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+DD_X4 net_8 VDDD dio_2p5_pp_nw_lp M=1 AREA=3e-12 PJ=8e-06
+XR_X0 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X8 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X9 net_2 POC VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X10 net_7 net_12 net_3 VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+MM_X11 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X12 net_1 net_14 VSS VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+XR_X1 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X13 net_14 net_19 net_19 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X14 net_21 net_12 VDDD VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X15 net_14 net_2 VDDD VDDD pmod3p3_lp W=1e-06 L=4e-07 MR=1
+MM_X16 net_2 net_19 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X17 net_2 net_19 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X18 net_14 net_24 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X19 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X20 net_9 VSS VDDD VDDD pmod3p3_lp W=4.5e-06 L=4e-07 MR=1
+DD_X5 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X21 net_4 E VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X22 net_11 net_7 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+DD_X6 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X23 net_5 net_8 VSS VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+MM_X24 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X7 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X25 net_11 net_7 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+MM_X26 net_2 net_24 net_24 VSS nmod3p3_lp W=2e-06 L=5e-07 MR=1
+MM_X27 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X28 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X29 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X30 net_21 net_12 VDDD VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+XR_X2 net_8 net_13 VDDD re_ppo_sab_3t W=4e-07 L=0.000462 MR=1
+DD_X8 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+DD_X9 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X31 net_7 net_4 VSS VSS nmod3p3_lp W=4e-06 L=5e-07 MR=1
+MM_X32 net_2 net_14 VDDD VDDD pmod3p3_lp W=1e-06 L=4e-07 MR=1
+MM_X33 net_7 net_12 net_21 VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+DD_X10 VSS net_8 dio_2p5_np_pw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X34 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X35 net_7 net_12 net_3 VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+MM_X36 net_4 E VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X37 net_3 net_12 VSS VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+DD_X11 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+XR_X3 net_8 XIN VSSD re_ndif_sab_3t W=2e-06 L=1e-05 MR=1
+MM_X38 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X39 net_12 net_1 net_5 VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+XR_X4 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X40 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X41 net_11 net_7 VDD VDD pmod3p3_lp W=2.8e-06 L=4e-07 MR=1
+DD_X12 net_12 VDDD dio_2p5_pp_nw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X42 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X43 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+XR_X5 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X44 net_19 net_24 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+MM_X45 net_3 net_12 VSS VSS nmod3p3_lp W=2.8e-06 L=5e-07 MR=1
+DD_X13 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X46 net_2 net_19 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+DD_X14 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X47 XC net_11 VSS VSS nm1p2_svt_lp W=4.6e-06 L=9e-08 MR=1
+MM_X48 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X49 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X15 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X50 net_14 net_24 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+DD_X16 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X51 XC net_11 VSS VSS nm1p2_svt_lp W=4.6e-06 L=9e-08 MR=1
+MM_X52 net_24 net_4 VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X53 net_5 net_8 VSS VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+MM_X54 XC net_11 VSS VSS nm1p2_svt_lp W=4.6e-06 L=9e-08 MR=1
+DD_X17 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X55 net_24 net_4 VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X56 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+XR_X6 XOUT net_12 VDDD re_ppo_sab_3t W=2e-06 L=5.6e-06 MR=1
+MM_X57 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X58 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X59 net_15 VDDD VSS VSS nmod3p3_lp W=5e-06 L=5e-07 MR=1
+DD_X18 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X60 net_2 net_19 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+MM_X61 net_1 net_14 VDDD VDDD pmod3p3_lp W=3e-06 L=4e-07 MR=1
+MM_X62 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X63 net_7 net_12 net_21 VDDD pmod3p3_lp W=5.6e-06 L=4e-07 MR=1
+MM_X64 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X65 net_9 net_7 net_3 VSS nmod3p3_lp W=2.5e-06 L=5e-07 MR=1
+DD_X19 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X66 net_4 E VDD VDD pm1p2_svt_lp W=1.6e-06 L=9e-08 MR=1
+MM_X67 net_12 net_1 net_5 VSS nmod3p3_lp W=2e-05 L=5e-07 MR=1
+DD_X20 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X68 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X69 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X70 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X71 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X72 net_14 net_24 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+DD_X21 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X73 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+MM_X74 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X75 net_24 net_4 VSS VSS nm1p2_svt_lp W=2e-06 L=9e-08 MR=1
+DD_X22 XIN VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+DD_X23 XOUT VDDD dio_2p5_pp_nw_lp M=1 AREA=6.432e-11 PJ=6.01313e-05
+MM_X76 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+DD_X24 VSSD XIN dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X77 XC net_11 VDD VDD pm1p2_svt_lp W=1.8e-06 L=9e-08 MR=1
+XR_X7 net_13 net_12 VDDD re_ppo_sab_3t W=4e-07 L=0.0005 MR=1
+DD_X25 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X78 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+DD_X26 VSS net_12 dio_2p5_np_pw_lp M=1 AREA=3e-12 PJ=8e-06
+MM_X79 net_12 net_8 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+MM_X80 net_14 net_24 VSS VSS nmod3p3_lp W=1.2e-05 L=5e-07 MR=1
+DD_X27 VSSD XOUT dio_2p5_np_pw_lp M=1 AREA=5.742e-11 PJ=5.41313e-05
+MM_X81 net_12 net_1 VDDD VDDD pmod3p3_lp W=8e-06 L=4e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDD1 POC VDD VDDD VSS VSSD
+MM_X0 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X1 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X2 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X3 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X4 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X5 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X6 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X7 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X8 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X9 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X10 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X11 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X12 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X13 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X14 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X15 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X16 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X17 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X18 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X19 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X20 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X21 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X22 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X23 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X24 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X25 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X26 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X27 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+XR_X0 VSS net_2 VDD re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X28 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X29 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X30 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X31 VSS net_0 VSS VSS nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X32 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X33 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X34 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X35 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X36 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X37 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X38 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X39 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X40 VSS net_0 VSS VSS nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X41 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X42 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X43 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X44 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X45 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X46 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+XR_X1 VDD net_0 VDD re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X47 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X48 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X49 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X50 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X51 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X52 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X53 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X54 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X55 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X56 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X57 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X58 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X59 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X60 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X61 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X62 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X63 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X64 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X65 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X66 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X67 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X68 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X69 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X70 net_2 net_0 VSS VSS nm2p5_lp W=6e-07 L=2.8e-07 MR=1
+MM_X71 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X72 VDD net_2 VSS VSS nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X73 VSS net_0 VSS VSS nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X74 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X75 VSS net_0 VSS VSS nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X76 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X77 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X78 VDD net_2 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X79 net_2 net_0 VDD VDD pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDD2 POC VDD VDDD VSS VSSD
+MM_X0 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X1 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X2 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X3 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X4 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X5 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X6 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X7 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X8 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X9 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X10 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X11 net_3 net_0 VSSD VSSD nmod3p3_lp W=1e-05 L=5.5e-07 MR=1
+MM_X12 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X13 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X14 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X15 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X16 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X17 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X18 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X19 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X20 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X21 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+XR_X0 net_3 VSSD VDDD re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X22 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X23 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X24 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X25 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X26 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X27 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X28 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X29 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X30 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X31 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X32 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X33 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X34 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+XR_X1 VDDD net_0 VDDD re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X35 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X36 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X37 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X38 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X39 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X40 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X41 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X42 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X43 net_3 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X44 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X45 VSSD net_0 VSSD VSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X46 VDDD net_3 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDDANA1 AVDDD AVDDI AVSSD VSS
+MM_X0 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X1 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X2 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X3 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X4 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X5 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X6 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X7 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X8 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X9 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X10 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X11 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X12 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X13 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X14 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X15 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X16 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X17 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X18 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X19 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X20 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X21 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X22 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X23 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X24 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X25 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X26 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+XR_X0 net_3 AVSSD AVDDI re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+XR_X1 AVDDI net_0 AVDDI re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X27 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X28 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X29 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X30 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X31 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X32 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X33 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X34 net_3 net_0 AVSSD AVSSD nmod3p3_lp W=1e-05 L=5.5e-07 MR=1
+MM_X35 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X36 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X37 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X38 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=4e-06 L=5.5e-06 MR=1
+MM_X39 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X40 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X41 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X42 net_3 net_0 AVDDI AVDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X43 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X44 AVDDI net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDDANA1C AVDDDC AVDDIC AVSSDC VSS
+MM_X0 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X1 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X2 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X3 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X4 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X5 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X6 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X7 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X8 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X9 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X10 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X11 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X12 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X13 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X14 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X15 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X16 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X17 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X18 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X19 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X20 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X21 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X22 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+XR_X0 net_3 AVSSDC AVDDIC re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X23 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X24 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X25 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X26 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X27 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X28 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X29 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X30 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X31 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X32 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X33 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X34 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X35 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X36 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X37 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+XR_X1 AVDDIC net_0 AVDDIC re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X38 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X39 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X40 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X41 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X42 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X43 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X44 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X45 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X46 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X47 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X48 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X49 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X50 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X51 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X52 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X53 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X54 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=4e-06 L=5.5e-06 MR=1
+MM_X55 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X56 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X57 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X58 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X59 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X60 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X61 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X62 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X63 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X64 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X65 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X66 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X67 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X68 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X69 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X70 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X71 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X72 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X73 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X74 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X75 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X76 AVDDIC net_3 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X77 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X78 net_3 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X79 net_3 net_0 AVDDIC AVDDIC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDDANA1I AVDDI POC VDD VDDD VSS VSSD
+MM_X0 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X1 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X2 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X3 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X4 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X5 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X6 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X7 VSSD net_0 VSSD VSSD nm2p5_lp W=8e-06 L=5.5e-06 MR=1
+MM_X8 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X9 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X10 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X11 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X12 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X13 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X14 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X15 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X16 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X17 VSSD net_0 VSSD VSSD nm2p5_lp W=8e-06 L=5.5e-06 MR=1
+MM_X18 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X19 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X20 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X21 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X22 VSSD net_0 VSSD VSSD nm2p5_lp W=8e-06 L=5.5e-06 MR=1
+MM_X23 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X24 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X25 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X26 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X27 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X28 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X29 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X30 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X31 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X32 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X33 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+XR_X0 net_3 VSSD AVDDI re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X34 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X35 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X36 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X37 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X38 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X39 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X40 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X41 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X42 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X43 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X44 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X45 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X46 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X47 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X48 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X49 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X50 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X51 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X52 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X53 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X54 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X55 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X56 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X57 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X58 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X59 VSSD net_0 VSSD VSSD nm2p5_lp W=8e-06 L=5.5e-06 MR=1
+MM_X60 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X61 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+XR_X1 AVDDI net_0 AVDDI re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X62 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X63 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X64 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X65 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X66 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X67 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X68 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X69 net_3 net_0 VSSD VSSD nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X70 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X71 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X72 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X73 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X74 net_3 net_0 AVDDI AVDDI pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X75 AVDDI net_3 VSSD VSSD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+.ENDS
+
+
+.SUBCKT PVDDANA2 AVDDD AVSSD VSS
+MM_X0 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X1 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=6e-06 L=6e-06 MR=1
+MM_X2 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X3 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X4 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X5 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+DD_X0 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X6 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X7 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+DD_X1 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X8 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X9 net_3 net_0 AVSSD AVSSD nmod3p3_lp W=1e-05 L=5.5e-07 MR=1
+MM_X10 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X11 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X12 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X13 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X14 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X15 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X16 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X17 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X18 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=6e-06 L=6e-06 MR=1
+MM_X19 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X20 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X21 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+DD_X2 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X22 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=6e-06 L=6e-06 MR=1
+MM_X23 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X24 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X25 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X26 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+XR_X0 AVDDD net_0 AVDDD re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+DD_X3 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X27 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=6e-06 L=6e-06 MR=1
+MM_X28 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+XR_X1 net_3 AVSSD AVDDD re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X29 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X30 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X31 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+DD_X4 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X32 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+DD_X5 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X33 AVDDD net_3 AVSSD AVSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+DD_X6 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X7 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X34 AVSSD net_0 AVSSD AVSSD nmod3p3_lp W=6e-06 L=6e-06 MR=1
+MM_X35 net_3 net_0 AVDDD AVDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDDANA2C AVDDDC AVSSDC VSS
+MM_X0 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X1 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X2 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X3 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X4 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X5 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X6 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X7 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+DD_X0 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X8 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X9 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X10 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+DD_X1 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X11 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X12 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X13 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X14 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X15 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+DD_X2 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X16 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X17 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X18 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X19 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X20 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X21 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X22 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X23 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X24 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X25 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X26 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X27 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X28 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X29 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X30 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X31 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X32 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+DD_X3 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X33 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+DD_X4 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X34 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+XR_X0 AVDDDC net_0 AVDDDC re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X35 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X36 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X37 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X38 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X39 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X40 AVSSDC net_0 AVSSDC AVSSDC nm2p5_lp W=7.5e-06 L=6e-06 MR=1
+MM_X41 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+DD_X5 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X42 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X43 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X44 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X45 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+XR_X1 net_2 AVSSDC AVDDDC re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X46 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X47 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+DD_X6 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X48 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X49 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X50 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X51 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X52 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X53 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X54 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X55 net_2 net_0 AVDDDC AVDDDC pm2p5_lp W=6.7e-06 L=2.8e-07 MR=1
+MM_X56 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X57 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X58 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+MM_X59 net_2 net_0 AVSSDC AVSSDC nm2p5_lp W=4e-07 L=2.8e-07 MR=1
+DD_X7 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+MM_X60 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X61 AVDDDC net_2 AVSSDC AVSSDC nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+.ENDS
+
+
+.SUBCKT PVDDANA2I AVDDDI POC VDD VDDD VSS VSSD
+MM_X0 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X1 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X2 VSSD net_1 VSSD VSSD nmod3p3_lp W=8e-06 L=5.5e-06 MR=1
+MM_X3 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X4 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X5 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X6 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X7 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X8 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X9 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X10 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X11 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X12 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X13 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X14 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X15 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X16 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X17 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X18 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+XR_X0 AVDDDI net_1 AVDDDI re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X19 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+XR_X1 net_0 VSSD AVDDDI re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X20 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X21 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X22 VSSD net_1 VSSD VSSD nmod3p3_lp W=8e-06 L=5.5e-06 MR=1
+MM_X23 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X24 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X25 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X26 net_0 net_1 VSSD VSSD nmod3p3_lp W=1e-05 L=5.5e-07 MR=1
+MM_X27 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X28 VSSD net_1 VSSD VSSD nmod3p3_lp W=8e-06 L=5.5e-06 MR=1
+MM_X29 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X30 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X31 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X32 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X33 VSSD net_1 VSSD VSSD nmod3p3_lp W=8e-06 L=5.5e-06 MR=1
+MM_X34 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X35 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X36 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X37 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X38 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X39 AVDDDI net_0 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X40 net_0 net_1 AVDDDI AVDDDI pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVDDPOC POC VDD VDDD VSS VSSD
+MM_X0 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X1 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X2 net_6 net_11 net_3 VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X3 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X4 net_9 net_10 net_4 VDDD pmod3p3_lp W=5e-07 L=5e-06 MR=1
+MM_X5 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X6 POC net_11 VSS VSS nmod3p3_lp W=1e-05 L=5e-07 MR=1
+MM_X7 net_4 net_10 net_5 VDDD pmod3p3_lp W=5e-07 L=5e-06 MR=1
+MM_X8 net_11 net_7 VSS VSS nmod3p3_lp W=8e-06 L=5e-07 MR=1
+MM_X9 net_11 net_6 net_3 VDDD pmod3p3_lp W=1e-06 L=4.5e-07 MR=1
+MM_X10 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X11 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X12 VSSD net_0 VSSD VSSD nmod3p3_lp W=7.5e-06 L=6e-06 MR=1
+MM_X13 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+XR_X0 net_8 VSSD VDDD re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X14 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X15 POC net_11 VDDD VDDD pmod3p3_lp W=1.52e-05 L=4e-07 MR=1
+MM_X16 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X17 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X18 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X19 net_3 net_8 VDDD VDDD pmod3p3_lp W=2.5e-06 L=4.5e-07 MR=1
+XR_X1 VDD net_10 VDD re_ppo_sab_3t W=2e-06 L=5e-06 MR=1
+MM_X20 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X21 VSSD net_0 VSSD VSSD nmod3p3_lp W=7.5e-06 L=6e-06 MR=1
+MM_X22 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X23 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X24 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X25 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X26 net_5 net_10 VDDD VDDD pmod3p3_lp W=5e-07 L=5e-06 MR=1
+MM_X27 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X28 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X29 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X30 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+XR_X2 VDDD net_0 VDDD re_ppo_sab_3t W=4e-07 L=0.000585 MR=1
+MM_X31 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X32 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X33 net_7 net_10 VSS VSS nmod3p3_lp W=2e-06 L=5.5e-07 MR=1
+MM_X34 VSSD net_0 VSSD VSSD nmod3p3_lp W=7.5e-06 L=6e-06 MR=1
+MM_X35 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X36 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X37 net_3 net_8 VDDD VDDD pmod3p3_lp W=2.5e-06 L=4.5e-07 MR=1
+MM_X38 net_3 net_8 VDDD VDDD pmod3p3_lp W=2.5e-06 L=4.5e-07 MR=1
+MM_X39 net_11 net_7 VSS VSS nmod3p3_lp W=8e-06 L=5e-07 MR=1
+MM_X40 net_3 net_8 VSS VSS nmod3p3_lp W=5e-06 L=5.5e-07 MR=1
+MM_X41 net_3 net_8 VDDD VDDD pmod3p3_lp W=2.5e-06 L=4.5e-07 MR=1
+MM_X42 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X43 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X44 VSSD net_0 VSSD VSSD nmod3p3_lp W=7.5e-06 L=6e-06 MR=1
+MM_X45 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X46 net_6 net_10 VSS VSS nmod3p3_lp W=8e-06 L=5e-07 MR=1
+MM_X47 net_7 net_10 net_9 VDDD pmod3p3_lp W=5e-07 L=5e-06 MR=1
+MM_X48 net_8 net_0 VSSD VSSD nmod3p3_lp W=1e-05 L=5.5e-07 MR=1
+MM_X49 net_8 net_0 VDDD VDDD pmod3p3_lp W=6.7e-06 L=4.5e-07 MR=1
+MM_X50 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X51 net_6 net_10 VSS VSS nmod3p3_lp W=8e-06 L=5e-07 MR=1
+MM_X52 VDDD net_8 VSSD VSSD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+.ENDS
+
+
+.SUBCKT PVSS1 POC VDD VDDD VSS VSSD
+DD_X0 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X2 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X3 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X4 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X5 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X6 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X7 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X8 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X9 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X10 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X11 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X12 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X14 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X16 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X17 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X18 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X19 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X20 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X21 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X22 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X23 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X24 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X25 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X26 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X27 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X28 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X29 VSS VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X30 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X31 VSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+.ENDS
+
+
+.SUBCKT PVSS2 POC VDD VDDD VSS VSSD
+DD_X0 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X1 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X3 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X4 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X5 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X7 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X8 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X12 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 VSSD VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X15 VSSD VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+.ENDS
+
+
+.SUBCKT PVSS3 POC VDD VDDD VSS
+DD_X0 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X1 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X2 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X4 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X5 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X7 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X8 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X10 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X12 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X13 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 VSS VDD dio_2p5_pp_nw_lp M=1 AREA=1.916e-11 PJ=2.84914e-05
+DD_X15 VSS VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+.ENDS
+
+
+.SUBCKT PVSSANA1 AVDDD AVSSD AVSSI VSS
+DD_X0 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X4 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X5 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X6 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X7 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X8 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X10 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X11 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X13 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X14 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X16 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X17 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X18 AVSSI AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X19 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X20 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X21 AVSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X22 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X23 AVSSI AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+.ENDS
+
+
+.SUBCKT PVSSANA1C AVDDDC AVSSDC AVSSIC VSS
+DD_X0 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X1 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X2 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X4 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X5 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X6 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X7 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X8 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X9 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X12 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X13 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X14 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X16 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X17 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X18 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X19 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X20 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X21 AVSSIC AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X22 AVSSIC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X23 AVSSDC AVSSIC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+.ENDS
+
+
+.SUBCKT PVSSANA1I AVSSI POC VDD VDDD VSS VSSD
+DD_X0 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X1 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X4 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X5 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X6 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X7 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X8 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X9 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X10 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X13 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X14 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X15 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X16 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X17 AVSSI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X18 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X19 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X20 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X21 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X22 AVSSI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X23 VSSD AVSSI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+.ENDS
+
+
+.SUBCKT PVSSANA2 AVDDD AVSSD VSS
+DD_X0 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X3 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X4 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X5 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X6 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X7 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X8 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X9 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X10 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X12 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X13 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X16 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X17 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X18 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X19 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X20 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X21 AVSSD VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X22 VSS AVSSD dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X23 AVSSD AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+.ENDS
+
+
+.SUBCKT PVSSANA2C AVDDDC AVSSDC VSS
+DD_X0 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X2 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X3 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X4 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X5 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X6 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X7 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X8 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X9 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X10 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X14 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X16 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X17 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X18 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X19 AVSSDC VSS dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X20 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X21 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X22 AVSSDC AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X23 VSS AVSSDC dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+.ENDS
+
+
+.SUBCKT PVSSANA2I AVSSDI POC VDD VDDD VSS VSSD
+DD_X0 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X1 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X2 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X3 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X4 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X5 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X7 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X8 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X11 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X12 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X13 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X14 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X16 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X17 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X18 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X19 AVSSDI VDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X20 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X21 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X22 VSSD AVSSDI dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X23 AVSSDI VSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+.ENDS
+
+
+.SUBCKT PVSSANA3 AVDDD AVSSD VSS
+DD_X0 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X1 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X2 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X3 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X4 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X5 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X6 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X7 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X8 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X10 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X11 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 VSS AVDDD dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X14 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X15 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X16 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X17 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X18 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X19 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X20 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X21 AVSSD VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X22 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X23 VSS AVSSD dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+.ENDS
+
+
+.SUBCKT PVSSANA3C AVDDDC AVSSDC VSS
+DD_X0 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X1 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X2 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X3 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X4 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X5 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X6 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X7 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X8 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X9 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X10 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X11 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X12 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X13 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X14 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X15 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X16 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X17 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+DD_X18 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X19 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X20 AVSSDC VSS dio_2p5_np_pw_lp M=1 AREA=1.74432e-11 PJ=2.61714e-05
+DD_X21 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X22 VSS AVDDDC dio_2p5_pp_nw_lp M=1 AREA=4.1952e-11 PJ=5.92914e-05
+DD_X23 VSS AVSSDC dio_2p5_pp_nw_lp M=1 AREA=1.74584e-11 PJ=2.62183e-05
+.ENDS
+
+
+.SUBCKT PCLAMP VDDDESD VSSDESD
+MM_X0 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X1 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X2 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X3 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X4 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X5 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X6 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X7 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X8 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X9 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X10 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X11 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X12 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X13 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+XR_X0 net_2 VSSDESD VDDDESD re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X14 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X15 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X16 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X17 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X18 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X19 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X20 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X21 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X22 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X23 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X24 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X25 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X26 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X27 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X28 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X29 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X30 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X31 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X32 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X33 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X34 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X35 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X36 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X37 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X38 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X39 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X40 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X41 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X42 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X43 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X44 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X45 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X46 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X47 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X48 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X49 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X50 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X51 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X52 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X53 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X54 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X55 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X56 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X57 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X58 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X59 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X60 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X61 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X62 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X63 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X64 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X65 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X66 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X67 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X68 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X69 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X70 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X71 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X72 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X73 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X74 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X75 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X76 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X77 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X78 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X79 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X80 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+XR_X1 VDDDESD net_1 VDDDESD re_ppo_sab_3t W=4e-07 L=0.0005856 MR=1
+MM_X81 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X82 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X83 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X84 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X85 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X86 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X87 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X88 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X89 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X90 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X91 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X92 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X93 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X94 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X95 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X96 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X97 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X98 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X99 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X100 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X101 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X102 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X103 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X104 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X105 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X106 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X107 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X108 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X109 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+MM_X110 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X111 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X112 VSSDESD net_1 VSSDESD VSSDESD nmod3p3_lp W=5e-06 L=5e-06 MR=1
+MM_X113 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X114 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X115 VDDDESD net_2 VSSDESD VSSDESD nmod3p3_lp W=3.2e-05 L=5e-07 MR=1
+MM_X116 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X117 net_2 net_1 VDDDESD VDDDESD pmod3p3_lp W=3.35e-06 L=4.5e-07 MR=1
+MM_X118 net_2 net_1 VSSDESD VSSDESD nmod3p3_lp W=1.5e-06 L=5e-07 MR=1
+.ENDS
+
+
+.SUBCKT PCLAMPC VDDESD VSSESD
+MM_X0 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X1 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X2 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X3 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X4 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X5 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X6 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X7 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X8 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X9 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X10 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X11 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X12 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X13 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X14 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X15 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X16 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X17 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X18 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X19 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X20 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X21 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+XR_X0 net_3 VSSESD VDDESD re_ppo_sab_3t W=4e-07 L=6.66e-06 MR=1
+MM_X22 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X23 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X24 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X25 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X26 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X27 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X28 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X29 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X30 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X31 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X32 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X33 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X34 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X35 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X36 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X37 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X38 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X39 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X40 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X41 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X42 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X43 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X44 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X45 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X46 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X47 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X48 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X49 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X50 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X51 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X52 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X53 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X54 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X55 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X56 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X57 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X58 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X59 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X60 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X61 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X62 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X63 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X64 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X65 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X66 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X67 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X68 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X69 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X70 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X71 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X72 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X73 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X74 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X75 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X76 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X77 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X78 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X79 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X80 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X81 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X82 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X83 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X84 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X85 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X86 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X87 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X88 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X89 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X90 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X91 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X92 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X93 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X94 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X95 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X96 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+XR_X1 VDDESD net_0 VDDESD re_ppo_sab_3t W=4e-07 L=0.0005856 MR=1
+MM_X97 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X98 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X99 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X100 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X101 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X102 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X103 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X104 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X105 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X106 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X107 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X108 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X109 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X110 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X111 VSSESD net_0 VSSESD VSSESD nm2p5_lp W=5e-06 L=5e-06 MR=1
+MM_X112 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X113 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X114 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X115 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X116 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X117 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X118 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X119 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X120 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X121 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X122 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X123 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X124 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X125 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X126 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X127 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X128 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X129 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X130 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X131 net_3 net_0 VSSESD VSSESD nm2p5_lp W=1.5e-06 L=2.8e-07 MR=1
+MM_X132 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X133 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X134 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+MM_X135 net_3 net_0 VDDESD VDDESD pm2p5_lp W=3.6e-06 L=2.8e-07 MR=1
+MM_X136 VDDESD net_3 VSSESD VSSESD nm1p2_svt_lp W=3e-05 L=9e-08 MR=1
+.ENDS
+
+
