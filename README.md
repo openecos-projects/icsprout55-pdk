@@ -12,7 +12,7 @@
 Download the repository and obtain large files by executing make script (please install `bzip2` tool first).
 
 ```bash
-git clone https://github.com/openecos-projects/icsprout55-pdk
+git clone --recurse-submodules https://github.com/openecos-projects/icsprout55-pdk
 cd icsprout55-pdk
 make unzip # downloads latest release (default)
 make unzip RELEASE_TAG=v1.10.100 # pins to v1.10.100
@@ -33,6 +33,10 @@ make unzip PROXY_USE=true
 ```bash
 make unzip PROXY_USE=true TOOL=wget
 ```
+
+## IP libraries
+
+IP for ICS55 includes [IO libraries](IP/IO/), [standard cell libraries](IP/STD_cell/), [PLL](https://github.com/openecos-projects/ics55_ecos_pll), [DDR3/DDR2 PHY](https://github.com/openecos-projects/55nm-ddr3-ddr2-phy), SRAM, and ROM. Use the [SRAM Compiler](https://factory.openecos.com/ip/sram) and [ROM Compiler](https://factory.openecos.com/ip/rom) to generate memory macros for your design. See the [ECOS IP Library](https://factory.openecos.com/ip) for documentation and project status.
 
 ## Introduction
 
@@ -78,6 +82,8 @@ The ICsprout55 Open Source PDK contents:
 │   │       ├── lef
 │   │       ├── liberty
 │   │       └── verilog
+│   ├── PLL
+│   │   └── ics55_ecos_pll                   # PLL submodule
 │   └── STD_cell                             # Standard cell library
 │       └── ics55_LLSC_H7C_V1p10C100         # 55nm LLSC H7C standard cell library version 1.10
 │           ├── ics55_LLSC_H7CH              # HVT standard cells

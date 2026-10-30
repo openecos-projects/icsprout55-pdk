@@ -1,0 +1,3 @@
+[submodule "IP/PLL/ics55_ecos_pll"]
+	path = IP/PLL/ics55_ecos_pll
+	url = https://github.com/openecos-projects/ics55_ecos_pll.git
