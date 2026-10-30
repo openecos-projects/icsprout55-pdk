@@ -1,0 +1,6 @@
+[submodule "IP/PLL/ics55_ecos_pll"]
+	path = IP/PLL/ics55_ecos_pll
+	url = https://github.com/openecos-projects/ics55_ecos_pll.git
+[submodule "IP/DDR_PHY/55nm-ddr3-ddr2-phy"]
+	path = IP/DDR_PHY/55nm-ddr3-ddr2-phy
+	url = https://github.com/openecos-projects/55nm-ddr3-ddr2-phy.git

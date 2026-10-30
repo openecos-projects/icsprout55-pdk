@@ -34,6 +34,10 @@ make unzip PROXY_USE=true
 make unzip PROXY_USE=true TOOL=wget
 ```
 
+## IP libraries
+
+IP for ICS55 includes [IO libraries](IP/IO/), [standard cell libraries](IP/STD_cell/), [PLL](https://github.com/openecos-projects/ics55_ecos_pll), [DDR3/DDR2 PHY](https://github.com/openecos-projects/55nm-ddr3-ddr2-phy), SRAM, and ROM. Use the **[SRAM Compiler](https://factory.openecos.com/ip/sram)** and **[ROM Compiler](https://factory.openecos.com/ip/rom)** to generate memory macros for your design. See the [ECOS IP Library](https://factory.openecos.com/ip) for documentation and project status.
+
 ## Introduction
 
 The **ICsprout 55nm Open Source PDK** (hereinafter referred to as ICS55) is an open source [Process Design Kit](https://en.wikipedia.org/wiki/Process_design_kit) independently developed by ICsprout Integrated Circuit Co., Ltd. (hereinafter referred to as ICsprout) and College of Integrated Circuits Zhejiang University (hereinafter referred to as IC, ZJU), maintained and released (first released in October 2025) by **ECOS Team, Institute of Computing Technology, Chinese Academy of Sciences (hereinafter referred to as ECOS Team).** A significant breakthrough in the global open source chip ecosystem, **ICS55 represents the industry's most advanced open source process node at the time of its release**. Built on mature 55nm CMOS process technology, it provides a complete and production-proven design rule files, device models, standard cell libraries, and parameterized cells. It fully supports the backend physical design flow of digital integrated circuits, including key steps such as logic synthesis, place and route, and physical verification, etc. Ultimately, it can be taped out on ICsprout's own production lines.
@@ -69,6 +73,8 @@ The ICsprout55 Open Source PDK contents:
 │   ├── quick-start_on_ICsprout_calibrelvs.pdf # Calibre LVS quick start
 │   └── ZJCX 55nm Design Rule Manual_V1.1.9.pdf
 ├── IP
+│   ├── DDR_PHY
+│   │   └── 55nm-ddr3-ddr2-phy               # DDR3/DDR2 PHY submodule
 │   ├── IO
 │   │   └── ICsprout_55LLULP1233_IO_251013   # Specific IO library
 │   │       ├── cdl
@@ -78,6 +84,8 @@ The ICsprout55 Open Source PDK contents:
 │   │       ├── lef
 │   │       ├── liberty
 │   │       └── verilog
+│   ├── PLL
+│   │   └── ics55_ecos_pll                   # PLL submodule
 │   └── STD_cell                             # Standard cell library
 │       └── ics55_LLSC_H7C_V1p10C100         # 55nm LLSC H7C standard cell library version 1.10
 │           ├── ics55_LLSC_H7CH              # HVT standard cells
