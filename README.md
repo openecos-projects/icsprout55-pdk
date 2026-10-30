@@ -12,7 +12,7 @@
 Download the repository and obtain large files by executing make script (please install `bzip2` tool first).
 
 ```bash
-git clone --recurse-submodules https://github.com/openecos-projects/icsprout55-pdk
+git clone https://github.com/openecos-projects/icsprout55-pdk
 cd icsprout55-pdk
 make unzip # downloads latest release (default)
 make unzip RELEASE_TAG=v1.10.100 # pins to v1.10.100
@@ -73,6 +73,8 @@ The ICsprout55 Open Source PDK contents:
 │   ├── quick-start_on_ICsprout_calibrelvs.pdf # Calibre LVS quick start
 │   └── ZJCX 55nm Design Rule Manual_V1.1.9.pdf
 ├── IP
+│   ├── DDR_PHY
+│   │   └── 55nm-ddr3-ddr2-phy               # DDR3/DDR2 PHY submodule
 │   ├── IO
 │   │   └── ICsprout_55LLULP1233_IO_251013   # Specific IO library
 │   │       ├── cdl
