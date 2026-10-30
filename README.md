@@ -36,7 +36,7 @@ make unzip PROXY_USE=true TOOL=wget
 
 ## IP libraries
 
-IP for ICS55 includes [IO libraries](IP/IO/), [standard cell libraries](IP/STD_cell/), [PLL](https://github.com/openecos-projects/ics55_ecos_pll), [DDR3/DDR2 PHY](https://github.com/openecos-projects/55nm-ddr3-ddr2-phy), SRAM, and ROM. Use the [SRAM Compiler](https://factory.openecos.com/ip/sram) and [ROM Compiler](https://factory.openecos.com/ip/rom) to generate memory macros for your design. See the [ECOS IP Library](https://factory.openecos.com/ip) for documentation and project status.
+IP for ICS55 includes [IO libraries](IP/IO/), [standard cell libraries](IP/STD_cell/), [PLL](https://github.com/openecos-projects/ics55_ecos_pll), [DDR3/DDR2 PHY](https://github.com/openecos-projects/55nm-ddr3-ddr2-phy), SRAM, and ROM. Use the **[SRAM Compiler](https://factory.openecos.com/ip/sram)** and **[ROM Compiler](https://factory.openecos.com/ip/rom)** to generate memory macros for your design. See the [ECOS IP Library](https://factory.openecos.com/ip) for documentation and project status.
 
 ## Introduction
 
