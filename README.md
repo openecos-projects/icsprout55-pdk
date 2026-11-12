@@ -172,9 +172,9 @@ by `make openpdk`:
 ```
 ├── klayout                                  # KLayout DRC and LVS decks
 │   └── tech
-│       ├── ics55.drc, ics55.lvs             # entry points
+│       ├── ics55.drc, ics55.lvs             # self-contained decks, generated from pv/
 │       ├── ics55.lyp, ics55.lyt, ics55.map  # layer properties / stack / DEF map
-│       └── rule_decks                       # the rules, translated from pv/
+│       └── rule_decks                       # earlier hand translation, no longer used
 ├── librelane                                # LibreLane PDK configuration
 │   ├── config.tcl                           # PDK level: views, corners, routing
 │   ├── N551P6M_ecos.lef                     # technology LEF
