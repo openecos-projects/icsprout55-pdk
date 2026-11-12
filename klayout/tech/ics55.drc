@@ -37,6 +37,16 @@ nthr = ($threads || $thr || "4").to_i
 threads(nthr)
 verbose(false)
 
+# -rd log=<file>: also write the log messages to a file
+if $log
+  $sv_logf = File.open($log, "w")
+  def log(msg, indent = 0)
+    puts msg
+    $sv_logf.puts(msg)
+    $sv_logf.flush
+  end
+end
+
 $sv_verbose = ($sv_verbose_flag.to_s == "1")
 $sv_strict = ($strict.to_s == "1")
 $sv_select = $select ? Regexp.new($select) : nil

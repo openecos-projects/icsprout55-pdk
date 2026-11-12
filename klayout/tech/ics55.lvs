@@ -28,6 +28,16 @@ end
 threads(($threads || $thr || "4").to_i)
 verbose(false)
 
+# -rd log=<file>: also write the log messages to a file
+if $log
+  $sv_logf = File.open($log, "w")
+  def log(msg, indent = 0)
+    puts msg
+    $sv_logf.puts(msg)
+    $sv_logf.flush
+  end
+end
+
 $sv_verbose = false
 $sv_strict = false
 $sv_select = nil
@@ -1756,6 +1766,7 @@ end
 
 def sv_lvs_extract
   g = $sv_G
+  sv_implicit_nets
   # Evaluate all layers first: derived layers must exist before the first
   # connect statement is issued.
   names = []
@@ -1837,6 +1848,8 @@ end
 # ---------------------------------------------------------------------------
 def sv_reduce_split_gates(nl)
   nmerged = 0
+  # net identity: the (expanded) name - cluster ids only exist in extracted netlists
+  nk = lambda { |n| n.expanded_name }
   nl.each_circuit do |c|
     changed = true
     while changed
@@ -1852,7 +1865,7 @@ def sv_reduce_split_gates(nl)
           tn = cls.terminal_definition(t.terminal_id).name
           ok = false unless tn == "S" || tn == "D"
         end
-        inner[n.cluster_id] = n if ok
+        inner[nk.call(n)] = n if ok
       end
       next if inner.empty?
       sd = lambda do |d|
@@ -1867,8 +1880,8 @@ def sv_reduce_split_gates(nl)
         next if visited[d0.id]
         a, b = sd.call(d0)
         next if a.nil? || b.nil?
-        ia = inner[a.cluster_id]
-        ib = inner[b.cluster_id]
+        ia = inner[nk.call(a)]
+        ib = inner[nk.call(b)]
         next if ia && ib          # middle of a chain
         next if !ia && !ib        # no stack
         start = ia ? b : a
@@ -1876,7 +1889,7 @@ def sv_reduce_split_gates(nl)
         cur = ia ? a : b
         prev = d0
         valid = true
-        while inner[cur.cluster_id]
+        while inner[nk.call(cur)]
           nxt = nil
           cur.each_terminal { |t| nxt = t.device if t.device.id != prev.id }
           if nxt.nil? || nxt.device_class.id != d0.device_class.id
@@ -1886,7 +1899,7 @@ def sv_reduce_split_gates(nl)
           x, y = sd.call(nxt)
           devs << nxt
           prev = nxt
-          cur = (x.cluster_id == cur.cluster_id) ? y : x
+          cur = (nk.call(x) == nk.call(cur)) ? y : x
           break if devs.size > 64
         end
         next unless valid
@@ -1895,16 +1908,16 @@ def sv_reduce_split_gates(nl)
         cls = d0.device_class
         gid = cls.terminal_id("G")
         bid = cls.has_terminal?("B") ? cls.terminal_id("B") : nil
-        gates = devs.collect { |d| g = d.net_for_terminal(gid); [g ? g.cluster_id : -1, (d.parameter("L") * 1e4).round] }
-        if start.cluster_id > stop.cluster_id
+        gates = devs.collect { |d| g = d.net_for_terminal(gid); [g ? nk.call(g) : "", (d.parameter("L") * 1e4).round] }
+        if nk.call(start) > nk.call(stop)
           start, stop = stop, start
           devs = devs.reverse
           gates = gates.reverse
-        elsif start.cluster_id == stop.cluster_id
+        elsif nk.call(start) == nk.call(stop)
           next
         end
         bn = bid ? devs[0].net_for_terminal(bid) : nil
-        key = [cls.id, start.cluster_id, stop.cluster_id, bn ? bn.cluster_id : -1, gates]
+        key = [cls.id, nk.call(start), nk.call(stop), bn ? nk.call(bn) : "", gates]
         (chains[key] ||= []) << devs
       end
       chains.each do |key, list|
@@ -1923,6 +1936,137 @@ def sv_reduce_split_gates(nl)
     end
   end
   nmerged
+end
+
+
+# ---------------------------------------------------------------------------
+# Options for library level regression: tapless cells and implicit nets
+# ---------------------------------------------------------------------------
+
+def sv_bool_opt(v)
+  %w(1 true yes on).include?(v.to_s.downcase)
+end
+
+# -rd implicit_nets="VDD VSS CELL:LABEL": nets with the same label are joined
+# by name (KLayout connect_implicit), e.g. supply rails which are only
+# connected through the ring outside of a standalone IO cell
+def sv_implicit_nets
+  ($implicit_nets || "").split(/[\s,]+/).reject { |x| x.empty? }.each do |entry|
+    cell, label = entry.split(":", 2)
+    label ? connect_implicit(cell, label) : connect_implicit(cell)
+  end
+end
+
+# A labelled net of a cell is a port even if the parent does not connect it
+# (Calibre PORT LAYER TEXT)
+def sv_expose_labeled_pins(nl, top_name)
+  nl.each_circuit_bottom_up do |c|
+    next if c.name == top_name
+    c.each_net.to_a.each do |n|
+      next if n.name.to_s.empty? || n.pin_count > 0
+      pin = c.create_pin(n.name)
+      c.connect_pin(pin, n)
+      c.each_ref { |sc| sc.connect_pin(pin, sc.circuit.create_net) }
+    end
+  end
+end
+
+# -rd tapless=true: cells without taps are compared on their own. Nets which
+# only carry MOS bulk terminals (the wells) are joined to the power net
+# (p-channel devices) or the ground net (n-channel devices) of the circuit.
+def sv_tie_tapless(nl, power, ground)
+  n_joined = 0
+  nl.each_circuit do |c|
+    pwr = c.net_by_name(power)
+    gnd = c.net_by_name(ground)
+    wells = []
+    c.each_net do |n|
+      next if n.terminal_count == 0 || n.name == power || n.name == ground
+      pol = nil
+      ok = true
+      n.each_terminal do |t|
+        cls = t.device.device_class
+        tn = cls.terminal_definition(t.terminal_id).name
+        if cls.is_a?(RBA::DeviceClassMOS4Transistor) && tn == "B"
+          x = (cls.name =~ /^p/i) ? :p : :n
+          ok = false if pol && pol != x
+          pol = x
+        else
+          ok = false
+        end
+      end
+      wells << [n, pol] if ok && pol
+    end
+    wells.each do |n, pol|
+      target = (pol == :p) ? pwr : gnd
+      next unless target
+      c.join_nets(target, n)
+      n_joined += 1
+    end
+  end
+  n_joined
+end
+
+# After nets have been joined inside a cell, several pins can sit on one net.
+# Keep one pin and short the nets of the others in every parent.
+def sv_merge_pins_on_same_net(nl)
+  nl.each_circuit_bottom_up do |c|
+    bynet = {}
+    c.each_pin do |pin|
+      n = c.net_for_pin(pin.id)
+      next unless n
+      (bynet[n.cluster_id] ||= []) << pin
+    end
+    bynet.each_value do |pins|
+      next if pins.size < 2
+      pins = pins.sort_by { |x| x.name.to_s.empty? ? 1 : 0 }
+      keep = pins[0]
+      pins[1..-1].each do |other|
+        c.each_ref.to_a.each do |sc|
+          a = sc.net_for_pin(keep.id)
+          b = sc.net_for_pin(other.id)
+          sc.disconnect_pin(other.id)
+          if a && b
+            sc.circuit.join_nets(a, b) if a.cluster_id != b.cluster_id
+          elsif b
+            sc.connect_pin(keep.id, b)
+          end
+        end
+        c.disconnect_pin(other.id)
+        c.remove_pin(other.id)
+      end
+    end
+  end
+end
+
+# Two pins of a cell that are on the same net in every instance are shorted
+# outside of the cell: join them into one pin (applied to both netlists).
+def sv_join_shorted_pins(nl)
+  nl.each_circuit_top_down do |c|
+    refs = c.each_ref.to_a
+    next if refs.empty?
+    net_index = {}
+    refs.collect { |r| r.circuit }.uniq { |x| x.name }.each do |parent|
+      parent.each_net.each_with_index do |n, i|
+        n.each_subcircuit_pin { |ref| net_index[[parent.name, ref.subcircuit.id, ref.pin_id]] = i }
+      end
+    end
+    groups = c.each_pin.to_a.group_by do |pin|
+      ids = refs.collect { |sc| net_index[[sc.circuit.name, sc.id, pin.id]] }
+      ids.any? { |x| x.nil? } ? [:open, pin.id] : refs.collect { |sc| sc.circuit.name }.zip(ids)
+    end
+    groups.each_value do |pins|
+      next if pins.size < 2
+      keep = c.net_for_pin(pins[0].id)
+      pins[1..-1].each do |pin|
+        other = c.net_for_pin(pin.id)
+        refs.each { |sc| sc.disconnect_pin(pin.id) }
+        c.disconnect_pin(pin.id)
+        c.join_nets(keep, other) if other && keep && other.cluster_id != keep.cluster_id
+        c.remove_pin(pin.id)
+      end
+    end
+  end
 end
 
 $sv_G = SvScope.new(self, nil, "GLOBAL")
@@ -8381,10 +8525,22 @@ $sv_filters.each do |type, model, mode|
   end
 end
 
-# Calibre compares flat (no HCELLs): flatten unless -rd hier=1
-if $hier.to_s != "1"
-  tc = netlist.circuit_by_name($topcell || source.cell_name)
+# Calibre compares flat (no HCELLs): flatten unless -rd hier=1.
+# -rd tapless=true (library regression of tap-less cells) implies hier=1.
+$sv_tapless = sv_bool_opt($tapless)
+$sv_hier = ($hier.to_s == "1") || $sv_tapless
+$sv_top_name = $topcell || source.cell_name
+if !$sv_hier
+  tc = netlist.circuit_by_name($sv_top_name)
   netlist.flatten_circuits(netlist.each_circuit.select { |c| c != tc }) if tc
+else
+  sv_expose_labeled_pins(netlist, $sv_top_name)
+  if $sv_tapless
+    nj = sv_tie_tapless(netlist, $tapless_power || "VDD", $tapless_ground || "VSS")
+    sv_merge_pins_on_same_net(netlist)
+    log("SVRF LVS: tapless mode, #{nj} well nets tied to supplies")
+  end
+  sv_join_shorted_pins(netlist)
 end
 
 # Calibre: LVS REDUCE PARALLEL MOS / RESISTORS ... YES
@@ -8402,8 +8558,8 @@ if $target_netlist
 end
 
 if $schematic && $no_compare.to_s != "1"
-  if $hier.to_s != "1"
-    stc = schematic.circuit_by_name($topcell || source.cell_name)
+  if !$sv_hier
+    stc = schematic.circuit_by_name($sv_top_name)
     schematic.flatten_circuits(schematic.each_circuit.select { |c| c != stc }) if stc
   end
   schematic.combine_devices
@@ -8430,7 +8586,7 @@ if $schematic && $no_compare.to_s != "1"
     end
   end
   # LVS CHECK PORT NAMES YES: named top level ports must pair by name
-  tcn = $topcell || source.cell_name
+  tcn = $sv_top_name
   ltc = netlist.circuit_by_name(tcn)
   stc2 = schematic.circuit_by_name(tcn)
   if ltc && stc2
@@ -8440,6 +8596,18 @@ if $schematic && $no_compare.to_s != "1"
       next if p.name == "" || !snames[p.name]
       same_nets!(tcn, p.name, p.name)
     end
+  end
+  [["layout", netlist], ["schematic", schematic]].each do |what, nl|
+    tcx = nl.circuit_by_name(tcn)
+    next unless tcx
+    cnt = Hash.new(0)
+    tcx.each_device { |d| cnt[d.device_class.name.downcase] += 1 }
+    log("SVRF LVS: #{what} #{tcn}: #{tcx.each_net.count} nets, devices " +
+        cnt.sort.collect { |k, v| "#{k}=#{v}" }.join(" "))
+  end
+  if $schematic_out
+    # reduced schematic netlist as it is compared (debugging aid)
+    schematic.write($schematic_out, RBA::NetlistSpiceWriter::new, "Reduced schematic")
   end
   ok = compare
   if ok
