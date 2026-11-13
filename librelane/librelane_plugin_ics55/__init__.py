@@ -28,8 +28,20 @@ Use it in place of Netgen.LVS, after OpenROAD.WriteCDL:
     substituting_steps:
       "-Netgen.LVS": OpenROAD.WriteCDL
       Netgen.LVS: ICS55.KLayoutLVS
+
+or next to it (Magic extraction + Netgen LVS, then KLayout LVS, one Checker.LVS):
+  meta:
+    substituting_steps:
+      "-Netgen.LVS": OpenROAD.WriteCDL
+      "+Netgen.LVS": ICS55.KLayoutLVS
+
+The step adds its error count to a design__lvs_error__count that an earlier LVS
+step (Netgen) left in the state, so Checker.LVS fails if either run fails; its
+own result is also kept as design__lvs_error__count__klayout. An existing SPICE
+view (the Magic extraction) is not replaced by the KLayout netlist.
 """
 
+from librelane.state import DesignFormat
 from librelane.steps import Step
 from librelane.steps.klayout import LVS as KLayoutLVS
 
@@ -44,4 +56,12 @@ class ICS55KLayoutLVS(KLayoutLVS):
     name = "Layout Versus Schematic (KLayout, ICS55)"
 
     def run(self, state_in, **kwargs):
-        return self.run_ihp_sg13g2(state_in, **kwargs)
+        views, metrics = self.run_ihp_sg13g2(state_in, **kwargs)
+        own = metrics.get("design__lvs_error__count", 0)
+        before = state_in.metrics.get("design__lvs_error__count")
+        metrics["design__lvs_error__count__klayout"] = own
+        if before is not None:
+            metrics["design__lvs_error__count"] = int(before) + int(own)
+        if state_in.get(DesignFormat.SPICE) is not None:
+            views.pop(DesignFormat.SPICE, None)
+        return views, metrics

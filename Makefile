@@ -173,6 +173,10 @@ $(OPENPDKS_INSTALL_DIR)/checkpoint: $(LIBS_ALL) $(GDS_ALL)
 	# other libraries) and empty subcircuits for the corner / spacer cells (OpenROAD write_cdl)
 	python3 scripts/cdl_convert.py $(DECOMP_DIR_GDS_IO_P)/ICsprout_55LLULP1233_IO_251013/cdl/ICSIOA_N55_3P3.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/ICsprout_55LLULP1233_IO_251013/cdl/ICSIOA_N55_3P3.cdl \
 		--lef $(DECOMP_DIR_GDS_IO_P)/ICsprout_55LLULP1233_IO_251013/lef/ICSIOA_N55_3P3_1P6M1TM_openpdk.lef
+	# ngspice view and netgen reference netlist (helper subcircuits inlined, split gates reduced)
+	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ICsprout_55LLULP1233_IO_251013/spice
+	python3 scripts/cdl_to_spice.py $(DECOMP_DIR_GDS_IO_P)/ICsprout_55LLULP1233_IO_251013/cdl/ICSIOA_N55_3P3.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/ICsprout_55LLULP1233_IO_251013/spice/ICSIOA_N55_3P3.spice
+	python3 scripts/lvs_netlist.py $(OPENPDKS_INSTALL_DIR)/libs.ref/ICsprout_55LLULP1233_IO_251013/spice/ICSIOA_N55_3P3.spice $(OPENPDKS_INSTALL_DIR)/libs.ref/ICsprout_55LLULP1233_IO_251013/spice/ICSIOA_N55_3P3_lvs.spice
 ifneq ($(DECOMP_DIR_LIB_P),$(DECOMP_DIR_GDS_STD_P))
 	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CH $(OPENPDKS_INSTALL_DIR)/libs.ref/
 	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CL $(OPENPDKS_INSTALL_DIR)/libs.ref/
@@ -187,6 +191,10 @@ endif
 	python3 scripts/cdl_to_spice.py $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CH/cdl/ics55_LLSC_H7CH.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CH/spice/ics55_LLSC_H7CH.spice
 	python3 scripts/cdl_to_spice.py $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CL/cdl/ics55_LLSC_H7CL.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CL/spice/ics55_LLSC_H7CL.spice
 	python3 scripts/cdl_to_spice.py $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CR/cdl/ics55_LLSC_H7CR.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CR/spice/ics55_LLSC_H7CR.spice
+	# netgen reference netlists (scripts/lvs_netlist.py)
+	for lib in ics55_LLSC_H7CH ics55_LLSC_H7CL ics55_LLSC_H7CR; do \
+		python3 scripts/lvs_netlist.py $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/spice/$$lib.spice $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/spice/$${lib}_lvs.spice; \
+	done
 	cp -r prtech $(OPENPDKS_INSTALL_DIR)/libs.ref/
 	cp -r klayout $(OPENPDKS_INSTALL_DIR)/libs.tech/
 	cp -r librelane $(OPENPDKS_INSTALL_DIR)/libs.tech/
@@ -231,6 +239,7 @@ private-std:
 		fi; \
 		python3 scripts/cdl_convert.py "$$src/cdl/$$lib.cdl" "$$dst/cdl/$$lib.cdl"; \
 		python3 scripts/cdl_to_spice.py "$$src/cdl/$$lib.cdl" "$$dst/spice/$$lib.spice"; \
+		python3 scripts/lvs_netlist.py "$$dst/spice/$$lib.spice" "$$dst/spice/$${lib}_lvs.spice"; \
 	done
 
 openpdk: $(OPENPDKS_INSTALL_DIR)/checkpoint

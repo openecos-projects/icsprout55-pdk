@@ -1,25 +1,33 @@
+# Magic startup file for icsprout55 (ICsprout 55LLULP 1P6M)
+#   magic -rcfile $PDK_ROOT/icsprout55/libs.tech/magic/ics55.magicrc
 puts stdout "Sourcing design .magicrc for technology ics55 ..."
 
-#set scalefac [tech lambda]
-#if {[lindex $scalefac 1] < 2} {
-#    scalegrid 1 2
-#}
+# The vendor layouts are on a 5 nm / 1 nm grid
+set scalefac [tech lambda]
+if {[lindex $scalefac 1] < 10} {
+    scalegrid 1 10
+}
 
-drc on
-
+drc euclidean on
 catch {random seed}
-ext2spice scale off
 
-tech load [file dirname [file normalize [info script]]]/ics55.tech
-
+set ICS55_TECH_DIR [file dirname [file normalize [info script]]]
+tech load $ICS55_TECH_DIR/ics55.tech
 if {[tech name] != "ics55"} {quit -noprompt}
 
-snap lambda
+source $ICS55_TECH_DIR/ics55.tcl
 
+snap internal
+
+# standard power, ground and substrate names
 set VDD VDD
-set VSS VSS
-set VBN VSUB
+set GND VSS
+set SUB VSUBS
+
+# Note: vendor GDS marker layers above GDS layer 255 (NODRC, SUBCKTLVS, the well
+# label texts, ...) are only seen by Magic in a GDS converted with
+# hacking/magic/magic_gds.py; see the header of ics55.tech.
 
 if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
-   set MAGTYPE mag
+    set MAGTYPE mag
 }

@@ -1,6 +1,6 @@
-#-----------------------------------------------------
-# Magic/TCL design kit for icsprout55 PDK
-#-----------------------------------------------------
+#-----------------------------------------------------------------
+# Magic Tcl setup for icsprout55, sourced by ics55.magicrc and used
+# as LibreLane MAGIC_PDK_SETUP. There are no device generators yet.
+#-----------------------------------------------------------------
 
-# EMPTY
-
+namespace eval ics55 {}
