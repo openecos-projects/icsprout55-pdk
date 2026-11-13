@@ -194,6 +194,11 @@ endif
 	# netgen reference netlists (scripts/lvs_netlist.py)
 	for lib in ics55_LLSC_H7CH ics55_LLSC_H7CL ics55_LLSC_H7CR; do \
 		python3 scripts/lvs_netlist.py $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/spice/$$lib.spice $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/spice/$${lib}_lvs.spice; \
+		python3 scripts/lef_antenna.py merge $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/lef/$${lib}_ecos.lef \
+			librelane/$$lib/antenna.pins $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/lef/$${lib}_ecos_openpdk.lef; \
+		python3 scripts/antenna_liberty.py $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/cdl/$$lib.cdl \
+			$(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/lef/$${lib}_ecos.lef ngspice/dio/dio_core.mdl $$lib \
+			$(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/liberty/$${lib}_antenna.lib; \
 	done
 	cp -r prtech $(OPENPDKS_INSTALL_DIR)/libs.ref/
 	cp -r klayout $(OPENPDKS_INSTALL_DIR)/libs.tech/

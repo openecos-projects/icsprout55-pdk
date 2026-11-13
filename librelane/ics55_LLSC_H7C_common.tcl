@@ -47,10 +47,10 @@ set ::env(SYNTH_TIELO_CELL) "TIELO${sfx}/Z"
 set ::env(DECAP_CELLS) [list "FILLCAP*${sfx}"]
 set ::env(FILL_CELLS) [list "FILLER*${sfx}"]
 
-# Antenna diode: tech.yml fills.diode is empty -- this library has no diode
-# cell. DIODE_CELL intentionally left unset; all diode insertion steps skip
-# themselves when it is null.
-# set ::env(DIODE_CELL) "..."
+# Antenna diode: ANT2 (n+/pwell + p+/nwell diode, 0.197 um2). It is in the LEF,
+# Verilog and CDL but not in the vendor liberty; install.sh writes
+# <lib>_antenna.lib for it (hacking/antenna_liberty.py), added to LIB in config.tcl.
+set ::env(DIODE_CELL) "ANT2${sfx}/A"
 
 # Placement cell padding in sites. 0 matches the bring-up configuration
 # (DFFRAM RAM blocks are macro-dominated; >0 is only needed for diode
@@ -86,5 +86,7 @@ set ::env(IO_DELAY_CONSTRAINT) 20
 # bring-up configuration; uncomment if needed.
 # set ::env(TRISTATE_CELLS) [list "TBUF*${sfx}"]
 
-# TODO adjust threshold
-# set ::env(HEURISTIC_ANTENNA_THRESHOLD) 90
+# Heuristic diode insertion (only with RUN_HEURISTIC_DIODE_INSERTION): net length in um.
+# Antenna rule AR_5_10: metal / gate area > 5000 without a diode; the smallest input gate
+# (0.34 um x 0.06 um = 0.0204 um2) reaches it with ~100 um2 of 0.1 um wide metal, ~1000 um.
+set ::env(HEURISTIC_ANTENNA_THRESHOLD) 1000

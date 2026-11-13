@@ -115,7 +115,9 @@ if { [regexp {^ICsprout55_9T[A-Z]+_basic$} $::env(STD_CELL_LIBRARY)] } {
 } else {
     # The bring-up configuration used the "_ecos" cell LEF with the plain
     # (non-ecos) tech LEF; keep that proven combination.
-    set scl_lef "$scl_dir/lef/$::env(STD_CELL_LIBRARY)_ecos.lef"
+    # _ecos_openpdk.lef = the _ecos LEF plus the per-pin antenna data (ANTENNAGATEAREA /
+    # ANTENNADIFFAREA) from Magic's LEF writer (make openpdk, scripts/lef_antenna.py)
+    set scl_lef "$scl_dir/lef/$::env(STD_CELL_LIBRARY)_ecos_openpdk.lef"
     # The _ecos cell LEF has the signal pins on MET2 (+ VIA1); the matching
     # layout is the _M2 GDS. The plain GDS only has MET1 pins, so routing to
     # the MET2 pin shapes would leave every signal pin open (found by KLayout
@@ -124,6 +126,11 @@ if { [regexp {^ICsprout55_9T[A-Z]+_basic$} $::env(STD_CELL_LIBRARY)] } {
     set scl_lib_tt "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_typ_tt_1p2_25_nldm.lib"
     set scl_lib_ss "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_ss_rcworst_1p08_125_nldm.lib"
     set scl_lib_ff "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_ff_rcbest_1p32_m40_nldm.lib"
+    # the antenna diode cells (DIODE_CELL) are not in the vendor liberty
+    set scl_lib_ant "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_antenna.lib"
+    set scl_lib_tt "$scl_lib_tt $scl_lib_ant"
+    set scl_lib_ss "$scl_lib_ss $scl_lib_ant"
+    set scl_lib_ff "$scl_lib_ff $scl_lib_ant"
 }
 
 # Standard cells
