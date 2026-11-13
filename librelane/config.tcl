@@ -65,6 +65,8 @@ set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/te
 set ::env(KLAYOUT_DEF_LAYER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.map"
 set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.drc"
 set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules 0 ]
+# Antenna: the vendor Calibre antenna runset (.ant) translated by the same generator; KLayout.Antenna
+set ::env(KLAYOUT_ANTENNA_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55_antenna.drc"
 set ::env(KLAYOUT_LVS_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.lvs"
 # Run by the ICS55.KLayoutLVS step of the PDK plugin (libs.tech/librelane/librelane_plugin_ics55)
 # No tapless / implicit_nets here: in a placed design FILLTAP ties the wells and
@@ -72,8 +74,8 @@ set ::env(KLAYOUT_LVS_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/te
 # joined by the runset itself. Forcing them would hide missing taps.
 set ::env(KLAYOUT_LVS_OPTIONS) [dict create run_mode deep ]
 
-set ::env(NETGEN_SETUP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/ics55.tcl"
-    
+set ::env(NETGEN_SETUP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/ics55_setup.tcl"
+
 # TODO: This is the only file that is left to implement for RCX
 # the one put here is just a copy of IHP. Obviously it won't work.
 # REPLACE ME REPLACE ME REPLACE ME
@@ -128,14 +130,17 @@ if { [regexp {^ICsprout55_9T[A-Z]+_basic$} $::env(STD_CELL_LIBRARY)] } {
 set ::env(CELL_LEFS) [list "$scl_lef"]
 set ::env(CELL_GDS) [list "$scl_gds"]
 set ::env(CELL_VERILOG_MODELS) [list "$scl_dir/verilog/$::env(STD_CELL_LIBRARY).v"]
-set ::env(CELL_SPICE_MODELS) [list "$scl_dir/cdl/$::env(STD_CELL_LIBRARY).cdl"]
+# Netgen reference netlists (and the port order Magic's SPICE extraction reads):
+# the spice views with the parametrised helper subcircuits inlined (scripts/lvs_netlist.py).
+# KLayout LVS uses the CDLs.
+set ::env(CELL_SPICE_MODELS) [list "$scl_dir/spice/$::env(STD_CELL_LIBRARY)_lvs.spice"]
 set ::env(CELL_CDLS) [list "$scl_dir/cdl/$::env(STD_CELL_LIBRARY).cdl"]
 
 # The _openpdk LEF is the vendor _ecos one with the pad terminals moved to RDL
 set ::env(PAD_LEFS) "$io_dir/lef/ICSIOA_N55_3P3_1P6M1TM_openpdk.lef"
 set ::env(PAD_GDS) "$io_dir/gds/ICSIOA_N55_3P3_1P6M1TM.gds"
 set ::env(PAD_VERILOG_MODELS) "$io_dir/verilog/icsIOA_N55_3P3.v"
-set ::env(PAD_SPICE_MODELS) "$io_dir/cdl/ICSIOA_N55_3P3.cdl"
+set ::env(PAD_SPICE_MODELS) "$io_dir/spice/ICSIOA_N55_3P3_lvs.spice"
 set ::env(PAD_CDLS) "$io_dir/cdl/ICSIOA_N55_3P3.cdl"
 
 # --- Timing libraries (tech.yml: sta.libs) ------------------------------------

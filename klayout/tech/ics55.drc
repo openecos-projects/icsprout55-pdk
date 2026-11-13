@@ -1394,6 +1394,112 @@ def sv_net_area_ratio(layers, expr, cons, opts = {})
   raise "SVRF: NET AREA RATIO form not supported"
 end
 
+# ---------------------------------------------------------------------------
+# DRC INCREMENTAL CONNECT YES (antenna decks): a NET AREA RATIO check only sees
+# the CONNECT statements above it. "stage" is their number; the connectivity of
+# a stage is set up on demand (clear_connections + the first <stage> connects).
+# ---------------------------------------------------------------------------
+$sv_incremental = false
+$sv_stage_cur = nil
+
+def sv_stage(stage)
+  conns = $sv_connects[0...stage]
+  # evaluate the layers first: they may need another stage themselves
+  conns.each { |layers, via| (layers + [via]).compact.each { |n| sv_p($sv_G[n]) } }
+  return if $sv_stage_cur == stage
+  clear_connections
+  conns.each do |layers, via|
+    ls = layers.collect { |n| sv_p($sv_G[n]) }
+    if via
+      v = sv_p($sv_G[via])
+      ls.each { |l| connect(l, v) }
+    else
+      (1...ls.size).each { |i| connect(ls[0], ls[i]) }
+    end
+  end
+  $sv_stage_cur = stage
+  $sv_netter_ready = true
+end
+
+# NET AREA X constraint: polygons of X on nets whose X area meets the constraint
+def sv_net_area(x, cons, stage)
+  a = sv_p(x)
+  sv_stage(stage)
+  an = a.nets(prop(1))
+  u2 = dbu * dbu
+  area = Hash.new(0.0)
+  an.data.each { |p| area[p.property(1)] += p.area * u2 }
+  r = RBA::Region::new
+  an.data.each { |p| r.insert(p.to_simple_polygon) if sv_cons_ok(cons, area[p.property(1)]) }
+  sv_w(r)
+end
+
+# NET AREA RATIO L1 ... Ln constraint [expr] [ACCUMULATE [acc]] at a connectivity stage.
+#   names: the layer names as used in expr; fn: lambda(area_hash, perimeter_hash) per net
+#   (um2 / um); acc: nil (plain), true (start of an accumulation) or the layer of a
+#   previous accumulation. Semantics settled against Calibre (tests/antenna):
+#   * the value is evaluated per net; nets where it is not finite (no gate) are skipped;
+#   * plain: the result are the L1 polygons of the nets meeting the constraint;
+#   * ACCUMULATE: per polygon of the last layer (the gate) the value is the net value
+#     plus the value the same gate has in <acc>; the result are those gate polygons,
+#     and the accumulated values are kept on the result for later ACCUMULATE <it>.
+def sv_nar(layers, names, fn, cons, stage, acc = nil, bases = [])
+  ls = layers.collect { |l| sv_p(l) }
+  bs = bases.collect { |b| b ? sv_p(b) : nil }
+  prev = nil
+  if acc && acc != true
+    al = sv_p(acc)
+    prev = al.instance_variable_get(:@sv_acc) || {}
+  end
+  sv_stage(stage)
+  u = dbu
+  u2 = u * u
+  area = Hash.new { |h, k| h[k] = Hash.new(0.0) }
+  perim = Hash.new { |h, k| h[k] = Hash.new(0.0) }
+  first = []
+  last = []
+  ls.each_with_index do |l, i|
+    n = names[i]
+    begin
+      ln = l.nets(prop(1))
+    rescue => ex
+      # not in the connectivity: nets of the layer it is derived from
+      raise ex unless bs[i]
+      ln = sv_w(bs[i].nets(prop(1)).data.and(l.data, RBA::Region::NoPropertyConstraint))
+    end
+    ln.data.each do |p|
+      id = p.property(1)
+      area[id][n] += p.area * u2
+      perim[id][n] += p.perimeter * u
+      first << [p, id] if i == 0
+      last << [p, id] if i == ls.size - 1
+    end
+  end
+  val = {}
+  area.each do |id, a|
+    v = fn.call(a, perim[id]).to_f
+    val[id] = v if v.finite?
+  end
+  r = RBA::Region::new
+  if acc
+    accmap = {}
+    last.each do |p, id|
+      next unless val.has_key?(id)
+      sp = p.to_simple_polygon
+      key = sp.to_s
+      v = val[id] + (prev ? (prev[key] || 0.0) : 0.0)
+      accmap[key] = v
+      r.insert(sp) if sv_cons_ok(cons, v)
+    end
+    out = sv_w(r)
+    out.instance_variable_set(:@sv_acc, accmap)
+    return out
+  end
+  first.each { |p, id| r.insert(p.to_simple_polygon) if val.has_key?(id) && sv_cons_ok(cons, val[id]) }
+  r.merge   # Calibre reports the merged polygons of the first layer
+  sv_w(r)
+end
+
 # STAMP A BY B: A polygons get the nets of B
 def sv_stamp(a, b, base = nil)
   bn = sv_has_props(b) ? b : sv_nets(b, base)
