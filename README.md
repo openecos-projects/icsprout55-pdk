@@ -47,12 +47,26 @@ export PDK=icsprout55
 ```
 
 Point LibreLane at it with `--pdk icsprout55 --manual-pdk`. The PDK plugin in
-`librelane/librelane_plugin_ics55` provides the `ICS55.KLayoutLVS` step and is
-picked up through `PYTHONPATH`:
+`librelane/librelane_plugin_ics55` provides the `ICS55.KLayoutLVS` and
+`ICS55.TapEndcapInsertion` steps and is picked up through `PYTHONPATH`:
 
 ```bash
 export PYTHONPATH=$PDK_ROOT/$PDK/libs.tech/librelane:$PYTHONPATH
 ```
+
+The 7-track libraries have no endcap cells. Their implant and well layers are
+only complete with a neighbour on every side, so the rows are closed with the
+plain fillers: `FILLER1` at both row ends (`ENDCAP_CELL`) and the top and bottom
+row of every row block filled with fillers (`ENDCAP_HORIZONTAL_CELLS`). The
+second part needs the plugin step in the design configuration:
+
+```yaml
+meta:
+  substituting_steps:
+    OpenROAD.TapEndcapInsertion: ICS55.TapEndcapInsertion
+```
+
+Without it, cells placed in the top / bottom rows report `NP_EN_3` / `PP_EN_3`.
 
 Standard cell libraries (`--scl`, default `ics55_LLSC_H7CR`):
 
@@ -194,7 +208,7 @@ by `make openpdk`:
 │   ├── ics55_LLSC_H7C_common.tcl            # shared 7-track configuration
 │   ├── ICsprout55_SC9T_common.tcl           # shared 9-track configuration
 │   ├── <standard cell library>              # cells, synthesis maps, tracks, RCX
-│   └── librelane_plugin_ics55               # ICS55.KLayoutLVS step
+│   └── librelane_plugin_ics55               # ICS55.KLayoutLVS / TapEndcapInsertion steps
 ├── magic                                    # Magic technology file
 ├── netgen                                   # netgen setup
 ├── ngspice                                  # device models for ngspice

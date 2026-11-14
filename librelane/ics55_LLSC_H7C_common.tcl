@@ -32,8 +32,21 @@ set ::env(PLACE_SITE) "core7"
 # Welltap insertion (tech.yml: fills.tap + tap_distance).
 set ::env(WELLTAP_CELL) "FILLTAP${sfx}"
 set ::env(FP_TAPCELL_DIST) 15
-# No endcap cells in this library; ENDCAP_CELL intentionally unset.
-# see: https://github.com/openecos-projects/ecos-studio/issues/47
+# The library has no endcap cells (https://github.com/openecos-projects/ecos-studio/issues/47).
+# NP / PP / NW of the cells extend past the cell boundary and are only complete with
+# a neighbour on all four sides: a cell at a row end sees NP/PP_EX_1_EX_1a, a cell in
+# the top / bottom row NP_EN_3 / PP_EN_3. The plain fillers (no devices, implant and
+# well bands over the full height) close the rows instead:
+# - ENDCAP_CELL: one site of FILLER1 at both ends of every row (OpenROAD tapcell /
+#   place_endcaps; also reserved by OpenROAD.CutRows),
+# - ENDCAP_HORIZONTAL_CELLS: the top and bottom row of every row block filled with
+#   fillers. Only the plugin step ICS55.TapEndcapInsertion uses it (substitute
+#   OpenROAD.TapEndcapInsertion, see librelane_plugin_ics55); it costs those two rows.
+# Every usable cell is DRC clean at a row end and in the outer rows with both
+# (each cell alone between two FILLER1 with a filler row above and below).
+set ::env(ENDCAP_CELL) "FILLER1${sfx}"
+set ::env(ENDCAP_HORIZONTAL_CELLS) [list "FILLER64${sfx}" "FILLER32${sfx}" "FILLER16${sfx}" \
+    "FILLER8${sfx}" "FILLER4${sfx}" "FILLER2${sfx}" "FILLER1${sfx}"]
 
 # --- Synthesis cells (tech.yml: sta.driving_cell, tie) --------------------------
 set ::env(SYNTH_DRIVING_CELL) "INVX8${sfx}/Y"
