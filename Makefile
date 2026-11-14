@@ -182,6 +182,13 @@ ifneq ($(DECOMP_DIR_LIB_P),$(DECOMP_DIR_GDS_STD_P))
 	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CL $(OPENPDKS_INSTALL_DIR)/libs.ref/
 	cp -r $(DECOMP_DIR_GDS_STD_P)/ics55_LLSC_H7CR $(OPENPDKS_INSTALL_DIR)/libs.ref/
 endif
+	# 7-track cells with the DRC violations fixed (GDS and cell LEFs; liberty, CDL and the cells listed
+	# in stdcell_fixed/<lib>/unusable.cells are the vendor ones, librelane/<lib>/*_exclude.cells excludes those)
+	for lib in ics55_LLSC_H7CH ics55_LLSC_H7CL ics55_LLSC_H7CR; do \
+		for f in stdcell_fixed/$$lib/gds/*.gz stdcell_fixed/$$lib/lef/*.gz; do \
+			gunzip -c $$f > $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/$$(basename $$(dirname $$f))/$$(basename $$f .gz); \
+		done; \
+	done
 	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CH/spice
 	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CL/spice
 	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CR/spice

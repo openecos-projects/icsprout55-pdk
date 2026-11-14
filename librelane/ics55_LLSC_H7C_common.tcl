@@ -44,7 +44,9 @@ set ::env(SYNTH_TIELO_CELL) "TIELO${sfx}/Z"
 
 # --- Fill / decap / tap cells (tech.yml: fills) ---------------------------------
 # tech.yml gives regular expressions; LibreLane wants shell wildcards.
-set ::env(DECAP_CELLS) [list "FILLCAP*${sfx}"]
+# FILLCAP8/16/32 still fail DRC after the layout fix (stdcell_fixed/<lib>/unusable.cells),
+# only FILLCAP4 is clean.
+set ::env(DECAP_CELLS) [list "FILLCAP4${sfx}"]
 set ::env(FILL_CELLS) [list "FILLER*${sfx}"]
 
 # Antenna diode: ANT2 (n+/pwell + p+/nwell diode, 0.197 um2). It is in the LEF,
@@ -61,9 +63,11 @@ set ::env(DPL_CELL_PADDING) 0
 set ::env(CELL_PAD_EXCLUDE) [list "FILLCAP*${sfx}" "TIEHI${sfx}" "TIELO${sfx}"]
 
 # --- Excluded cells --------------------------------------------------------------
-# Cells whose layout does not match their CDL in the KLayout LVS regression
-# (the lvs_stdcell_* golden files of the KLayout LVS regression, plain and _M2 GDS).
-# Synthesis and place & route must not use them. Overrides the /dev/null of config.tcl.
+# Synthesis and place & route must not use (overrides the /dev/null of config.tcl):
+# - the cells whose layout does not match their CDL in the KLayout LVS regression
+#   (the lvs_stdcell_* golden files, plain and _M2 GDS),
+# - the cells that still fail DRC after the layout fix (stdcell_fixed/<lib>/unusable.cells,
+#   hacking/stdcell_fix/README.md); they are installed with the vendor layout.
 set ::env(SYNTH_EXCLUDED_CELL_FILE) "$scl_tech_dir/synth_exclude.cells"
 set ::env(PNR_EXCLUDED_CELL_FILE) "$scl_tech_dir/pnr_exclude.cells"
 

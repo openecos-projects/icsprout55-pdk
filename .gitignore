@@ -5,3 +5,5 @@
 ics55/*
 icsprout55/*
 .DS_Store
+# DRC fixed 7-track GDS (gzipped, shipped with the repository)
+!/stdcell_fixed/*/gds/

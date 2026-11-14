@@ -1,3 +1,5 @@
+// Negative enable latches with reset / set+reset use the positive enable cells with an
+// inverted enable: LATLRX* / LATLSRX* fail DRC after the layout fix (stdcell_fixed/).
 module \$_DLATCH_P_ (input E, input D, output Q);
   LATHX1H7R _TECHMAP_DLATCH_P (
     .D(D),
@@ -17,10 +19,10 @@ module \$_DLATCH_N_ (input E, input D, output Q);
 endmodule
 
 module \$_DLATCH_NN0_ (input E, input R, input D, output Q);
-  LATLRX1H7R _TECHMAP_DLATCH_NN0 (
+  LATHRX1H7R _TECHMAP_DLATCH_NN0 (
     .D(D),
     .Q(Q),
-    .GN(E),
+    .G(~E),
     .RN(R),
     .QN()
   );
@@ -37,10 +39,10 @@ module \$_DLATCH_PN0_ (input E, input R, input D, output Q);
 endmodule
 
 module \$_DLATCHSR_NNN_ (input E, input S, input R, input D, output Q);
-  LATLSRX1H7R _TECHMAP_DLATCHSR_NNN (
+  LATHSRX1H7R _TECHMAP_DLATCHSR_NNN (
     .D(D),
     .Q(Q),
-    .GN(E),
+    .G(~E),
     .SN(S),
     .RN(R),
     .QN()

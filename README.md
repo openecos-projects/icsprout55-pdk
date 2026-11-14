@@ -66,6 +66,19 @@ The 9-track libraries ship 16 liberty corners as NLDM and CCS plus `.db`, about
 `librelane/config.tcl` are installed. `make openpdk PRIVATE_STD_LIBERTY=all`
 installs every NLDM corner instead.
 
+The 7-track GDS and cell LEFs installed by `make openpdk` are modified versions
+of the vendor ones: the vendor cells violate some of the PDK's own Calibre rules
+(contact to gate spacing, M1 enclosure, 45 degree M1, implant enclosure, ...), so
+their geometry was moved until the KLayout deck (the Calibre rules, unrelaxed) is
+clean. The result is in `stdcell_fixed/<lib>` (gzipped GDS / LEF, `report.json`
+per cell), made by `hacking/stdcell_fix/make_fixed.py` in
+[icsprout55-openpdk](https://github.com/ckdur/icsprout55-openpdk). 609 of the 785
+cells per library are clean; the other 176 (`stdcell_fixed/<lib>/unusable.cells`,
+among them the asynchronous reset flops, the scan flops and `FILLCAP8/16/32`) keep
+the vendor layout and are excluded from synthesis and place and route
+(`librelane/<lib>/{synth,pnr}_exclude.cells`). Liberty files and CDLs are the
+vendor ones; cells that grew (up to three sites) keep their liberty area.
+
 `make openpdk PDK_NAME=<name>` installs under a different directory name, and
 `make clean-openpdk` removes the tree.
 
@@ -187,6 +200,7 @@ by `make openpdk`:
 ├── ngspice                                  # device models for ngspice
 ├── hspice                                   # the vendor models the ngspice ones come from
 ├── scripts                                  # generators: CDL conversion, layer maps
+├── stdcell_fixed                            # DRC fixed 7-track GDS / LEF (see above)
 ├── demo_counter, demo_chip, demo_sim        # see Demos above
 └── Makefile
 ```
