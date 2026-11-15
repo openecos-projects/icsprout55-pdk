@@ -64,9 +64,16 @@ set ::env(KLAYOUT_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics
 set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.lyp"
 set ::env(KLAYOUT_DEF_LAYER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.map"
 set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.drc"
-set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules 0 ]
+# flat: the mode the translated deck is verified in against Calibre (compare.py);
+# deep mode reports e.g. LU_S_2_* (tap distance) inside placed cells that Calibre
+# and the flat run do not report
+set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules 0 flat 1 ]
 # Antenna: the vendor Calibre antenna runset (.ant) translated by the same generator; KLayout.Antenna
 set ::env(KLAYOUT_ANTENNA_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55_antenna.drc"
+# flat: deep and flat agree on the antenna test layout, but deep did not finish on a
+# full chip (pad ring guard rings) in hours; flat breaks the huge polygons (pad ring
+# of demo_chip alone ~27 min)
+set ::env(KLAYOUT_ANTENNA_OPTIONS) [dict create flat 1 ]
 set ::env(KLAYOUT_LVS_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.lvs"
 # Run by the ICS55.KLayoutLVS step of the PDK plugin (libs.tech/librelane/librelane_plugin_ics55)
 # No tapless / implicit_nets here: in a placed design FILLTAP ties the wells and

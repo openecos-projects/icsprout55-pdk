@@ -1498,6 +1498,28 @@ end
 $sv_incremental = false
 $sv_stage_cur = nil
 
+# Very large flat polygons make the net extraction crawl: the guard rings of an abutted IO pad
+# ring merge into one ACT / SD polygon of ~43000 points and ~10000 holes, which ~500000
+# contacts are tested against (a full-chip antenna run did not get past the first stage in
+# hours; broken: 5 s). The connectivity layers are broken in place into pieces of <= 512
+# points. Areas per net are unchanged; perimeters of broken polygons would grow, but they are
+# only used for PO and RDL, which never reach that size. Deep layers are split by KLayout.
+SV_BREAK_POINTS = ($break_points || 512).to_i   # -rd break_points=<n> (tests)
+$sv_broken = {}
+def sv_break_big(l)
+  d = l.data
+  return l unless d.is_a?(RBA::Region) && !d.is_deep?
+  return l if $sv_broken[d.object_id]
+  $sv_broken[d.object_id] = true
+  n = 0
+  d.each { |p| n += 1 if p.num_points > SV_BREAK_POINTS }
+  if n > 0
+    d.break(SV_BREAK_POINTS, 0.0)
+    log("SVRF: #{n} polygons with > #{SV_BREAK_POINTS} points broken for the connectivity") if $sv_verbose
+  end
+  l
+end
+
 def sv_stage(stage)
   conns = $sv_connects[0...stage]
   # evaluate the layers first: they may need another stage themselves
@@ -1505,9 +1527,9 @@ def sv_stage(stage)
   return if $sv_stage_cur == stage
   clear_connections
   conns.each do |layers, via|
-    ls = layers.collect { |n| sv_p($sv_G[n]) }
+    ls = layers.collect { |n| sv_break_big(sv_p($sv_G[n])) }
     if via
-      v = sv_p($sv_G[via])
+      v = sv_break_big(sv_p($sv_G[via]))
       ls.each { |l| connect(l, v) }
     else
       (1...ls.size).each { |i| connect(ls[0], ls[i]) }
@@ -3635,7 +3657,7 @@ end
 sv_rule("PP_EN_2", "Enclosure of P+ AA NW, except the SRAMALL region. >= 0.12um") do |outs|
   s = SvScope.new(self, $sv_G, "PP_EN_2")
   s.define("X") { sv_esel_lz("inside_edge", sv_lz { sv_esel_lz("coin", sv_lz { sv_esel_lz("coin", sv_lz { sv_sel_any("interact", s["PACT"], s["NWR"], [], true, {}) }, sv_lzn(s, "NACT"), [], true, true) }, sv_lzn(s, "SDN"), [], true, true) }, sv_lzn(s, "NW"), [], false, true) }
-  outs << proc { sv_sel_any("inside", sv_sel_any("inside", sv_check_lz("enc", sv_lzn(s, "X"), sv_lz { sv_bool_lz("AND", sv_lzn(s, "SDP"), sv_lzn(s, "NW")) }, [["<", 0.12]], {:abut => [["<", 90.0]], :region => true}, true), s["SRAMALL"], [], true, {}), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_sel_any("inside", sv_check_lz("enc", sv_lzn(s, "X"), sv_lz { sv_bool_lz("AND", sv_lzn(s, "SDP"), sv_lzn(s, "NW")) }, [["<", 0.12]], {:abut => [["<", 90.0]], :region => true}, false), s["SRAMALL"], [], true, {}), s["NODRC"], [], true, {}) }
 end
 sv_rule("PP_EN_3", "Minimum PP Enclosure of POLY >=0.15um") do |outs|
   s = SvScope.new(self, $sv_G, "PP_EN_3")
@@ -5099,16 +5121,16 @@ end
 sv_rule("NWresAA_S_1", "Space between NW of NW resistors and un-related implant region >= 0.60um") do |outs|
   s = SvScope.new(self, $sv_G, "NWresAA_S_1")
   s.define("X") { sv_sel_any("interact", s["NWR"], sv_holes(s["SAB"], {}), [], false, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["NW"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["HVTN"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["HVTP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["LVTN"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["LVTP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["SDN"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["SDP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["NPR"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["ESD1"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
-  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["HRP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["NW"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["HVTN"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["HVTP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["LVTN"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["LVTP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["SDN"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["SDP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["NPR"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["ESD1"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
+  outs << proc { sv_sel_any("inside", sv_check_lz("ext", sv_lzn(s, "X"), sv_lz { sv_sel_any("interact", s["HRP"], s["NWR"], [], true, {}) }, [["<", 0.6]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true), s["NODRC"], [], true, {}) }
 end
 sv_rule("NWresAA_S_2", "Space between SAB and CT for NW ressitor = 0.28 um") do |outs|
   s = SvScope.new(self, $sv_G, "NWresAA_S_2")
@@ -7203,7 +7225,7 @@ if sv_ifdef("LATCH_UP_CHECK", "YES")
       s.define("Y") { sv_sel_any("enclose", s["PMOS_IO_PAD"], s["GATELV"], [], false, {}) }
       s.define("M") { sv_sel_any("enclose", s["NMOS"], s["GATELV"], [], false, {}) }
       s.define("N") { sv_sel_any("enclose", s["PMOS"], s["GATELV"], [], false, {}) }
-      outs << proc { sv_sel_any("inside", sv_bool_lz("NOT", sv_lz { sv_check_lz("ext", sv_lzn(s, "X"), sv_lzn(s, "N"), [["<", 2.0]], {:abut => [["<", 90.0]], :singular => true, :region => true}, true) }, sv_lzn(s, "SRINGBLK")), sv_nary("OR", s["LATCHUP"], s["NODRC"]), [], true, {}) }
+      outs << proc { sv_sel_any("inside", sv_bool_lz("NOT", sv_lz { sv_check_lz("ext", sv_lzn(s, "X"), sv_lzn(s, "N"), [["<", 2.0]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false) }, sv_lzn(s, "SRINGBLK")), sv_nary("OR", s["LATCHUP"], s["NODRC"]), [], true, {}) }
       outs << proc { sv_sel_any("inside", sv_bool_lz("NOT", sv_lz { sv_check_lz("ext", sv_lzn(s, "M"), sv_lzn(s, "Y"), [["<", 2.0]], {:abut => [["<", 90.0]], :singular => true, :region => true}, false) }, sv_lzn(s, "SRINGBLK")), sv_nary("OR", s["LATCHUP"], s["NODRC"]), [], true, {}) }
     end
     sv_rule("LU_S_1b", "LU.3a-LU.3d define minimum space (S1) between NMOS and PMOS with either one of NMOS or PMOS AA connected to I/O pad. (Fig.1). For 1.8V N/PMOS AA connected to an I/O pad Spacing between 1.8V NMOS and 1.8V/Core PMOS and Spacing between 1.8V PMOS and 1.8V/Core NMOS. >= 2.3um") do |outs|

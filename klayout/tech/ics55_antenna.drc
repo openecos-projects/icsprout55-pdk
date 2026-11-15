@@ -1485,6 +1485,28 @@ end
 $sv_incremental = false
 $sv_stage_cur = nil
 
+# Very large flat polygons make the net extraction crawl: the guard rings of an abutted IO pad
+# ring merge into one ACT / SD polygon of ~43000 points and ~10000 holes, which ~500000
+# contacts are tested against (a full-chip antenna run did not get past the first stage in
+# hours; broken: 5 s). The connectivity layers are broken in place into pieces of <= 512
+# points. Areas per net are unchanged; perimeters of broken polygons would grow, but they are
+# only used for PO and RDL, which never reach that size. Deep layers are split by KLayout.
+SV_BREAK_POINTS = ($break_points || 512).to_i   # -rd break_points=<n> (tests)
+$sv_broken = {}
+def sv_break_big(l)
+  d = l.data
+  return l unless d.is_a?(RBA::Region) && !d.is_deep?
+  return l if $sv_broken[d.object_id]
+  $sv_broken[d.object_id] = true
+  n = 0
+  d.each { |p| n += 1 if p.num_points > SV_BREAK_POINTS }
+  if n > 0
+    d.break(SV_BREAK_POINTS, 0.0)
+    log("SVRF: #{n} polygons with > #{SV_BREAK_POINTS} points broken for the connectivity") if $sv_verbose
+  end
+  l
+end
+
 def sv_stage(stage)
   conns = $sv_connects[0...stage]
   # evaluate the layers first: they may need another stage themselves
@@ -1492,9 +1514,9 @@ def sv_stage(stage)
   return if $sv_stage_cur == stage
   clear_connections
   conns.each do |layers, via|
-    ls = layers.collect { |n| sv_p($sv_G[n]) }
+    ls = layers.collect { |n| sv_break_big(sv_p($sv_G[n])) }
     if via
-      v = sv_p($sv_G[via])
+      v = sv_break_big(sv_p($sv_G[via]))
       ls.each { |l| connect(l, v) }
     else
       (1...ls.size).each { |i| connect(ls[0], ls[i]) }
