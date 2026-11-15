@@ -53,7 +53,7 @@ DECOMP_DIR_GDS       := $(patsubst %_gds.tar.bz2, $(DECOMP_DIR_GDS_STD_P)/%/gds,
 
 DECOMP_DIR := $(DECOMP_DIR_LIB) $(DECOMP_DIR_GDS)
 
-.PHONY: start download unzip clean-bz2 clean-dir openpdk clean-openpdk private-std generated-std
+.PHONY: start download unzip clean-bz2 clean-dir openpdk clean-openpdk private-std
 
 $(RELEASE_FILE):
 	@echo "\n[download] getting release info for $(RELEASE_TAG)"
@@ -215,7 +215,6 @@ endif
 	cp -r ngspice $(OPENPDKS_INSTALL_DIR)/libs.tech/
 	cp -r hspice $(OPENPDKS_INSTALL_DIR)/libs.tech/
 	$(MAKE) private-std
-	$(MAKE) generated-std
 	find $(OPENPDKS_INSTALL_DIR) -name .DS_Store -delete || true
 	touch $@
 
@@ -253,29 +252,6 @@ private-std:
 		python3 scripts/cdl_convert.py "$$src/cdl/$$lib.cdl" "$$dst/cdl/$$lib.cdl"; \
 		python3 scripts/cdl_to_spice.py "$$src/cdl/$$lib.cdl" "$$dst/spice/$$lib.spice"; \
 		python3 scripts/lvs_netlist.py "$$dst/spice/$$lib.spice" "$$dst/spice/$${lib}_lvs.spice"; \
-	done
-
-# The generated standard cells (stdcell-gen, stdcell_gen/README.md): the delivered views plus
-# Verilog models LibreLane's lint can read, liberty max capacitance (CTS), the LEF with the
-# per pin antenna areas (units 1000 like the tech LEF), the diode liberty and the netgen spice.
-generated-std:
-	@for lib in ics55t9 ics55t7; do \
-		dst="$(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib"; \
-		echo "[generated-std]   $$lib"; \
-		mkdir -p "$$dst"; \
-		for view in gds lef liberty verilog cdl spice doc cell_list README.md; do \
-			cp -r "stdcell_gen/$$lib/$$view" "$$dst/"; \
-		done; \
-		find "$$dst/gds" "$$dst/liberty" -name '*.gz' -exec gunzip -f {} +; \
-		python3 scripts/verilog_models.py "$$dst/verilog/$$lib.v" "$$dst/verilog/$$lib.v"; \
-		for f in "$$dst"/liberty/$${lib}_*_*.lib; do \
-			python3 scripts/liberty_limits.py "$$f" "$$f"; \
-		done; \
-		python3 scripts/lvs_netlist.py "$$dst/spice/$$lib.spice" "$$dst/spice/$${lib}_lvs.spice"; \
-		python3 scripts/lef_antenna.py merge "$$dst/lef/$$lib.lef" librelane/$$lib/antenna.pins "$$dst/lef/$${lib}_openpdk.lef"; \
-		sed -i 's/DATABASE MICRONS 2000 ;/DATABASE MICRONS 1000 ;/' "$$dst/lef/$${lib}_openpdk.lef"; \
-		python3 scripts/antenna_liberty.py "$$dst/cdl/$$lib.cdl" "$$dst/lef/$$lib.lef" ngspice/dio/dio_core.mdl $$lib \
-			"$$dst/liberty/$${lib}_antenna.lib"; \
 	done
 
 openpdk: $(OPENPDKS_INSTALL_DIR)/checkpoint

@@ -62,8 +62,7 @@ def diode_cells(cdl):
         if name and t[0].upper() == '.ENDS':
             sig = [p for p in pins if p.upper() not in SUPPLIES]
             if devs and len(sig) == 1 and all(d is not None for d in devs):
-                sup = {q.upper(): q for q in pins if q.upper() in SUPPLIES}
-                cells[name] = (sig[0], devs, sup.get('VDD', 'VDD'), sup.get('VSS', 'VSS'))
+                cells[name] = (sig[0], devs)
             name = None
             continue
         if name and t[0][0] in '*':
@@ -71,9 +70,8 @@ def diode_cells(cdl):
         if name:
             if t[0][0] in 'Dd':
                 p = {k.lower(): v for k, v in (x.split('=', 1) for x in t[4:] if '=' in x)}
-                # area= / pj= (vendor CDL) or a= / p= (stdcell_gen CDL)
-                devs.append((t[3].lower(), num(p.get('area', p.get('a', '0'))),
-                             num(p.get('pj', p.get('p', '0'))), num(p.get('m', '1'))))
+                devs.append((t[3].lower(), num(p.get('area', '0')), num(p.get('pj', '0')),
+                             num(p.get('m', '1'))))
             else:
                 devs.append(None)
     return cells
@@ -114,7 +112,7 @@ def main():
          '  nom_temperature : 25;',
          '  nom_voltage : 1.2;']
     for name in sorted(cells):
-        pin, devs, vdd, vss = cells[name]   # supply pin names as in the CDL (VDD or vdd)
+        pin, devs = cells[name]
         c = 0.0
         for model, a, pj, m in devs:
             cj, cjsw = mod[model]
@@ -124,12 +122,12 @@ def main():
               '    cell_footprint : "ANTENNA";',
               '    dont_touch : true;',
               '    cell_leakage_power : 0;',
-              '    pg_pin (%s) {' % vdd, '      pg_type : primary_power;', '      voltage_name : "VDD";', '    }',
-              '    pg_pin (%s) {' % vss, '      pg_type : primary_ground;', '      voltage_name : "VSS";', '    }',
+              '    pg_pin (VDD) {', '      pg_type : primary_power;', '      voltage_name : "VDD";', '    }',
+              '    pg_pin (VSS) {', '      pg_type : primary_ground;', '      voltage_name : "VSS";', '    }',
               '    pin (%s) {' % pin,
               '      direction : input;',
-              '      related_power_pin : "%s";' % vdd,
-              '      related_ground_pin : "%s";' % vss,
+              '      related_power_pin : "VDD";',
+              '      related_ground_pin : "VSS";',
               '      capacitance : %.6g;' % (c * 1e12),
               '    }', '  }']
         print('antenna_liberty: %s pin %s C = %.3f fF' % (name, pin, c * 1e15), file=sys.stderr)
