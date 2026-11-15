@@ -105,10 +105,25 @@ set ::env(SCL_GROUND_PINS) [list "VSS"]
 #   ics55_LLSC_H7C{R,H,L}  7-track public libraries (icsprout55-pdk submodule)
 #   ICsprout55_9T{S,H,L}VT_basic  9-track private libraries, installed from
 #                          ICsprout_55LLULP1225_STD_0818 by install.sh
+#   ics55t9 / ics55t7      generated libraries (stdcell-gen), installed from
+#                          stdcell_gen/<lib> by make openpdk
 #
 # scl_lef / scl_gds are the cell views and scl_lib_{tt,ss,ff} the liberty file
 # of each STA corner; they are used by LIB further down.
-if { [regexp {^ICsprout55_9T[A-Z]+_basic$} $::env(STD_CELL_LIBRARY)] } {
+if { [regexp {^ics55t[79]$} $::env(STD_CELL_LIBRARY)] } {
+    # One LEF / GDS pair (pins on MET1, some cells with MET2 pins too). The
+    # _openpdk LEF adds the per-pin antenna data (make openpdk, scripts/lef_antenna.py).
+    set scl_lef "$scl_dir/lef/$::env(STD_CELL_LIBRARY)_openpdk.lef"
+    set scl_gds "$scl_dir/gds/$::env(STD_CELL_LIBRARY).gds"
+    set scl_lib_tt "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_tt_1p20v_25c.lib"
+    set scl_lib_ss "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_ss_1p08v_125c.lib"
+    set scl_lib_ff "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_ff_1p32v_m40c.lib"
+    # the antenna diode (DIODE_CELL) is not characterized (make openpdk, scripts/antenna_liberty.py)
+    set scl_lib_ant "$scl_dir/liberty/$::env(STD_CELL_LIBRARY)_antenna.lib"
+    set scl_lib_tt "$scl_lib_tt $scl_lib_ant"
+    set scl_lib_ss "$scl_lib_ss $scl_lib_ant"
+    set scl_lib_ff "$scl_lib_ff $scl_lib_ant"
+} elseif { [regexp {^ICsprout55_9T[A-Z]+_basic$} $::env(STD_CELL_LIBRARY)] } {
     # The private libraries have a single cell LEF / GDS pair with the signal
     # pins on MET1, so there is no _ecos / _M2 split to worry about here.
     set scl_lef "$scl_dir/lef/$::env(STD_CELL_LIBRARY).lef"

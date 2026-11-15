@@ -7,3 +7,6 @@ icsprout55/*
 .DS_Store
 # DRC fixed 7-track GDS (gzipped, shipped with the repository)
 !/stdcell_fixed/*/gds/
+# generated standard cells (stdcell-gen, gzipped GDS)
+!/stdcell_gen/*/gds/
+__pycache__/
