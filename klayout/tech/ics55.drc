@@ -299,6 +299,19 @@ def sv_empty_poly
   polygons
 end
 
+# Parts of edges inside / outside a polygon layer; edges on its boundary are outside.
+# Deep mode: KLayout 0.30 Edges#inside_part / #outside_part lose the edges of a child cell
+# that are covered by a polygon of a parent cell only (tests/deep_edge_parts.rb; LU_S_2_*
+# markers inside placed BUFX10/16H7R). The boolean operators are right, so the same result
+# is built from them. Flat mode keeps the plain methods.
+def sv_ein(e, b)
+  $sv_flat ? e.inside_part(b) : (e & b) - b.edges
+end
+
+def sv_eout(e, b)
+  $sv_flat ? e.outside_part(b) : (e - b) + (e & b.edges)
+end
+
 # to region
 def sv_p(l)
   case sv_kind(l)
@@ -439,8 +452,8 @@ def sv_bool(op, a, b)
   if ka == :edge && kb == :poly
     # edge AND/NOT polygon: Calibre does not allow it, treat as inside/outside parts
     case op
-    when "AND" then return a.inside_part(b)
-    when "NOT" then return a.outside_part(b)
+    when "AND" then return sv_ein(a, b)
+    when "NOT" then return sv_eout(a, b)
     when "OR" then return a + b.edges
     end
   end
@@ -589,11 +602,11 @@ def sv_esel(kind, a, b, cons, neg, opts = {})
   case kind
   when "inside_edge"
     bp = sv_p(b)
-    r = ea.inside_part(bp)
+    r = sv_ein(ea, bp)
     neg ? ea - r : r
   when "outside_edge"
     bp = sv_p(b)
-    r = ea.outside_part(bp)
+    r = sv_eout(ea, bp)
     neg ? ea - r : r
   when "coin"
     r = ea & sv_e(b)
@@ -929,7 +942,7 @@ def sv_corner_check(kind, a, b, d, opts)
     c = a.corners(as_boxes, ang)
     if out
       e = a.edges
-      return e.inside_part(c.sized(d))
+      return sv_ein(e, c.sized(d))
     end
     # Calibre produces a triangle with legs d in the exterior (EXT) or
     # interior (INT) quadrant of the corner; use the quadrant square
@@ -953,7 +966,7 @@ def sv_corner_check(kind, a, b, d, opts)
     oe = (out == 2) ? e2 : e1
     ref = (out == 2) ? e1 : e2
     sel = oe.interacting(c) - (oe & ref)
-    return sel.inside_part(c.sized(d))
+    return sv_ein(sel, c.sized(d))
   end
   c.sized(d * 0.5)
 end
@@ -1068,7 +1081,7 @@ def sv_check(kind, a, b, cons, opts = {})
       # inside of) layer2
       ae = a.edges
       be = b.edges
-      ain = ae.inside_part(b) + ((ae & be) & (a & b).edges)
+      ain = sv_ein(ae, b) + ((ae & be) & (a & b).edges)
       ep = be.enclosing(ain, *eargs)
     else
       ep = b.enclosing(a, *args)
@@ -1157,7 +1170,7 @@ def sv_check(kind, a, b, cons, opts = {})
     if ap
       # pieces of a outside b that carry edges of a (holes of b inside a,
       # e.g. metal slots, are not flagged)
-      oe = ap.edges.outside_part(b)
+      oe = sv_eout(ap.edges, b)
       extra = (ap - b).interacting(oe) unless oe.is_empty?
     end
   end
@@ -1172,7 +1185,7 @@ def sv_check(kind, a, b, cons, opts = {})
       r = (out == 1) ? first : second
     end
     if extra && out == 1
-      r = r + (sv_e(a).outside_part(b))
+      r = r + sv_eout(sv_e(a), b)
     end
     return r
   end
