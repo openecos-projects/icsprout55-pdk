@@ -70,7 +70,9 @@ set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/te
 # The density rules (*_D_<n>) are left to KLayout.Density (same deck, select below): they
 # are chip properties, and the chip is only complete after KLayout.Filler. (The deck takes
 # densityRules=False only, the former "0" had no effect.)
-set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules False flat 1 ]
+# jobs: the rules in 4 KLayout processes, reports merged (IHP sg13g2 style); each
+# process reads the layout, so memory grows with the number of jobs
+set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules False flat 1 jobs 4 ]
 # Dummy fill (KLayout.Filler, Chip flow): AA / PO / MET1-5 / T4M2 dummies per the
 # AADUM / PODUM / MnDUM / T4M2DUM rules. Rows get their AA / PO density from the FILLDENS
 # filler cells instead (FILL_CELLS).
