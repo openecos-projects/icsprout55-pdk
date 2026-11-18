@@ -487,6 +487,19 @@ end
 # Polygon selection (INTERACT, INSIDE, OUTSIDE, TOUCH, ENCLOSE, CUT)
 # ---------------------------------------------------------------------------
 
+# Polygons of a (none overlapping b) that share an edge part of positive length
+# with b. Calibre INTERACT / TOUCH do not count a contact in a single point
+# (corner to corner, or a vertex on an edge); KLayout "interacting" does
+# (tests/micro/exp_pttouch: NP_EN_3 missed on XNOR2X0P5H7R, whose PO meets a PP
+# notch corner only and was therefore taken for a PO crossing NP / PP).
+def sv_edge_touching(a, b)
+  cand = a.interacting(b)
+  return cand if cand.is_empty?
+  bb = b.interacting(cand)
+  ce = cand.edges & bb.edges
+  cand.interacting(ce)
+end
+
 def sv_sel(kind, a, b, cons, neg, opts = {})
   if sv_kind(a) == :edge
     return sv_edge_layer_sel(kind, a, b, neg, opts)
@@ -499,8 +512,10 @@ def sv_sel(kind, a, b, cons, neg, opts = {})
   when "interact"
     if mn || mx
       r = sv_cnt(a, :interacting, b, mn, mx)
-    else
+    elsif bk == :edge
       r = a.interacting(b)
+    else
+      r = a.overlapping(b) + sv_edge_touching(a.not_overlapping(b), b)
     end
     neg ? a - r : r
   when "inside"
@@ -521,9 +536,11 @@ def sv_sel(kind, a, b, cons, neg, opts = {})
   when "touch"
     if bk == :edge
       r = sv_cnt(a, :interacting, b, mn, mx)
-    else
+    elsif mn || mx
       c = a.not_overlapping(b)
       r = sv_cnt(c, :interacting, b, mn, mx)
+    else
+      r = sv_edge_touching(a.not_overlapping(b), b)
     end
     neg ? a - r : r
   when "cut"
@@ -592,8 +609,18 @@ def sv_esel(kind, a, b, cons, neg, opts = {})
     ap = sv_p(a)
     be = sv_e(b)
     mn, mx = sv_count_range(cons)
-    m = sv_mid(be)
-    r = sv_cnt(ap, :interacting, m, mn, mx)
+    # the coincident edge parts, extended by 1 dbu into their polygon (the polygon edges keep
+    # their orientation in the AND): selected by area, so a polygon touching only an end
+    # point is not taken. The former test with the edge centres (centers(0, 0.5)) rounded
+    # the quarter points of 45 degree edges off the polygon (tests/micro/exp_srck3: one of
+    # the four corner triangles of SRCK_3 was not found).
+    # The strips stay unmerged: WITH EDGE counts edges (AA_US / AA_OS: "== 1", "== 5"), and
+    # merged, the strips of two edges meeting in a corner would count once (ACT_S_4).
+    ce = ap.edges.data & be.data
+    st = ce.extended_in(1)
+    st.merged_semantics = false
+    m = sv_w(st)
+    r = sv_cnt(ap, :overlapping, m, mn, mx)
     return neg ? ap - r : r
   end
   ea = sv_e(a)
@@ -739,8 +766,14 @@ def sv_holes(a, opts = {})
   a = sv_p(a)
   h = a.holes
   if opts[:inner]
-    # innermost holes: holes that do not contain other holes
-    h = h.not_covering(h.holes) if false
+    # innermost holes: holes that do not contain another hole, i.e. no polygon of the layer
+    # that has a hole itself (a hole with a plain polygon inside is still inner). Calibre,
+    # tests/micro/exp_holes: the hole of an outer seal ring contains the inner ring and is
+    # not inner (SRCK_6 took the outer ring for the inner one).
+    # raw holes: with merged semantics a hole nested in an outer hole would vanish in it
+    d = h.data.dup
+    d.merged_semantics = false
+    h = sv_w(d.not_overlapping(a.with_holes(1, nil).data))
   end
   if opts[:empty]
     h = h.not_interacting(a.inside(h)) if false
@@ -975,6 +1008,49 @@ end
 # Dimensional checks: EXT / INT / ENC
 # ---------------------------------------------------------------------------
 
+# ANGLED constraint of a dimensional check: keep the edge pairs whose number of non-orthogonal
+# edges (0, 1 or 2) satisfies it. The seal ring checks use "ANGLED < 1" so that the 45 degree
+# corners are not measured (SRCK_4 / 5 / 6 / 8 / 10: without it, the joints of the straight and
+# the 45 degree edges were measured, tests/sealring).
+def sv_angled(ep, cons)
+  ok = [0, 1, 2].select do |n|
+    cons.all? do |op, v|
+      case op
+      when "<" then n < v
+      when "<=" then n <= v
+      when ">" then n > v
+      when ">=" then n >= v
+      when "==" then n == v
+      when "!=" then n != v
+      else true
+      end
+    end
+  end
+  d = ep.data
+  ortho = RBA::Edges::OrthoEdges
+  # KLayout 0.30: with_angle(ORTHO, false) = at least one edge orthogonal, (.., true) = at
+  # least one edge not orthogonal; with_angle_both(ORTHO, false / true) = both edges
+  # orthogonal / both not orthogonal
+  r = case ok
+      when [0, 1, 2] then d
+      when [0] then d.with_angle_both(ortho, false)
+      when [0, 1] then d.with_angle(ortho, false)
+      when [1, 2] then d.with_angle(ortho, true)
+      when [2] then d.with_angle_both(ortho, true)
+      when [] then RBA::EdgePairs::new
+      else
+        # [1] / [0, 2]: count per pair (no constraint in the decks uses these)
+        f = d.is_deep? ? d.dup.tap { |x| x.flatten } : d
+        out = RBA::EdgePairs::new
+        f.each do |p|
+          n = [p.first, p.second].count { |e| e.dx != 0 && e.dy != 0 }
+          out.insert(p) if ok.include?(n)
+        end
+        out
+      end
+  sv_w(r)
+end
+
 def sv_check(kind, a, b, cons, opts = {})
   # distance limits
   lo = nil
@@ -1154,6 +1230,9 @@ def sv_check(kind, a, b, cons, opts = {})
     ep = ep.with_internal_angle(90)
   elsif opts[:perp] == "not"
     ep = ep.without_internal_angle(90)
+  end
+  if opts[:angled]
+    ep = sv_angled(ep, opts[:angled])
   end
   if opts[:not_projecting]
     # keep only pairs with no projection: approximation - corner pairs

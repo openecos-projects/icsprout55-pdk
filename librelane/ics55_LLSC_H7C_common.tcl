@@ -60,7 +60,10 @@ set ::env(SYNTH_TIELO_CELL) "TIELO${sfx}/Z"
 # FILLCAP8/16/32 still fail DRC after the layout fix (stdcell_fixed/<lib>/unusable.cells),
 # only FILLCAP4 is clean.
 set ::env(DECAP_CELLS) [list "FILLCAP4${sfx}"]
-set ::env(FILL_CELLS) [list "FILLER*${sfx}"]
+# The density filler cells FILLDENS{4..64} carry AA / PO (ACT_D_1 / PO_D_2 >= 20 % per 100 um
+# window, dummy fill cannot enter the rows); FILLER1 / FILLER2 close the gaps below 4 sites. The
+# larger plain fillers are left out: OpenROAD fills largest first and would take them instead.
+set ::env(FILL_CELLS) [list "FILLDENS*${sfx}" "FILLER1${sfx}" "FILLER2${sfx}"]
 
 # Antenna diode: ANT2 (n+/pwell + p+/nwell diode, 0.197 um2). It is in the LEF,
 # Verilog and CDL but not in the vendor liberty; install.sh writes

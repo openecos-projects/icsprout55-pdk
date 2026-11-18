@@ -298,6 +298,19 @@ def sv_empty_poly
   polygons
 end
 
+# Parts of edges inside / outside a polygon layer; edges on its boundary are outside.
+# Deep mode: KLayout 0.30 Edges#inside_part / #outside_part lose the edges of a child cell
+# that are covered by a polygon of a parent cell only (tests/deep_edge_parts.rb; LU_S_2_*
+# markers inside placed BUFX10/16H7R). The boolean operators are right, so the same result
+# is built from them. Flat mode keeps the plain methods.
+def sv_ein(e, b)
+  $sv_flat ? e.inside_part(b) : (e & b) - b.edges
+end
+
+def sv_eout(e, b)
+  $sv_flat ? e.outside_part(b) : (e - b) + (e & b.edges)
+end
+
 # to region
 def sv_p(l)
   case sv_kind(l)
@@ -438,8 +451,8 @@ def sv_bool(op, a, b)
   if ka == :edge && kb == :poly
     # edge AND/NOT polygon: Calibre does not allow it, treat as inside/outside parts
     case op
-    when "AND" then return a.inside_part(b)
-    when "NOT" then return a.outside_part(b)
+    when "AND" then return sv_ein(a, b)
+    when "NOT" then return sv_eout(a, b)
     when "OR" then return a + b.edges
     end
   end
@@ -473,6 +486,19 @@ end
 # Polygon selection (INTERACT, INSIDE, OUTSIDE, TOUCH, ENCLOSE, CUT)
 # ---------------------------------------------------------------------------
 
+# Polygons of a (none overlapping b) that share an edge part of positive length
+# with b. Calibre INTERACT / TOUCH do not count a contact in a single point
+# (corner to corner, or a vertex on an edge); KLayout "interacting" does
+# (tests/micro/exp_pttouch: NP_EN_3 missed on XNOR2X0P5H7R, whose PO meets a PP
+# notch corner only and was therefore taken for a PO crossing NP / PP).
+def sv_edge_touching(a, b)
+  cand = a.interacting(b)
+  return cand if cand.is_empty?
+  bb = b.interacting(cand)
+  ce = cand.edges & bb.edges
+  cand.interacting(ce)
+end
+
 def sv_sel(kind, a, b, cons, neg, opts = {})
   if sv_kind(a) == :edge
     return sv_edge_layer_sel(kind, a, b, neg, opts)
@@ -485,8 +511,10 @@ def sv_sel(kind, a, b, cons, neg, opts = {})
   when "interact"
     if mn || mx
       r = sv_cnt(a, :interacting, b, mn, mx)
-    else
+    elsif bk == :edge
       r = a.interacting(b)
+    else
+      r = a.overlapping(b) + sv_edge_touching(a.not_overlapping(b), b)
     end
     neg ? a - r : r
   when "inside"
@@ -507,9 +535,11 @@ def sv_sel(kind, a, b, cons, neg, opts = {})
   when "touch"
     if bk == :edge
       r = sv_cnt(a, :interacting, b, mn, mx)
-    else
+    elsif mn || mx
       c = a.not_overlapping(b)
       r = sv_cnt(c, :interacting, b, mn, mx)
+    else
+      r = sv_edge_touching(a.not_overlapping(b), b)
     end
     neg ? a - r : r
   when "cut"
@@ -578,8 +608,18 @@ def sv_esel(kind, a, b, cons, neg, opts = {})
     ap = sv_p(a)
     be = sv_e(b)
     mn, mx = sv_count_range(cons)
-    m = sv_mid(be)
-    r = sv_cnt(ap, :interacting, m, mn, mx)
+    # the coincident edge parts, extended by 1 dbu into their polygon (the polygon edges keep
+    # their orientation in the AND): selected by area, so a polygon touching only an end
+    # point is not taken. The former test with the edge centres (centers(0, 0.5)) rounded
+    # the quarter points of 45 degree edges off the polygon (tests/micro/exp_srck3: one of
+    # the four corner triangles of SRCK_3 was not found).
+    # The strips stay unmerged: WITH EDGE counts edges (AA_US / AA_OS: "== 1", "== 5"), and
+    # merged, the strips of two edges meeting in a corner would count once (ACT_S_4).
+    ce = ap.edges.data & be.data
+    st = ce.extended_in(1)
+    st.merged_semantics = false
+    m = sv_w(st)
+    r = sv_cnt(ap, :overlapping, m, mn, mx)
     return neg ? ap - r : r
   end
   ea = sv_e(a)
@@ -588,11 +628,11 @@ def sv_esel(kind, a, b, cons, neg, opts = {})
   case kind
   when "inside_edge"
     bp = sv_p(b)
-    r = ea.inside_part(bp)
+    r = sv_ein(ea, bp)
     neg ? ea - r : r
   when "outside_edge"
     bp = sv_p(b)
-    r = ea.outside_part(bp)
+    r = sv_eout(ea, bp)
     neg ? ea - r : r
   when "coin"
     r = ea & sv_e(b)
@@ -725,8 +765,14 @@ def sv_holes(a, opts = {})
   a = sv_p(a)
   h = a.holes
   if opts[:inner]
-    # innermost holes: holes that do not contain other holes
-    h = h.not_covering(h.holes) if false
+    # innermost holes: holes that do not contain another hole, i.e. no polygon of the layer
+    # that has a hole itself (a hole with a plain polygon inside is still inner). Calibre,
+    # tests/micro/exp_holes: the hole of an outer seal ring contains the inner ring and is
+    # not inner (SRCK_6 took the outer ring for the inner one).
+    # raw holes: with merged semantics a hole nested in an outer hole would vanish in it
+    d = h.data.dup
+    d.merged_semantics = false
+    h = sv_w(d.not_overlapping(a.with_holes(1, nil).data))
   end
   if opts[:empty]
     h = h.not_interacting(a.inside(h)) if false
@@ -928,7 +974,7 @@ def sv_corner_check(kind, a, b, d, opts)
     c = a.corners(as_boxes, ang)
     if out
       e = a.edges
-      return e.inside_part(c.sized(d))
+      return sv_ein(e, c.sized(d))
     end
     # Calibre produces a triangle with legs d in the exterior (EXT) or
     # interior (INT) quadrant of the corner; use the quadrant square
@@ -952,7 +998,7 @@ def sv_corner_check(kind, a, b, d, opts)
     oe = (out == 2) ? e2 : e1
     ref = (out == 2) ? e1 : e2
     sel = oe.interacting(c) - (oe & ref)
-    return sel.inside_part(c.sized(d))
+    return sv_ein(sel, c.sized(d))
   end
   c.sized(d * 0.5)
 end
@@ -960,6 +1006,49 @@ end
 # ---------------------------------------------------------------------------
 # Dimensional checks: EXT / INT / ENC
 # ---------------------------------------------------------------------------
+
+# ANGLED constraint of a dimensional check: keep the edge pairs whose number of non-orthogonal
+# edges (0, 1 or 2) satisfies it. The seal ring checks use "ANGLED < 1" so that the 45 degree
+# corners are not measured (SRCK_4 / 5 / 6 / 8 / 10: without it, the joints of the straight and
+# the 45 degree edges were measured, tests/sealring).
+def sv_angled(ep, cons)
+  ok = [0, 1, 2].select do |n|
+    cons.all? do |op, v|
+      case op
+      when "<" then n < v
+      when "<=" then n <= v
+      when ">" then n > v
+      when ">=" then n >= v
+      when "==" then n == v
+      when "!=" then n != v
+      else true
+      end
+    end
+  end
+  d = ep.data
+  ortho = RBA::Edges::OrthoEdges
+  # KLayout 0.30: with_angle(ORTHO, false) = at least one edge orthogonal, (.., true) = at
+  # least one edge not orthogonal; with_angle_both(ORTHO, false / true) = both edges
+  # orthogonal / both not orthogonal
+  r = case ok
+      when [0, 1, 2] then d
+      when [0] then d.with_angle_both(ortho, false)
+      when [0, 1] then d.with_angle(ortho, false)
+      when [1, 2] then d.with_angle(ortho, true)
+      when [2] then d.with_angle_both(ortho, true)
+      when [] then RBA::EdgePairs::new
+      else
+        # [1] / [0, 2]: count per pair (no constraint in the decks uses these)
+        f = d.is_deep? ? d.dup.tap { |x| x.flatten } : d
+        out = RBA::EdgePairs::new
+        f.each do |p|
+          n = [p.first, p.second].count { |e| e.dx != 0 && e.dy != 0 }
+          out.insert(p) if ok.include?(n)
+        end
+        out
+      end
+  sv_w(r)
+end
 
 def sv_check(kind, a, b, cons, opts = {})
   # distance limits
@@ -1067,7 +1156,7 @@ def sv_check(kind, a, b, cons, opts = {})
       # inside of) layer2
       ae = a.edges
       be = b.edges
-      ain = ae.inside_part(b) + ((ae & be) & (a & b).edges)
+      ain = sv_ein(ae, b) + ((ae & be) & (a & b).edges)
       ep = be.enclosing(ain, *eargs)
     else
       ep = b.enclosing(a, *args)
@@ -1141,6 +1230,9 @@ def sv_check(kind, a, b, cons, opts = {})
   elsif opts[:perp] == "not"
     ep = ep.without_internal_angle(90)
   end
+  if opts[:angled]
+    ep = sv_angled(ep, opts[:angled])
+  end
   if opts[:not_projecting]
     # keep only pairs with no projection: approximation - corner pairs
     ep = ep.without_internal_angle(0)
@@ -1156,7 +1248,7 @@ def sv_check(kind, a, b, cons, opts = {})
     if ap
       # pieces of a outside b that carry edges of a (holes of b inside a,
       # e.g. metal slots, are not flagged)
-      oe = ap.edges.outside_part(b)
+      oe = sv_eout(ap.edges, b)
       extra = (ap - b).interacting(oe) unless oe.is_empty?
     end
   end
@@ -1171,7 +1263,7 @@ def sv_check(kind, a, b, cons, opts = {})
       r = (out == 1) ? first : second
     end
     if extra && out == 1
-      r = r + (sv_e(a).outside_part(b))
+      r = r + sv_eout(sv_e(a), b)
     end
     return r
   end
@@ -1497,6 +1589,28 @@ end
 $sv_incremental = false
 $sv_stage_cur = nil
 
+# Very large flat polygons make the net extraction crawl: the guard rings of an abutted IO pad
+# ring merge into one ACT / SD polygon of ~43000 points and ~10000 holes, which ~500000
+# contacts are tested against (a full-chip antenna run did not get past the first stage in
+# hours; broken: 5 s). The connectivity layers are broken in place into pieces of <= 512
+# points. Areas per net are unchanged; perimeters of broken polygons would grow, but they are
+# only used for PO and RDL, which never reach that size. Deep layers are split by KLayout.
+SV_BREAK_POINTS = ($break_points || 512).to_i   # -rd break_points=<n> (tests)
+$sv_broken = {}
+def sv_break_big(l)
+  d = l.data
+  return l unless d.is_a?(RBA::Region) && !d.is_deep?
+  return l if $sv_broken[d.object_id]
+  $sv_broken[d.object_id] = true
+  n = 0
+  d.each { |p| n += 1 if p.num_points > SV_BREAK_POINTS }
+  if n > 0
+    d.break(SV_BREAK_POINTS, 0.0)
+    log("SVRF: #{n} polygons with > #{SV_BREAK_POINTS} points broken for the connectivity") if $sv_verbose
+  end
+  l
+end
+
 def sv_stage(stage)
   conns = $sv_connects[0...stage]
   # evaluate the layers first: they may need another stage themselves
@@ -1504,9 +1618,9 @@ def sv_stage(stage)
   return if $sv_stage_cur == stage
   clear_connections
   conns.each do |layers, via|
-    ls = layers.collect { |n| sv_p($sv_G[n]) }
+    ls = layers.collect { |n| sv_break_big(sv_p($sv_G[n])) }
     if via
-      v = sv_p($sv_G[via])
+      v = sv_break_big(sv_p($sv_G[via]))
       ls.each { |l| connect(l, v) }
     else
       (1...ls.size).each { |i| connect(ls[0], ls[i]) }

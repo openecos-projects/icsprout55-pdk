@@ -189,6 +189,14 @@ endif
 			gunzip -c $$f > $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/$$(basename $$(dirname $$f))/$$(basename $$f .gz); \
 		done; \
 	done
+	# density filler cells FILLDENS* (own GDS / LEF / CDL per library)
+	for lib in ics55_LLSC_H7CH ics55_LLSC_H7CL ics55_LLSC_H7CR; do \
+		mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/spice; \
+		cp stdcell_fixed/$$lib/filldens/$${lib}_filldens.gds $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/gds/; \
+		cp stdcell_fixed/$$lib/filldens/$${lib}_filldens.lef $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/lef/; \
+		cp stdcell_fixed/$$lib/filldens/$${lib}_filldens.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/cdl/; \
+		cp stdcell_fixed/$$lib/filldens/$${lib}_filldens.cdl $(OPENPDKS_INSTALL_DIR)/libs.ref/$$lib/spice/$${lib}_filldens.spice; \
+	done
 	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CH/spice
 	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CL/spice
 	mkdir -p $(OPENPDKS_INSTALL_DIR)/libs.ref/ics55_LLSC_H7CR/spice

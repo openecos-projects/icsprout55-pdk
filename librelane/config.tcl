@@ -67,7 +67,24 @@ set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/te
 # flat: the mode the translated deck is verified in against Calibre (compare.py);
 # deep mode reports e.g. LU_S_2_* (tap distance) inside placed cells that Calibre
 # and the flat run do not report
-set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules 0 flat 1 ]
+# The density rules (*_D_<n>) are left to KLayout.Density (same deck, select below): they
+# are chip properties, and the chip is only complete after KLayout.Filler. (The deck takes
+# densityRules=False only, the former "0" had no effect.)
+set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules False flat 1 ]
+# Dummy fill (KLayout.Filler, Chip flow): AA / PO / MET1-5 / T4M2 dummies per the
+# AADUM / PODUM / MnDUM / T4M2DUM rules. Rows get their AA / PO density from the FILLDENS
+# filler cells instead (FILL_CELLS).
+set ::env(KLAYOUT_FILLER_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55_fill.py"
+# Seal ring (KLayout.SealRing, Chip flow): drawn on the die edge, 10 um wide (SR.1), so the pad
+# ring starts 10 um (SR.2 assembly isolation) further in: PAD_EDGE_SPACING 20.
+set ::env(KLAYOUT_SEALRING_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55_sealring.py"
+set ::env(PAD_EDGE_SPACING) 20
+# KLayout.Density: the DRC deck restricted to the density rules
+set ::env(KLAYOUT_DENSITY_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.drc"
+set ::env(KLAYOUT_DENSITY_DEFINES) [dict create flat 1 ]
+# "dict set": LibreLane takes the value as is; inside "dict create" Tcl quotes the brackets
+# as {_D_[0-9]} and the braces end up in the value (a format placeholder for the Chip flow)
+dict set ::env(KLAYOUT_DENSITY_DEFINES) select "_D_\[0-9\]"
 # Antenna: the vendor Calibre antenna runset (.ant) translated by the same generator; KLayout.Antenna
 set ::env(KLAYOUT_ANTENNA_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55_antenna.drc"
 # flat: deep and flat agree on the antenna test layout, but deep did not finish on a
@@ -138,6 +155,14 @@ if { [regexp {^ICsprout55_9T[A-Z]+_basic$} $::env(STD_CELL_LIBRARY)] } {
     set scl_lib_tt "$scl_lib_tt $scl_lib_ant"
     set scl_lib_ss "$scl_lib_ss $scl_lib_ant"
     set scl_lib_ff "$scl_lib_ff $scl_lib_ant"
+    # density filler cells FILLDENS{4..64} (floating AA + field poly, no devices) for the
+    # AA / PO density minima of the rows. Own files: one GDS for both pin views (no signal
+    # pins), empty subcircuits for LVS.
+    set scl_fill_views [list \
+        "$scl_dir/lef/$::env(STD_CELL_LIBRARY)_filldens.lef" \
+        "$scl_dir/gds/$::env(STD_CELL_LIBRARY)_filldens.gds" \
+        "$scl_dir/spice/$::env(STD_CELL_LIBRARY)_filldens.spice" \
+        "$scl_dir/cdl/$::env(STD_CELL_LIBRARY)_filldens.cdl"]
 }
 
 # Standard cells
@@ -149,6 +174,14 @@ set ::env(CELL_VERILOG_MODELS) [list "$scl_dir/verilog/$::env(STD_CELL_LIBRARY).
 # KLayout LVS uses the CDLs.
 set ::env(CELL_SPICE_MODELS) [list "$scl_dir/spice/$::env(STD_CELL_LIBRARY)_lvs.spice"]
 set ::env(CELL_CDLS) [list "$scl_dir/cdl/$::env(STD_CELL_LIBRARY).cdl"]
+if { [info exists scl_fill_views] } {
+    lassign $scl_fill_views fill_lef fill_gds fill_spice fill_cdl
+    # plain "set": LibreLane only picks up set / dict set on ::env, not lappend
+    set ::env(CELL_LEFS) [list "$scl_lef" "$fill_lef"]
+    set ::env(CELL_GDS) [list "$scl_gds" "$fill_gds"]
+    set ::env(CELL_SPICE_MODELS) [list "$scl_dir/spice/$::env(STD_CELL_LIBRARY)_lvs.spice" "$fill_spice"]
+    set ::env(CELL_CDLS) [list "$scl_dir/cdl/$::env(STD_CELL_LIBRARY).cdl" "$fill_cdl"]
+}
 
 # The _openpdk LEF is the vendor _ecos one with the pad terminals moved to RDL
 set ::env(PAD_LEFS) "$io_dir/lef/ICSIOA_N55_3P3_1P6M1TM_openpdk.lef"
