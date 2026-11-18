@@ -1119,49 +1119,62 @@ def sv_check(kind, a, b, cons, opts = {})
   end
   nargs = args.dup
   conn = nil
-  if !opts[:connected].nil? && !edge_mode
-    conn = opts[:connected]
-    args << (conn ? props_eq : props_ne)
-    a = sv_nets(a, opts[:netbase_a])
-    b = sv_nets(b, opts[:netbase_b]) if b
-  end
-
-  # first: layer a edges; second: layer b edges (if any)
-  case kind
-  when "ext"
-    if b.nil?
-      if opts[:notch]
-        ep = a.notch(*args)
-      elsif opts[:space]
-        ep = a.isolated(*args)
+  conn = opts[:connected] if !opts[:connected].nil? && !edge_mode
+  run = lambda do |a, b, args|
+    ep = nil
+    swap = false
+    # first: layer a edges; second: layer b edges (if any)
+    case kind
+    when "ext"
+      if b.nil?
+        if opts[:notch]
+          ep = a.notch(*args)
+        elsif opts[:space]
+          ep = a.isolated(*args)
+        else
+          ep = a.space(*args)
+        end
+        swap = false
       else
-        ep = a.space(*args)
+        ep = a.separation(b, *args)
+        swap = false
+      end
+    when "int"
+      if b.nil?
+        ep = a.width(*args)
+      else
+        ep = a.overlap(b, *args)
       end
       swap = false
-    else
-      ep = a.separation(b, *args)
-      swap = false
+    when "enc"
+      raise "SVRF: ENC needs two layers" if b.nil?
+      if !edge_mode && conn.nil?
+        # Calibre only measures layer1 edges inside (or coincident with the
+        # inside of) layer2
+        ae = a.edges
+        be = b.edges
+        ain = sv_ein(ae, b) + ((ae & be) & (a & b).edges)
+        ep = be.enclosing(ain, *eargs)
+      else
+        ep = b.enclosing(a, *args)
+      end
+      swap = true
     end
-  when "int"
-    if b.nil?
-      ep = a.width(*args)
-    else
-      ep = a.overlap(b, *args)
+    [ep, swap]
+  end
+  if conn.nil?
+    ep, swap = run.call(a, b, args)
+  else
+    # CONNECTED / NOT CONNECTED: the pairs are a subset of the same check without the net
+    # condition; when that is empty no net extraction is needed (WP5: DNW_S_2a and the other
+    # net aware rules built the connectivity of the whole filled chip for nothing)
+    ep, swap = run.call(a, b, nargs)
+    unless ep.is_empty?
+      args << (conn ? props_eq : props_ne)
+      a = sv_nets(a, opts[:netbase_a])
+      b = sv_nets(b, opts[:netbase_b]) if b
+      ep, swap = run.call(a, b, args)
     end
-    swap = false
-  when "enc"
-    raise "SVRF: ENC needs two layers" if b.nil?
-    if !edge_mode && conn.nil?
-      # Calibre only measures layer1 edges inside (or coincident with the
-      # inside of) layer2
-      ae = a.edges
-      be = b.edges
-      ain = sv_ein(ae, b) + ((ae & be) & (a & b).edges)
-      ep = be.enclosing(ain, *eargs)
-    else
-      ep = b.enclosing(a, *args)
-    end
-    swap = true
   end
   if abut.nil?
     # without ABUT, Calibre does not measure abutting/coincident edges
@@ -1603,9 +1616,9 @@ def sv_net_area_ratio(layers, expr, cons, opts = {})
     bn = sv_has_props(b) ? b : sv_nets(b, bases[1])
     u2 = dbu * dbu
     area_b = Hash.new(0.0)
-    bn.data.each { |p| area_b[p.property(1)] += p.area * u2 }
+    bn.data.merged.each { |p| area_b[p.property(1)] += p.area * u2 }   # per net, see sv_nar_all_nets
     area_a = Hash.new(0.0)
-    an.data.each { |p| area_a[p.property(1)] += p.area * u2 }
+    an.data.merged.each { |p| area_a[p.property(1)] += p.area * u2 }
     r = RBA::Region::new
     an.data.each do |p|
       id = p.property(1)
@@ -1648,35 +1661,94 @@ def sv_break_big(l)
   l
 end
 
-def sv_stage(stage)
+# prune: leave out the polygons that touch no polygon of a layer they are connected to (each
+# is a net of its own, without a gate): the floating AA / field poly of the density filler
+# cells, ~1.2 M polygons on demo_chip that every stage extracted again. The nets of all other
+# polygons are unchanged; only the gate net path of sv_nar uses a pruned stage. Polygons are
+# grouped by a merge (corner contacts join, like the polygons sv_break_big cut apart), a
+# group is dropped when none of it touches a connected layer. $sv_conn_map: data of a
+# layer -> data registered in the connectivity.
+$sv_conn_map = {}
+$sv_merged_cache = {}
+$sv_prune_cache = {}
+def sv_prune_isolated(n, l, others)
+  key = [n, others.collect { |o| o.data.object_id }.sort]
+  return $sv_prune_cache[key] if $sv_prune_cache.has_key?(key)
+  d = l.data
+  m = ($sv_merged_cache[d.object_id] ||= d.merged)
+  ot = RBA::Region::new
+  others.each { |o| ot += o.data }
+  ot.merged_semantics = false
+  iso = m.not_interacting(ot)
+  r = l
+  unless iso.is_empty?
+    # same semantics as the layer itself (the netter takes merged polygons), big ones broken
+    # again like sv_break_big did on the layer
+    kept = d.not_inside(iso)
+    kept.break(SV_BREAK_POINTS, 0.0) if kept.each.any? { |p| p.num_points > SV_BREAK_POINTS }
+    log("SVRF: #{n}: #{iso.count} isolated polygons left out of the connectivity") if $sv_verbose
+    r = DRC::DRCLayer::new(self, kept)
+  end
+  $sv_prune_cache[key] = r
+end
+
+def sv_stage(stage, prune = false)
   conns = $sv_connects[0...stage]
   # evaluate the layers first: they may need another stage themselves
   conns.each { |layers, via| (layers + [via]).compact.each { |n| sv_p($sv_G[n]) } }
-  return if $sv_stage_cur == stage
+  return if $sv_stage_cur == [stage, prune]
   clear_connections
+  names = conns.collect { |layers, via| layers + [via] }.flatten.compact.uniq
+  base = {}
+  names.each { |n| base[n] = sv_break_big(sv_p($sv_G[n])) }
+  use = base
+  $sv_conn_map = {}
+  if prune
+    nb = Hash.new { |h, k| h[k] = [] }
+    conns.each do |layers, via|
+      if via
+        layers.each { |n| nb[n] << via; nb[via] << n }
+      else
+        (1...layers.size).each { |i| nb[layers[0]] << layers[i]; nb[layers[i]] << layers[0] }
+      end
+    end
+    use = {}
+    names.each do |n|
+      os = nb[n].uniq.reject { |m| m == n }.collect { |m| base[m] }
+      use[n] = sv_prune_isolated(n, base[n], os)
+      $sv_conn_map[base[n].data.object_id] = use[n].data
+    end
+  end
   conns.each do |layers, via|
-    ls = layers.collect { |n| sv_break_big(sv_p($sv_G[n])) }
+    ls = layers.collect { |n| use[n] }
     if via
-      v = sv_break_big(sv_p($sv_G[via]))
+      v = use[via]
       ls.each { |l| connect(l, v) }
     else
       (1...ls.size).each { |i| connect(ls[0], ls[i]) }
     end
   end
-  $sv_stage_cur = stage
+  $sv_stage_cur = [stage, prune]
   $sv_netter_ready = true
 end
 
 # NET AREA X constraint: polygons of X on nets whose X area meets the constraint
 def sv_net_area(x, cons, stage)
   a = sv_p(x)
+  if cons.all? { |op, v| (op == ">" || op == ">=") && v <= 0.0 } &&
+     $sv_connects[0...stage].any? { |layers, via| (layers + [via]).compact.any? { |n| sv_p($sv_G[n]).equal?(a) } }
+    # every polygon of X (the diode layers: NET AREA SD > 0): no extraction needed
+    d = sv_break_big(a).data.dup
+    return sv_w(d)
+  end
   sv_stage(stage)
   an = a.nets(prop(1))
   u2 = dbu * dbu
   area = Hash.new(0.0)
-  an.data.each { |p| area[p.property(1)] += p.area * u2 }
+  am = an.data.merged   # per net, see sv_nar_all_nets
+  am.each { |p| area[p.property(1)] += p.area * u2 }
   r = RBA::Region::new
-  an.data.each { |p| r.insert(p.to_simple_polygon) if sv_cons_ok(cons, area[p.property(1)]) }
+  am.each { |p| r.insert(p.to_simple_polygon) if sv_cons_ok(cons, area[p.property(1)]) }
   sv_w(r)
 end
 
@@ -1689,15 +1761,10 @@ end
 #   * ACCUMULATE: per polygon of the last layer (the gate) the value is the net value
 #     plus the value the same gate has in <acc>; the result are those gate polygons,
 #     and the accumulated values are kept on the result for later ACCUMULATE <it>.
-def sv_nar(layers, names, fn, cons, stage, acc = nil, bases = [])
-  ls = layers.collect { |l| sv_p(l) }
-  bs = bases.collect { |b| b ? sv_p(b) : nil }
-  prev = nil
-  if acc && acc != true
-    al = sv_p(acc)
-    prev = al.instance_variable_get(:@sv_acc) || {}
-  end
-  sv_stage(stage)
+# Areas / perimeters per net of every layer, the polygons of the first and the last layer
+# with their net: the nets of all polygons (nets(prop)).
+$sv_nar_check = ($nar_check.to_s == "1")
+def sv_nar_all_nets(ls, bs, names)
   u = dbu
   u2 = u * u
   area = Hash.new { |h, k| h[k] = Hash.new(0.0) }
@@ -1713,7 +1780,9 @@ def sv_nar(layers, names, fn, cons, stage, acc = nil, bases = [])
       raise ex unless bs[i]
       ln = sv_w(bs[i].nets(prop(1)).data.and(l.data, RBA::Region::NoPropertyConstraint))
     end
-    ln.data.each do |p|
+    # merged per net (property aware): the netter hands out the shapes as stored, which
+    # overlap (M1 of demo_chip: 1.6 x its area) and are cut at other layers (perimeters)
+    ln.data.merged.each do |p|
       id = p.property(1)
       area[id][n] += p.area * u2
       perim[id][n] += p.perimeter * u
@@ -1721,6 +1790,122 @@ def sv_nar(layers, names, fn, cons, stage, acc = nil, bases = [])
       last << [p, id] if i == ls.size - 1
     end
   end
+  [area, perim, first, last, false]
+end
+
+# True when the value is never finite without the area of layer g (the gate: every antenna
+# ratio divides by it), whatever the other areas / perimeters are.
+def sv_nar_needs(names, fn, g)
+  vals = [0.0, 1.0, 3.7]
+  vals.product(vals).all? do |x, y|
+    a = Hash.new(0.0)
+    p = Hash.new(0.0)
+    names.each_with_index do |n, i|
+      next if i == g
+      a[n] = i.even? ? x : y
+      p[n] = i.even? ? y : x
+    end
+    v = (fn.call(a, p).to_f rescue Float::NAN)
+    !v.finite?
+  end
+end
+
+# The same as sv_nar_all_nets, restricted to the nets that have a polygon of the last
+# layer (the gate), when the value needs it (sv_nar_needs; other nets are skipped anyway):
+# the nets are probed on the gate polygons and their shapes taken per net from the
+# extracted netlist. A chip with density filler cells has ~150 floating poly lines per gate,
+# each its own net, which nets(prop) of every layer and the Ruby loop went through (WP5).
+# Flat only (probe_net on a flat netlist gives the top level net). nil: not applicable.
+def sv_nar_gate_nets(ls, bs, names, fn)
+  return nil unless $sv_flat
+  g = ls.size - 1
+  return nil unless sv_nar_needs(names, fn, g)
+  l2n = _netter.l2n_data
+  reg = lambda { |l| $sv_conn_map[l.data.object_id] || l.data }
+  idx = ls.collect { |l| (l2n.layer_of(reg.call(l)) rescue nil) }
+  return nil unless idx[g]
+  bidx = bs.collect { |b| b ? (l2n.layer_of(reg.call(b)) rescue nil) : nil }
+  ls.each_index { |i| return nil unless idx[i] || bidx[i] }
+  nets = {}
+  ls[g].data.each do |p|
+    tr = p.decompose_trapezoids(0)[0]
+    next unless tr
+    xs = 0
+    ys = 0
+    tr.each_point { |q| xs += q.x; ys += q.y }
+    pt = RBA::Point::new(xs / tr.num_points, ys / tr.num_points)
+    net = l2n.probe_net(reg.call(ls[g]), pt)
+    return nil unless net   # point not on the gate polygon: should not happen
+    nets[net.cluster_id] ||= net
+  end
+  u = dbu
+  u2 = u * u
+  area = Hash.new { |h, k| h[k] = Hash.new(0.0) }
+  perim = Hash.new { |h, k| h[k] = Hash.new(0.0) }
+  first = []
+  last = []
+  ls.each_with_index do |l, i|
+    n = names[i]
+    src = idx[i] || bidx[i]
+    nr = RBA::Region::new
+    nets.each do |cid, net|
+      l2n.polygons_of_net(net, src).each { |p| nr.insert(RBA::PolygonWithProperties::new(p, { 1 => cid })) }
+    end
+    nr = nr.and(l.data, RBA::Region::NoPropertyConstraint) unless idx[i]
+    nr.merged.each do |p|
+      id = p.property(1)
+      area[id][n] += p.area * u2
+      perim[id][n] += p.perimeter * u
+      first << [p, id] if i == 0
+      last << [p, id] if i == g
+    end
+  end
+  [area, perim, first, last, true]
+end
+
+# -rd nar_check=1: values per gate polygon and per first-layer polygon of both paths
+def sv_nar_compare(got, ref, names, fn)
+  sig = lambda do |x|
+    area, perim, first, last = x
+    val = {}
+    area.each do |id, a|
+      v = fn.call(a, perim[id]).to_f
+      val[id] = v if v.finite?
+    end
+    h = {}
+    last.each { |p, id| h["G " + p.to_simple_polygon.to_s] = val[id] if val.has_key?(id) }
+    first.each { |p, id| h["F " + p.to_simple_polygon.to_s] = val[id] if val.has_key?(id) }
+    h
+  end
+  a = sig.call(got)
+  b = sig.call(ref)
+  bad = (a.keys | b.keys).select { |k| !a[k] || !b[k] || (a[k] - b[k]).abs > 1e-6 * [1.0, b[k].abs].max }
+  log("SVRF nar_check #{names.join(',')}: #{a.size} / #{b.size} values, #{bad.size} differ#{bad.empty? ? '' : ': ' + bad[0, 3].collect { |k| "#{k} #{a[k].inspect} #{b[k].inspect}" }.join('; ')}")
+  $sv_nar_bad = ($sv_nar_bad || 0) + bad.size
+end
+
+def sv_nar(layers, names, fn, cons, stage, acc = nil, bases = [])
+  ls = layers.collect { |l| sv_p(l) }
+  bs = bases.collect { |b| b ? sv_p(b) : nil }
+  prev = nil
+  if acc && acc != true
+    al = sv_p(acc)
+    prev = al.instance_variable_get(:@sv_acc) || {}
+  end
+  # gate net path on the pruned connectivity (flat), else all nets on the full one
+  sv_stage(stage, $sv_flat && $nar_prune.to_s != "0")
+  got = sv_nar_gate_nets(ls, bs, names, fn)
+  unless got
+    sv_stage(stage)
+    got = sv_nar_all_nets(ls, bs, names)
+  end
+  if $sv_nar_check && got[4]
+    # -rd nar_check=1 (tests): the gate net path against the full one, per rule
+    sv_stage(stage)
+    ref = sv_nar_all_nets(ls, bs, names)
+    sv_nar_compare(got, ref, names, fn)
+  end
+  area, perim, first, last = got
   val = {}
   area.each do |id, a|
     v = fn.call(a, perim[id]).to_f
