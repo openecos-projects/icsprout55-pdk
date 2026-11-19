@@ -14,7 +14,7 @@ Download the repository and obtain large files by executing make script (please 
 ```bash
 git clone --branch ics55-v1 https://github.com/openecos-projects/icsprout55-pdk
 cd icsprout55-pdk
-make unzip # downloads the pinned v1.10.102 asset set
+make unzip # downloads the pinned v1.10.103 asset set
 ```
 
 If you cannot download large files, try the following command (make script use `curl` as the default tool).
