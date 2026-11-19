@@ -12,10 +12,9 @@
 Download the repository and obtain large files by executing make script (please install `bzip2` tool first).
 
 ```bash
-git clone https://github.com/openecos-projects/icsprout55-pdk
+git clone --branch ics55-v1 https://github.com/openecos-projects/icsprout55-pdk
 cd icsprout55-pdk
-make unzip # downloads latest release (default)
-make unzip RELEASE_TAG=v1.10.100 # pins to v1.10.100
+make unzip # downloads the pinned v1.10.102 asset set
 ```
 
 If you cannot download large files, try the following command (make script use `curl` as the default tool).
@@ -33,6 +32,10 @@ make unzip PROXY_USE=true
 ```bash
 make unzip PROXY_USE=true TOOL=wget
 ```
+
+The ICS55 v1 (7T) PDK description is in `ecc-pdk.json`. It identifies the
+PDK revision and the resource files expected after extraction. ECC manages
+its tool settings separately.
 
 ## IP libraries
 

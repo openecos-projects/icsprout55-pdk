@@ -7,7 +7,7 @@ REPO_NAME := icsprout55-pdk
 PROXY_URL ?= https://gh-proxy.org/
 PROXY_USE ?= false
 
-RELEASE_TAG ?= latest
+RELEASE_TAG ?= v1.10.102
 RELEASE_FILE_LIB := ics55_LLSC_H7CH_liberty.tar.bz2 \
                     ics55_LLSC_H7CL_liberty.tar.bz2 \
                     ics55_LLSC_H7CR_liberty.tar.bz2
