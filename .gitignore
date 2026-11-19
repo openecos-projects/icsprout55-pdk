@@ -1,4 +1,5 @@
 /**/STD_cell/**/liberty/
 /**/gds/
+/IP/**/doc/*.pdf
 *.tar.bz2
 *.mk
