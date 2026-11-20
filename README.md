@@ -34,8 +34,7 @@ make unzip PROXY_USE=true TOOL=wget
 ```
 
 The default `main` branch contains ICS55 v2 (9T). For ICS55 v1 (7T),
-clone the `ics55-v1` branch or check out a v1 release tag. See
-[ECC PDK description](ECC-PDK.md) for the v2 resource manifest.
+clone the `ics55-v1` branch or check out a v1 release tag. The root `VERSION` file contains `ics55-v2`. Software can read this line to identify the PDK data version.
 
 ## IP libraries
 
