@@ -35,8 +35,8 @@ make unzip PROXY_USE=true TOOL=wget
 
 The ICS55 v1 (7T) PDK description is in `ecc-pdk.json`. It identifies the
 PDK revision and the resource files expected after extraction. ECC manages
-its tool settings separately. ECC derives the cell families from the installed standard-cell LEFs and supplies
-them in the workspace STA configuration. The PDK can be installed read-only.
+its tool settings separately. ECC derives the cell families from the installed standard-cell LEFs, caches one shared TSV,
+and supplies its path in the workspace STA configuration. The PDK can be installed read-only.
 
 ## IP libraries
 
