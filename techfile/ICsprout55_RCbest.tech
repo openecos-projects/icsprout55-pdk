@@ -1,0 +1,312 @@
+# technology : ICsprout_55LLULP_1P6M_5lc_V1p1_RCbest
+# Foundry_Process: ICsprout 55
+HALF_NODE_SCALE_FACTOR 0.9
+units {
+  capacitance 1pf
+  inductance  1nh
+  resistance  1ohm
+  length      1um
+  current     1ma
+  voltage     1v
+  power       1w
+  time        1ns
+  frequency   1MHz
+}
+metal RDL {
+  Tnom 25.0
+  Coeff_RT1 3.93E-03
+  MINWIDTH 2.7
+  Coeff_RT2 5.49E-06
+  em 1.0
+  THICKNESS 1.595
+  MINSPACE 1.8
+  CAPACITIVE_ONLY_ETCH -0.27
+  Resistance 0.01174
+  above PASS4
+}
+metal T4M2 {
+  Tnom 25.0
+  Coeff_RT1 3.73E-03
+  MINWIDTH 0.36
+  Coeff_RT2 3.96E-06
+  em 8.1
+  THICKNESS 0.99
+  CAPACITIVE_ONLY_ETCH -0.036
+  MINSPACE 0.36
+  Resistance 0.01688
+  above IMD7b2
+}
+metal MET5 {
+  Tnom 25.0
+  Coeff_RT1 3.126E-03
+  MINWIDTH 0.09
+  Coeff_RT2 2.349E-6
+  em 1.7
+  THICKNESS 0.231
+  CAPACITIVE_ONLY_ETCH -0.009
+  MINSPACE 0.09
+  Resistance 0.0653
+  above IMD5b1
+}
+metal MET4 {
+  Tnom 25.0
+  Coeff_RT1 3.126E-03
+  MINWIDTH 0.09
+  Coeff_RT2 2.349E-6
+  em 1.7
+  THICKNESS 0.231
+  CAPACITIVE_ONLY_ETCH -0.009
+  MINSPACE 0.09
+  Resistance 0.0653
+  above IMD4b1
+}
+metal MET3 {
+  Tnom 25.0
+  Coeff_RT1 3.126E-03
+  MINWIDTH 0.09
+  Coeff_RT2 2.349E-6
+  em 1.7
+  THICKNESS 0.231
+  CAPACITIVE_ONLY_ETCH -0.009
+  MINSPACE 0.09
+  Resistance 0.0653
+  above IMD3b1
+}
+metal MET2 {
+  Tnom 25.0
+  Coeff_RT1 3.126E-03
+  MINWIDTH 0.09
+  Coeff_RT2 2.349E-6
+  em 1.7
+  THICKNESS 0.231
+  CAPACITIVE_ONLY_ETCH -0.009
+  MINSPACE 0.09
+  Resistance 0.0653
+  above IMD2b1
+}
+metal MET1 {
+  Tnom 25.0
+  Coeff_RT1 3.242E-03
+  MINWIDTH 0.081
+  Coeff_RT2 6.79E-06
+  em 1.5
+  THICKNESS 0.198
+  CAPACITIVE_ONLY_ETCH -0.0081
+  MINSPACE 0.081
+  Resistance 0.0827
+  above ILD1b1
+}
+via RV {
+  em 1.0
+  Area 7.29
+  UpperLayer RDL
+  LowerLayer T4M2
+  Resistance 0.072
+}
+via T4V2 {
+  em 3.2
+  Area 0.104976
+  UpperLayer T4M2
+  LowerLayer MET5
+  Resistance 0.225
+}
+via VIA4 {
+  em 0.135
+  Area 0.006561
+  UpperLayer MET5
+  LowerLayer MET4
+  Resistance 1.8
+}
+via VIA3 {
+  em 0.135
+  Area 0.006561
+  UpperLayer MET4
+  LowerLayer MET3
+  Resistance 1.8
+}
+via VIA2 {
+  em 0.135
+  Area 0.006561
+  UpperLayer MET3
+  LowerLayer MET2
+  Resistance 1.8
+}
+via VIA1 {
+  em 0.135
+  Area 0.006561
+  UpperLayer MET2
+  LowerLayer MET1
+  Resistance 1.8
+}
+dielectric PASS6 {
+  SW_T 0.66
+  thickness 0.66
+  TW_T 0.66
+  constant 7
+  above PASS5
+}
+dielectric PASS5 {
+  SW_T 0.44
+  thickness 0.44
+  TW_T 0.44
+  constant 4
+  above PASS4
+}
+dielectric PASS4 {
+  thickness 0.22
+  constant 4
+  above PASS3
+}
+dielectric PASS3 {
+  thickness 0.0825
+  constant 7
+  above PASS2
+}
+dielectric PASS2 {
+  thickness 0.44
+  constant 4
+  above PASS1
+}
+dielectric PASS1 {
+  thickness 0.0825
+  constant 7
+  above IMD7b1
+}
+dielectric IMD7b1 {
+  thickness 0.99
+  constant 4
+  above IMD7b2
+}
+dielectric IMD7b2 {
+  thickness 0.77
+  constant 4
+  above IMD7a
+}
+dielectric IMD7a {
+  thickness 0.0825
+  constant 7
+  above IMD5b2
+}
+dielectric IMD5b2 {
+  thickness 0.231
+  constant 3
+  above IMD5b1
+}
+dielectric IMD5b1 {
+  thickness 0.077
+  constant 3
+  above IMD5a
+}
+dielectric IMD5a {
+  thickness 0.055
+  constant 5
+  above IMD4b2
+}
+dielectric IMD4b2 {
+  thickness 0.231
+  constant 3
+  above IMD4b1
+}
+dielectric IMD4b1 {
+  thickness 0.077
+  constant 3
+  above IMD4a
+}
+dielectric IMD4a {
+  thickness 0.055
+  constant 5
+  above IMD3b2
+}
+dielectric IMD3b2 {
+  thickness 0.231
+  constant 3
+  above IMD3b1
+}
+dielectric IMD3b1 {
+  thickness 0.077
+  constant 3
+  above IMD3a
+}
+dielectric IMD3a {
+  thickness 0.055
+  constant 5
+  above IMD2b2
+}
+dielectric IMD2b2 {
+  thickness 0.231
+  constant 3
+  above IMD2b1
+}
+dielectric IMD2b1 {
+  thickness 0.077
+  constant 3
+  above IMD2a
+}
+dielectric IMD2a {
+  thickness 0.055
+  constant 5
+  above IMD1b
+}
+dielectric IMD1b {
+  thickness 0.154
+  constant 3
+  above IMD1a
+}
+dielectric IMD1a {
+  thickness 0.033
+  constant 5
+  above ILD1b2
+}
+dielectric ILD1b2 {
+  thickness 0.011
+  constant 4
+  above ILD1b1
+}
+dielectric ILD1b1 {
+  thickness 0.3025
+  constant 4
+  above ILD1a
+}
+dielectric ILD1a {
+  SW_T 0.0231
+  thickness 0.0385
+  TW_T 0.0297
+  constant 7
+  above PO_SP3
+}
+dielectric PO_SP3 {
+  SW_T 0.0297
+  thickness 0
+  TW_T 0
+  constant 7
+  above PO_SP2
+}
+dielectric PO_SP2 {
+  SW_T 0.0099
+  thickness 0
+  TW_T 0
+  constant 7
+  above PO_SP1
+}
+dielectric PO_SP1 {
+  SW_T 0.0044
+  thickness 0
+  TW_T 0
+  constant 4
+  above GOX
+}
+dielectric GOX {
+  thickness 0.00198
+  constant 4
+  above FOXB
+}
+dielectric FOXB {
+  thickness 0.165
+  constant 4
+  above FOXA
+}
+dielectric FOXA {
+  thickness 0.18502
+  constant 4
+  Height 0.0
+}
