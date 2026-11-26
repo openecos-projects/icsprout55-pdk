@@ -1,0 +1,70 @@
+# Not for synthesis / resizing: physical cells, bus holder, latches and clock gates (not in the liberty)
+ANTENNA
+BHD
+CKLHQD1
+CKLHQD2
+CKLHQD3
+CKLHQD6
+CKLHQD8
+CKLNQD1
+CKLNQD2
+CKLNQD3
+CKLNQD12
+DCAP
+DCAP4
+DCAP8
+DCAP16
+DCAP64
+FILL1
+FILL2
+FILL4
+FILL8
+FILL16
+FILL32
+FILL64
+LHCND2
+LHCSND1
+LHCSNQD1
+LHCSNQD2
+LHD1
+LHD2
+LHQD1
+LHQD2
+LHSND1
+LHSND2
+LHSNQD1
+LHSNQD2
+LNCND1
+LNCND2
+LNCNQD1
+LNCSND1
+LNCSND2
+LNCSNQD4
+LND1
+LND2
+LNQD1
+LNQD2
+LNSND1
+LNSND2
+LNSND4
+LNSNQD1
+LNSNQD2
+LNSNQD4
+TAPCELL
+# Signal pins the OpenROAD detailed router has no access point for (DRT-0073), found by
+# hacking/pin_access_scan.tcl with the tech LEF spacing rules of hacking/spacing2lef.py on stdcell-gen
+# 9dcd1cd + the pin access search of 2026-11-26 (stdcell-gen docs/ics55_pdk_feedback_2026-11-26.md):
+# 6 cells (53 on 9dcd1cd counting the latches; the latches that fail it are in the list above anyway)
+AO221D4
+AO222D4
+DFCSNQD1
+IIND4D2
+IND4D4
+MAOI222D4
+# Reachable in the pin access scan, but the detailed router of a real design leaves a violation at
+# them (mix test design, 2026-11-27): XOR3D2 (laid out again on 2026-11-26) a MET2 spacing at a3,
+# OA31D1 a MET1 short of a1's net to the cell MET1 0.09 left of the pin, AOI21D2 (laid out again)
+# a MET1 short of a pin net to the VDD rail
+XOR3D2
+OA31D1
+AOI21D2

@@ -1,0 +1,59 @@
+# Not for synthesis / resizing: physical cells, bus holder, latches and clock gates (not in the liberty)
+ANTENNA
+BHD
+CKLHQD1
+CKLNQD1
+CKLNQD2
+CKLNQD3
+CKLNQD6
+CKLNQD8
+FILL1
+FILL2
+FILL4
+FILL8
+FILL16
+FILL32
+FILL64
+LHCND1
+LHCND2
+LHCND4
+LHCNQD1
+LHCNQD2
+LHCNQD4
+LHCSND1
+LHCSND2
+LHCSNQD2
+LHD1
+LHQD1
+LHQD2
+LHSND2
+LHSND4
+LHSNQD1
+LHSNQD2
+LHSNQD4
+LNCND2
+LNCNQD1
+LNCNQD2
+LNCNQD4
+LNCSND1
+LNCSND2
+LNCSNQD1
+LNCSNQD2
+LNCSNQD4
+LND1
+LND2
+LNQD2
+LNSND2
+LNSND4
+LNSNQD1
+LNSNQD2
+LNSNQD4
+TAPCELL
+# Signal pins the OpenROAD detailed router has no access point for (DRT-0073), found by
+# hacking/pin_access_scan.tcl with the tech LEF spacing rules of hacking/spacing2lef.py on stdcell-gen
+# 9dcd1cd + the pin access search of 2026-11-26 (stdcell-gen docs/ics55_pdk_feedback_2026-11-26.md):
+# 0 cells (32 on 9dcd1cd counting the latches; the latches that fail it are in the list above anyway)
+# Reachable in the pin access scan, but the detailed router of a real design leaves a short on it
+# (a3 is a 0.10 x 0.62 MET1 pin boxed in by the MET2 of a1 and a2; mix test design 2026-11-27, MET1
+# short of a3 to VDD / zn in two runs); no setting of the generator search frees it
+AOI31D2
