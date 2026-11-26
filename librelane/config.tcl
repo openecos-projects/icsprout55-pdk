@@ -72,7 +72,7 @@ set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/te
 # densityRules=False only, the former "0" had no effect.)
 # jobs: the rules in 4 KLayout processes, reports merged (IHP sg13g2 style); each
 # process reads the layout, so memory grows with the number of jobs
-set ::env(KLAYOUT_DRC_OPTIONS) [dict create densityRules False flat 1 jobs 4 ]
+set ::env(KLAYOUT_DRC_DEFINES) [dict create densityRules False flat 1 jobs 4 ]
 # Dummy fill (KLayout.Filler, Chip flow): AA / PO / MET1-5 / T4M2 dummies per the
 # AADUM / PODUM / MnDUM / T4M2DUM rules. Rows get their AA / PO density from the FILLDENS
 # filler cells instead (FILL_CELLS).
@@ -92,7 +92,7 @@ set ::env(KLAYOUT_ANTENNA_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayou
 # flat: deep and flat agree on the antenna test layout, but deep did not finish on a
 # full chip (pad ring guard rings) in hours; flat breaks the huge polygons (pad ring
 # of demo_chip alone ~27 min)
-set ::env(KLAYOUT_ANTENNA_OPTIONS) [dict create flat 1 ]
+set ::env(KLAYOUT_ANTENNA_DEFINES) [dict create flat 1 ]
 set ::env(KLAYOUT_LVS_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/ics55.lvs"
 # Run by the ICS55.KLayoutLVS step of the PDK plugin (libs.tech/librelane/librelane_plugin_ics55)
 # No tapless / implicit_nets here: in a placed design FILLTAP ties the wells and
