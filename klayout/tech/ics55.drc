@@ -1011,7 +1011,18 @@ def sv_corner_check(kind, a, b, d, opts)
     oe = (out == 2) ? e2 : e1
     ref = (out == 2) ? e1 : e2
     sel = oe.interacting(c) - (oe & ref)
-    return sv_ein(sel, c.sized(d))
+    # the piece of length d from the corner along the edge only (MET1_S_5, H7CR: an edge
+    # selected at one corner had output near another corner it does not pass through, the far
+    # M1 edge 0.09 from a line end); c are 2 dbu boxes around the corner points, d - 1 dbu
+    # reaches d from the point: the length of Calibre's pieces ("INT LINE_SIDE [M1] < 0.11":
+    # 0.110, was 0.111)
+    dd = d - 1.dbu
+    hs = sel.with_angle(0)
+    vs = sel.with_angle(90)
+    rest = sel - hs - vs
+    r = sv_ein(hs, c.sized(dd, 0.0)) + sv_ein(vs, c.sized(0.0, dd))
+    r = r + sv_ein(rest, c.sized(dd)) unless rest.is_empty?
+    return r.interacting(c)
   end
   c.sized(d * 0.5)
 end
@@ -1097,6 +1108,7 @@ def sv_check(kind, a, b, cons, opts = {})
     kb = :edge if kb == :ep
     b = sv_e(b) if kb == :edge
     if ka == :edge && kb == :poly
+      bpoly = b
       b = b.edges
       kb = :edge
     elsif ka == :poly && kb == :edge
@@ -1168,6 +1180,7 @@ def sv_check(kind, a, b, cons, opts = {})
         be = b.edges
         ain = sv_ein(ae, b) + ((ae & be) & (a & b).edges)
         ep = be.enclosing(ain, *eargs)
+        ep = sv_enc_drop_across(ep, b, hi, opts[:metric]) unless ep.is_empty?
       else
         ep = b.enclosing(a, *args)
       end
@@ -1195,6 +1208,37 @@ def sv_check(kind, a, b, cons, opts = {})
   end
   if lo
     ep = sv_w(ep.data.with_distance(sv_dbu_i(lo), nil, false))
+  end
+  if kind == "ext" && edge_mode && bpoly && !ep.is_empty?
+    # EXT edges polygons: a pair measured through the interior of the polygon the first edge
+    # belongs to (a 45 degree M1 edge and the end of a foot of the same polygon behind the bar
+    # in between: MET1_S_4, H7CR; Calibre: nothing) is no space. Pairs not outside the polygons
+    # are looked at: the shortest connection of their edges must not cross that interior.
+    cd = ep.data.not_outside(bpoly.data)
+    unless cd.is_empty?
+      cdf = cd.is_deep? ? cd.dup.tap { |x| x.flatten } : cd
+      bidx = sv_area_index(bpoly.data)
+      bad = {}
+      cdf.each do |p|
+        q1, q2 = sv_closest(p.first, p.second)
+        next if q1.sq_distance(q2) < 4
+        seg = RBA::Edge::new(q1, q2)
+        # through the polygon of the first edge (a connection that only grazes the corner of
+        # the other polygon is measured: MET1_S_4, H7CR, a 45 degree edge to an M1 notch corner)
+        own = RBA::Region::new
+        c, li = bidx
+        c.shapes(li).each_touching(p.first.bbox) { |sh| q = sh.polygon; own.insert(q) if q.touches?(p.first) }
+        next if own.is_empty?
+        bad[p.to_s] = true if (RBA::Edges::new(seg).inside_part(own) - own.edges).length > 2
+      end
+      unless bad.empty?
+        dd = ep.data
+        dd = dd.dup.tap { |x| x.flatten } if dd.is_deep?
+        keep = RBA::EdgePairs::new
+        dd.each { |p| keep.insert(p) unless bad[p.to_s] }
+        ep = sv_w(keep)
+      end
+    end
   end
   if kind == "ext" && !edge_mode && b.nil? && !ep.is_empty?
     # Calibre measures exterior space only: drop pairs measured across the
@@ -1235,11 +1279,43 @@ def sv_check(kind, a, b, cons, opts = {})
             e1 = RBA::Edges::new(p.first)
             e2 = RBA::Edges::new(p.second)
             drop = (e1 - pe).is_empty? && (e2 - pe).is_empty?
+            # the space between the edges is covered by the layer: measured through the interior
+            drop ||= (q - owners).is_empty?
           end
         end
         keep.insert(p) unless drop
       end
       ep = rest + sv_w(keep)
+    end
+    # a pair of the two vertices of a corner to corner measurement (zero area) between two
+    # concave corners of one polygon, through its interior (PO_S_1, H7CR: a 0.11 x 0.047
+    # diagonal across a poly bar; Calibre: nothing): dropped when the middle of the
+    # connection lies inside the layer
+    dg = ep.data.with_area(0, 1, false)
+    unless dg.is_empty?
+      dgf = dg.is_deep? ? dg.dup.tap { |x| x.flatten } : dg
+      ic, il = sv_area_index(a.data)
+      bad = RBA::EdgePairs::new
+      dgf.each do |p|
+        c1 = p.first.bbox.center
+        c2 = p.second.bbox.center
+        next if c1.sq_distance(c2) < 4    # zero distance pairs (abutting edges)
+        m = RBA::Point::new(((c1.x + c2.x) / 2.0).round, ((c1.y + c2.y) / 2.0).round)
+        inside = false
+        ic.shapes(il).each_touching(RBA::Box::new(m, m)) do |sh2|
+          q = sh2.polygon
+          inside = true if q.inside?(m) && !q.each_edge.any? { |e| e.contains?(m) }
+        end
+        bad.insert(p) if inside
+      end
+      unless bad.is_empty?
+        ok = ep.data.with_area(1, nil, false)
+        keepd = RBA::EdgePairs::new
+        bs = {}
+        bad.each { |b2| bs[b2.to_s] = true }
+        dgf.each { |p| keepd.insert(p) unless bs[p.to_s] }
+        ep = sv_w(ok) + sv_w(keepd)
+      end
     end
   end
   if opts[:parallel] == "only"
@@ -1279,6 +1355,10 @@ def sv_check(kind, a, b, cons, opts = {})
     end
   end
 
+  ray = nil
+  if kind == "enc" && b && !edge_mode && lo.nil? && conn.nil? && opts[:metric].to_s.start_with?("opposite")
+    ep, ray = sv_enc_ray(ep, a, b, hi)
+  end
   out = opts[:out]
   if out
     if b.nil?
@@ -1291,22 +1371,236 @@ def sv_check(kind, a, b, cons, opts = {})
     if extra && out == 1
       r = r + sv_eout(sv_e(a), b)
     end
+    if ray && out == 1
+      r = r + ray[0]
+    end
     return r
   end
   if opts[:region]
     r = sv_ep_region(ep, swap)
+    r = r + ray[1] if ray
     if conn != nil && extra.nil?
       # regions of different nets stay separate polygons in Calibre
-      rr = ep.polygons.raw
-      return rr
+      return sv_conn_region(ep, a, b)
     end
     r = r | extra if extra
-    return r.merged
+    # regions that touch in a single point stay separate polygons (Calibre: PO_S_2, H7CR, the
+    # regions on two sides of a corner; merged, the polygon with a long edge took the other along)
+    return sv_w(r.data.merged(true, 0))
   end
   if extra
     return sv_ep_region(ep, swap) | extra
   end
   ep
+end
+
+# REGION output of a CONNECTED / NOT CONNECTED check: one polygon per edge pair, except that
+# edge pair polygons that overlap or touch and lie between the same two polygons are merged.
+# Calibre writes one region per pair of polygons: the two crossing edge pairs KLayout finds
+# between the corners of two contacts (H7CR CT_S_2) are one Calibre polygon, their union.
+# Regions of different pairs stay apart. a, b: the net annotated layers (b nil: single layer).
+def sv_conn_region(ep, a, b)
+  rr = ep.polygons.raw
+  d = ep.data
+  return rr if d.count < 2
+  d = d.dup.tap { |x| x.flatten } if d.is_deep?
+  pairs = []
+  d.each { |p| pairs << p }
+  polys = pairs.collect { |p| p.normalized.polygon(0) }   # as EdgePairs#polygons (no bow ties)
+  # candidate pairs: polygons that overlap or share an edge piece (the two edge pairs of a corner
+  # pair cross, their common area can be below one dbu; PO_S_14: two pairs of an L-shaped region)
+  grid = Hash.new { |h, k| h[k] = [] }
+  g = 2000
+  polys.each_with_index do |q, i|
+    bb = q.bbox
+    (bb.left.div(g)..bb.right.div(g)).each { |gx| (bb.bottom.div(g)..bb.top.div(g)).each { |gy| grid[[gx, gy]] << i } }
+  end
+  cand = {}
+  grid.each_value do |l|
+    l.combination(2) do |i, j|
+      next if cand[[i, j]] || !polys[i].bbox.touches?(polys[j].bbox)
+      # overlap or a common edge piece; a single point does not join them (Calibre: PO_S_14,
+      # two regions on the corner of an AA notch stay apart)
+      rg = RBA::Region::new(polys[i])
+      rg.insert(polys[j])
+      cand[[i, j]] = rg.merged(true, 0).count == 1
+    end
+  end
+  cand.select! { |_, v| v }
+  return rr if cand.empty?
+  # nets of the edges of the candidates
+  idx = cand.keys.flatten.uniq
+  # the polygon an edge lies on: its index in the layer and its net (one pass over the layer;
+  # Region#interacting would drop the net properties)
+  owners_of = lambda do |l, edges|
+    eg = Hash.new { |h, k| h[k] = [] }
+    edges.each_with_index do |e, n|
+      bb = e.bbox
+      (bb.left.div(g)..bb.right.div(g)).each { |gx| (bb.bottom.div(g)..bb.top.div(g)).each { |gy| eg[[gx, gy]] << n } }
+    end
+    res = {}
+    ld = l.data
+    ld = ld.dup.tap { |x| x.flatten } if ld.is_deep?
+    pi = 0
+    ld.each do |p|
+      bb = p.bbox
+      (bb.left.div(g)..bb.right.div(g)).each do |gx|
+        (bb.bottom.div(g)..bb.top.div(g)).each do |gy|
+          eg.fetch([gx, gy], []).each { |n| res[n] ||= [pi, p.property(1)] if bb.touches?(edges[n].bbox) && p.touches?(edges[n]) }
+        end
+      end
+      pi += 1
+    end
+    res
+  end
+  o1 = owners_of.call(a, idx.collect { |i| pairs[i].first })
+  o2 = owners_of.call(b || a, idx.collect { |i| pairs[i].second })
+  # key: the pair of polygons (single layer: unordered)
+  key = {}
+  idx.each_with_index do |i, n|
+    k = [o1[n], o2[n]]
+    k = k.sort_by(&:to_s) if b.nil?
+    key[i] = (o1[n].nil? || o2[n].nil?) ? [:none, i] : k
+  end
+  parent = {}
+  find = lambda { |i| parent[i] ||= i; parent[i] == i ? i : (parent[i] = find.call(parent[i])) }
+  merged_any = false
+  cand.each_key do |i, j|
+    next unless key[i] == key[j]
+    ri, rj = find.call(i), find.call(j)
+    next if ri == rj
+    parent[ri] = rj
+    merged_any = true
+  end
+  return rr unless merged_any
+  groups = Hash.new { |h, k| h[k] = RBA::Region::new }
+  r = RBA::Region::new
+  polys.each_with_index do |q, i|
+    if parent.has_key?(i)
+      groups[find.call(i)].insert(q)
+    else
+      r.insert(q)
+    end
+  end
+  groups.each_value { |gr| r += gr.merged }
+  r.merged_semantics = false
+  DRC::DRCLayer::new(self, r)
+end
+
+# ENC: the edge check also pairs a layer1 edge with a layer2 edge that is shielded from it by
+# other layer2 edges: a layer1 edge coincident with the edge of its layer2 polygon and a thin
+# layer2 polygon 1 um further (IO filler cells, RV_EN_1_2 / RV_EN_3_4), or the far side of a slot
+# in the same polygon. Calibre does not measure those, and does measure a skewed pair at a jog
+# whose straight connection cuts the corner (PP_EN_3); KLayout's shielded region check makes the
+# same distinction (disc/rvm, disc/ppc). The pairs not inside layer2 are checked one by one with
+# it: the layer1 edge as a 1 dbu sliver against the layer2 polygons around the pair.
+def sv_enc_drop_across(ep, b, dist, metric)
+  d = ep.data
+  inside = d.inside(b.data)
+  rest = d.not_inside(b.data)
+  return ep if rest.is_empty?
+  rest = rest.dup.tap { |x| x.flatten } if rest.is_deep?
+  c, li = sv_area_index(b.data)
+  di = (dist / dbu).round + 2
+  m = case metric
+      when "opposite", "opposite_extended", "opposite_symmetric", "opposite_fsymmetric" then RBA::Region::Projection
+      when "square" then RBA::Region::Square
+      else RBA::Region::Euclidian
+      end
+  keep = RBA::EdgePairs::new
+  rest.each do |p|
+    eb, ea = p.first, p.second
+    lb = RBA::Region::new
+    c.shapes(li).each_touching(p.bbox.enlarged(di, di)) { |sh| lb.insert(sh.polygon) }
+    sl = RBA::Edges::new(ea).extended_in(1)
+    chk = lb.enclosing_check(sl, di, false, m, nil, nil, nil, true)
+    ebs = RBA::Edges::new(eb)
+    keep.insert(p) if chk.each.any? { |q| !(RBA::Edges::new(q.first) & ebs).is_empty? }
+  end
+  sv_w(inside) + sv_w(keep)
+end
+
+# ENC ... OPPOSITE against a non-orthogonal layer2 edge: Calibre measures the enclosure of each
+# point of the layer1 edge along its normal (a 45 degree M1 edge 0.025 from the corner of a contact
+# fails "ENC [CT] M1 < 0.04 OPPOSITE" over the first 0.015 of the contact edge: disc/ct4m), the
+# projection metric of KLayout projects perpendicular to the other edge (a piece 0.015 - 0.022 up).
+# For the axis parallel layer1 edges inside layer2 whose normal of length d leaves layer2 at a
+# non-orthogonal boundary, the pairs with a non-parallel layer2 edge are replaced by the parts
+# of the edge that fail along the normal and, for REGION output, the area between them and the
+# layer2 boundary. Returns [edge pairs, [edges, region]] or [edge pairs, nil].
+def sv_enc_ray(ep, a, b, d)
+  # "< d": the exterior has to start before d; at exactly d the piece in the box has no area
+  di = sv_dbu_i(d)
+  return [ep, nil] if di <= 0
+  e = sv_ein(a.edges, b).data
+  e = e.dup.tap { |x| x.flatten } if e.is_deep?
+  e = e.with_angle(0, false) + e.with_angle(90, false)
+  return [ep, nil] if e.is_empty?
+  bd = b.data
+  bd = bd.dup.tap { |x| x.flatten } if bd.is_deep?
+  ex = (e.extended_out(di) - bd).non_rectilinear
+  return [ep, nil] if ex.is_empty?
+  cand = e.interacting(ex.sized(di))
+  return [ep, nil] if cand.is_empty?
+  idx = sv_area_index(bd)
+  oe = RBA::Edges::new
+  orr = RBA::Region::new
+  cand.each do |ed|
+    box = RBA::Edges::new(ed).extended_out(di)
+    loc = sv_area_local(idx, box.bbox.enlarged(2, 2))
+    pcs = box - loc
+    next if pcs.is_empty?
+    vert = ed.dx == 0
+    lo1, hi1 = vert ? [[ed.y1, ed.y2].min, [ed.y1, ed.y2].max] : [[ed.x1, ed.x2].min, [ed.x1, ed.x2].max]
+    bb0 = box.bbox
+    pcs.merged.each do |pc|
+      bb = pc.bbox
+      l, h = vert ? [bb.bottom, bb.top] : [bb.left, bb.right]
+      l = [l, lo1].max
+      h = [h, hi1].min
+      next if h <= l
+      if vert
+        oe.insert(ed.y1 < ed.y2 ? RBA::Edge::new(ed.x1, l, ed.x1, h) : RBA::Edge::new(ed.x1, h, ed.x1, l))
+        orr += RBA::Region::new(RBA::Box::new(bb0.left, l, bb0.right, h)) & loc
+      else
+        oe.insert(ed.x1 < ed.x2 ? RBA::Edge::new(l, ed.y1, h, ed.y1) : RBA::Edge::new(h, ed.y1, l, ed.y1))
+        orr += RBA::Region::new(RBA::Box::new(l, bb0.bottom, h, bb0.top)) & loc
+      end
+    end
+  end
+  return [ep, nil] if oe.is_empty?
+  # drop the pairs of these edges with non-parallel layer2 edges
+  dd = ep.data
+  par = dd.with_internal_angle(0, false)
+  np = dd.with_internal_angle(0, true)
+  unless np.is_empty?
+    np = np.dup.tap { |x| x.flatten } if np.is_deep?
+    ce = cand.dup
+    keep = RBA::EdgePairs::new
+    np.each do |p|
+      ea = p.second
+      ax = ea.dx == 0 || ea.dy == 0
+      keep.insert(p) unless ax && !(RBA::Edges::new(ea) & ce).is_empty?
+    end
+    ep = sv_w(par) + sv_w(keep)
+  end
+  [ep, [sv_w(oe), sv_w(orr)]]
+end
+
+# closest points of two edges
+def sv_closest(e1, e2)
+  best = nil
+  [[e1.p1, e2, true], [e1.p2, e2, true], [e2.p1, e1, false], [e2.p2, e1, false]].each do |pt, e, first|
+    dx = (e.p2.x - e.p1.x).to_f
+    dy = (e.p2.y - e.p1.y).to_f
+    l2 = dx * dx + dy * dy
+    t = l2 > 0 ? (((pt.x - e.p1.x) * dx + (pt.y - e.p1.y) * dy) / l2) : 0.0
+    t = [[t, 0.0].max, 1.0].min
+    q = RBA::Point::new((e.p1.x + t * dx).round, (e.p1.y + t * dy).round)
+    d = pt.sq_distance(q)
+    best = [d, first ? [pt, q] : [q, pt]] if best.nil? || d < best[0]
+  end
+  best[1]
 end
 
 # edge pairs to regions; zero-distance pairs become thin strips like Calibre
@@ -1339,14 +1633,31 @@ def sv_rect_enc(a, b, goods, opts = {})
   # parts outside b
   outside = rects.interacting(rects - b)
   cache = {}
-  fail_dir = lambda do |t|
-    k = t
+  # a value with OPPOSITE is measured in the projection of the side, one without it euclidean:
+  # a concave layer2 corner diagonal to the corner of the rectangle counts (Calibre, tests in
+  # disc/renc: V1 in M1 with all sides >= 0.03 but a notch corner 0.0255 away fails
+  # "0.03 0.03 0.03 0.03 OPPOSITE", the same notch passes "0 0.04 OPPOSITE 0 0.04 OPPOSITE")
+  fail_dir = lambda do |t, eu|
+    k = [t, eu]
     next cache[k] if cache[k]
     if t <= 0.0
       cache[k] = [outside, outside]
       next cache[k]
     end
-    ep = b.enclosing(rects, t, projection, transparent)
+    ep = b.enclosing(rects, t, eu ? euclidian : projection, transparent)
+    if eu
+      # euclidean: an edge of layer2 that only touches the rectangle in a point (a concave
+      # layer2 corner on the corner of the rectangle, a collinear edge ending there) is no
+      # enclosure of 0 (H7CR CT_EN_4a_4b_4c: a contact with M1 notches at two corners; Calibre:
+      # clean); coincident edges are
+      z = ep.data.with_distance(0, 1, false)
+      unless z.is_empty?
+        zf = z.is_deep? ? z.dup.tap { |x| x.flatten } : z
+        keep = RBA::EdgePairs::new
+        zf.each { |p| keep.insert(p) if (RBA::Edges::new(p.first) & RBA::Edges::new(p.second)).length > 0 }
+        ep = sv_w(ep.data.with_distance(1, nil, false)) + sv_w(keep)
+      end
+    end
     ie = ep.second_edges
     fh = rects.interacting(ie.with_angle(0)) | outside   # bottom/top sides fail
     fv = rects.interacting(ie.with_angle(90)) | outside  # left/right sides fail
@@ -1354,12 +1665,15 @@ def sv_rect_enc(a, b, goods, opts = {})
   end
   goods.each do |spec|
     vals = spec.collect { |v, o| v }
+    opp = spec.collect { |v, o| o }
     vals = vals + [vals[-1]] * (4 - vals.size) if vals.size < 4
+    opp = opp + [opp[-1]] * (4 - opp.size) if opp.size < 4
     # sides are given cyclically: s0, s1, s2, s3 ; s0/s2 opposite, s1/s3 opposite
     p = [vals[0], vals[2]].max
     q = [vals[1], vals[3]].max
-    fhp, fvp = fail_dir.call(p)
-    fhq, fvq = fail_dir.call(q)
+    # a pair is measured euclidean when one of its values is
+    fhp, fvp = fail_dir.call(p, !(opp[0] && opp[2]))
+    fhq, fvq = fail_dir.call(q, !(opp[1] && opp[3]))
     # orientation 1: vertical sides (left/right) need p, horizontal sides need q
     bad1 = fvp | fhq
     # orientation 2: vertical sides need q, horizontal need p
@@ -1488,8 +1802,12 @@ def sv_density(layers, cons, opts = {})
     keys.each do |k1|
       keys.each do |k2|
         next if k1 == k2
-        next unless k1.touches?(k2) && !(k1 & k2).area > 0 rescue nil
-        next unless (k1.left == k2.right || k1.right == k2.left || k1.top == k2.bottom || k1.bottom == k2.top)
+        # neighbours (Calibre, tests in disc/grad_m): the next window of the same row or the
+        # same column only; not diagonal ones and not a BACKUP window that overlaps (it is
+        # not compared to the window it overlaps, nor to the shifted windows next to it)
+        same_row = k1.bottom == k2.bottom && k1.top == k2.top && (k1.left == k2.right || k1.right == k2.left)
+        same_col = k1.left == k2.left && k1.right == k2.right && (k1.bottom == k2.top || k1.top == k2.bottom)
+        next unless same_row || same_col
         d = (dens[k1] - dens[k2]).abs
         if sv_cons_ok(g, d) && sv_cons_ok(cons, dens[k1])
           bad[k1] = true
@@ -1503,7 +1821,9 @@ def sv_density(layers, cons, opts = {})
     end
   end
   r = r & bflat if bflat
-  sv_w(r)
+  # one polygon per group of overlapping / abutting windows, as Calibre writes them (IO
+  # library: M2_D_1_max 1 polygon of 13 windows, T4M2_D_3 1 of 4)
+  sv_w(r.merged)
 end
 
 # ---------------------------------------------------------------------------
@@ -1564,6 +1884,16 @@ end
 # ---------------------------------------------------------------------------
 
 $sv_netter_ready = false
+# CONNECT l0 l1 .. ln BY v: a via shape joins l0 and lk where it overlaps both (v AND l0 AND
+# lk), and then carries their net. A via on one of the layers only, or on lk and lm without
+# l0, joins nothing and is a net of its own (settled with Calibre on CT_S_2 / V1_S_3: contacts
+# on M1 or on poly only, on M1 and poly in disjoint parts, a contact between poly and N+
+# without M1; the former connect(l, v) joined all of them). The via layer is split into its
+# polygons that join l0 and lk (one part per lk, a polygon in two parts gets one net through
+# l0) and the floating rest; the parts take the place of the via in the connectivity (a via
+# layer next to the AND pieces doubled the shapes of the extraction, IO library 63 -> 143 s).
+# $sv_via_parts: [via layer, its parts], for sv_nets.
+$sv_via_parts = []
 def sv_setup_connect
   return if $sv_netter_ready
   $sv_netter_ready = true
@@ -1571,15 +1901,54 @@ def sv_setup_connect
   $sv_connects.each do |layers, via|
     (layers + [via]).compact.each { |n| sv_p($sv_G[n]) }
   end
+  # parts of the via layers
+  parts = {}
+  joins = Hash.new { |h, k| h[k] = [] }
+  pieces = Hash.new { |h, k| h[k] = [] }
   $sv_connects.each do |layers, via|
-    ls = layers.collect { |n| sv_p($sv_G[n]) }
-    if via
-      v = sv_p($sv_G[via])
-      ls.each { |l| connect(l, v) }
-    else
-      (1...ls.size).each { |i| connect(ls[0], ls[i]) }
+    next unless via && layers.size >= 2
+    v = sv_p($sv_G[via])
+    l0 = sv_p($sv_G[layers[0]])
+    vm = v.and(l0)
+    (1...layers.size).each do |i|
+      lk = sv_p($sv_G[layers[i]])
+      t = vm.and(lk)
+      pieces[via] << t
+      joins[via] << [l0, lk, v.interacting(t)]
     end
   end
+  joins.each do |via, js|
+    v = sv_p($sv_G[via])
+    fl = v.not_interacting(pieces[via].inject { |x, y| x + y })
+    parts[via] = js.collect { |_, _, vk| vk } + [fl]
+    $sv_via_parts << [v, parts[via]]
+  end
+  lay = lambda { |n| parts[n] || [sv_p($sv_G[n])] }
+  joins.each_value do |js|
+    js.each { |l0, lk, vk| connect(l0, vk); connect(lk, vk) }
+  end
+  parts.each_value { |ps| connect(ps[-1], ps[-1]) }   # floating vias: nets of their own
+  $sv_connects.each do |layers, via|
+    next if via && layers.size >= 2
+    if via
+      lay.call(via).each { |v| layers.each { |n| lay.call(n).each { |l| connect(l, v) } } }
+    else
+      (1...layers.size).each { |i| lay.call(layers[0]).each { |a| lay.call(layers[i]).each { |b| connect(a, b) } } }
+    end
+  end
+end
+
+# nets of a layer of the connectivity (a via layer: of its parts)
+def sv_layer_nets(l)
+  vp = $sv_via_parts.find { |v, _| v.equal?(l) }
+  return l.nets(prop(1)) unless vp
+  ps = vp[1]
+  ns = ps.collect { |q| q.nets(prop(1)) }
+  return ns.inject { |x, y| x + y } if ns[0].data.is_deep?
+  # flat: Region#join_with / + / insert(Region) kept only the first net layer (KLayout 0.30)
+  r = RBA::Region::new
+  ns.each { |n| n.data.each { |p| r.insert(p) } }
+  sv_w(r)
 end
 
 # net-annotated version of a; a may be derived from a connectivity layer
@@ -1587,9 +1956,9 @@ end
 def sv_nets(a, base = nil)
   sv_setup_connect
   if base.nil? || base.equal?(a)
-    return a.nets(prop(1))
+    return sv_layer_nets(a)
   end
-  bn = sv_p(base).nets(prop(1))
+  bn = sv_layer_nets(sv_p(base))
   sv_w(bn.data.and(a.data, RBA::Region::NoPropertyConstraint))
 end
 

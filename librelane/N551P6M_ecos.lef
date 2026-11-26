@@ -71,6 +71,7 @@ LAYER MET1
   OFFSET 0.1 0.1 ;
   AREA 0.042 ;
   SPACING 0.09 ;
+  SPACING 0.11 ENDOFLINE 0.11 WITHIN 0 PARALLELEDGE 0.11 WITHIN 0.11 ;   # MET1_S_5 (hacking/spacing2lef.py)
   MAXWIDTH 10 ;
   MINENCLOSEDAREA 0.18 ;
   CAPACITANCE CPERSQDIST 0.0007630 ;
@@ -88,7 +89,8 @@ END MET1
 
 LAYER VIA1
   TYPE CUT ;
-  SPACING 0.11 ;
+  SPACING 0.13 ;   # V1_S_3 different nets (hacking/spacing2lef.py)
+  SPACING 0.11 SAMENET ;   # V*_S_1 (hacking/spacing2lef.py)
   SPACING 0.13 ADJACENTCUTS 3 WITHIN 0.14 ;   # V1_S_2 (hacking/svrf2klayout/cutspacing2lef.py)
   WIDTH 0.09 ;
   DCCURRENTDENSITY AVERAGE 0.135 ;
@@ -109,6 +111,7 @@ LAYER MET2
   OFFSET 0.1 0.1 ;
   AREA 0.052 ;
   SPACING 0.1 ;
+  SPACING 0.12 ENDOFLINE 0.12 WITHIN 0 PARALLELEDGE 0.12 WITHIN 0.12 ;   # M2_S_5 (hacking/spacing2lef.py)
   MAXWIDTH 10 ;
   MINENCLOSEDAREA 0.18 ;
   CAPACITANCE CPERSQDIST 0.0011069 ;
@@ -126,7 +129,8 @@ END MET2
 
 LAYER VIA2
   TYPE CUT ;
-  SPACING 0.11 ;
+  SPACING 0.13 ;   # V2_S_3 different nets (hacking/spacing2lef.py)
+  SPACING 0.11 SAMENET ;   # V*_S_1 (hacking/spacing2lef.py)
   SPACING 0.13 ADJACENTCUTS 3 WITHIN 0.14 ;   # V2_S_2 (hacking/svrf2klayout/cutspacing2lef.py)
   WIDTH 0.09 ;
   DCCURRENTDENSITY AVERAGE 0.135 ;
@@ -147,6 +151,7 @@ LAYER MET3
   OFFSET 0.1 0.1 ;
   AREA 0.052 ;
   SPACING 0.1 ;
+  SPACING 0.12 ENDOFLINE 0.12 WITHIN 0 PARALLELEDGE 0.12 WITHIN 0.12 ;   # M3_S_5 (hacking/spacing2lef.py)
   MAXWIDTH 10 ;
   MINENCLOSEDAREA 0.18 ;
   CAPACITANCE CPERSQDIST 0.0011069 ;
@@ -164,7 +169,8 @@ END MET3
 
 LAYER VIA3
   TYPE CUT ;
-  SPACING 0.11 ;
+  SPACING 0.13 ;   # V3_S_3 different nets (hacking/spacing2lef.py)
+  SPACING 0.11 SAMENET ;   # V*_S_1 (hacking/spacing2lef.py)
   SPACING 0.13 ADJACENTCUTS 3 WITHIN 0.14 ;   # V3_S_2 (hacking/svrf2klayout/cutspacing2lef.py)
   WIDTH 0.09 ;
   DCCURRENTDENSITY AVERAGE 0.135 ;
@@ -185,6 +191,7 @@ LAYER MET4
   OFFSET 0.1 0.1 ;
   AREA 0.052 ;
   SPACING 0.1 ;
+  SPACING 0.12 ENDOFLINE 0.12 WITHIN 0 PARALLELEDGE 0.12 WITHIN 0.12 ;   # M4_S_5 (hacking/spacing2lef.py)
   MAXWIDTH 10 ;
   MINENCLOSEDAREA 0.18 ;
   CAPACITANCE CPERSQDIST 0.0011069 ;
@@ -202,7 +209,8 @@ END MET4
 
 LAYER VIA4
   TYPE CUT ;
-  SPACING 0.11 ;
+  SPACING 0.13 ;   # V4_S_3 different nets (hacking/spacing2lef.py)
+  SPACING 0.11 SAMENET ;   # V*_S_1 (hacking/spacing2lef.py)
   SPACING 0.13 ADJACENTCUTS 3 WITHIN 0.14 ;   # V4_S_2 (hacking/svrf2klayout/cutspacing2lef.py)
   WIDTH 0.09 ;
   ENCLOSURE BELOW 0.02 0.005 ;
@@ -224,6 +232,7 @@ LAYER MET5
   OFFSET 0.1 0.1 ;
   AREA 0.052 ;
   SPACING 0.1 ;
+  SPACING 0.12 ENDOFLINE 0.12 WITHIN 0 PARALLELEDGE 0.12 WITHIN 0.12 ;   # M5_S_5 (hacking/spacing2lef.py)
   MAXWIDTH 10 ;
   MINENCLOSEDAREA 0.18 ;
   CAPACITANCE CPERSQDIST 0.0006259 ;
