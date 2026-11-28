@@ -23,16 +23,18 @@ set ::env(SCL_GROUND_PINS) [list "VSS"]
 set ::env(PLACE_SITE) "obssite"
 
 # --- Excluded cells -----------------------------------------------------------------
-# Physical cells, the bus holder, and the latches / clock gates (not characterized, so
-# not in the liberty either), plus the cells with a signal pin the detailed router cannot
-# reach (hacking/pin_access_scan.tcl: none in ics55t9, 6 in ics55t7 since the 2026-11-26 fixes;
-# ics55t7 then has no set+reset flip-flop, DFCSNQD1 is one of them).
+# Physical cells, the bus holder and the clock gates (characterized, but yosys does not infer
+# them), plus the cells with a signal pin the detailed router cannot reach (test/pin_access.sh
+# of stdcell-gen on the delivered LEF: ics55t9 LHSNQD2, ics55t7 8 cells; ics55t7 has no
+# set+reset flip-flop, DFCSNQD1 is one of them) and three ics55t7 cells the router of a real
+# design leaves a violation at.
 set ::env(SYNTH_EXCLUDED_CELL_FILE) "$scl_tech_dir/synth_exclude.cells"
 set ::env(PNR_EXCLUDED_CELL_FILE) "$scl_tech_dir/synth_exclude.cells"
 
-# No latch / mux / tri-state maps: there are no latches in the liberty (designs with latches
-# do not synthesize yet), yosys builds muxes from gates, and the tri-state buffers BUFTD*
-# have no enable arcs.
+# Latches: yosys techmap to the latch cells (stdcell-gen layout_emit/latch_map.py; the latches
+# are characterized by latch_char.py). No mux / tri-state maps: yosys builds muxes from gates,
+# and the tri-state buffers BUFTD* have no enable arcs.
+set ::env(SYNTH_LATCH_MAP) "$scl_tech_dir/latch_map.v"
 
 # --- Taps / ends --------------------------------------------------------------------
 # The cells have no bulk contacts: TAPCELL (0.8 um) ties the wells to the rails.

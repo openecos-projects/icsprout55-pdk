@@ -5,7 +5,7 @@ Two open standard cell libraries for ICsprout 55 nm (1.2 V core SVT devices `nm1
 `make -f Makefile.<lib> deliverable`, 2026-11-27: the fixes of stdcell-gen
 `docs/ics55_pdk_feedback_2026-11-26.md` on top of 9dcd1cd, the LEF synced with the GDS and 31 / 44
 cells laid out again for pin access). They are meant for place and route with LibreLane /
-OpenROAD in this PDK, next to the vendor 7-track (`ics55_LLSC_H7C*`) and private 9-track libraries.
+OpenROAD in this PDK, as an alternative to the vendor 9-track libraries (see "Standard cells" in the top README).
 
 | Library | Height | Site | Cells | With liberty |
 |---|---|---|---|---|
@@ -16,6 +16,28 @@ Cell and pin names are the generator's (TSMC style): `ND2D1` (`a1 a2 -> zn`), `D
 (`d cp cdn -> q`), drive strength after `D`. `<lib>/cell_list` has the cells, and
 `<lib>/doc/datasheet/index.html` documents every cell (function and table, pins, size, layout
 picture, timing at tt).
+
+## Status (2026-11-28): post-layout views, **not ready for a production tapeout**
+
+The views here come from stdcell-gen `cb9ee49` (post-layout characterization: `layout_emit/pex.py`
+netlists, latches and clock gates characterized, `latch_map.v`, the floating pin pieces of 71 cells
+fixed, `TIEL/zn` among them). They were built in a work copy before that commit; they have not been
+rebuilt from the committed sources. Where the text below says commit `17c3ab1`, pre-layout liberty,
+latches missing from the liberty, hold constraints growing with the data slew or the old pin access
+counts, it describes the previous build. **This section wins.**
+
+- PDK side review: stdcell-gen `docs/ics55_pdk_feedback_2026-11-28.md`. Every cell with devices is
+  Calibre LVS clean (428 / 396); abutted DRC only latch-up / untapped well (no taps there) and density.
+- Timing is about 8 % faster than the vendor methodology on vendor cells (tt, combinational; probably
+  the transistor models differ, not proven). Setup / hold tables have one clock slew (0.1 ns): at 0.02
+  or 0.4 ns they are optimistic by up to 26 ps (setup) / 33 ps (hold). Three corners only. **These
+  risks are accepted (2026-11-28); nothing is silicon proven.** If in doubt: at least 15 % late derate,
+  clock slew near 0.1 ns or 35 ps more hold margin (judgement, not validated).
+- Excluded cells: `icsprout55/libs.tech/librelane/<lib>/synth_exclude.cells` (18 / 37: physical cells,
+  clock gates, pin access, cells the router fails at). `latch_map.v` there uses no excluded cell
+  (`stdcell_gen/librelane/<lib>/` is the copy as delivered, not used by the PDK).
+- ics55t9 designs with many hold paths need `PL_RESIZER_HOLD_MAX_BUFFER_PERCENT` /
+  `GRT_RESIZER_HOLD_MAX_BUFFER_PERCENT` 100 (the default 50 % aborts, `RSZ-0060`).
 
 ## Contents
 
@@ -58,7 +80,9 @@ stdcell_gen/
 - **Fillers / ends**: `FILL1 FILL2 FILL4 FILL8 FILL16 FILL32 FILL64` (site multiples). No endcap cells:
   close the rows with fillers. `FILL1` alone has a MET1 minimum-area marker that disappears when
   abutted. Decaps: `DCAP DCAP4 DCAP8 DCAP16 DCAP64` (ics55t7 only); not used as LibreLane
-  `DECAP_CELLS`: inserted after routing, their internal MET1 shorts to the routed MET1.
+  `DECAP_CELLS` (inserted after routing, their internal MET1 shorts to the routed MET1) but as
+  `ICS55_DECAP_CELLS` of the routing aware step `ICS55.FillInsertion` (PDK LibreLane plugin, substitute
+  `OpenROAD.FillInsertion`; 3221 decaps, 82 % of the filled area, DRC / LVS clean on a 3500 cell test design).
 - **Ties**: `TIEH/z`, `TIEL/zn`. **Antenna diode**: `ANTENNA/i`, in the liberty (junction
   capacitance 0.315 fF). Every signal pin of the LEF has `ANTENNAGATEAREA` / `ANTENNADIFFAREA`
   (extracted from the layout, the same areas as Magic's LEF writer).
@@ -104,10 +128,6 @@ stdcell_gen/
 ## LibreLane integration
 
 `librelane --pdk icsprout55 --scl ics55t9` (or `ics55t7`).
-
-In this repository the install is `make openpdk` (target `generated-std`, which does what `install.sh`
-below does) and the LibreLane files are in `librelane/`. The `hacking/` tools and `test/` scripts
-named here are in the icsprout55-openpdk and stdcell-gen repositories.
 
 - `install.sh` copies `stdcell_gen/<lib>` to `icsprout55/libs.ref/<lib>`, unpacks GDS and liberty and
   adds `spice/<lib>_lvs.spice`, the netgen reference (`hacking/magic/lvs_netlist.py`). Everything else

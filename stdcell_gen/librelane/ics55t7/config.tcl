@@ -17,6 +17,8 @@ set ::env(DECAP_CELLS) [list "DCAP*"]
 set ::env(FILL_CELLS) [list "FILL*"]
 set ::env(DIODE_CELL) "ANTENNA/i"
 set ::env(CELL_PAD_EXCLUDE) [list "DCAP*" "TIEH" "TIEL"]
+# Latches: yosys techmap to the latch cells (latch_map.py)
+set ::env(SYNTH_LATCH_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/latch_map.v"
 
 set ::env(PDN_RAIL_WIDTH) 0.16
 set ::env(CTS_ROOT_BUFFER) "CKBD16"
