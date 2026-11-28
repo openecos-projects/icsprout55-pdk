@@ -69,7 +69,7 @@ $sv_overrides = {}
 $sv_switches = {}
 
 # options handed to the child processes of -rd jobs=N
-$sv_fwd_vars = %w[input topcell flat densityRules sv_verbose_flag strict break_points]
+$sv_fwd_vars = %w[input topcell flat densityRules sv_verbose_flag strict break_points release release_check mem_log trim]
 if $densityRules && $densityRules.to_s.downcase == "false"
   $sv_overrides["DENSITY_RULES"] = "NO"
 end
@@ -93,11 +93,16 @@ class SvScope
     @p = parent
     @name = name
     @defs = {}
+    @deps = {}
     @cache = {}
     @busy = {}
+    @released = {}
   end
-  def define(n, &blk)
-    @defs[n.upcase] = blk
+  # deps: the names the definition looks up (generator, global layers only; nil = unknown)
+  def define(n, deps = nil, &blk)
+    k = n.upcase
+    @defs[k] = blk
+    @deps[k] = deps
   end
   def defined?(n)
     @defs.has_key?(n.upcase) || (@p && @p.defined?(n))
@@ -105,14 +110,25 @@ class SvScope
   def [](n)
     k = n.upcase
     if @defs.has_key?(k)
+      SvScope.dep_check(k) if $sv_release_check && @p.nil?
       return @cache[k] if @cache.has_key?(k)
       raise "SVRF: cyclic definition of #{k}" if @busy[k]
+      if @released.delete(k)
+        # the dependencies of a rule or layer missed k: a wrong release would only cost time
+        # here, but it means the static dependency sets are wrong
+        msg = "SVRF: layer #{k} used after its release (#{$sv_cur_rule})"
+        raise msg if $sv_release_check
+        @e.log("WARNING: #{msg}, computed again")
+        $sv_late_uses << [$sv_cur_rule, k]
+      end
       @busy[k] = true
       t0 = Time.now
+      $sv_ctx << SvScope.dep_set(@deps[k]) if $sv_release_check && @p.nil?
       begin
         v = @defs[k].call
       ensure
         @busy[k] = false
+        $sv_ctx.pop if $sv_release_check && @p.nil?
       end
       if $sv_verbose && Time.now - t0 > 0.5
         @e.log("SVRF layer #{@name}:#{k}: #{'%.2f' % (Time.now - t0)}s (incl. dependencies)")
@@ -142,6 +158,74 @@ class SvScope
   end
   def forget
     @cache.clear
+  end
+  def cached_values
+    @cache.values
+  end
+  def cached_names
+    @cache.keys
+  end
+  # Release the computed layers no rule left to run can need. roots: the names the remaining
+  # rules look up directly ("@CONN": the connectivity). A computed layer stops the walk (its
+  # own dependencies are not needed for it any more), a layer still to be computed needs its
+  # dependencies. Returns the released [name, value] pairs and the needed names.
+  def release_unneeded(roots, conn_names)
+    need = {}
+    work = roots.dup
+    while (k = work.pop)
+      next if need[k]
+      need[k] = true
+      if k == "@CONN"
+        work.concat(conn_names)
+        next
+      end
+      next if @cache.has_key?(k) || !@defs.has_key?(k)
+      d = @deps[k]
+      return [[], nil] if d.nil?   # unknown dependencies: keep everything
+      work.concat(d)
+    end
+    rel = []
+    @cache.keys.each do |k|
+      next if need[k]
+      rel << [k, @cache.delete(k)]
+      @released[k] = true
+    end
+    [rel, need]
+  end
+end
+
+# -rd release=0: keep every computed global layer to the end (the former behaviour; for
+# comparisons). -rd release_check=1: check every global lookup against the static dependencies
+# of the rule / layer that makes it and stop at a use after release.
+$sv_release = !%w[0 false no].include?($release.to_s.downcase)
+$sv_release_check = ($release_check.to_s == "1")
+$sv_mem_log = ($mem_log.to_s == "1")
+$sv_ctx = []
+$sv_late_uses = []
+$sv_cur_rule = nil
+$sv_dep_sets = {}
+
+def sv_conn_names
+  $sv_conn_names ||= $sv_connects.collect { |layers, via| layers + [via] }.flatten.compact.collect(&:upcase).uniq
+end
+
+class SvScope
+  def self.dep_set(deps)
+    return nil if deps.nil?
+    $sv_dep_sets[deps.object_id] ||= begin
+      h = {}
+      deps.each { |d| h[d] = true }
+      h
+    end
+  end
+  # release_check: a global lookup must be in the dependencies of the rule / global layer that
+  # makes it (a CONNECT layer: through "@CONN")
+  def self.dep_check(k)
+    ctx = $sv_ctx[-1]
+    return if ctx.nil?   # outside of any rule (dump)
+    return if ctx[k]
+    return if ctx["@CONN"] && $sv_conn_names_all.include?(k)
+    raise "SVRF: #{$sv_cur_rule} looks up #{k}, which is not in the static dependencies"
   end
 end
 
@@ -261,8 +345,9 @@ def sv_define(name, value)
   $sv_defines[name.upcase] = ov.nil? ? value : ov
 end
 
-def sv_rule(name, desc, groups = [], &blk)
-  $sv_rules << [name, desc, blk]
+# deps: the global layers the rule may look up (generator; nil = unknown, no release)
+def sv_rule(name, desc, deps = nil, &blk)
+  $sv_rules << [name, desc, blk, deps]
 end
 
 def sv_connect(layers, via)
@@ -1183,6 +1268,10 @@ def sv_check(kind, a, b, cons, opts = {})
     # net aware rules built the connectivity of the whole filled chip for nothing)
     ep, swap = run.call(a, b, nargs)
     unless ep.is_empty?
+      # the pairs without the net condition are only this test: freed before the net aware
+      # check (PO_S_14: every AA / poly pair at every gate, ~1.6 GB on a 5000 cell block)
+      ep.data._destroy if $sv_release
+      ep = nil
       args << (conn ? props_eq : props_ne)
       a = sv_nets(a, opts[:netbase_a])
       b = sv_nets(b, opts[:netbase_b]) if b
@@ -1469,7 +1558,9 @@ def sv_conn_region(ep, a, b)
       r.insert(q)
     end
   end
-  groups.each_value { |gr| r += gr.merged }
+  # in place: "r += " copied r for every group (PO_S_14: ~2800 groups of a 5000 cell block,
+  # 1.6 GB of copies the GC had not freed yet)
+  groups.each_value { |gr| gr.merged.each { |q| r.insert(q) } }
   r.merged_semantics = false
   DRC::DRCLayer::new(self, r)
 end
@@ -1548,10 +1639,10 @@ def sv_enc_ray(ep, a, b, d)
       next if h <= l
       if vert
         oe.insert(ed.y1 < ed.y2 ? RBA::Edge::new(ed.x1, l, ed.x1, h) : RBA::Edge::new(ed.x1, h, ed.x1, l))
-        orr += RBA::Region::new(RBA::Box::new(bb0.left, l, bb0.right, h)) & loc
+        (RBA::Region::new(RBA::Box::new(bb0.left, l, bb0.right, h)) & loc).each { |q| orr.insert(q) }   # in place, "orr +=" copied it per piece
       else
         oe.insert(ed.x1 < ed.x2 ? RBA::Edge::new(l, ed.y1, h, ed.y1) : RBA::Edge::new(h, ed.y1, l, ed.y1))
-        orr += RBA::Region::new(RBA::Box::new(l, bb0.bottom, h, bb0.top)) & loc
+        (RBA::Region::new(RBA::Box::new(l, bb0.bottom, h, bb0.top)) & loc).each { |q| orr.insert(q) }   # in place, "orr +=" copied it per piece
       end
     end
   end
@@ -1779,7 +1870,7 @@ def sv_density(layers, cons, opts = {})
       end
       dens[bx] = a.to_f / wa
     end
-    $sv_density_cache[key] = [l.data, bound ? bound.data : nil, dens]
+    $sv_density_cache[key] = [l.data, bound ? bound.data : nil, dens, [lidx, bidx].compact]
   end
   if opts[:gradient]
     # compare neighbouring windows
@@ -1888,6 +1979,7 @@ def sv_setup_connect
   $sv_connects.each do |layers, via|
     (layers + [via]).compact.each { |n| sv_p($sv_G[n]) }
   end
+  sv_mem_log("connectivity layers computed") if $sv_mem_log
   # parts of the via layers
   parts = {}
   joins = Hash.new { |h, k| h[k] = [] }
@@ -1943,7 +2035,9 @@ end
 def sv_nets(a, base = nil)
   sv_setup_connect
   if base.nil? || base.equal?(a)
-    return sv_layer_nets(a)
+    r = sv_layer_nets(a)
+    sv_mem_log("nets extracted") if $sv_mem_log
+    return r
   end
   bn = sv_layer_nets(sv_p(base))
   sv_w(bn.data.and(a.data, RBA::Region::NoPropertyConstraint))
@@ -2365,7 +2459,10 @@ def sv_run_jobs(title)
     failed << lg unless st.success? && File.exist?(rep)
   end
   jobs.each do |pid, rep, lg, n|
-    File.readlines(lg).each { |l| $sv_failed << [l.split[3].to_s.chomp(":"), l.strip] if l =~ /SVRF rule .* FAILED/ }
+    File.readlines(lg).each do |l|
+      $sv_failed << [l.split[3].to_s.chomp(":"), l.strip] if l =~ /SVRF rule .* FAILED/
+      log("SVRF process #{File.basename(lg)}: #{l.strip}") if $sv_mem_log && l =~ /SVRF mem end:|layers used after/
+    end
   end
   raise "SVRF: #{failed.size} DRC processes failed, see #{failed.join(', ')}" unless failed.empty?
   # merge the reports
@@ -2421,16 +2518,22 @@ def sv_run_rules
   end
   sel = $sv_select
   unsel = $sv_unselect
+  run = $sv_rules.select do |name, desc, blk, deps|
+    only ? only[name] : !(sel && !(name =~ sel)) && !(unsel && (name =~ unsel))
+  end
+  # release: how many of the rules still to run look up each name directly
+  release = $sv_release && run.all? { |r| r[3] }
+  log("SVRF: release of computed layers off (#{$sv_release ? 'a rule without dependencies' : '-rd release=0'})") unless release
+  $sv_conn_names_all = sv_conn_names
+  left = Hash.new(0)
+  run.each { |r| r[3].each { |d| left[d] += 1 } } if release
+  sv_mem_log("start (layout read)") if $sv_mem_log
   n = 0
-  $sv_rules.each do |name, desc, blk|
-    if only
-      next unless only[name]
-    else
-      next if sel && !(name =~ sel)
-      next if unsel && (name =~ unsel)
-    end
+  run.each do |name, desc, blk, deps|
+    $sv_cur_rule = name
     t0 = Time.now
     outs = []
+    $sv_ctx = [SvScope.dep_set(deps)] if $sv_release_check
     begin
       blk.call(outs)
       # outputs are evaluated after all local layers of the rule are defined
@@ -2447,394 +2550,524 @@ def sv_run_rules
     rescue => ex
       $sv_failed << [name, ex.to_s]
       log("SVRF rule #{name} FAILED: #{ex}")
-      if $sv_strict
+      if $sv_strict || ($sv_release_check && ex.to_s =~ /static dependencies|after its release/)
         raise ex
       end
     end
+    outs = nil
+    $sv_ctx = []
     dt = Time.now - t0
     log("SVRF rule #{name}: #{'%.2f' % dt}s") if $sv_verbose
+    if release
+      deps.each { |d| left.delete(d) if (left[d] -= 1) <= 0 }
+      sv_release_after(left.keys)
+    end
+    sv_mem_log("rule #{name}") if $sv_mem_log
   end
+  $sv_cur_rule = nil
+  unless $sv_late_uses.empty?
+    log("SVRF: WARNING: #{$sv_late_uses.size} layers used after their release (computed again): " +
+        $sv_late_uses.collect { |r, k| "#{r}:#{k}" }.join(" "))
+  end
+  sv_mem_probe_end if $sv_mem_log
   n
 end
 
+# ---------------------------------------------------------------------------
+# Release of computed layers (-rd release=0 switches it off)
+#
+# Global layers are computed on first use and cached. After each rule the layers that no rule
+# left to run can look up (static dependencies from the generator, transitively through the
+# layers not computed yet) are dropped from the cache, and with them what the runtime caches
+# for them: input layers, density windows, merged / broken connectivity layers. The
+# connectivity is cleared after the last rule that uses it. A layer only used by one rule is
+# so computed and freed around that rule. GC.start then frees the KLayout objects (Ruby does
+# not see their size, so without it they stay until a later GC); local layers of the rule go
+# the same way. Nothing is _destroy'ed: a layer can be the value of several names (COPY,
+# aliases of one input), the GC only frees what nothing refers to any more.
+# ---------------------------------------------------------------------------
+$sv_malloc_trim = nil
+def sv_trim
+  return if $trim.to_s == "0"
+  if $sv_malloc_trim.nil?
+    $sv_malloc_trim = false
+    begin
+      require 'fiddle'
+      $sv_malloc_trim = Fiddle::Function.new(Fiddle.dlopen(nil)['malloc_trim'], [Fiddle::TYPE_SIZE_T], Fiddle::TYPE_INT)
+    rescue Exception
+    end
+  end
+  $sv_malloc_trim.call(0) if $sv_malloc_trim
+end
+
+def sv_release_after(roots)
+  rel, need = $sv_G.release_unneeded(roots, sv_conn_names)
+  return if need.nil?
+  live = {}
+  $sv_G.cached_values.each { |v| live[v.data.object_id] = true if v.respond_to?(:data) }
+  conn = need["@CONN"]
+  unless conn
+    if $sv_netter_ready || $sv_stage_cur
+      clear_connections
+      $sv_netter_ready = false
+      $sv_stage_cur = nil
+      $sv_via_parts = []
+      $sv_conn_map = {}
+      $sv_prune_cache = {}
+    end
+  end
+  # caches keyed by object ids: only for layers still alive (a freed id can be reused)
+  $sv_merged_cache.delete_if { |id, _| !live[id] }
+  $sv_broken.delete_if { |id, _| !live[id] }
+  $sv_prune_cache.delete_if { |key, r| !key[1].all? { |id| live[id] } }
+  unless need["@INPUTS"]
+    $sv_input_cache.delete_if { |_, r| !live[r.data.object_id] }
+  end
+  if $sv_density_cache
+    $sv_density_cache.delete_if do |_, e|
+      keep = live[e[0].object_id] && (e[1].nil? || live[e[1].object_id])
+      e[3].each { |c, li| $sv_area_ly.delete_cell(c.cell_index) } unless keep
+      !keep
+    end
+  end
+  # GC (~15 ms with the deck loaded) when the time since the last one is 10 x its own cost:
+  # after every rule on a large layout, every few rules on a small one
+  now = Time.now
+  $sv_gc_last ||= now
+  if now - $sv_gc_last >= 10 * ($sv_gc_cost || 0.0)
+    GC.start
+    sv_trim
+    $sv_gc_cost = Time.now - now
+    $sv_gc_last = Time.now
+  end
+  if $sv_verbose && !rel.empty?
+    log("SVRF: released #{rel.collect { |k, _| k }.join(' ')}")
+  end
+end
+
+def sv_rss
+  h = {}
+  File.readlines("/proc/self/status").each { |l| h[$1] = $2.to_i / 1024 if l =~ /^(VmRSS|VmHWM):\s+(\d+)/ }
+  h
+rescue
+  {}
+end
+
+def sv_layer_size(v)
+  d = v.respond_to?(:data) ? v.data : nil
+  return 0 if d.nil?
+  d.respond_to?(:is_deep?) && d.is_deep? ? d.hier_count : d.count
+rescue
+  0
+end
+
+# -rd mem_log=1: resident memory after each rule and the layers held
+def sv_mem_log(what)
+  m = sv_rss
+  names = $sv_G.cached_names
+  tot = 0
+  big = names.collect { |k| [k, sv_layer_size($sv_G.instance_variable_get(:@cache)[k])] }
+  big.each { |_, c| tot += c }
+  top = big.sort_by { |_, c| -c }[0, 3].collect { |k, c| "#{k}=#{c}" }.join(" ")
+  log("SVRF mem #{what}: rss #{m['VmRSS']} MB peak #{m['VmHWM']} MB, #{names.size} global layers " +
+      "(#{tot} shapes; #{top}), #{$sv_input_cache.size} inputs")
+end
+
+# mem_log: at the end, what the remaining caches held
+def sv_mem_probe_end
+  sv_mem_log("end")
+  $sv_G.forget
+  $sv_input_cache.clear
+  $sv_density_cache = {} if $sv_density_cache
+  $sv_merged_cache.clear
+  $sv_prune_cache = {}
+  clear_connections
+  $sv_netter_ready = false
+  $sv_stage_cur = nil
+  $sv_via_parts = []
+  GC.start
+  sv_trim
+  sv_mem_log("end, all caches dropped")
+end
+
 $sv_G = SvScope.new(self, nil, "GLOBAL")
-$sv_G.define("ACTi") { sv_input([[2, 1]]) }
-$sv_G.define("DGOX") { sv_input([[27, 1]]) }
-$sv_G.define("TGOX") { sv_input([[28, 1]]) }
-$sv_G.define("POLYi") { sv_input([[41, 1]]) }
-$sv_G.define("NPi") { sv_input([[52, 1]]) }
-$sv_G.define("PPi") { sv_input([[53, 1]]) }
-$sv_G.define("CT") { sv_input([[72, 1]]) }
-$sv_G.define("CTbar") { sv_input([[72, 7]]) }
-$sv_G.define("MET1i") { sv_input([[81, 1]]) }
-$sv_G.define("MET1dmi") { sv_input([[81, 2]]) }
-$sv_G.define("MET1dmblk") { sv_input([[81, 3]]) }
-$sv_G.define("MET1res") { sv_input([[81, 4]]) }
-$sv_G.define("MET1opcblk") { sv_input([[81, 5]]) }
-$sv_G.define("MET1text") { sv_input([]) }
-$sv_G.define("MET1sloti") { sv_input([[81, 8]]) }
-$sv_G.define("MET1slotblk") { sv_input([[81, 9]]) }
-$sv_G.define("MET1mom") { sv_input([[81, 10]]) }
-$sv_G.define("MET2i") { sv_input([[82, 1]]) }
-$sv_G.define("MET2dmi") { sv_input([[82, 2]]) }
-$sv_G.define("MET2dmblk") { sv_input([[82, 3]]) }
-$sv_G.define("MET2res") { sv_input([[82, 4]]) }
-$sv_G.define("MET2opcblk") { sv_input([[82, 5]]) }
-$sv_G.define("MET2text") { sv_input([]) }
-$sv_G.define("MET2sloti") { sv_input([[82, 8]]) }
-$sv_G.define("MET2slotblk") { sv_input([[82, 9]]) }
-$sv_G.define("MET2mom") { sv_input([[82, 10]]) }
-$sv_G.define("MET3i") { sv_input([[83, 1]]) }
-$sv_G.define("MET3dmi") { sv_input([[83, 2]]) }
-$sv_G.define("MET3dmblk") { sv_input([[83, 3]]) }
-$sv_G.define("MET3res") { sv_input([[83, 4]]) }
-$sv_G.define("MET3opcblk") { sv_input([[83, 5]]) }
-$sv_G.define("MET3text") { sv_input([]) }
-$sv_G.define("MET3sloti") { sv_input([[83, 8]]) }
-$sv_G.define("MET3slotblk") { sv_input([[83, 9]]) }
-$sv_G.define("MET3mom") { sv_input([[83, 10]]) }
-$sv_G.define("MET4i") { sv_input([[84, 1]]) }
-$sv_G.define("MET4dmi") { sv_input([[84, 2]]) }
-$sv_G.define("MET4dmblk") { sv_input([[84, 3]]) }
-$sv_G.define("MET4res") { sv_input([[84, 4]]) }
-$sv_G.define("MET4opcblk") { sv_input([[84, 5]]) }
-$sv_G.define("MET4text") { sv_input([]) }
-$sv_G.define("MET4sloti") { sv_input([[84, 8]]) }
-$sv_G.define("MET4slotblk") { sv_input([[84, 9]]) }
-$sv_G.define("MET4mom") { sv_input([[84, 10]]) }
-$sv_G.define("MET5i") { sv_input([[85, 1]]) }
-$sv_G.define("MET5dmi") { sv_input([[85, 2]]) }
-$sv_G.define("MET5dmblk") { sv_input([[85, 3]]) }
-$sv_G.define("MET5res") { sv_input([[85, 4]]) }
-$sv_G.define("MET5opcblk") { sv_input([[85, 5]]) }
-$sv_G.define("MET5text") { sv_input([]) }
-$sv_G.define("MET5sloti") { sv_input([[85, 8]]) }
-$sv_G.define("MET5slotblk") { sv_input([[85, 9]]) }
-$sv_G.define("MET5mom") { sv_input([[85, 10]]) }
-$sv_G.define("MET6i") { sv_input([[86, 1]]) }
-$sv_G.define("MET6dmi") { sv_input([[86, 2]]) }
-$sv_G.define("MET6dmblk") { sv_input([[86, 3]]) }
-$sv_G.define("MET6res") { sv_input([[86, 4]]) }
-$sv_G.define("MET6opcblk") { sv_input([[86, 5]]) }
-$sv_G.define("MET6text") { sv_input([]) }
-$sv_G.define("MET6sloti") { sv_input([[86, 8]]) }
-$sv_G.define("MET6slotblk") { sv_input([[86, 9]]) }
-$sv_G.define("MET6mom") { sv_input([[86, 10]]) }
-$sv_G.define("MET7i") { sv_input([[87, 1]]) }
-$sv_G.define("MET7dmi") { sv_input([[87, 2]]) }
-$sv_G.define("MET7dmblk") { sv_input([[87, 3]]) }
-$sv_G.define("MET7res") { sv_input([[87, 4]]) }
-$sv_G.define("MET7opcblk") { sv_input([[87, 5]]) }
-$sv_G.define("MET7text") { sv_input([]) }
-$sv_G.define("MET7sloti") { sv_input([[87, 8]]) }
-$sv_G.define("MET7slotblk") { sv_input([[87, 9]]) }
-$sv_G.define("MET7mom") { sv_input([[87, 10]]) }
-$sv_G.define("MET8i") { sv_input([[88, 1]]) }
-$sv_G.define("MET8dmi") { sv_input([[88, 2]]) }
-$sv_G.define("MET8dmblk") { sv_input([[88, 3]]) }
-$sv_G.define("MET8res") { sv_input([[88, 4]]) }
-$sv_G.define("MET8opcblk") { sv_input([[88, 5]]) }
-$sv_G.define("MET8text") { sv_input([]) }
-$sv_G.define("MET8sloti") { sv_input([[88, 8]]) }
-$sv_G.define("MET8slotblk") { sv_input([[88, 9]]) }
-$sv_G.define("MET8mom") { sv_input([[88, 10]]) }
-$sv_G.define("VIA1i") { sv_input([[91, 1]]) }
-$sv_G.define("VIA1bar") { sv_input([[91, 7]]) }
-$sv_G.define("VIA2i") { sv_input([[92, 1]]) }
-$sv_G.define("VIA2bar") { sv_input([[92, 7]]) }
-$sv_G.define("VIA3i") { sv_input([[93, 1]]) }
-$sv_G.define("VIA3bar") { sv_input([[93, 7]]) }
-$sv_G.define("VIA4i") { sv_input([[94, 1]]) }
-$sv_G.define("VIA4bar") { sv_input([[94, 7]]) }
-$sv_G.define("VIA5i") { sv_input([[95, 1]]) }
-$sv_G.define("VIA5bar") { sv_input([[95, 7]]) }
-$sv_G.define("VIA6i") { sv_input([[96, 1]]) }
-$sv_G.define("VIA6bar") { sv_input([[96, 7]]) }
-$sv_G.define("VIA7i") { sv_input([[97, 1]]) }
-$sv_G.define("VIA7bar") { sv_input([[97, 7]]) }
-$sv_G.define("T2M1i") { sv_input([[100, 1]]) }
-$sv_G.define("T2M1dmi") { sv_input([[100, 2]]) }
-$sv_G.define("T2M1dmblk") { sv_input([[100, 3]]) }
-$sv_G.define("T2M1res") { sv_input([[100, 4]]) }
-$sv_G.define("T2M1opcblk") { sv_input([[100, 5]]) }
-$sv_G.define("T2M1text") { sv_input([]) }
-$sv_G.define("T2M1sloti") { sv_input([[100, 8]]) }
-$sv_G.define("T2M1slotblk") { sv_input([[100, 9]]) }
-$sv_G.define("T2M2i") { sv_input([[101, 1]]) }
-$sv_G.define("T2M2dmi") { sv_input([[101, 2]]) }
-$sv_G.define("T2M2dmblk") { sv_input([[101, 3]]) }
-$sv_G.define("T2M2res") { sv_input([[101, 4]]) }
-$sv_G.define("T2M2opcblk") { sv_input([[101, 5]]) }
-$sv_G.define("T2M2text") { sv_input([]) }
-$sv_G.define("T2M2sloti") { sv_input([[101, 8]]) }
-$sv_G.define("T2M2slotblk") { sv_input([[101, 9]]) }
-$sv_G.define("T4M1i") { sv_input([[102, 1]]) }
-$sv_G.define("T4M1dmi") { sv_input([[102, 2]]) }
-$sv_G.define("T4M1dmblk") { sv_input([[102, 3]]) }
-$sv_G.define("T4M1res") { sv_input([[102, 4]]) }
-$sv_G.define("T4M1opcblk") { sv_input([[102, 5]]) }
-$sv_G.define("T4M1text") { sv_input([]) }
-$sv_G.define("T4M1sloti") { sv_input([[102, 8]]) }
-$sv_G.define("T4M1slotblk") { sv_input([[102, 9]]) }
-$sv_G.define("T4M2i") { sv_input([[103, 1]]) }
-$sv_G.define("T4M2dmi") { sv_input([[103, 2]]) }
-$sv_G.define("T4M2dmblk") { sv_input([[103, 3]]) }
-$sv_G.define("T4M2res") { sv_input([[103, 4]]) }
-$sv_G.define("T4M2opcblk") { sv_input([[103, 5]]) }
-$sv_G.define("T4M2text") { sv_input([]) }
-$sv_G.define("T4M2sloti") { sv_input([[103, 8]]) }
-$sv_G.define("T4M2slotblk") { sv_input([[103, 9]]) }
-$sv_G.define("T8M1i") { sv_input([[104, 1]]) }
-$sv_G.define("T8M1dmi") { sv_input([[104, 2]]) }
-$sv_G.define("T8M1dmblk") { sv_input([[104, 3]]) }
-$sv_G.define("T8M1res") { sv_input([[104, 4]]) }
-$sv_G.define("T8M1opcblk") { sv_input([[104, 5]]) }
-$sv_G.define("T8M1text") { sv_input([]) }
-$sv_G.define("T8M1sloti") { sv_input([[104, 8]]) }
-$sv_G.define("T8M1slotblk") { sv_input([[104, 9]]) }
-$sv_G.define("T8M2i") { sv_input([[105, 1]]) }
-$sv_G.define("T8M2dmi") { sv_input([[105, 2]]) }
-$sv_G.define("T8M2dmblk") { sv_input([[105, 3]]) }
-$sv_G.define("T8M2res") { sv_input([[105, 4]]) }
-$sv_G.define("T8M2opcblk") { sv_input([[105, 5]]) }
-$sv_G.define("T8M2text") { sv_input([]) }
-$sv_G.define("T8M2sloti") { sv_input([[105, 8]]) }
-$sv_G.define("T8M2slotblk") { sv_input([[105, 9]]) }
-$sv_G.define("T2V1i") { sv_input([[110, 1]]) }
-$sv_G.define("T2V1bar") { sv_input([[110, 7]]) }
-$sv_G.define("T2V2i") { sv_input([[111, 1]]) }
-$sv_G.define("T2V2bar") { sv_input([[111, 7]]) }
-$sv_G.define("T4V1i") { sv_input([[112, 1]]) }
-$sv_G.define("T4V1bar") { sv_input([[112, 7]]) }
-$sv_G.define("T4V2i") { sv_input([[113, 1]]) }
-$sv_G.define("T4V2bar") { sv_input([[113, 7]]) }
-$sv_G.define("T8V1i") { sv_input([[114, 1]]) }
-$sv_G.define("T8V1bar") { sv_input([[114, 7]]) }
-$sv_G.define("T8V2i") { sv_input([[115, 1]]) }
-$sv_G.define("T8V2bar") { sv_input([[115, 7]]) }
-$sv_G.define("RV") { sv_input([[120, 1]]) }
-$sv_G.define("CB") { sv_input([[121, 1]]) }
-$sv_G.define("CBtext") { sv_input([]) }
-$sv_G.define("ALPAD") { sv_input([[122, 1]]) }
-$sv_G.define("ALPADres") { sv_input([[122, 4]]) }
-$sv_G.define("ALPADtext") { sv_input([]) }
-$sv_G.define("ALPADsloti") { sv_input([[122, 8]]) }
-$sv_G.define("ALPADslotblk") { sv_input([[122, 9]]) }
-$sv_G.define("RDL") { sv_input([[123, 1]]) }
-$sv_G.define("RDV") { sv_nary("OR", $sv_G["RV"], $sv_G["CB"]) }
-$sv_G.define("M1") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET1i"), sv_lzn($sv_G, "MET1sloti")) }
-$sv_G.define("M2") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET2i"), sv_lzn($sv_G, "MET2sloti")) }
-$sv_G.define("M3") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET3i"), sv_lzn($sv_G, "MET3sloti")) }
-$sv_G.define("M4") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET4i"), sv_lzn($sv_G, "MET4sloti")) }
-$sv_G.define("M5") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET5i"), sv_lzn($sv_G, "MET5sloti")) }
-$sv_G.define("M6") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET6i"), sv_lzn($sv_G, "MET6sloti")) }
-$sv_G.define("M7") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET7i"), sv_lzn($sv_G, "MET7sloti")) }
-$sv_G.define("M8") { sv_bool_lz("NOT", sv_lzn($sv_G, "MET8i"), sv_lzn($sv_G, "MET8sloti")) }
-$sv_G.define("T4M1") { sv_bool_lz("NOT", sv_lzn($sv_G, "T4M1i"), sv_lzn($sv_G, "T4M1sloti")) }
-$sv_G.define("T4M2") { sv_bool_lz("NOT", sv_lzn($sv_G, "T4M2i"), sv_lzn($sv_G, "T4M2sloti")) }
-$sv_G.define("T2M1") { sv_bool_lz("NOT", sv_lzn($sv_G, "T2M1i"), sv_lzn($sv_G, "T2M1sloti")) }
-$sv_G.define("T2M2") { sv_bool_lz("NOT", sv_lzn($sv_G, "T2M2i"), sv_lzn($sv_G, "T2M2sloti")) }
-$sv_G.define("T8M1") { sv_bool_lz("NOT", sv_lzn($sv_G, "T8M1i"), sv_lzn($sv_G, "T8M1sloti")) }
-$sv_G.define("T8M2") { sv_bool_lz("NOT", sv_lzn($sv_G, "T8M2i"), sv_lzn($sv_G, "T8M2sloti")) }
-$sv_G.define("CT1") { sv_nary("OR", $sv_G["CT"], $sv_G["CTbar"]) }
-$sv_G.define("VIA1") { sv_nary("OR", $sv_G["VIA1i"], $sv_G["VIA1bar"]) }
-$sv_G.define("VIA2") { sv_nary("OR", $sv_G["VIA2i"], $sv_G["VIA2bar"]) }
-$sv_G.define("VIA3") { sv_nary("OR", $sv_G["VIA3i"], $sv_G["VIA3bar"]) }
-$sv_G.define("VIA4") { sv_nary("OR", $sv_G["VIA4i"], $sv_G["VIA4bar"]) }
-$sv_G.define("VIA5") { sv_nary("OR", $sv_G["VIA5i"], $sv_G["VIA5bar"]) }
-$sv_G.define("VIA6") { sv_nary("OR", $sv_G["VIA6i"], $sv_G["VIA6bar"]) }
-$sv_G.define("VIA7") { sv_nary("OR", $sv_G["VIA7i"], $sv_G["VIA7bar"]) }
-$sv_G.define("T2V1") { sv_nary("OR", $sv_G["T2V1i"], $sv_G["T2V1bar"]) }
-$sv_G.define("T2V2") { sv_nary("OR", $sv_G["T2V2i"], $sv_G["T2V2bar"]) }
-$sv_G.define("T4V1") { sv_nary("OR", $sv_G["T4V1i"], $sv_G["T4V1bar"]) }
-$sv_G.define("T4V2") { sv_nary("OR", $sv_G["T4V2i"], $sv_G["T4V2bar"]) }
-$sv_G.define("T8V1") { sv_nary("OR", $sv_G["T8V1i"], $sv_G["T8V1bar"]) }
-$sv_G.define("T8V2") { sv_nary("OR", $sv_G["T8V2i"], $sv_G["T8V2bar"]) }
-$sv_G.define("AA") { $sv_G["ACTi"] }
-$sv_G.define("PO") { $sv_G["POLYi"] }
-$sv_G.define("GATE") { sv_sel_any("interact", sv_bool_lz("AND", sv_lzn($sv_G, "PO"), sv_lzn($sv_G, "AA")), $sv_G["SD_1"], [["==", 2.0]], false, {}) }
-$sv_G.define("SD_1") { sv_bool_lz("NOT", sv_lzn($sv_G, "AA"), sv_lzn($sv_G, "PO")) }
-$sv_G.define("SD") { sv_bool_lz("NOT", sv_lz { sv_bool_lz("AND", sv_lz { sv_bool("OR", $sv_G["NPi"], $sv_G["PPi"]) }, sv_lzn($sv_G, "AA")) }, sv_lzn($sv_G, "PO")) }
-$sv_G.define("GATE18") { sv_bool_lz("AND", sv_lzn($sv_G, "GATE"), sv_lzn($sv_G, "DGOX")) }
-$sv_G.define("GATE1825") { sv_bool_lz("AND", sv_lzn($sv_G, "GATE"), sv_lz { sv_bool("OR", $sv_G["DGOX"], $sv_G["TGOX"]) }) }
+$sv_G.define("ACTi", []) { sv_input([[2, 1]]) }
+$sv_G.define("DGOX", []) { sv_input([[27, 1]]) }
+$sv_G.define("TGOX", []) { sv_input([[28, 1]]) }
+$sv_G.define("POLYi", []) { sv_input([[41, 1]]) }
+$sv_G.define("NPi", []) { sv_input([[52, 1]]) }
+$sv_G.define("PPi", []) { sv_input([[53, 1]]) }
+$sv_G.define("CT", []) { sv_input([[72, 1]]) }
+$sv_G.define("CTbar", []) { sv_input([[72, 7]]) }
+$sv_G.define("MET1i", []) { sv_input([[81, 1]]) }
+$sv_G.define("MET1dmi", []) { sv_input([[81, 2]]) }
+$sv_G.define("MET1dmblk", []) { sv_input([[81, 3]]) }
+$sv_G.define("MET1res", []) { sv_input([[81, 4]]) }
+$sv_G.define("MET1opcblk", []) { sv_input([[81, 5]]) }
+$sv_G.define("MET1text", []) { sv_input([]) }
+$sv_G.define("MET1sloti", []) { sv_input([[81, 8]]) }
+$sv_G.define("MET1slotblk", []) { sv_input([[81, 9]]) }
+$sv_G.define("MET1mom", []) { sv_input([[81, 10]]) }
+$sv_G.define("MET2i", []) { sv_input([[82, 1]]) }
+$sv_G.define("MET2dmi", []) { sv_input([[82, 2]]) }
+$sv_G.define("MET2dmblk", []) { sv_input([[82, 3]]) }
+$sv_G.define("MET2res", []) { sv_input([[82, 4]]) }
+$sv_G.define("MET2opcblk", []) { sv_input([[82, 5]]) }
+$sv_G.define("MET2text", []) { sv_input([]) }
+$sv_G.define("MET2sloti", []) { sv_input([[82, 8]]) }
+$sv_G.define("MET2slotblk", []) { sv_input([[82, 9]]) }
+$sv_G.define("MET2mom", []) { sv_input([[82, 10]]) }
+$sv_G.define("MET3i", []) { sv_input([[83, 1]]) }
+$sv_G.define("MET3dmi", []) { sv_input([[83, 2]]) }
+$sv_G.define("MET3dmblk", []) { sv_input([[83, 3]]) }
+$sv_G.define("MET3res", []) { sv_input([[83, 4]]) }
+$sv_G.define("MET3opcblk", []) { sv_input([[83, 5]]) }
+$sv_G.define("MET3text", []) { sv_input([]) }
+$sv_G.define("MET3sloti", []) { sv_input([[83, 8]]) }
+$sv_G.define("MET3slotblk", []) { sv_input([[83, 9]]) }
+$sv_G.define("MET3mom", []) { sv_input([[83, 10]]) }
+$sv_G.define("MET4i", []) { sv_input([[84, 1]]) }
+$sv_G.define("MET4dmi", []) { sv_input([[84, 2]]) }
+$sv_G.define("MET4dmblk", []) { sv_input([[84, 3]]) }
+$sv_G.define("MET4res", []) { sv_input([[84, 4]]) }
+$sv_G.define("MET4opcblk", []) { sv_input([[84, 5]]) }
+$sv_G.define("MET4text", []) { sv_input([]) }
+$sv_G.define("MET4sloti", []) { sv_input([[84, 8]]) }
+$sv_G.define("MET4slotblk", []) { sv_input([[84, 9]]) }
+$sv_G.define("MET4mom", []) { sv_input([[84, 10]]) }
+$sv_G.define("MET5i", []) { sv_input([[85, 1]]) }
+$sv_G.define("MET5dmi", []) { sv_input([[85, 2]]) }
+$sv_G.define("MET5dmblk", []) { sv_input([[85, 3]]) }
+$sv_G.define("MET5res", []) { sv_input([[85, 4]]) }
+$sv_G.define("MET5opcblk", []) { sv_input([[85, 5]]) }
+$sv_G.define("MET5text", []) { sv_input([]) }
+$sv_G.define("MET5sloti", []) { sv_input([[85, 8]]) }
+$sv_G.define("MET5slotblk", []) { sv_input([[85, 9]]) }
+$sv_G.define("MET5mom", []) { sv_input([[85, 10]]) }
+$sv_G.define("MET6i", []) { sv_input([[86, 1]]) }
+$sv_G.define("MET6dmi", []) { sv_input([[86, 2]]) }
+$sv_G.define("MET6dmblk", []) { sv_input([[86, 3]]) }
+$sv_G.define("MET6res", []) { sv_input([[86, 4]]) }
+$sv_G.define("MET6opcblk", []) { sv_input([[86, 5]]) }
+$sv_G.define("MET6text", []) { sv_input([]) }
+$sv_G.define("MET6sloti", []) { sv_input([[86, 8]]) }
+$sv_G.define("MET6slotblk", []) { sv_input([[86, 9]]) }
+$sv_G.define("MET6mom", []) { sv_input([[86, 10]]) }
+$sv_G.define("MET7i", []) { sv_input([[87, 1]]) }
+$sv_G.define("MET7dmi", []) { sv_input([[87, 2]]) }
+$sv_G.define("MET7dmblk", []) { sv_input([[87, 3]]) }
+$sv_G.define("MET7res", []) { sv_input([[87, 4]]) }
+$sv_G.define("MET7opcblk", []) { sv_input([[87, 5]]) }
+$sv_G.define("MET7text", []) { sv_input([]) }
+$sv_G.define("MET7sloti", []) { sv_input([[87, 8]]) }
+$sv_G.define("MET7slotblk", []) { sv_input([[87, 9]]) }
+$sv_G.define("MET7mom", []) { sv_input([[87, 10]]) }
+$sv_G.define("MET8i", []) { sv_input([[88, 1]]) }
+$sv_G.define("MET8dmi", []) { sv_input([[88, 2]]) }
+$sv_G.define("MET8dmblk", []) { sv_input([[88, 3]]) }
+$sv_G.define("MET8res", []) { sv_input([[88, 4]]) }
+$sv_G.define("MET8opcblk", []) { sv_input([[88, 5]]) }
+$sv_G.define("MET8text", []) { sv_input([]) }
+$sv_G.define("MET8sloti", []) { sv_input([[88, 8]]) }
+$sv_G.define("MET8slotblk", []) { sv_input([[88, 9]]) }
+$sv_G.define("MET8mom", []) { sv_input([[88, 10]]) }
+$sv_G.define("VIA1i", []) { sv_input([[91, 1]]) }
+$sv_G.define("VIA1bar", []) { sv_input([[91, 7]]) }
+$sv_G.define("VIA2i", []) { sv_input([[92, 1]]) }
+$sv_G.define("VIA2bar", []) { sv_input([[92, 7]]) }
+$sv_G.define("VIA3i", []) { sv_input([[93, 1]]) }
+$sv_G.define("VIA3bar", []) { sv_input([[93, 7]]) }
+$sv_G.define("VIA4i", []) { sv_input([[94, 1]]) }
+$sv_G.define("VIA4bar", []) { sv_input([[94, 7]]) }
+$sv_G.define("VIA5i", []) { sv_input([[95, 1]]) }
+$sv_G.define("VIA5bar", []) { sv_input([[95, 7]]) }
+$sv_G.define("VIA6i", []) { sv_input([[96, 1]]) }
+$sv_G.define("VIA6bar", []) { sv_input([[96, 7]]) }
+$sv_G.define("VIA7i", []) { sv_input([[97, 1]]) }
+$sv_G.define("VIA7bar", []) { sv_input([[97, 7]]) }
+$sv_G.define("T2M1i", []) { sv_input([[100, 1]]) }
+$sv_G.define("T2M1dmi", []) { sv_input([[100, 2]]) }
+$sv_G.define("T2M1dmblk", []) { sv_input([[100, 3]]) }
+$sv_G.define("T2M1res", []) { sv_input([[100, 4]]) }
+$sv_G.define("T2M1opcblk", []) { sv_input([[100, 5]]) }
+$sv_G.define("T2M1text", []) { sv_input([]) }
+$sv_G.define("T2M1sloti", []) { sv_input([[100, 8]]) }
+$sv_G.define("T2M1slotblk", []) { sv_input([[100, 9]]) }
+$sv_G.define("T2M2i", []) { sv_input([[101, 1]]) }
+$sv_G.define("T2M2dmi", []) { sv_input([[101, 2]]) }
+$sv_G.define("T2M2dmblk", []) { sv_input([[101, 3]]) }
+$sv_G.define("T2M2res", []) { sv_input([[101, 4]]) }
+$sv_G.define("T2M2opcblk", []) { sv_input([[101, 5]]) }
+$sv_G.define("T2M2text", []) { sv_input([]) }
+$sv_G.define("T2M2sloti", []) { sv_input([[101, 8]]) }
+$sv_G.define("T2M2slotblk", []) { sv_input([[101, 9]]) }
+$sv_G.define("T4M1i", []) { sv_input([[102, 1]]) }
+$sv_G.define("T4M1dmi", []) { sv_input([[102, 2]]) }
+$sv_G.define("T4M1dmblk", []) { sv_input([[102, 3]]) }
+$sv_G.define("T4M1res", []) { sv_input([[102, 4]]) }
+$sv_G.define("T4M1opcblk", []) { sv_input([[102, 5]]) }
+$sv_G.define("T4M1text", []) { sv_input([]) }
+$sv_G.define("T4M1sloti", []) { sv_input([[102, 8]]) }
+$sv_G.define("T4M1slotblk", []) { sv_input([[102, 9]]) }
+$sv_G.define("T4M2i", []) { sv_input([[103, 1]]) }
+$sv_G.define("T4M2dmi", []) { sv_input([[103, 2]]) }
+$sv_G.define("T4M2dmblk", []) { sv_input([[103, 3]]) }
+$sv_G.define("T4M2res", []) { sv_input([[103, 4]]) }
+$sv_G.define("T4M2opcblk", []) { sv_input([[103, 5]]) }
+$sv_G.define("T4M2text", []) { sv_input([]) }
+$sv_G.define("T4M2sloti", []) { sv_input([[103, 8]]) }
+$sv_G.define("T4M2slotblk", []) { sv_input([[103, 9]]) }
+$sv_G.define("T8M1i", []) { sv_input([[104, 1]]) }
+$sv_G.define("T8M1dmi", []) { sv_input([[104, 2]]) }
+$sv_G.define("T8M1dmblk", []) { sv_input([[104, 3]]) }
+$sv_G.define("T8M1res", []) { sv_input([[104, 4]]) }
+$sv_G.define("T8M1opcblk", []) { sv_input([[104, 5]]) }
+$sv_G.define("T8M1text", []) { sv_input([]) }
+$sv_G.define("T8M1sloti", []) { sv_input([[104, 8]]) }
+$sv_G.define("T8M1slotblk", []) { sv_input([[104, 9]]) }
+$sv_G.define("T8M2i", []) { sv_input([[105, 1]]) }
+$sv_G.define("T8M2dmi", []) { sv_input([[105, 2]]) }
+$sv_G.define("T8M2dmblk", []) { sv_input([[105, 3]]) }
+$sv_G.define("T8M2res", []) { sv_input([[105, 4]]) }
+$sv_G.define("T8M2opcblk", []) { sv_input([[105, 5]]) }
+$sv_G.define("T8M2text", []) { sv_input([]) }
+$sv_G.define("T8M2sloti", []) { sv_input([[105, 8]]) }
+$sv_G.define("T8M2slotblk", []) { sv_input([[105, 9]]) }
+$sv_G.define("T2V1i", []) { sv_input([[110, 1]]) }
+$sv_G.define("T2V1bar", []) { sv_input([[110, 7]]) }
+$sv_G.define("T2V2i", []) { sv_input([[111, 1]]) }
+$sv_G.define("T2V2bar", []) { sv_input([[111, 7]]) }
+$sv_G.define("T4V1i", []) { sv_input([[112, 1]]) }
+$sv_G.define("T4V1bar", []) { sv_input([[112, 7]]) }
+$sv_G.define("T4V2i", []) { sv_input([[113, 1]]) }
+$sv_G.define("T4V2bar", []) { sv_input([[113, 7]]) }
+$sv_G.define("T8V1i", []) { sv_input([[114, 1]]) }
+$sv_G.define("T8V1bar", []) { sv_input([[114, 7]]) }
+$sv_G.define("T8V2i", []) { sv_input([[115, 1]]) }
+$sv_G.define("T8V2bar", []) { sv_input([[115, 7]]) }
+$sv_G.define("RV", []) { sv_input([[120, 1]]) }
+$sv_G.define("CB", []) { sv_input([[121, 1]]) }
+$sv_G.define("CBtext", []) { sv_input([]) }
+$sv_G.define("ALPAD", []) { sv_input([[122, 1]]) }
+$sv_G.define("ALPADres", []) { sv_input([[122, 4]]) }
+$sv_G.define("ALPADtext", []) { sv_input([]) }
+$sv_G.define("ALPADsloti", []) { sv_input([[122, 8]]) }
+$sv_G.define("ALPADslotblk", []) { sv_input([[122, 9]]) }
+$sv_G.define("RDL", []) { sv_input([[123, 1]]) }
+$sv_G.define("RDV", ["CB", "RV"]) { sv_nary("OR", $sv_G["RV"], $sv_G["CB"]) }
+$sv_G.define("M1", ["MET1I", "MET1SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET1i"), sv_lzn($sv_G, "MET1sloti")) }
+$sv_G.define("M2", ["MET2I", "MET2SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET2i"), sv_lzn($sv_G, "MET2sloti")) }
+$sv_G.define("M3", ["MET3I", "MET3SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET3i"), sv_lzn($sv_G, "MET3sloti")) }
+$sv_G.define("M4", ["MET4I", "MET4SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET4i"), sv_lzn($sv_G, "MET4sloti")) }
+$sv_G.define("M5", ["MET5I", "MET5SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET5i"), sv_lzn($sv_G, "MET5sloti")) }
+$sv_G.define("M6", ["MET6I", "MET6SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET6i"), sv_lzn($sv_G, "MET6sloti")) }
+$sv_G.define("M7", ["MET7I", "MET7SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET7i"), sv_lzn($sv_G, "MET7sloti")) }
+$sv_G.define("M8", ["MET8I", "MET8SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "MET8i"), sv_lzn($sv_G, "MET8sloti")) }
+$sv_G.define("T4M1", ["T4M1I", "T4M1SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "T4M1i"), sv_lzn($sv_G, "T4M1sloti")) }
+$sv_G.define("T4M2", ["T4M2I", "T4M2SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "T4M2i"), sv_lzn($sv_G, "T4M2sloti")) }
+$sv_G.define("T2M1", ["T2M1I", "T2M1SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "T2M1i"), sv_lzn($sv_G, "T2M1sloti")) }
+$sv_G.define("T2M2", ["T2M2I", "T2M2SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "T2M2i"), sv_lzn($sv_G, "T2M2sloti")) }
+$sv_G.define("T8M1", ["T8M1I", "T8M1SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "T8M1i"), sv_lzn($sv_G, "T8M1sloti")) }
+$sv_G.define("T8M2", ["T8M2I", "T8M2SLOTI"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "T8M2i"), sv_lzn($sv_G, "T8M2sloti")) }
+$sv_G.define("CT1", ["CT", "CTBAR"]) { sv_nary("OR", $sv_G["CT"], $sv_G["CTbar"]) }
+$sv_G.define("VIA1", ["VIA1BAR", "VIA1I"]) { sv_nary("OR", $sv_G["VIA1i"], $sv_G["VIA1bar"]) }
+$sv_G.define("VIA2", ["VIA2BAR", "VIA2I"]) { sv_nary("OR", $sv_G["VIA2i"], $sv_G["VIA2bar"]) }
+$sv_G.define("VIA3", ["VIA3BAR", "VIA3I"]) { sv_nary("OR", $sv_G["VIA3i"], $sv_G["VIA3bar"]) }
+$sv_G.define("VIA4", ["VIA4BAR", "VIA4I"]) { sv_nary("OR", $sv_G["VIA4i"], $sv_G["VIA4bar"]) }
+$sv_G.define("VIA5", ["VIA5BAR", "VIA5I"]) { sv_nary("OR", $sv_G["VIA5i"], $sv_G["VIA5bar"]) }
+$sv_G.define("VIA6", ["VIA6BAR", "VIA6I"]) { sv_nary("OR", $sv_G["VIA6i"], $sv_G["VIA6bar"]) }
+$sv_G.define("VIA7", ["VIA7BAR", "VIA7I"]) { sv_nary("OR", $sv_G["VIA7i"], $sv_G["VIA7bar"]) }
+$sv_G.define("T2V1", ["T2V1BAR", "T2V1I"]) { sv_nary("OR", $sv_G["T2V1i"], $sv_G["T2V1bar"]) }
+$sv_G.define("T2V2", ["T2V2BAR", "T2V2I"]) { sv_nary("OR", $sv_G["T2V2i"], $sv_G["T2V2bar"]) }
+$sv_G.define("T4V1", ["T4V1BAR", "T4V1I"]) { sv_nary("OR", $sv_G["T4V1i"], $sv_G["T4V1bar"]) }
+$sv_G.define("T4V2", ["T4V2BAR", "T4V2I"]) { sv_nary("OR", $sv_G["T4V2i"], $sv_G["T4V2bar"]) }
+$sv_G.define("T8V1", ["T8V1BAR", "T8V1I"]) { sv_nary("OR", $sv_G["T8V1i"], $sv_G["T8V1bar"]) }
+$sv_G.define("T8V2", ["T8V2BAR", "T8V2I"]) { sv_nary("OR", $sv_G["T8V2i"], $sv_G["T8V2bar"]) }
+$sv_G.define("AA", ["ACTI"]) { $sv_G["ACTi"] }
+$sv_G.define("PO", ["POLYI"]) { $sv_G["POLYi"] }
+$sv_G.define("GATE", ["AA", "PO", "SD_1"]) { sv_sel_any("interact", sv_bool_lz("AND", sv_lzn($sv_G, "PO"), sv_lzn($sv_G, "AA")), $sv_G["SD_1"], [["==", 2.0]], false, {}) }
+$sv_G.define("SD_1", ["AA", "PO"]) { sv_bool_lz("NOT", sv_lzn($sv_G, "AA"), sv_lzn($sv_G, "PO")) }
+$sv_G.define("SD", ["AA", "NPI", "PO", "PPI"]) { sv_bool_lz("NOT", sv_lz { sv_bool_lz("AND", sv_lz { sv_bool("OR", $sv_G["NPi"], $sv_G["PPi"]) }, sv_lzn($sv_G, "AA")) }, sv_lzn($sv_G, "PO")) }
+$sv_G.define("GATE18", ["DGOX", "GATE"]) { sv_bool_lz("AND", sv_lzn($sv_G, "GATE"), sv_lzn($sv_G, "DGOX")) }
+$sv_G.define("GATE1825", ["DGOX", "GATE", "TGOX"]) { sv_bool_lz("AND", sv_lzn($sv_G, "GATE"), sv_lz { sv_bool("OR", $sv_G["DGOX"], $sv_G["TGOX"]) }) }
 $sv_incremental = true
 flat
 $sv_flat = true
 sv_connect(["PO", "GATE"], nil)
 sv_connect(["PO", "GATE18"], nil)
 sv_connect(["PO", "GATE1825"], nil)
-sv_rule("AR_1", "Max. (Poly area / gate area) is 250") do |outs|
+sv_rule("AR_1", "Max. (Poly area / gate area) is 250", ["@CONN", "GATE", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_1")
   outs << proc { sv_nar([s["PO"], s["GATE"]], ["PO", "GATE"], lambda { |a, p| a["PO"] / a["GATE"] }, [[">", 250.0]], 3, nil, [nil, nil]) }
 end
-sv_rule("AR_2", "Max. (Poly perim*thickness / gate area) is 500") do |outs|
+sv_rule("AR_2", "Max. (Poly perim*thickness / gate area) is 500", ["@CONN", "GATE", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_2")
   outs << proc { sv_nar([s["PO"], s["GATE"]], ["PO", "GATE"], lambda { |a, p| p["PO"] * 0.10 / a["GATE"] }, [[">", 500.0]], 3, nil, [nil, nil]) }
 end
 sv_connect(["CT1", "PO"], nil)
-sv_rule("AR_3", "Max. (contact area / gate area) is 10") do |outs|
+sv_rule("AR_3", "Max. (contact area / gate area) is 10", ["@CONN", "CT1", "GATE"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_3")
   outs << proc { sv_nar([s["CT1"], s["GATE"]], ["CT1", "GATE"], lambda { |a, p| a["CT1"] / a["GATE"] }, [[">", 10.0]], 4, nil, [nil, nil]) }
 end
 sv_connect(["M1", "PO", "SD"], "CT1")
-$sv_G.define("M1_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 5) }
+$sv_G.define("M1_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 5) }
 sv_connect(["M1", "M1_DIO"], "CT1")
-sv_rule("AR_5_10_M1", "Max. (M1 area / gate area) is 5000 (without effective diode) Max. (M1 area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_5_10_M1", "Max. (M1 area / gate area) is 5000 (without effective diode) Max. (M1 area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "GATE", "M1", "M1_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_5_10_M1")
   s.define("A1") { sv_nar([s["PO"], s["M1"], s["M1_DIO"], s["GATE"]], ["PO", "M1", "M1_DIO", "GATE"], lambda { |a, p| a["M1"] / a["GATE"] - (a["M1_DIO"] * 500.0 + ((a["M1_DIO"]) != 0 ? 1.0 : 0.0) * 38000.0) }, [[">", 5000.0]], 6, true, [nil, nil, nil, nil]) }
   outs << proc { s["A1"] }
 end
-sv_rule("AR18_5_10_M1", "Max. (M1 area / 1.8v gate area) is 1000 (without effective diode) Max. (M1 area / 1.8v gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR18_5_10_M1", "Max. (M1 area / 1.8v gate area) is 1000 (without effective diode) Max. (M1 area / 1.8v gate area) is Ratio Equation (with effective diode)", ["@CONN", "GATE18", "M1", "M1_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR18_5_10_M1")
   s.define("A1_18") { sv_nar([s["PO"], s["M1"], s["M1_DIO"], s["GATE18"]], ["PO", "M1", "M1_DIO", "GATE18"], lambda { |a, p| a["M1"] / a["GATE18"] - (a["M1_DIO"] * 500.0 + ((a["M1_DIO"]) != 0 ? 1.0 : 0.0) * 42000.0) }, [[">", 1000.0]], 6, true, [nil, nil, nil, nil]) }
   outs << proc { s["A1_18"] }
 end
 sv_connect(["VIA1", "M1"], nil)
-sv_rule("AR_4_VIA1", "(VIA1 area / gate area) > 20 (without effective diode) (VIA1 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate") do |outs|
+sv_rule("AR_4_VIA1", "(VIA1 area / gate area) > 20 (without effective diode) (VIA1 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate", ["@CONN", "GATE", "M1", "M1_DIO", "PO", "VIA1"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_4_VIA1")
   s.define("AVIA1_no_accumulate") { sv_nar([s["PO"], s["M1"], s["VIA1"], s["M1_DIO"], s["GATE"]], ["PO", "M1", "VIA1", "M1_DIO", "GATE"], lambda { |a, p| a["VIA1"] / a["GATE"] - (a["M1_DIO"] * 150.0 + ((a["M1_DIO"]) != 0 ? 1.0 : 0.0) * 980.0) }, [[">", 20.0]], 7, nil, [nil, nil, nil, nil, nil]) }
   outs << proc { s["AVIA1_no_accumulate"] }
 end
-sv_rule("AR_6_9_VIA1", "(VIA1 area / gate area) > 50 (without effective diode) (VIA1 area / gate area) > Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_6_9_VIA1", "(VIA1 area / gate area) > 50 (without effective diode) (VIA1 area / gate area) > Ratio Equation (with effective diode)", ["@CONN", "GATE", "M1", "M1_DIO", "PO", "VIA1"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_6_9_VIA1")
   s.define("AVIA1") { sv_nar([s["PO"], s["M1"], s["VIA1"], s["M1_DIO"], s["GATE"]], ["PO", "M1", "VIA1", "M1_DIO", "GATE"], lambda { |a, p| a["VIA1"] / a["GATE"] - (a["M1_DIO"] * 250.0 + ((a["M1_DIO"]) != 0 ? 1.0 : 0.0) * 850.0) }, [[">", 50.0]], 7, true, [nil, nil, nil, nil, nil]) }
   outs << proc { s["AVIA1"] }
 end
-$sv_G.define("AC1") { sv_nar([$sv_G["M1"], $sv_G["GATE"]], ["M1", "GATE"], lambda { |a, p| a["M1"] / a["GATE"] }, [[">=", 0.0]], 7, true, [nil, nil]) }
-$sv_G.define("AC1_18") { sv_nar([$sv_G["M1"], $sv_G["GATE18"]], ["M1", "GATE18"], lambda { |a, p| a["M1"] / a["GATE18"] }, [[">=", 0.0]], 7, true, [nil, nil]) }
-$sv_G.define("AC1_V") { sv_nar([$sv_G["VIA1"], $sv_G["GATE"]], ["VIA1", "GATE"], lambda { |a, p| a["VIA1"] / a["GATE"] }, [[">=", 0.0]], 7, true, [nil, nil]) }
+$sv_G.define("AC1", ["@CONN", "GATE", "M1"]) { sv_nar([$sv_G["M1"], $sv_G["GATE"]], ["M1", "GATE"], lambda { |a, p| a["M1"] / a["GATE"] }, [[">=", 0.0]], 7, true, [nil, nil]) }
+$sv_G.define("AC1_18", ["@CONN", "GATE18", "M1"]) { sv_nar([$sv_G["M1"], $sv_G["GATE18"]], ["M1", "GATE18"], lambda { |a, p| a["M1"] / a["GATE18"] }, [[">=", 0.0]], 7, true, [nil, nil]) }
+$sv_G.define("AC1_V", ["@CONN", "GATE", "VIA1"]) { sv_nar([$sv_G["VIA1"], $sv_G["GATE"]], ["VIA1", "GATE"], lambda { |a, p| a["VIA1"] / a["GATE"] }, [[">=", 0.0]], 7, true, [nil, nil]) }
 sv_connect(["M2", "M1"], "VIA1")
-$sv_G.define("M2_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 8) }
+$sv_G.define("M2_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 8) }
 sv_connect(["M1", "M2_DIO"], "CT1")
-sv_rule("AR_5_10_M2", "Max. (M2 area / gate area) is 5000 (without effective diode) Max. (M2 area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_5_10_M2", "Max. (M2 area / gate area) is 5000 (without effective diode) Max. (M2 area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC1", "GATE", "M1", "M2", "M2_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_5_10_M2")
   s.define("A2") { sv_nar([s["PO"], s["M1"], s["M2"], s["M2_DIO"], s["GATE"]], ["PO", "M1", "M2", "M2_DIO", "GATE"], lambda { |a, p| a["M2"] / a["GATE"] - (a["M2_DIO"] * 500.0 + ((a["M2_DIO"]) != 0 ? 1.0 : 0.0) * 38000.0) }, [[">", 5000.0]], 9, s["AC1"], [nil, nil, nil, nil, nil]) }
   outs << proc { s["A2"] }
 end
-sv_rule("AR18_5_10_M2", "Max. (M2 area / 1.8v gate area) is 1000 (without effective diode) Max. (M2 area / 1.8v gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR18_5_10_M2", "Max. (M2 area / 1.8v gate area) is 1000 (without effective diode) Max. (M2 area / 1.8v gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC1_18", "GATE18", "M1", "M2", "M2_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR18_5_10_M2")
   s.define("A2_18") { sv_nar([s["PO"], s["M1"], s["M2"], s["M2_DIO"], s["GATE18"]], ["PO", "M1", "M2", "M2_DIO", "GATE18"], lambda { |a, p| a["M2"] / a["GATE18"] - (a["M2_DIO"] * 500.0 + ((a["M2_DIO"]) != 0 ? 1.0 : 0.0) * 42000.0) }, [[">", 1000.0]], 9, s["AC1_18"], [nil, nil, nil, nil, nil]) }
   outs << proc { s["A2_18"] }
 end
 sv_connect(["M2", "VIA2"], nil)
-sv_rule("AR_4_VIA2", "(VIA2 area / gate area) > 20 (without effective diode) (VIA2 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate") do |outs|
+sv_rule("AR_4_VIA2", "(VIA2 area / gate area) > 20 (without effective diode) (VIA2 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate", ["@CONN", "GATE", "M1", "M2", "M2_DIO", "PO", "VIA2"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_4_VIA2")
   s.define("AV2_no_accumulate") { sv_nar([s["PO"], s["M1"], s["M2"], s["VIA2"], s["M2_DIO"], s["GATE"]], ["PO", "M1", "M2", "VIA2", "M2_DIO", "GATE"], lambda { |a, p| a["VIA2"] / a["GATE"] - (a["M2_DIO"] * 150.0 + ((a["M2_DIO"]) != 0 ? 1.0 : 0.0) * 980.0) }, [[">", 20.0]], 10, nil, [nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AV2_no_accumulate"] }
 end
-sv_rule("AR_6_9_VIA2", "(VIA2 area / gate area) > 50 (without effective diode) (VIA2 area / gate area) > Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_6_9_VIA2", "(VIA2 area / gate area) > 50 (without effective diode) (VIA2 area / gate area) > Ratio Equation (with effective diode)", ["@CONN", "AC1_V", "GATE", "M1", "M2", "M2_DIO", "PO", "VIA2"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_6_9_VIA2")
   s.define("AVIA2") { sv_nar([s["PO"], s["M1"], s["M2"], s["VIA2"], s["M2_DIO"], s["GATE"]], ["PO", "M1", "M2", "VIA2", "M2_DIO", "GATE"], lambda { |a, p| a["VIA2"] / a["GATE"] - (a["M2_DIO"] * 250.0 + ((a["M2_DIO"]) != 0 ? 1.0 : 0.0) * 850.0) }, [[">", 50.0]], 10, s["AC1_V"], [nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AVIA2"] }
 end
-$sv_G.define("AC2") { sv_nar([$sv_G["M2"], $sv_G["GATE"]], ["M2", "GATE"], lambda { |a, p| a["M2"] / a["GATE"] }, [[">=", 0.0]], 10, $sv_G["AC1"], [nil, nil]) }
-$sv_G.define("AC2_18") { sv_nar([$sv_G["M2"], $sv_G["GATE18"]], ["M2", "GATE18"], lambda { |a, p| a["M2"] / a["GATE18"] }, [[">=", 0.0]], 10, $sv_G["AC1_18"], [nil, nil]) }
-$sv_G.define("AC2_V") { sv_nar([$sv_G["VIA2"], $sv_G["GATE"]], ["VIA2", "GATE"], lambda { |a, p| a["VIA2"] / a["GATE"] }, [[">=", 0.0]], 10, $sv_G["AC1_V"], [nil, nil]) }
+$sv_G.define("AC2", ["@CONN", "AC1", "GATE", "M2"]) { sv_nar([$sv_G["M2"], $sv_G["GATE"]], ["M2", "GATE"], lambda { |a, p| a["M2"] / a["GATE"] }, [[">=", 0.0]], 10, $sv_G["AC1"], [nil, nil]) }
+$sv_G.define("AC2_18", ["@CONN", "AC1_18", "GATE18", "M2"]) { sv_nar([$sv_G["M2"], $sv_G["GATE18"]], ["M2", "GATE18"], lambda { |a, p| a["M2"] / a["GATE18"] }, [[">=", 0.0]], 10, $sv_G["AC1_18"], [nil, nil]) }
+$sv_G.define("AC2_V", ["@CONN", "AC1_V", "GATE", "VIA2"]) { sv_nar([$sv_G["VIA2"], $sv_G["GATE"]], ["VIA2", "GATE"], lambda { |a, p| a["VIA2"] / a["GATE"] }, [[">=", 0.0]], 10, $sv_G["AC1_V"], [nil, nil]) }
 sv_connect(["M3", "M2"], "VIA2")
-$sv_G.define("M3_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 11) }
+$sv_G.define("M3_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 11) }
 sv_connect(["M1", "M3_DIO"], "CT1")
-sv_rule("AR_5_10_M3", "Max. (M3 area / gate area) is 5000 (without effective diode) Max. (M3 area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_5_10_M3", "Max. (M3 area / gate area) is 5000 (without effective diode) Max. (M3 area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC2", "GATE", "M1", "M2", "M3", "M3_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_5_10_M3")
   s.define("A3") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M3_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M3_DIO", "GATE"], lambda { |a, p| a["M3"] / a["GATE"] - (a["M3_DIO"] * 500.0 + ((a["M3_DIO"]) != 0 ? 1.0 : 0.0) * 38000.0) }, [[">", 5000.0]], 12, s["AC2"], [nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A3"] }
 end
-sv_rule("AR18_5_10_M3", "Max. (M3 area / 1.8v gate area) is 1000 (without effective diode) Max. (M3 area / 1.8v gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR18_5_10_M3", "Max. (M3 area / 1.8v gate area) is 1000 (without effective diode) Max. (M3 area / 1.8v gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC2_18", "GATE18", "M1", "M2", "M3", "M3_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR18_5_10_M3")
   s.define("A3_18") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M3_DIO"], s["GATE18"]], ["PO", "M1", "M2", "M3", "M3_DIO", "GATE18"], lambda { |a, p| a["M3"] / a["GATE18"] - (a["M3_DIO"] * 500.0 + ((a["M3_DIO"]) != 0 ? 1.0 : 0.0) * 42000.0) }, [[">", 1000.0]], 12, s["AC2_18"], [nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A3_18"] }
 end
 sv_connect(["M3", "VIA3"], nil)
-sv_rule("AR_4_VIA3", "(VIA3 area / gate area) > 20 (without effective diode) (VIA3 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate") do |outs|
+sv_rule("AR_4_VIA3", "(VIA3 area / gate area) > 20 (without effective diode) (VIA3 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate", ["@CONN", "GATE", "M1", "M2", "M3", "M3_DIO", "PO", "VIA3"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_4_VIA3")
   s.define("AV3_no_accumulate") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["VIA3"], s["M3_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "VIA3", "M3_DIO", "GATE"], lambda { |a, p| a["VIA3"] / a["GATE"] - (a["M3_DIO"] * 150.0 + ((a["M3_DIO"]) != 0 ? 1.0 : 0.0) * 980.0) }, [[">", 20.0]], 13, nil, [nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AV3_no_accumulate"] }
 end
-sv_rule("AR_6_9_VIA3", "(VIA3 area / gate area) > 50 (without effective diode) (VIA3 area / gate area) > Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_6_9_VIA3", "(VIA3 area / gate area) > 50 (without effective diode) (VIA3 area / gate area) > Ratio Equation (with effective diode)", ["@CONN", "AC2_V", "GATE", "M1", "M2", "M3", "M3_DIO", "PO", "VIA3"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_6_9_VIA3")
   s.define("AVIA3") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["VIA3"], s["M3_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "VIA3", "M3_DIO", "GATE"], lambda { |a, p| a["VIA3"] / a["GATE"] - (a["M3_DIO"] * 250.0 + ((a["M3_DIO"]) != 0 ? 1.0 : 0.0) * 850.0) }, [[">", 50.0]], 13, s["AC2_V"], [nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AVIA3"] }
 end
-$sv_G.define("AC3") { sv_nar([$sv_G["M3"], $sv_G["GATE"]], ["M3", "GATE"], lambda { |a, p| a["M3"] / a["GATE"] }, [[">=", 0.0]], 13, $sv_G["AC2"], [nil, nil]) }
-$sv_G.define("AC3_18") { sv_nar([$sv_G["M3"], $sv_G["GATE18"]], ["M3", "GATE18"], lambda { |a, p| a["M3"] / a["GATE18"] }, [[">=", 0.0]], 13, $sv_G["AC2_18"], [nil, nil]) }
-$sv_G.define("AC3_V") { sv_nar([$sv_G["VIA3"], $sv_G["GATE"]], ["VIA3", "GATE"], lambda { |a, p| a["VIA3"] / a["GATE"] }, [[">=", 0.0]], 13, $sv_G["AC2_V"], [nil, nil]) }
+$sv_G.define("AC3", ["@CONN", "AC2", "GATE", "M3"]) { sv_nar([$sv_G["M3"], $sv_G["GATE"]], ["M3", "GATE"], lambda { |a, p| a["M3"] / a["GATE"] }, [[">=", 0.0]], 13, $sv_G["AC2"], [nil, nil]) }
+$sv_G.define("AC3_18", ["@CONN", "AC2_18", "GATE18", "M3"]) { sv_nar([$sv_G["M3"], $sv_G["GATE18"]], ["M3", "GATE18"], lambda { |a, p| a["M3"] / a["GATE18"] }, [[">=", 0.0]], 13, $sv_G["AC2_18"], [nil, nil]) }
+$sv_G.define("AC3_V", ["@CONN", "AC2_V", "GATE", "VIA3"]) { sv_nar([$sv_G["VIA3"], $sv_G["GATE"]], ["VIA3", "GATE"], lambda { |a, p| a["VIA3"] / a["GATE"] }, [[">=", 0.0]], 13, $sv_G["AC2_V"], [nil, nil]) }
 sv_connect(["M4", "M3"], "VIA3")
-$sv_G.define("M4_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 14) }
+$sv_G.define("M4_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 14) }
 sv_connect(["M1", "M4_DIO"], "CT1")
-sv_rule("AR_5_10_M4", "Max. (M4 area / gate area) is 5000 (without effective diode) Max. (M4 area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_5_10_M4", "Max. (M4 area / gate area) is 5000 (without effective diode) Max. (M4 area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC3", "GATE", "M1", "M2", "M3", "M4", "M4_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_5_10_M4")
   s.define("A4") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M4_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M4_DIO", "GATE"], lambda { |a, p| a["M4"] / a["GATE"] - (a["M4_DIO"] * 500.0 + ((a["M4_DIO"]) != 0 ? 1.0 : 0.0) * 38000.0) }, [[">", 5000.0]], 15, s["AC3"], [nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A4"] }
 end
-sv_rule("AR18_5_10_M4", "Max. (M4 area / 1.8v gate area) is 1000 (without effective diode) Max. (M4 area / 1.8v gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR18_5_10_M4", "Max. (M4 area / 1.8v gate area) is 1000 (without effective diode) Max. (M4 area / 1.8v gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC3_18", "GATE18", "M1", "M2", "M3", "M4", "M4_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR18_5_10_M4")
   s.define("A4_18") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M4_DIO"], s["GATE18"]], ["PO", "M1", "M2", "M3", "M4", "M4_DIO", "GATE18"], lambda { |a, p| a["M4"] / a["GATE18"] - (a["M4_DIO"] * 500.0 + ((a["M4_DIO"]) != 0 ? 1.0 : 0.0) * 42000.0) }, [[">", 1000.0]], 15, s["AC3_18"], [nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A4_18"] }
 end
 sv_connect(["M4", "VIA4"], nil)
-sv_rule("AR_4_VIA4", "(VIA4 area / gate area) > 20 (without effective diode) (VIA4 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate") do |outs|
+sv_rule("AR_4_VIA4", "(VIA4 area / gate area) > 20 (without effective diode) (VIA4 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate", ["@CONN", "GATE", "M1", "M2", "M3", "M4", "M4_DIO", "PO", "VIA4"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_4_VIA4")
   s.define("AV4_no_accumulate") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["VIA4"], s["M4_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "VIA4", "M4_DIO", "GATE"], lambda { |a, p| a["VIA4"] / a["GATE"] - (a["M4_DIO"] * 150.0 + ((a["M4_DIO"]) != 0 ? 1.0 : 0.0) * 980.0) }, [[">", 20.0]], 16, nil, [nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AV4_no_accumulate"] }
 end
-sv_rule("AR_6_9_VIA4", "(VIA4 area / gate area) > 50 (without effective diode) (VIA4 area / gate area) > Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_6_9_VIA4", "(VIA4 area / gate area) > 50 (without effective diode) (VIA4 area / gate area) > Ratio Equation (with effective diode)", ["@CONN", "AC3_V", "GATE", "M1", "M2", "M3", "M4", "M4_DIO", "PO", "VIA4"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_6_9_VIA4")
   s.define("AVIA4") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["VIA4"], s["M4_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "VIA4", "M4_DIO", "GATE"], lambda { |a, p| a["VIA4"] / a["GATE"] - (a["M4_DIO"] * 250.0 + ((a["M4_DIO"]) != 0 ? 1.0 : 0.0) * 850.0) }, [[">", 50.0]], 16, s["AC3_V"], [nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AVIA4"] }
 end
-$sv_G.define("AC4") { sv_nar([$sv_G["M4"], $sv_G["GATE"]], ["M4", "GATE"], lambda { |a, p| a["M4"] / a["GATE"] }, [[">=", 0.0]], 16, $sv_G["AC3"], [nil, nil]) }
-$sv_G.define("AC4_18") { sv_nar([$sv_G["M4"], $sv_G["GATE18"]], ["M4", "GATE18"], lambda { |a, p| a["M4"] / a["GATE18"] }, [[">=", 0.0]], 16, $sv_G["AC3_18"], [nil, nil]) }
-$sv_G.define("AC4_V") { sv_nar([$sv_G["VIA4"], $sv_G["GATE"]], ["VIA4", "GATE"], lambda { |a, p| a["VIA4"] / a["GATE"] }, [[">=", 0.0]], 16, $sv_G["AC3_V"], [nil, nil]) }
+$sv_G.define("AC4", ["@CONN", "AC3", "GATE", "M4"]) { sv_nar([$sv_G["M4"], $sv_G["GATE"]], ["M4", "GATE"], lambda { |a, p| a["M4"] / a["GATE"] }, [[">=", 0.0]], 16, $sv_G["AC3"], [nil, nil]) }
+$sv_G.define("AC4_18", ["@CONN", "AC3_18", "GATE18", "M4"]) { sv_nar([$sv_G["M4"], $sv_G["GATE18"]], ["M4", "GATE18"], lambda { |a, p| a["M4"] / a["GATE18"] }, [[">=", 0.0]], 16, $sv_G["AC3_18"], [nil, nil]) }
+$sv_G.define("AC4_V", ["@CONN", "AC3_V", "GATE", "VIA4"]) { sv_nar([$sv_G["VIA4"], $sv_G["GATE"]], ["VIA4", "GATE"], lambda { |a, p| a["VIA4"] / a["GATE"] }, [[">=", 0.0]], 16, $sv_G["AC3_V"], [nil, nil]) }
 sv_connect(["M5", "M4"], "VIA4")
-$sv_G.define("M5_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 17) }
+$sv_G.define("M5_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 17) }
 sv_connect(["M1", "M5_DIO"], "CT1")
-sv_rule("AR_5_10_M5", "Max. (M5 area / gate area) is 5000 (without effective diode) Max. (M5 area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_5_10_M5", "Max. (M5 area / gate area) is 5000 (without effective diode) Max. (M5 area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC4", "GATE", "M1", "M2", "M3", "M4", "M5", "M5_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_5_10_M5")
   s.define("A5") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["M5_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M5", "M5_DIO", "GATE"], lambda { |a, p| a["M5"] / a["GATE"] - (a["M5_DIO"] * 500.0 + ((a["M5_DIO"]) != 0 ? 1.0 : 0.0) * 38000.0) }, [[">", 5000.0]], 18, s["AC4"], [nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A5"] }
 end
-sv_rule("AR18_5_10_M5", "Max. (M5 area / 1.8v gate area) is 1000 (without effective diode) Max. (M5 area / 1.8v gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR18_5_10_M5", "Max. (M5 area / 1.8v gate area) is 1000 (without effective diode) Max. (M5 area / 1.8v gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC4_18", "GATE18", "M1", "M2", "M3", "M4", "M5", "M5_DIO", "PO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR18_5_10_M5")
   s.define("A5_18") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["M5_DIO"], s["GATE18"]], ["PO", "M1", "M2", "M3", "M4", "M5", "M5_DIO", "GATE18"], lambda { |a, p| a["M5"] / a["GATE18"] - (a["M5_DIO"] * 500.0 + ((a["M5_DIO"]) != 0 ? 1.0 : 0.0) * 42000.0) }, [[">", 1000.0]], 18, s["AC4_18"], [nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A5_18"] }
 end
 sv_connect(["T4V2", "M5"], nil)
-sv_rule("AR_4_T4V2", "(T4V2 area / gate area) > 20 (without effective diode) (T4V2 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate") do |outs|
+sv_rule("AR_4_T4V2", "(T4V2 area / gate area) > 20 (without effective diode) (T4V2 area / gate area) > Ratio Equation (with effective diode) single layer Via area to the active poly gate area, no accumulate", ["@CONN", "GATE", "M1", "M2", "M3", "M4", "M5", "M5_DIO", "PO", "T4V2"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_4_T4V2")
   s.define("AV5_no_accumulate") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4V2"], s["M5_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4V2", "M5_DIO", "GATE"], lambda { |a, p| a["T4V2"] / a["GATE"] - (a["M5_DIO"] * 150.0 + ((a["M5_DIO"]) != 0 ? 1.0 : 0.0) * 980.0) }, [[">", 20.0]], 19, nil, [nil, nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AV5_no_accumulate"] }
 end
-sv_rule("AR_6_9_T4V2", "(T4V2 area / gate area) > 50 (without effective diode) (T4V2 area / gate area) > Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_6_9_T4V2", "(T4V2 area / gate area) > 50 (without effective diode) (T4V2 area / gate area) > Ratio Equation (with effective diode)", ["@CONN", "AC4_V", "GATE", "M1", "M2", "M3", "M4", "M5", "M5_DIO", "PO", "T4V2"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_6_9_T4V2")
   s.define("AVIA5") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4V2"], s["M5_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4V2", "M5_DIO", "GATE"], lambda { |a, p| a["T4V2"] / a["GATE"] - (a["M5_DIO"] * 250.0 + ((a["M5_DIO"]) != 0 ? 1.0 : 0.0) * 850.0) }, [[">", 50.0]], 19, s["AC4_V"], [nil, nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["AVIA5"] }
 end
-$sv_G.define("AC5") { sv_nar([$sv_G["M5"], $sv_G["GATE"]], ["M5", "GATE"], lambda { |a, p| a["M5"] / a["GATE"] }, [[">=", 0.0]], 19, $sv_G["AC4"], [nil, nil]) }
-$sv_G.define("AC5_18") { sv_nar([$sv_G["M5"], $sv_G["GATE18"]], ["M5", "GATE18"], lambda { |a, p| a["M5"] / a["GATE18"] }, [[">=", 0.0]], 19, $sv_G["AC4_18"], [nil, nil]) }
+$sv_G.define("AC5", ["@CONN", "AC4", "GATE", "M5"]) { sv_nar([$sv_G["M5"], $sv_G["GATE"]], ["M5", "GATE"], lambda { |a, p| a["M5"] / a["GATE"] }, [[">=", 0.0]], 19, $sv_G["AC4"], [nil, nil]) }
+$sv_G.define("AC5_18", ["@CONN", "AC4_18", "GATE18", "M5"]) { sv_nar([$sv_G["M5"], $sv_G["GATE18"]], ["M5", "GATE18"], lambda { |a, p| a["M5"] / a["GATE18"] }, [[">=", 0.0]], 19, $sv_G["AC4_18"], [nil, nil]) }
 sv_connect(["T4M2", "M5"], "T4V2")
-$sv_G.define("T4M2_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 20) }
+$sv_G.define("T4M2_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 20) }
 sv_connect(["M1", "T4M2_DIO"], "CT1")
-sv_rule("AR_5_10_T4M2", "Max. (T4M2 area / gate area) is 5000 (without effective diode) Max. (T4M2 area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_5_10_T4M2", "Max. (T4M2 area / gate area) is 5000 (without effective diode) Max. (T4M2 area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC5", "GATE", "M1", "M2", "M3", "M4", "M5", "PO", "T4M2", "T4M2_DIO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_5_10_T4M2")
   s.define("A6") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4M2"], s["T4M2_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4M2", "T4M2_DIO", "GATE"], lambda { |a, p| a["T4M2"] / a["GATE"] - (a["T4M2_DIO"] * 8000.0 + ((a["T4M2_DIO"]) != 0 ? 1.0 : 0.0) * 45000.0) }, [[">", 5000.0]], 21, s["AC5"], [nil, nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A6"] }
 end
-sv_rule("AR18_5_10_T4M2", "Max. (T4M2 area / 1.8v gate area) is 1000 (without effective diode) Max. (T4M2 area / 1.8v gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR18_5_10_T4M2", "Max. (T4M2 area / 1.8v gate area) is 1000 (without effective diode) Max. (T4M2 area / 1.8v gate area) is Ratio Equation (with effective diode)", ["@CONN", "AC5_18", "GATE18", "M1", "M2", "M3", "M4", "M5", "PO", "T4M2", "T4M2_DIO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR18_5_10_T4M2")
   s.define("A6_18") { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4M2"], s["T4M2_DIO"], s["GATE18"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4M2", "T4M2_DIO", "GATE18"], lambda { |a, p| a["T4M2"] / a["GATE18"] - (a["T4M2_DIO"] * 8000.0 + ((a["T4M2_DIO"]) != 0 ? 1.0 : 0.0) * 49000.0) }, [[">", 1000.0]], 21, s["AC5_18"], [nil, nil, nil, nil, nil, nil, nil, nil, nil]) }
   outs << proc { s["A6_18"] }
 end
 sv_connect(["RDV", "T4M2"], nil)
-sv_rule("AR_7_11_io", "Max. (RDV area / IO gate area) is 20 (without effective diode) Max. (RDV area / IO gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_7_11_io", "Max. (RDV area / IO gate area) is 20 (without effective diode) Max. (RDV area / IO gate area) is Ratio Equation (with effective diode)", ["@CONN", "GATE1825", "M1", "M2", "M3", "M4", "M5", "PO", "RDV", "T4M2", "T4M2_DIO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_7_11_io")
   outs << proc { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4M2"], s["RDV"], s["T4M2_DIO"], s["GATE1825"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4M2", "RDV", "T4M2_DIO", "GATE1825"], lambda { |a, p| a["RDV"] / a["GATE1825"] - (a["T4M2_DIO"] * 90.0 + ((a["T4M2_DIO"]) != 0 ? 1.0 : 0.0) * 380.0) }, [[">", 20.0]], 22, nil, [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]) }
 end
-sv_rule("AR_7_11_core", "Max. (RDV area / gate area) is 200 (without effective diode) Max. (RDV area / gate area) is Ratio Equation (with effective diode)") do |outs|
+sv_rule("AR_7_11_core", "Max. (RDV area / gate area) is 200 (without effective diode) Max. (RDV area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "GATE", "M1", "M2", "M3", "M4", "M5", "PO", "RDV", "T4M2", "T4M2_DIO"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_7_11_core")
   outs << proc { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4M2"], s["RDV"], s["T4M2_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4M2", "RDV", "T4M2_DIO", "GATE"], lambda { |a, p| a["RDV"] / a["GATE"] - (a["T4M2_DIO"] * 90.0 + ((a["T4M2_DIO"]) != 0 ? 1.0 : 0.0) * 200.0) }, [[">", 200.0]], 22, nil, [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]) }
 end
 sv_connect(["RDL", "T4M2"], "RDV")
-$sv_G.define("RDL_DIO") { sv_net_area($sv_G["SD"], [[">", 0.0]], 23) }
-sv_rule("AR_8_12", "Max. (RDL side-wall area / gate area) is 1000 (without effective diode) Max. (RDL side-wall area / gate area) is Ratio Equation (with effective diode)") do |outs|
+$sv_G.define("RDL_DIO", ["@CONN", "SD"]) { sv_net_area($sv_G["SD"], [[">", 0.0]], 23) }
+sv_rule("AR_8_12", "Max. (RDL side-wall area / gate area) is 1000 (without effective diode) Max. (RDL side-wall area / gate area) is Ratio Equation (with effective diode)", ["@CONN", "GATE", "M1", "M2", "M3", "M4", "M5", "PO", "RDL", "RDL_DIO", "SD", "T4M2"]) do |outs|
   s = SvScope.new(self, $sv_G, "AR_8_12")
   outs << proc { sv_nar([s["PO"], s["M1"], s["M2"], s["M3"], s["M4"], s["M5"], s["T4M2"], s["RDL"], s["RDL_DIO"], s["GATE"]], ["PO", "M1", "M2", "M3", "M4", "M5", "T4M2", "RDL", "RDL_DIO", "GATE"], lambda { |a, p| p["RDL"] * 1.595 / a["GATE"] - (a["RDL_DIO"] * 8000.0 + ((a["RDL_DIO"]) != 0 ? 1.0 : 0.0) * 29000.0) }, [[">", 1000.0]], 23, nil, [nil, nil, nil, nil, nil, nil, nil, nil, s["SD"], nil]) }
 end
